@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.projetTut.ordreMission.view.OrdreMissionMoyenTransportController">
+   <children>
+      <VBox fx:id="page" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="611.0" text="Moyen de transport autorisé">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="79.0" prefWidth="600.0">
+               <children>
+                  <RadioButton fx:id="voitureRadioBtn" mnemonicParsing="false" onAction="#VoitureSelectionne" selected="true" text="Voiture">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="moyenTransport" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="trainRadioBtn" mnemonicParsing="false" onAction="#TrainSelectionne" text="Train" toggleGroup="$moyenTransport">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="avionRadioBtn" mnemonicParsing="false" onAction="#AvionSelectionne" text="Avion" toggleGroup="$moyenTransport">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <GridPane fx:id="detailsVoiture" prefHeight="101.0" prefWidth="400.0" vgap="20.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="476.0" minWidth="10.0" prefWidth="302.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="300.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="477.0" text="Type :">
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="380.0" text="N° Immatriculation :" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="393.0" text="Nombre de CV :" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="immatriculationTextField" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="150.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="nbrCVTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets right="150.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="typeVoitureTextField" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets right="150.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <RadioButton fx:id="vehiculeServiceRadioBtn" mnemonicParsing="false" text="Utilisation de véhicule de service" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets left="50.0" />
+                     </GridPane.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="utilisationVehicule" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="vehiculePersoRadioBtn" mnemonicParsing="false" text="Utilisation à titre exceptionnel du véhicule personnel" toggleGroup="$utilisationVehicule" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </GridPane>
+            <HBox fx:id="trainClasseHBox" alignment="CENTER" prefHeight="50.0" prefWidth="600.0" spacing="15.0">
+               <children>
+                  <RadioButton fx:id="train1ereClasseRadioBtn" mnemonicParsing="false" text="1ère classe">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="classeTrain" />
+                     </toggleGroup></RadioButton>
+                  <RadioButton fx:id="train2emeClasseRadioBtn" mnemonicParsing="false" text="2ème classe" toggleGroup="$classeTrain" />
+               </children>
+            </HBox>
+            <VBox fx:id="cramcoVBox" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="606.0" text="Billet pris par la C.R.A.M.C.O.">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="26.0" prefWidth="600.0" spacing="15.0">
+                     <children>
+                        <RadioButton fx:id="cramcoOuiRadioBtn" mnemonicParsing="false" text="Oui">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="cramco" />
+                           </toggleGroup></RadioButton>
+                        <RadioButton fx:id="cramcoNonRadioBtn" mnemonicParsing="false" text="Non" toggleGroup="$cramco" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="33.0" prefWidth="600.0" spacing="15.0">
+                     <children>
+                        <RadioButton fx:id="cramcoAutreRadioBtn" mnemonicParsing="false" text="Autre (à préciser) :" toggleGroup="$cramco" />
+                        <TextField fx:id="cramcoAutreTextField" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
