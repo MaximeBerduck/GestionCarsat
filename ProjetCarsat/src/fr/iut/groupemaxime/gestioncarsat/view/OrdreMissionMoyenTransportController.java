@@ -1,4 +1,4 @@
-package fr.iut.projetTut.ordreMission.view;
+package fr.iut.groupemaxime.gestioncarsat.view;
 
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import javafx.fxml.FXML;

@@ -2,9 +2,9 @@ package fr.iut.groupemaxime.gestioncarsat;
 
 import java.io.IOException;
 
-import fr.iut.projetTut.ordreMission.view.OrdreMissionInfoPersoController;
-import fr.iut.projetTut.ordreMission.view.OrdreMissionTypeOMController;
-import fr.iut.projetTut.ordreMission.view.OrdreMissionMoyenTransportController;
+import fr.iut.groupemaxime.gestioncarsat.view.OrdreMissionInfoPersoController;
+import fr.iut.groupemaxime.gestioncarsat.view.OrdreMissionMoyenTransportController;
+import fr.iut.groupemaxime.gestioncarsat.view.OrdreMissionTypeOMController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

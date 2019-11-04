@@ -1,4 +1,4 @@
-package fr.iut.projetTut.ordreMission.view;
+package fr.iut.groupemaxime.gestioncarsat.view;
 
 import java.util.ArrayList;
 import java.util.Collection;
