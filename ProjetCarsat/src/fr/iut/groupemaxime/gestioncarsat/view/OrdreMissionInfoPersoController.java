@@ -61,8 +61,6 @@ public class OrdreMissionInfoPersoController {
             alert.setContentText("Remplissez tous les champs avant de pouvoir continuer");
             
             alert.showAndWait();
-		} else if(true){
-			
 		} else {
 			this.mainApp.afficherFormTypeOM();
 		}
