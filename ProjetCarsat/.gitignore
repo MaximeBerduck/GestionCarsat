@@ -1,1 +1,6 @@
 /target/
+/.classpath
+/.DS_Store
+org.eclipse.jdt.core.prefs
+/.settings
+/pom.xml
