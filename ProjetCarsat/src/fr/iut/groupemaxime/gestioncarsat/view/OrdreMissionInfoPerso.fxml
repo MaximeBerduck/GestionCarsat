@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.201" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.OrdreMissionInfoPersoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.OrdreMissionInfoPersoController">
    <children>
       <GridPane fx:id="grilleTop" prefHeight="400.0" prefWidth="600.0">
         <columnConstraints>
@@ -29,11 +29,6 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <TextField fx:id="prenomTextField" maxWidth="150.0" GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets left="65.0" />
-               </GridPane.margin>
-            </TextField>
             <TextField fx:id="nomTextField" maxWidth="150.0">
                <GridPane.margin>
                   <Insets left="50.0" right="20.0" />
@@ -44,32 +39,12 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
+            <TextField fx:id="prenomTextField" maxWidth="150.0" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="65.0" />
+               </GridPane.margin>
+            </TextField>
             <Label text="Fonction :" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </Label>
-            <Label text="Résidence Administrative :" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </Label>
-            <Label text="Unité de travail :" GridPane.rowIndex="3">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </Label>
-            <Label text="N° CAPSSA :" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </Label>
-            <Label text="Coefficient :" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </Label>
-            <Label text="Code analytique :" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
@@ -79,29 +54,54 @@
                   <Insets left="65.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="residenceAdminTextField" maxWidth="150.0" GridPane.rowIndex="2">
+            <Label text="N° CAPSSA :" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets left="155.0" />
+                  <Insets left="10.0" />
                </GridPane.margin>
-            </TextField>
+            </Label>
             <TextField fx:id="numCAPSSATextField" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="80.0" />
                </GridPane.margin>
             </TextField>
+            <Label text="Résidence Administrative :" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="residenceAdminTextField" maxWidth="150.0" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="155.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label text="Coefficient :" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
             <TextField fx:id="coefficientTextField" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="80.0" />
                </GridPane.margin>
             </TextField>
-            <TextField fx:id="codeAnalytiqueTextField" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label text="Unité de travail :" GridPane.rowIndex="3">
                <GridPane.margin>
-                  <Insets left="110.0" />
+                  <Insets />
                </GridPane.margin>
-            </TextField>
+            </Label>
             <TextField fx:id="uniteTavailTextField" maxWidth="150.0" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets left="100.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label text="Code analytique :" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="codeAnalytiqueTextField" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="110.0" />
                </GridPane.margin>
             </TextField>
             <Button fx:id="suivantBtn" mnemonicParsing="false" onAction="#passerATypeOM" prefHeight="25.0" prefWidth="131.0" text="Suivant &gt;&gt;" GridPane.columnIndex="1" GridPane.rowIndex="4">
