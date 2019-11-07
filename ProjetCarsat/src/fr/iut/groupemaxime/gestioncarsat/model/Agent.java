@@ -17,5 +17,10 @@ public class Agent {
 		this.residenceAdmin = residenceAdmin;
 		this.uniteTravail = uniteTravail;
 	}
+	
+	public String toString() {
+		return this.nom + ","+ this.prenom + ","+ this.numCAPSSA + ","+ this.fonction + ","+  this.residenceAdmin + ","+ this.uniteTravail;
+		
+	}
 
 }

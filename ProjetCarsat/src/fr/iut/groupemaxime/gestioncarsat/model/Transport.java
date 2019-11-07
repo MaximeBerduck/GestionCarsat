@@ -6,4 +6,8 @@ public abstract class Transport {
 	public Transport(String nom) {
 		this.nom = nom;
 	}
+	
+	public String toString() {
+		return this.nom;
+	}
 }

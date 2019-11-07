@@ -8,4 +8,8 @@ public class Fonction {
 		this.fonction = fonction;
 		this.coefficient = coefficient;
 	}
+	
+	public String toString() {
+		return this.fonction+","+this.coefficient;
+	}
 }

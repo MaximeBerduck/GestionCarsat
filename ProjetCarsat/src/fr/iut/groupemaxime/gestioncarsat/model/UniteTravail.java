@@ -8,4 +8,8 @@ public class UniteTravail {
 		this.codeAnalytique = codeAnalytique;
 		this.uniteTravail = uniteTravail;
 	}
+	
+	public String toString() {
+		return this.codeAnalytique+","+this.uniteTravail;
+	}
 }
