@@ -10,7 +10,6 @@ import java.io.OutputStream;
 
 public class OrdreMission {
 	private Agent agent;
-
 	private Mission mission;
 	private Transport transport;
 	

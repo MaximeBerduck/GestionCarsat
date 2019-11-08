@@ -1,5 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
 
+import java.awt.font.NumericShaper;
+
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -52,28 +54,63 @@ public class AgentController {
 
 	@FXML
 	private void passerATypeOM() {
-		if (unDesChampsNEstPasRempli()) {
-			Alert alert = new Alert(AlertType.WARNING);
-            alert.initOwner(mainApp.getPrimaryStage());
-            alert.setTitle("Champs non remplis");
-            alert.setHeaderText("Des champs ne sont pas remplis");
-            alert.setContentText("Remplissez tous les champs avant de pouvoir continuer");
-            
-            alert.showAndWait();
-		} else {
+		if (tousLesChampsValides())
 			this.mainApp.afficherFormTypeOM();
-		}
 	}
 
-	private boolean unDesChampsNEstPasRempli() {
-		return "".equals(nomTextField.getText()) 
-				|| "".equals(prenomTextField.getText())
-				|| "".equals(fonctionTextField.getText()) 
-				|| "".equals(residenceAdminTextField.getText())
-				|| "".equals(uniteTavailTextField.getText()) 
-				|| "".equals(codeAnalytiqueTextField.getText())
-				|| "".equals(numCAPSSATextField.getText()) 
-				|| "".equals(coefficientTextField.getText());
+	private boolean tousLesChampsValides() {
+		String erreur = "";
+		if (nomTextField.getText() == null || nomTextField.getText().length() == 0)
+			erreur += "Le champ nom est vide !\n";
+		if (prenomTextField.getText() == null || prenomTextField.getText().length() == 0)
+			erreur += "Le champ prénom est vide !\n";
+		if (fonctionTextField.getText() == null || fonctionTextField.getText().length() == 0)
+			erreur += "Le champ fonction est vide !\n";
+		if (uniteTavailTextField.getText() == null || uniteTavailTextField.getText().length() == 0)
+			erreur += "Le champ unité de travail est vide !\n";
+		if (residenceAdminTextField.getText() == null || residenceAdminTextField.getText().length() == 0)
+			erreur += "Le champ résidence administrative est vide !\n";
+		if (numCAPSSATextField.getText() == null || numCAPSSATextField.getText().length() == 0)
+			erreur += "Le champ numéro CAPSSA est vide !\n";
+		else {
+			try {
+				Integer.parseInt(numCAPSSATextField.getText());
+			} catch (NumberFormatException e) {
+				erreur += "Le champ numéro CAPSSA est invalide (entrez un nombre entier)!\n";
+			}
+		}
+		if (coefficientTextField.getText() == null || coefficientTextField.getText().length() == 0)
+			erreur += "Le champ coefficient est vide !\n";
+		else {
+			try {
+				Integer.parseInt(coefficientTextField.getText());
+			} catch (NumberFormatException e) {
+				erreur += "Le champ coefficient est invalide (entrez un nombre entier)!\n";
+			}
+		}
+		if (codeAnalytiqueTextField.getText() == null || codeAnalytiqueTextField.getText().length() == 0)
+			erreur += "Le champ code analytique est vide !\n";
+		else {
+			try {
+				Integer.parseInt(codeAnalytiqueTextField.getText());
+			} catch (NumberFormatException e) {
+				erreur += "Le champ code analytique est invalide (entrez un nombre entier)!\n";
+			}
+		}
+		
+		if (erreur.length() > 0) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(mainApp.getPrimaryStage());
+			alert.setTitle("Champs non Valides");
+			alert.setHeaderText("Des champs ne sont pas valides");
+			alert.setContentText(erreur);
+
+			alert.showAndWait();
+			return false;
+		} else {
+			return true;
+		}
+
 	}
 
 }
