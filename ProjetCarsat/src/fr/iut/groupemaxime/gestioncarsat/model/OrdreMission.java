@@ -54,10 +54,7 @@ public class OrdreMission {
 	}
 
 	public static void main(String[] args) {
-		Fonction fonction = new Fonction("progr", 200);
-		ResidenceAdministrative residenceAdmin = new ResidenceAdministrative("DUT");
-		UniteTravail uniteTravail = new UniteTravail(123, "2A");
-		Agent agent = new Agent("Berduck", "Maxime", 12345, fonction,residenceAdmin, uniteTravail);
+		Agent agent = new Agent("Berduck", "Maxime", 12345, "progr","DUT", "2A", 200, 123);
 		Transport avion = new Avion();
 		OrdreMission OM = new OrdreMission(agent,null, avion);
 		OM.sauvegarder(new File("target/PDF/OM1.txt"));
