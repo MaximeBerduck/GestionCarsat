@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 
-public class OrdreMissionInfoPersoController {
+public class AgentController {
 
 	@FXML
 	private GridPane grilleTop;

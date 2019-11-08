@@ -16,7 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.FlowPane;
 
-public class OrdreMissionTypeOMController {
+public class MissionController {
 
 	@FXML
 	private FlowPane flowPane;

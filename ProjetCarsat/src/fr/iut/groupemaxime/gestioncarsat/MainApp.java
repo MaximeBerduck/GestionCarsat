@@ -2,9 +2,9 @@ package fr.iut.groupemaxime.gestioncarsat;
 
 import java.io.IOException;
 
-import fr.iut.groupemaxime.gestioncarsat.view.OrdreMissionInfoPersoController;
-import fr.iut.groupemaxime.gestioncarsat.view.OrdreMissionMoyenTransportController;
-import fr.iut.groupemaxime.gestioncarsat.view.OrdreMissionTypeOMController;
+import fr.iut.groupemaxime.gestioncarsat.view.AgentController;
+import fr.iut.groupemaxime.gestioncarsat.view.TransportController;
+import fr.iut.groupemaxime.gestioncarsat.view.MissionController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,23 +23,7 @@ public class MainApp extends Application {
 		this.primaryStage.setTitle("OM");
 		//this.primaryStage.isResizable(); --> propriété redimensionnement de la fenêtre
 
-		
-		
-		
-		
-		
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+			
 		initRootLayout();
 
 		afficherFormInfoPerso();
@@ -65,14 +49,14 @@ public class MainApp extends Application {
 	public void afficherFormInfoPerso() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/OrdreMissionInfoPerso.fxml"));
+			loader.setLocation(MainApp.class.getResource("view/Agent.fxml"));
 			AnchorPane page = loader.load();
 
 			// Set person overview into the center of root layout.
 			rootLayout.setCenter(page);
 
 			// Give the controller access to the main app.
-			OrdreMissionInfoPersoController controller = loader.getController();
+			AgentController controller = loader.getController();
 			controller.setMainApp(this);
 
 		} catch (IOException e) {
@@ -95,14 +79,14 @@ public class MainApp extends Application {
 	public void afficherFormTypeOM() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/OrdreMissionTypeOM.fxml"));
+			loader.setLocation(MainApp.class.getResource("view/Mission.fxml"));
 			AnchorPane ordreMission = loader.load();
 
 			// Set person overview into the center of root layout.
 			rootLayout.setCenter(ordreMission);
 
 			// Give the controller access to the main app.
-			OrdreMissionTypeOMController controller = loader.getController();
+			MissionController controller = loader.getController();
 			controller.setMainApp(this);
 
 		} catch (IOException e) {
@@ -114,14 +98,14 @@ public class MainApp extends Application {
 	public void afficherFormMoyenTransport() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/OrdreMissionMoyenTransport.fxml"));
+			loader.setLocation(MainApp.class.getResource("view/Transport.fxml"));
 			AnchorPane ordreMission = loader.load();
 
 			// Set person overview into the center of root layout.
 			rootLayout.setCenter(ordreMission);
 
 			// Give the controller access to the main app.
-			OrdreMissionMoyenTransportController controller = loader.getController();
+			TransportController controller = loader.getController();
 			controller.setMainApp(this);
 
 		} catch (IOException e) {

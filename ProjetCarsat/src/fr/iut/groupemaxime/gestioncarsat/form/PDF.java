@@ -3,6 +3,8 @@ package fr.iut.groupemaxime.gestioncarsat.form;
 import java.io.File;
 import java.io.IOException;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;

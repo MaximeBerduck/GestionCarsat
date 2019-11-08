@@ -8,7 +8,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class OrdreMissionMoyenTransportController {
+public class TransportController {
 	private MainApp mainApp;
 	// menu choix moyen transport
 	@FXML
