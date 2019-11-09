@@ -24,20 +24,18 @@ public class MainApp extends Application {
 		//this.primaryStage.isResizable(); --> propriété redimensionnement de la fenêtre
 
 			
-		initRootLayout();
+		initialiseRootLayout();
 
 		afficherFormInfoPerso();
 
 	}
 
-	public void initRootLayout() {
+	public void initialiseRootLayout() {
 		try {
-			// Load root layout from fxml file.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
 			rootLayout = loader.load();
 
-			// Show the scene containing the root layout.
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -52,10 +50,8 @@ public class MainApp extends Application {
 			loader.setLocation(MainApp.class.getResource("view/Agent.fxml"));
 			AnchorPane page = loader.load();
 
-			// Set person overview into the center of root layout.
 			rootLayout.setCenter(page);
 
-			// Give the controller access to the main app.
 			AgentController controller = loader.getController();
 			controller.setMainApp(this);
 
@@ -82,10 +78,8 @@ public class MainApp extends Application {
 			loader.setLocation(MainApp.class.getResource("view/Mission.fxml"));
 			AnchorPane ordreMission = loader.load();
 
-			// Set person overview into the center of root layout.
 			rootLayout.setCenter(ordreMission);
 
-			// Give the controller access to the main app.
 			MissionController controller = loader.getController();
 			controller.setMainApp(this);
 
@@ -101,10 +95,8 @@ public class MainApp extends Application {
 			loader.setLocation(MainApp.class.getResource("view/Transport.fxml"));
 			AnchorPane ordreMission = loader.load();
 
-			// Set person overview into the center of root layout.
 			rootLayout.setCenter(ordreMission);
 
-			// Give the controller access to the main app.
 			TransportController controller = loader.getController();
 			controller.setMainApp(this);
 

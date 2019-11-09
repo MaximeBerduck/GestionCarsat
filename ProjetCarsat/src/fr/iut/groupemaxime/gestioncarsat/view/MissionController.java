@@ -1,31 +1,28 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class MissionController {
 
 	@FXML
-	private FlowPane flowPane;
+	private VBox pageVBox;
 
 	@FXML
-	private ToggleGroup typeOm;
+	private HBox missionPonctuelHBox;
 
 	@FXML
-	private ToggleGroup titre;
+	private ToggleGroup typeOmToggleG;
+
+	@FXML
+	private ToggleGroup titreToggleG;
 
 	@FXML
 	private RadioButton ordrePermanentRadioBtn;
@@ -52,16 +49,13 @@ public class MissionController {
 	private DatePicker dateFin;
 
 	private MainApp mainApp;
-	
+
 	@FXML
 	private Label labelDu;
 
 	@FXML
 	private Label labelAu;
 
-	@FXML
-	private void initialize() {
-	}
 
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
@@ -72,16 +66,13 @@ public class MissionController {
 	}
 
 	public void ordrePermanentRadioBtnSelectionne() {
-		this.flowPane.getChildren().removeAll(labelDu, dateDebut, labelAu, dateFin);
+		if (this.pageVBox.getChildren().contains(missionPonctuelHBox))
+			this.pageVBox.getChildren().remove(missionPonctuelHBox);
 	}
 
-	
 	public void ordrePonctuelRadioBtnSelectionne() {
-		this.flowPane.getChildren().add(2, dateFin);
-		this.flowPane.getChildren().add(2, labelAu);
-		this.flowPane.getChildren().add(2, dateDebut);
-		this.flowPane.getChildren().add(2, labelDu);
-
+		if (!this.pageVBox.getChildren().contains(missionPonctuelHBox))
+			this.pageVBox.getChildren().add(2, missionPonctuelHBox);
 	}
 
 }
