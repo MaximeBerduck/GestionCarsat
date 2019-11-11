@@ -5,17 +5,17 @@ import java.util.Date;
 
 
 public class MissionTemporaire extends Mission {
-	private Date dateDebut;
-	private Time heureDebut;
-	private Date dateFin;
-	private Time heureFin;
+	private String dateDebut; //Format dd/mm/aaaa
+	private String heureDebut; //Format hh:mm
+	private String dateFin; //Format dd/mm/aaaa
+	private String heureFin; //Format hh:mm
 	private String motifDeplacement;
 	private String lieuDeplacement;
 	private String titre; //ne peut prendre uniquement la valeur fonctionHabituelle ou formation
 	
 	
 	
-	public MissionTemporaire(Date dateDebut, Time heureDebut, Date dateFin, Time heureFin, String motifDeplacement,
+	public MissionTemporaire(String dateDebut, String heureDebut, String dateFin, String heureFin, String motifDeplacement,
 			String lieuDeplacement, String titre) {
 		this.dateDebut = dateDebut;
 		this.heureDebut = heureDebut;
@@ -26,16 +26,16 @@ public class MissionTemporaire extends Mission {
 		this.titre = titre;
 	}
 	
-	public Date getDateDebut() {
+	public String getDateDebut() {
 		return dateDebut;
 	}
-	public Time getHeureDebut() {
+	public String getHeureDebut() {
 		return heureDebut;
 	}
-	public Date getDateFin() {
+	public String getDateFin() {
 		return dateFin;
 	}
-	public Time getHeureFin() {
+	public String getHeureFin() {
 		return heureFin;
 	}
 	public String getMotifDeplacement() {
@@ -46,6 +46,13 @@ public class MissionTemporaire extends Mission {
 	}
 	public String getTitre() {
 		return titre;
+	}
+
+	@Override
+	public String toString() {
+		return "MissionTemporaire [dateDebut=" + dateDebut + ", heureDebut=" + heureDebut + ", dateFin=" + dateFin
+				+ ", heureFin=" + heureFin + ", motifDeplacement=" + motifDeplacement + ", lieuDeplacement="
+				+ lieuDeplacement + ", titre=" + titre + "]";
 	}
 	
 	
