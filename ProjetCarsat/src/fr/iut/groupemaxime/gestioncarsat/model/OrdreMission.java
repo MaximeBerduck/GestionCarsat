@@ -237,111 +237,22 @@ public class OrdreMission {
 				final Document document = builder.parse(file);
 
 				// Importation de l'agent
-				final NodeList agent = document.getElementsByTagName("Agent");
-				for (int i = 0; i < agent.getLength(); i++) {
-					Node node = agent.item(i);
-					if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-						// Récupère l'élément
-						Element agentElement = (Element) node;
-
-						// Objet Agent
-						agentOM = new Agent(agentElement.getElementsByTagName("nom").item(0).getTextContent(),
-								agentElement.getElementsByTagName("prenom").item(0).getTextContent(),
-								Integer.parseInt(
-										agentElement.getElementsByTagName("numCAPSSA").item(0).getTextContent()),
-								agentElement.getElementsByTagName("fonction").item(0).getTextContent(),
-								agentElement.getElementsByTagName("residenceAdmin").item(0).getTextContent(),
-								agentElement.getElementsByTagName("uniteTravail").item(0).getTextContent(),
-								Integer.parseInt(
-										agentElement.getElementsByTagName("coefficient").item(0).getTextContent()),
-								Integer.parseInt(
-										agentElement.getElementsByTagName("codeAnalytique").item(0).getTextContent()));
-					}
-				}
+				agentOM = importerAgent(agentOM, document);
 
 				// Importation de la missionTemporaire si temporaire
-				final NodeList missionTempo = document.getElementsByTagName("missionTemporaire");
-				for (int i = 0; i < missionTempo.getLength(); i++) {
-					Node node = missionTempo.item(i);
-					if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-						// Récupère l'élément
-						Element missionElement = (Element) node;
-
-						// Objet MissionTemporaire
-						missionOM = new MissionTemporaire(
-								missionElement.getElementsByTagName("dateDebut").item(0).getTextContent(),
-								missionElement.getElementsByTagName("heureDebut").item(0).getTextContent(),
-								missionElement.getElementsByTagName("dateFin").item(0).getTextContent(),
-								missionElement.getElementsByTagName("heureFin").item(0).getTextContent(),
-								missionElement.getElementsByTagName("motifDeplacement").item(0).getTextContent(),
-								missionElement.getElementsByTagName("lieuDeplacement").item(0).getTextContent(),
-								missionElement.getElementsByTagName("titre").item(0).getTextContent());
-					}
-				}
+				missionOM = importerMissionTemporaire(missionOM, document);
 
 				// Importation de la missionPermanent si permanente
-				final NodeList missionPerma = document.getElementsByTagName("missionPermanent");
-				for (int i = 0; i < missionPerma.getLength(); i++) {
-					Node node = missionPerma.item(i);
-					if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-						// Récupère l'élément
-						Element missionElement = (Element) node;
-
-						// Objet MissionTemporaire
-						missionOM = new MissionPermanent();
-					}
-				}
+				missionOM = importerMissionPermanent(missionOM, document);
 
 				// Importation du Train si le transport est le train
-				final NodeList train = document.getElementsByTagName("train");
-				for (int i = 0; i < train.getLength(); i++) {
-					Node node = train.item(i);
-					if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-						// Récupère l'élément
-						Element trainElement = (Element) node;
-
-						// Objet MissionTemporaire
-						transportOM = new Train(trainElement.getElementsByTagName("classe").item(0).getTextContent(),
-								trainElement.getElementsByTagName("prisParCRAMCO").item(0).getTextContent());
-					}
-				}
+				transportOM = importerTrain(transportOM, document);
 
 				// Importation de la Voiture si le transport est la voiture
-				final NodeList voiture = document.getElementsByTagName("voiture");
-				for (int i = 0; i < voiture.getLength(); i++) {
-					Node node = voiture.item(i);
-					if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-						// Récupère l'élément
-						Element voitureElement = (Element) node;
-
-						// Objet MissionTemporaire
-						transportOM = new Voiture(
-								voitureElement.getElementsByTagName("typeVoiture").item(0).getTextContent(),
-								voitureElement.getElementsByTagName("immatriculation").item(0).getTextContent(),
-								Integer.parseInt(voitureElement.getElementsByTagName("nbrCV").item(0).getTextContent()),
-								voitureElement.getElementsByTagName("appartenanceVehicule").item(0).getTextContent());
-					}
-				}
+				transportOM = importerVoiture(transportOM, document);
 
 				// Importation de l'Avion si le transport est l'avion
-				final NodeList avion = document.getElementsByTagName("avion");
-				for (int i = 0; i < avion.getLength(); i++) {
-					Node node = avion.item(i);
-					if (node.getNodeType() == Node.ELEMENT_NODE) {
-
-						// Récupère l'élément
-						Element avionElement = (Element) node;
-
-						// Objet MissionTemporaire
-						transportOM = new Avion(
-								avionElement.getElementsByTagName("prisParCRAMCO").item(0).getTextContent());
-					}
-				}
+				transportOM = importerAvion(transportOM, document);
 			} catch (SAXException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -354,6 +265,125 @@ public class OrdreMission {
 		}
 		om = new OrdreMission(agentOM, missionOM, transportOM);
 		return om;
+	}
+
+	private static Transport importerAvion(Transport transportOM, final Document document) {
+		final NodeList avion = document.getElementsByTagName("avion");
+		for (int i = 0; i < avion.getLength(); i++) {
+			Node node = avion.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+				// Récupère l'élément
+				Element avionElement = (Element) node;
+
+				// Objet MissionTemporaire
+				transportOM = new Avion(
+						avionElement.getElementsByTagName("prisParCRAMCO").item(0).getTextContent());
+			}
+		}
+		return transportOM;
+	}
+
+	private static Transport importerVoiture(Transport transportOM, final Document document) {
+		final NodeList voiture = document.getElementsByTagName("voiture");
+		for (int i = 0; i < voiture.getLength(); i++) {
+			Node node = voiture.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+				// Récupère l'élément
+				Element voitureElement = (Element) node;
+
+				// Objet MissionTemporaire
+				transportOM = new Voiture(
+						voitureElement.getElementsByTagName("typeVoiture").item(0).getTextContent(),
+						voitureElement.getElementsByTagName("immatriculation").item(0).getTextContent(),
+						Integer.parseInt(voitureElement.getElementsByTagName("nbrCV").item(0).getTextContent()),
+						voitureElement.getElementsByTagName("appartenanceVehicule").item(0).getTextContent());
+			}
+		}
+		return transportOM;
+	}
+
+	private static Transport importerTrain(Transport transportOM, final Document document) {
+		final NodeList train = document.getElementsByTagName("train");
+		for (int i = 0; i < train.getLength(); i++) {
+			Node node = train.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+				// Récupère l'élément
+				Element trainElement = (Element) node;
+
+				// Objet MissionTemporaire
+				transportOM = new Train(trainElement.getElementsByTagName("classe").item(0).getTextContent(),
+						trainElement.getElementsByTagName("prisParCRAMCO").item(0).getTextContent());
+			}
+		}
+		return transportOM;
+	}
+
+	private static Mission importerMissionPermanent(Mission missionOM, final Document document) {
+		final NodeList missionPerma = document.getElementsByTagName("missionPermanent");
+		for (int i = 0; i < missionPerma.getLength(); i++) {
+			Node node = missionPerma.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+				// Récupère l'élément
+				Element missionElement = (Element) node;
+
+				// Objet MissionTemporaire
+				missionOM = new MissionPermanent();
+			}
+		}
+		return missionOM;
+	}
+
+	private static Mission importerMissionTemporaire(Mission missionOM, final Document document) {
+		final NodeList missionTempo = document.getElementsByTagName("missionTemporaire");
+		for (int i = 0; i < missionTempo.getLength(); i++) {
+			Node node = missionTempo.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+				// Récupère l'élément
+				Element missionElement = (Element) node;
+
+				// Objet MissionTemporaire
+				missionOM = new MissionTemporaire(
+						missionElement.getElementsByTagName("dateDebut").item(0).getTextContent(),
+						missionElement.getElementsByTagName("heureDebut").item(0).getTextContent(),
+						missionElement.getElementsByTagName("dateFin").item(0).getTextContent(),
+						missionElement.getElementsByTagName("heureFin").item(0).getTextContent(),
+						missionElement.getElementsByTagName("motifDeplacement").item(0).getTextContent(),
+						missionElement.getElementsByTagName("lieuDeplacement").item(0).getTextContent(),
+						missionElement.getElementsByTagName("titre").item(0).getTextContent());
+			}
+		}
+		return missionOM;
+	}
+
+	private static Agent importerAgent(Agent agentOM, final Document document) {
+		final NodeList agent = document.getElementsByTagName("Agent");
+		for (int i = 0; i < agent.getLength(); i++) {
+			Node node = agent.item(i);
+			if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+				// Récupère l'élément
+				Element agentElement = (Element) node;
+
+				// Objet Agent
+				agentOM = new Agent(agentElement.getElementsByTagName("nom").item(0).getTextContent(),
+						agentElement.getElementsByTagName("prenom").item(0).getTextContent(),
+						Integer.parseInt(
+								agentElement.getElementsByTagName("numCAPSSA").item(0).getTextContent()),
+						agentElement.getElementsByTagName("fonction").item(0).getTextContent(),
+						agentElement.getElementsByTagName("residenceAdmin").item(0).getTextContent(),
+						agentElement.getElementsByTagName("uniteTravail").item(0).getTextContent(),
+						Integer.parseInt(
+								agentElement.getElementsByTagName("coefficient").item(0).getTextContent()),
+						Integer.parseInt(
+								agentElement.getElementsByTagName("codeAnalytique").item(0).getTextContent()));
+			}
+		}
+		return agentOM;
 	}
 
 	public static void main(String[] args) {
