@@ -24,13 +24,13 @@
             <HBox fx:id="missionPonctuelHBox" prefWidth="600.0">
                <children>
                   <Label fx:id="labelDu" alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="du" />
-                  <DatePicker fx:id="dateDebut" prefWidth="174.0">
+                  <DatePicker fx:id="dateDebut" editable="false" onAction="#onDateDebutModifier" prefWidth="174.0">
                      <HBox.margin>
                         <Insets top="13.0" />
                      </HBox.margin>
                   </DatePicker>
                   <Label fx:id="labelAu" alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="au" />
-                  <DatePicker fx:id="dateFin">
+                  <DatePicker fx:id="dateFin" editable="false" onAction="#onDateFinModifier">
                      <HBox.margin>
                         <Insets top="13.0" />
                      </HBox.margin>
@@ -63,7 +63,7 @@
             <HBox prefWidth="600.0">
                <children>
                   <Label prefHeight="50.0" prefWidth="81.0" text="Au titre de :" />
-                  <RadioButton fx:id="fonctionHabituelleRadioBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="147.0" text="La fonction habituelle">
+                  <RadioButton fx:id="fonctionHabituelleRadioBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="147.0" selected="true" text="La fonction habituelle">
                      <toggleGroup>
                         <ToggleGroup fx:id="titreToggleG" />
                      </toggleGroup>
@@ -71,11 +71,18 @@
                   <RadioButton fx:id="formationRadioBtn" mnemonicParsing="false" prefHeight="50.0" text="La formation" toggleGroup="$titreToggleG" />
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#passerAMoyenTransport" text="Suivant &gt;&gt;">
+            <HBox prefWidth="600.0" spacing="35.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#retournerAInfoPerso" prefWidth="75.0" text="Retour" />
+                  <Button mnemonicParsing="false" onAction="#passerAMoyenTransport" text="Suivant &gt;&gt;" />
+               </children>
+               <padding>
+                  <Insets left="275.0" />
+               </padding>
                <VBox.margin>
-                  <Insets left="400.0" top="20.0" />
+                  <Insets top="10.0" />
                </VBox.margin>
-            </Button>
+            </HBox>
          </children>
       </VBox>
    </children>

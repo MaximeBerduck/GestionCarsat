@@ -1,7 +1,5 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
 
-import java.awt.font.NumericShaper;
-
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

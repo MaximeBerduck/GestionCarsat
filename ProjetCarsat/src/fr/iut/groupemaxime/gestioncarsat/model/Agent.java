@@ -1,12 +1,5 @@
 package fr.iut.groupemaxime.gestioncarsat.model;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 public class Agent {
 	private String nom;
 	private String prenom;

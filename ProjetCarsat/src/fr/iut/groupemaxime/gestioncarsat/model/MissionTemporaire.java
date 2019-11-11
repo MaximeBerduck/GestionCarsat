@@ -1,8 +1,5 @@
 package fr.iut.groupemaxime.gestioncarsat.model;
 
-import java.sql.Time;
-import java.util.Date;
-
 
 public class MissionTemporaire extends Mission {
 	private String dateDebut; //Format dd/mm/aaaa

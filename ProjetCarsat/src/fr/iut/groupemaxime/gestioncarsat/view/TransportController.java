@@ -41,6 +41,9 @@ public class TransportController {
 	private RadioButton cramcoNonRadioBtn;
 
 	@FXML
+	private HBox cramcoHBox;
+	
+	@FXML
 	private RadioButton cramcoAutreRadioBtn;
 
 	@FXML
@@ -75,6 +78,14 @@ public class TransportController {
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
+	
+	public void retournerATypeOM() {
+		this.mainApp.afficherFormTypeOM();
+	}
+	
+	public void validerOM() {
+		//TODO
+	}
 
 	public void AvionSelectionne() {
 		this.page.getChildren().removeAll(detailsVoiture, trainClasseHBox);
@@ -93,5 +104,16 @@ public class TransportController {
 	public void VoitureSelectionne() {
 		this.page.getChildren().removeAll(cramcoVBox, trainClasseHBox);
 		this.page.getChildren().add(2, detailsVoiture);
+	}
+	
+	public void ouiOuNonSelectionne() {
+		if (this.cramcoHBox.getChildren().contains(cramcoAutreTextField)) {
+			this.cramcoHBox.getChildren().remove(cramcoAutreTextField);
+		}		
+	}
+	
+	public void autreSelectionne() {
+		this.cramcoHBox.getChildren().add(cramcoAutreTextField);
+
 	}
 }

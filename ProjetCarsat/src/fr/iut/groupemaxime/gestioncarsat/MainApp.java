@@ -16,14 +16,17 @@ public class MainApp extends Application {
 
 	private Stage primaryStage;
 	private BorderPane rootLayout;
+	private AnchorPane pageAgent;
+	private AnchorPane pageMission;
+	private AnchorPane pageTransport;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("OM");
-		//this.primaryStage.isResizable(); --> propriété redimensionnement de la fenêtre
+		// this.primaryStage.isResizable(); --> propriété redimensionnement de la
+		// fenêtre
 
-			
 		initialiseRootLayout();
 
 		afficherFormInfoPerso();
@@ -45,19 +48,24 @@ public class MainApp extends Application {
 	}
 
 	public void afficherFormInfoPerso() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Agent.fxml"));
-			AnchorPane page = loader.load();
+		if (this.pageAgent != null) {
+			rootLayout.setCenter(this.pageAgent);
+		} else {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(MainApp.class.getResource("view/Agent.fxml"));
+				pageAgent = loader.load();
 
-			rootLayout.setCenter(page);
+				rootLayout.setCenter(pageAgent);
 
-			AgentController controller = loader.getController();
-			controller.setMainApp(this);
+				AgentController controller = loader.getController();
+				controller.setMainApp(this);
 
-		} catch (IOException e) {
-			e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+
 	}
 
 	public static void main(String[] args) {
@@ -73,37 +81,43 @@ public class MainApp extends Application {
 	}
 
 	public void afficherFormTypeOM() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Mission.fxml"));
-			AnchorPane ordreMission = loader.load();
+		if (this.pageMission != null) {
+			rootLayout.setCenter(this.pageMission);
+		} else {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(MainApp.class.getResource("view/Mission.fxml"));
+				pageMission = loader.load();
 
-			rootLayout.setCenter(ordreMission);
+				rootLayout.setCenter(pageMission);
+				MissionController controller = loader.getController();
+				controller.setMainApp(this);
 
-			MissionController controller = loader.getController();
-			controller.setMainApp(this);
-
-		} catch (IOException e) {
-			e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
 
 	public void afficherFormMoyenTransport() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Transport.fxml"));
-			AnchorPane ordreMission = loader.load();
+		if (this.pageTransport != null) {
+			rootLayout.setCenter(this.pageTransport);
+		} else {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(MainApp.class.getResource("view/Transport.fxml"));
+				pageTransport = loader.load();
 
-			rootLayout.setCenter(ordreMission);
+				rootLayout.setCenter(pageTransport);
 
-			TransportController controller = loader.getController();
-			controller.setMainApp(this);
+				TransportController controller = loader.getController();
+				controller.setMainApp(this);
 
-		} catch (IOException e) {
-			e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-
 	}
 
 }
