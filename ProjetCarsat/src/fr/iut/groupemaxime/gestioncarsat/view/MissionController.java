@@ -1,6 +1,5 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
@@ -15,7 +14,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.DateCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 public class MissionController {
