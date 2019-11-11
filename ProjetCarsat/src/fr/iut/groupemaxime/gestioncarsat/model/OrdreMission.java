@@ -383,13 +383,25 @@ public class OrdreMission {
 		return agentOM;
 	}
 
+	public Agent getAgent() {
+		return agent;
+	}
+
+	public Mission getMission() {
+		return mission;
+	}
+
+	public Transport getTransport() {
+		return transport;
+	}
+
 	public static void main(String[] args) {
 		Agent agent = new Agent("Berduck", "Maxime", 12345, "progr", "DUT", "2A", 200, 123);
 		Transport avion = new Avion("oui");
 		Transport voiture = new Voiture("course", "11-qqq-44", 120, "vehiculePersonnel");
 		Transport train = new Train("premiereClasse", "oui");
 		Mission mission = new MissionTemporaire("12/12/2019", "12:12", "14/12/2019", "20:12", "test", "Limoges",
-				"Rien");
+				"formation");
 		OrdreMission OM = new OrdreMission(agent, mission, avion);
 		OrdreMission OM1 = new OrdreMission(agent, mission, train);
 		OrdreMission OM2 = new OrdreMission(agent, mission, voiture);
