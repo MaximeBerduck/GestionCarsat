@@ -18,13 +18,19 @@ public class ListeOrdreMission {
 		}
 	}
 	
+	public void ajouterOM(OrdreMission om) {
+		if(null != om) {
+			this.listeOM.add(om);
+		}
+	}
+	
+	public void supprimerOM(OrdreMission om){
+		if(null != om) {
+			this.listeOM.remove(om);
+		}
+	}
+	
 	public ArrayList<OrdreMission> getListeOM() {
 		return listeOM;
 	}
-
-	public static void main(String[] args) {
-		ListeOrdreMission liste = new ListeOrdreMission();
-		liste.chargerOM(new File("target/OM/"));
-	}
-	
 }
