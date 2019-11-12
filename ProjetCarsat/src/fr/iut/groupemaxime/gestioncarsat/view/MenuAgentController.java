@@ -36,10 +36,14 @@ public class MenuAgentController {
 
 	private static VBox creerItemOM(OrdreMission om) {
 		VBox item = null;
+		itemOrdreMissionController ctrl = null;
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/itemOrdreMission.fxml"));
 			item = loader.load();
+			
+			ctrl = loader.getController();
+			ctrl.chargerOM(om);
 
 		} catch (IOException e) {
 			e.printStackTrace();
