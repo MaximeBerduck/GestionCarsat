@@ -227,6 +227,10 @@ public class MainApp extends Application {
 		
 		OrdreMission om = new OrdreMission(agent,mission,transport);
 		listeOM.ajouterOM(om);
+		rootLayout.setCenter(null);
+		om.sauvegarder(new File("target/OM/test.xml"));
+		afficherListOm();
+
 	}
 	
 	public void creerNouveauOm() {

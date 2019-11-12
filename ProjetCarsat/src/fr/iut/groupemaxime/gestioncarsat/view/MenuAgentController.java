@@ -28,7 +28,7 @@ public class MenuAgentController {
 	@FXML
 	public void initialize() {
 		listeOm = new ListeOrdreMission();
-		listeOm.chargerOM(new File("target/PDF/"));
+		listeOm.chargerOM(new File("target/OM/"));
 		for (OrdreMission om : listeOm.getListeOM()) {
 			listeOmVBox.getChildren().add(MenuAgentController.creerItemOM(om));
 		}
