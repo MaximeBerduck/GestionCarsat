@@ -1,6 +1,8 @@
 package fr.iut.groupemaxime.gestioncarsat;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
 
 import fr.iut.groupemaxime.gestioncarsat.view.AgentController;
 import fr.iut.groupemaxime.gestioncarsat.view.TransportController;
@@ -26,11 +28,24 @@ public class MainApp extends Application {
 		this.primaryStage.setTitle("OM");
 		// this.primaryStage.isResizable(); --> propriété redimensionnement de la
 		// fenêtre
-
 		initialiseRootLayout();
-
+		afficherListOm();
 		afficherFormInfoPerso();
 
+	}
+
+	private void afficherListOm() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/MenuAgent.fxml"));
+			AnchorPane page = loader.load();
+
+			rootLayout.setLeft(page);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public void initialiseRootLayout() {

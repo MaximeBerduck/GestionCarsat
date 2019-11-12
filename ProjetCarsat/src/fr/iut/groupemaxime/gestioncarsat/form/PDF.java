@@ -1,7 +1,10 @@
 package fr.iut.groupemaxime.gestioncarsat.form;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
@@ -93,20 +96,17 @@ public class PDF {
 					} else {
 						this.remplirChamp("deuxiemeClasse", "Yes");
 					}
-					if("oui".equals(train.getPrisParCRAMCO())) {
+					if ("oui".equals(train.getPrisParCRAMCO())) {
 						this.remplirChamp("oui", "Yes");
-					}
-					else if("non".equals(train.getPrisParCRAMCO())) {
+					} else if ("non".equals(train.getPrisParCRAMCO())) {
 						this.remplirChamp("non", "Yes");
-					}
-					else {
+					} else {
 						this.remplirChamp("autre", "Yes");
 						this.remplirChamp("non", "Yes");
 						this.remplirChamp("infos", train.getPrisParCRAMCO());
 					}
-				}
-				else {
-					
+				} else {
+
 				}
 			}
 		}
@@ -124,5 +124,12 @@ public class PDF {
 		pdf.remplirPDF(OM);
 		pdf.sauvegarderPDF();
 		pdf.fermerPDF();
+		try {
+			Desktop.getDesktop().browse(new URI("file:///C:/Users/mylan/git/GestionCarsat/ProjetCarsat/target/PDF/Doc1modif.pdf"));
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }
