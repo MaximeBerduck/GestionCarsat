@@ -44,6 +44,7 @@ public class AgentController {
 
 	@FXML
 	private void initialize() {
+		
 	}
 
 	public void setMainApp(MainApp mainApp) {

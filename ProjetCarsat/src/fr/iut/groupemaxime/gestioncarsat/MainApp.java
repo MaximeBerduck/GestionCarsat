@@ -15,6 +15,7 @@ import fr.iut.groupemaxime.gestioncarsat.model.Train;
 import fr.iut.groupemaxime.gestioncarsat.model.Transport;
 import fr.iut.groupemaxime.gestioncarsat.model.Voiture;
 import fr.iut.groupemaxime.gestioncarsat.view.AgentController;
+import fr.iut.groupemaxime.gestioncarsat.view.MenuAgentController;
 import fr.iut.groupemaxime.gestioncarsat.view.TransportController;
 import fr.iut.groupemaxime.gestioncarsat.view.MissionController;
 import javafx.application.Application;
@@ -229,6 +230,10 @@ public class MainApp extends Application {
 		listeOM.ajouterOM(om);
 	}
 	
+	public void creerNouveauOm() {
+		afficherFormInfoPerso();
+	}
+
 	public void creerNouveauOm() {
 		afficherFormInfoPerso();
 	}
