@@ -1,6 +1,19 @@
 package fr.iut.groupemaxime.gestioncarsat;
 
+import java.io.File;
 import java.io.IOException;
+
+import fr.iut.groupemaxime.gestioncarsat.model.Agent;
+import fr.iut.groupemaxime.gestioncarsat.view.MenuAgentController;
+import fr.iut.groupemaxime.gestioncarsat.model.Avion;
+import fr.iut.groupemaxime.gestioncarsat.model.ListeOrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.model.Mission;
+import fr.iut.groupemaxime.gestioncarsat.model.MissionPermanent;
+import fr.iut.groupemaxime.gestioncarsat.model.MissionTemporaire;
+import fr.iut.groupemaxime.gestioncarsat.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.model.Train;
+import fr.iut.groupemaxime.gestioncarsat.model.Transport;
+import fr.iut.groupemaxime.gestioncarsat.model.Voiture;
 import fr.iut.groupemaxime.gestioncarsat.view.AgentController;
 import fr.iut.groupemaxime.gestioncarsat.view.MenuAgentController;
 import fr.iut.groupemaxime.gestioncarsat.view.TransportController;
@@ -22,19 +35,21 @@ public class MainApp extends Application {
 	private AgentController controllerAgent;
 	private MissionController controllerMission;
 	private TransportController controllerTransport;
+	private ListeOrdreMission listeOM;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("OM");
-		// this.primaryStage.isResizable(); --> propriété redimensionnement de la
-		// fenêtre
+		// this.primaryStage.isResizable(); --> propriï¿½tï¿½ redimensionnement de la
+		// fenï¿½tre
 		initialiseRootLayout();
 		afficherListOm();
 
 	}
 
 	private void afficherListOm() {
+		listeOM.chargerOM(new File("target/OM/"));
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/MenuAgent.fxml"));
@@ -52,6 +67,7 @@ public class MainApp extends Application {
 	}
 
 	public void initialiseRootLayout() {
+		listeOM = new ListeOrdreMission();
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
@@ -139,9 +155,84 @@ public class MainApp extends Application {
 	}
 
 	public void validerOrdreMission() {
-		//TODO
-	}
+		Agent agent = new Agent(controllerAgent.getNomTextField().getText(),
+				controllerAgent.getPrenomTextField().getText(),
+				Integer.parseInt(controllerAgent.getNumCAPSSATextField().getText()),
+				controllerAgent.getFonctionTextField().getText(),
+				controllerAgent.getResidenceAdminTextField().getText(),
+				controllerAgent.getUniteTavailTextField().getText(),
+				Integer.parseInt(controllerAgent.getCoefficientTextField().getText()),
+				Integer.parseInt(controllerAgent.getCodeAnalytiqueTextField().getText()));
+		Mission mission;
+		if (controllerMission.getOrdrePermanentRadioBtn().isSelected()) {
+			mission = new MissionPermanent();
+		} else {
+			String dateDebut = String.valueOf(controllerMission.getDateDebut().getValue().getDayOfMonth()) + '/'
+					+ String.valueOf(controllerMission.getDateDebut().getValue().getMonth()) + '/'
+					+ String.valueOf(controllerMission.getDateDebut().getValue().getYear());
+			String dateFin = String.valueOf(controllerMission.getDateFin().getValue().getDayOfMonth()) + '/'
+					+ String.valueOf(controllerMission.getDateFin().getValue().getMonth()) + '/'
+					+ String.valueOf(controllerMission.getDateFin().getValue().getYear());
+			String titre;
+			if (controllerMission.getFonctionHabituelleRadioBtn().isSelected()) {
+				titre = "fonctionHabituelle";
+			} else {
+				titre = "formation";
+			}
+			mission = new MissionTemporaire(dateDebut, "12:00", dateFin, "12:00",
+					controllerMission.getMotifDeplacementTextField().getText(),
+					controllerMission.getLieuDeplacementTextField().getText(), titre);
+		}
 
+		Transport transport;
+
+		if (controllerTransport.getAvionRadioBtn().isSelected()) {
+			String cramco;
+			if (controllerTransport.getCramcoNonRadioBtn().isSelected()) {
+				cramco = "non";
+			} else {
+				cramco = "oui";
+			}
+			transport = new Avion(cramco);
+		}
+
+		else if (controllerTransport.getVoitureRadioBtn().isSelected()) {
+			String appartenanceVehicule;
+			if (controllerTransport.getVehiculePersoRadioBtn().isSelected()) {
+				appartenanceVehicule = "vehiculePerso";
+			} else {
+				appartenanceVehicule = "vehiculeService";
+			}
+			transport = new Voiture(controllerTransport.getTypeVoitureTextField().getText(),
+					controllerTransport.getImmatriculationTextField().getText(),
+					Integer.parseInt(controllerTransport.getNbrCVTextField().getText()), appartenanceVehicule);
+		}
+
+		else {
+			String classe;
+			if (controllerTransport.getTrain1ereClasseRadioBtn().isSelected()) {
+				classe = "premiereClasse";
+			} else {
+				classe = "deuxiemeClasse";
+			}
+
+			String cramco;
+			if (controllerTransport.getCramcoNonRadioBtn().isSelected()) {
+				cramco = "non";
+			} else {
+				cramco = "oui";
+			}
+			transport = new Train(classe, cramco);
+		}
+		
+		OrdreMission om = new OrdreMission(agent,mission,transport);
+		listeOM.ajouterOM(om);
+		rootLayout.setCenter(null);
+		om.sauvegarder(new File("target/OM/test.xml"));
+		afficherListOm();
+
+	}
+	
 	public void creerNouveauOm() {
 		afficherFormInfoPerso();
 	}

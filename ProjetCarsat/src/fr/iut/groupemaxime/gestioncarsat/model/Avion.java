@@ -1,7 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.model;
 
 public class Avion extends Transport {
-	private String prisParCRAMCO; //Ne peut prendre que les valeurs Oui, Non ou <autres>
+	private String prisParCRAMCO; //Ne peut prendre que les valeurs Oui, Non
 
 	
 	public Avion(String prisParCRAMCO) {

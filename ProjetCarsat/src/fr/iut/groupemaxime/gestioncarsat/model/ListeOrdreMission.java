@@ -11,10 +11,16 @@ public class ListeOrdreMission {
 	}
 	
 	public void chargerOM(File file) {
-		String liste[] = file.list();
-		for(String fichier : liste) {
-			OrdreMission om = OrdreMission.importer(new File(file.toString() + '/' + fichier));
-			listeOM.add(om);
+		String liste[] = {};
+		liste = file.list();
+		if(liste.length == 0) {
+			System.out.println("pas de fichier à charger");
+		}
+		else {
+			for(String fichier : liste) {
+				OrdreMission om = OrdreMission.importer(new File(file.toString() + '/' + fichier));
+				listeOM.add(om);
+			}
 		}
 	}
 	
