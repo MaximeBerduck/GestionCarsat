@@ -2,8 +2,10 @@ package fr.iut.groupemaxime.gestioncarsat.view;
 
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -42,12 +44,6 @@ public class TransportController {
 
 	@FXML
 	private HBox cramcoHBox;
-	
-	@FXML
-	private RadioButton cramcoAutreRadioBtn;
-
-	@FXML
-	private TextField cramcoAutreTextField;
 
 	// details voiture
 	@FXML
@@ -84,7 +80,27 @@ public class TransportController {
 	}
 	
 	public void validerOM() {
-		this.mainApp.validerOrdreMission();
+		String erreur = "";
+		if(avionRadioBtn.isSelected()) {
+			erreur = getErreurAvion();
+		}
+		else if(voitureRadioBtn.isSelected()) {
+			erreur = getErreurVoiture();
+		}
+		else {
+			erreur = getErreurTrain();
+		}
+		if (erreur.length() > 0) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(mainApp.getPrimaryStage());
+			alert.setTitle("Champs non Valides");
+			alert.setHeaderText("Des champs ne sont pas valides");
+			alert.setContentText(erreur);
+
+			alert.showAndWait();
+		} else {
+			this.mainApp.validerOrdreMission();
+		}
 	}
 
 	public void AvionSelectionne() {
@@ -106,15 +122,44 @@ public class TransportController {
 		this.page.getChildren().add(2, detailsVoiture);
 	}
 	
-	public void ouiOuNonSelectionne() {
-		if (this.cramcoHBox.getChildren().contains(cramcoAutreTextField)) {
-			this.cramcoHBox.getChildren().remove(cramcoAutreTextField);
-		}		
+	public String getErreurTrain() {
+		String erreur = "";
+		if(!train1ereClasseRadioBtn.isSelected() && !train2emeClasseRadioBtn.isSelected()) {
+			erreur += "Vous n'avez pas sélectionné la classe de votre billet! \n";
+		}
+		erreur += getErreurCRAMCO();
+		return erreur;
 	}
 	
-	public void autreSelectionne() {
-		this.cramcoHBox.getChildren().add(cramcoAutreTextField);
-
+	public String getErreurCRAMCO() {
+		String erreur = "";
+		if(!cramcoNonRadioBtn.isSelected() && !cramcoOuiRadioBtn.isSelected()) {
+			erreur += "Vous n'avez pas dit si la C.R.A.M.C.O a pris votre billet ! \n";
+		}
+		return erreur;
+	}
+	
+	public String getErreurVoiture(){
+		String erreur = "";
+		if(null == typeVoitureTextField.getText() || 0 == typeVoitureTextField.getText().length()) {
+			erreur += "Vous n'avez pas indiqué le type de la voiture! \n";
+		}
+		if(null == immatriculationTextField.getText() || 0 == immatriculationTextField.getText().length()) {
+			erreur += "Vous n'avez pas indiqué le numéro d'immatriculation de la voiture!\n";
+		}
+		if(null == nbrCVTextField.getText() || 0 == nbrCVTextField.getText().length()) {
+			erreur += "Vous n'avez pas indiqué le nombre de cheveaux de la voiture!\n";
+		}
+		if(!vehiculePersoRadioBtn.isSelected() && !vehiculeServiceRadioBtn.isSelected()) {
+			erreur += "Vous n'avez pas indiqué à qui appartient la voiture";
+		}
+		return erreur;
+	}
+	
+	public String getErreurAvion() {
+		String erreur = "";
+		erreur += getErreurCRAMCO();
+		return erreur;
 	}
 
 	public RadioButton getVoitureRadioBtn() {
@@ -147,14 +192,6 @@ public class TransportController {
 
 	public RadioButton getCramcoNonRadioBtn() {
 		return cramcoNonRadioBtn;
-	}
-
-	public RadioButton getCramcoAutreRadioBtn() {
-		return cramcoAutreRadioBtn;
-	}
-
-	public TextField getCramcoAutreTextField() {
-		return cramcoAutreTextField;
 	}
 
 	public RadioButton getVehiculeServiceRadioBtn() {

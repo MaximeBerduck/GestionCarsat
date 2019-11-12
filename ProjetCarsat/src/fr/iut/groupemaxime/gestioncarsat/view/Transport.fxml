@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.TransportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.TransportController">
    <children>
       <VBox fx:id="page" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -65,12 +65,12 @@
                         <Insets right="20.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="380.0" text="N° Immatriculation :" GridPane.rowIndex="1">
+                  <TextField fx:id="typeVoitureTextField" GridPane.columnIndex="1">
                      <GridPane.margin>
-                        <Insets right="20.0" />
+                        <Insets right="150.0" />
                      </GridPane.margin>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="393.0" text="Nombre de CV :" GridPane.rowIndex="2">
+                  </TextField>
+                  <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="380.0" text="N° Immatriculation :" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="20.0" />
                      </GridPane.margin>
@@ -80,12 +80,12 @@
                         <Insets right="150.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="nbrCVTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="393.0" text="Nombre de CV :" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets right="150.0" />
+                        <Insets right="20.0" />
                      </GridPane.margin>
-                  </TextField>
-                  <TextField fx:id="typeVoitureTextField" GridPane.columnIndex="1">
+                  </Label>
+                  <TextField fx:id="nbrCVTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="150.0" />
                      </GridPane.margin>
@@ -122,17 +122,11 @@
                   </Label>
                   <HBox alignment="CENTER" prefHeight="26.0" prefWidth="600.0" spacing="15.0">
                      <children>
-                        <RadioButton fx:id="cramcoOuiRadioBtn" mnemonicParsing="false" onAction="#ouiOuNonSelectionne" text="Oui">
+                        <RadioButton fx:id="cramcoOuiRadioBtn" mnemonicParsing="false" text="Oui">
                            <toggleGroup>
                               <ToggleGroup fx:id="cramco" />
                            </toggleGroup></RadioButton>
-                        <RadioButton fx:id="cramcoNonRadioBtn" mnemonicParsing="false" onAction="#ouiOuNonSelectionne" text="Non" toggleGroup="$cramco" />
-                     </children>
-                  </HBox>
-                  <HBox fx:id="cramcoHBox" alignment="CENTER" prefHeight="33.0" prefWidth="600.0" spacing="15.0">
-                     <children>
-                        <RadioButton fx:id="cramcoAutreRadioBtn" mnemonicParsing="false" onAction="#autreSelectionne" text="Autre (à préciser) :" toggleGroup="$cramco" />
-                        <TextField fx:id="cramcoAutreTextField" />
+                        <RadioButton fx:id="cramcoNonRadioBtn" mnemonicParsing="false" text="Non" toggleGroup="$cramco" />
                      </children>
                   </HBox>
                </children>
