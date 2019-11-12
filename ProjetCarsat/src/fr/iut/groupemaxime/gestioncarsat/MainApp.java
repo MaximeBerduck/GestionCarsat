@@ -49,7 +49,6 @@ public class MainApp extends Application {
 	}
 
 	private void afficherListOm() {
-		listeOM = new ListeOrdreMission();
 		listeOM.chargerOM(new File("target/OM/"));
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -68,6 +67,7 @@ public class MainApp extends Application {
 	}
 
 	public void initialiseRootLayout() {
+		listeOM = new ListeOrdreMission();
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
@@ -155,7 +155,6 @@ public class MainApp extends Application {
 	}
 
 	public void validerOrdreMission() {
-		// TODO
 		Agent agent = new Agent(controllerAgent.getNomTextField().getText(),
 				controllerAgent.getPrenomTextField().getText(),
 				Integer.parseInt(controllerAgent.getNumCAPSSATextField().getText()),
@@ -230,10 +229,6 @@ public class MainApp extends Application {
 		listeOM.ajouterOM(om);
 	}
 	
-	public void creerNouveauOm() {
-		afficherFormInfoPerso();
-	}
-
 	public void creerNouveauOm() {
 		afficherFormInfoPerso();
 	}
