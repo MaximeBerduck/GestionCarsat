@@ -2,6 +2,7 @@ package fr.iut.groupemaxime.gestioncarsat;
 
 import java.io.IOException;
 import fr.iut.groupemaxime.gestioncarsat.view.AgentController;
+import fr.iut.groupemaxime.gestioncarsat.view.MenuAgentController;
 import fr.iut.groupemaxime.gestioncarsat.view.TransportController;
 import fr.iut.groupemaxime.gestioncarsat.view.MissionController;
 import javafx.application.Application;
@@ -30,7 +31,6 @@ public class MainApp extends Application {
 		// fenêtre
 		initialiseRootLayout();
 		afficherListOm();
-		afficherFormInfoPerso();
 
 	}
 
@@ -41,6 +41,9 @@ public class MainApp extends Application {
 			AnchorPane page = loader.load();
 
 			rootLayout.setLeft(page);
+			
+			MenuAgentController controller = loader.getController();
+			controller.setMainApp(this);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -137,5 +140,9 @@ public class MainApp extends Application {
 
 	public void validerOrdreMission() {
 		//TODO
+	}
+
+	public void creerNouveauOm() {
+		afficherFormInfoPerso();
 	}
 }
