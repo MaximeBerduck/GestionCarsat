@@ -84,7 +84,7 @@ public class TransportController {
 	}
 	
 	public void validerOM() {
-		//TODO
+		this.mainApp.validerOrdreMission();
 	}
 
 	public void AvionSelectionne() {
@@ -116,4 +116,65 @@ public class TransportController {
 		this.cramcoHBox.getChildren().add(cramcoAutreTextField);
 
 	}
+
+	public RadioButton getVoitureRadioBtn() {
+		return voitureRadioBtn;
+	}
+
+	public RadioButton getTrainRadioBtn() {
+		return trainRadioBtn;
+	}
+
+	public RadioButton getAvionRadioBtn() {
+		return avionRadioBtn;
+	}
+
+	public HBox getTrainClasseHBox() {
+		return trainClasseHBox;
+	}
+
+	public RadioButton getTrain1ereClasseRadioBtn() {
+		return train1ereClasseRadioBtn;
+	}
+
+	public RadioButton getTrain2emeClasseRadioBtn() {
+		return train2emeClasseRadioBtn;
+	}
+
+	public RadioButton getCramcoOuiRadioBtn() {
+		return cramcoOuiRadioBtn;
+	}
+
+	public RadioButton getCramcoNonRadioBtn() {
+		return cramcoNonRadioBtn;
+	}
+
+	public RadioButton getCramcoAutreRadioBtn() {
+		return cramcoAutreRadioBtn;
+	}
+
+	public TextField getCramcoAutreTextField() {
+		return cramcoAutreTextField;
+	}
+
+	public RadioButton getVehiculeServiceRadioBtn() {
+		return vehiculeServiceRadioBtn;
+	}
+
+	public RadioButton getVehiculePersoRadioBtn() {
+		return vehiculePersoRadioBtn;
+	}
+
+	public TextField getTypeVoitureTextField() {
+		return typeVoitureTextField;
+	}
+
+	public TextField getImmatriculationTextField() {
+		return immatriculationTextField;
+	}
+
+	public TextField getNbrCVTextField() {
+		return nbrCVTextField;
+	}
+	
 }

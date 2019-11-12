@@ -1,9 +1,6 @@
 package fr.iut.groupemaxime.gestioncarsat;
 
-import java.awt.Desktop;
 import java.io.IOException;
-import java.net.URI;
-
 import fr.iut.groupemaxime.gestioncarsat.view.AgentController;
 import fr.iut.groupemaxime.gestioncarsat.view.TransportController;
 import fr.iut.groupemaxime.gestioncarsat.view.MissionController;
@@ -21,6 +18,9 @@ public class MainApp extends Application {
 	private AnchorPane pageAgent;
 	private AnchorPane pageMission;
 	private AnchorPane pageTransport;
+	private AgentController controllerAgent;
+	private MissionController controllerMission;
+	private TransportController controllerTransport;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -45,7 +45,7 @@ public class MainApp extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void initialiseRootLayout() {
@@ -73,8 +73,8 @@ public class MainApp extends Application {
 
 				rootLayout.setCenter(pageAgent);
 
-				AgentController controller = loader.getController();
-				controller.setMainApp(this);
+				controllerAgent = loader.getController();
+				controllerAgent.setMainApp(this);
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -105,8 +105,8 @@ public class MainApp extends Application {
 				pageMission = loader.load();
 
 				rootLayout.setCenter(pageMission);
-				MissionController controller = loader.getController();
-				controller.setMainApp(this);
+				controllerMission = loader.getController();
+				controllerMission.setMainApp(this);
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -126,8 +126,8 @@ public class MainApp extends Application {
 
 				rootLayout.setCenter(pageTransport);
 
-				TransportController controller = loader.getController();
-				controller.setMainApp(this);
+				controllerTransport = loader.getController();
+				controllerTransport.setMainApp(this);
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -135,4 +135,7 @@ public class MainApp extends Application {
 		}
 	}
 
+	public void validerOrdreMission() {
+		System.out.println(this.controllerAgent.getFonctionTextField().getText());
+	}
 }

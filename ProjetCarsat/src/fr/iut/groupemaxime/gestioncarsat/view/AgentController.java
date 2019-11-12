@@ -111,4 +111,37 @@ public class AgentController {
 
 	}
 
+	public TextField getNomTextField() {
+		return nomTextField;
+	}
+
+	public TextField getPrenomTextField() {
+		return prenomTextField;
+	}
+
+	public TextField getFonctionTextField() {
+		return fonctionTextField;
+	}
+
+	public TextField getResidenceAdminTextField() {
+		return residenceAdminTextField;
+	}
+
+	public TextField getUniteTavailTextField() {
+		return uniteTavailTextField;
+	}
+
+	public TextField getCodeAnalytiqueTextField() {
+		return codeAnalytiqueTextField;
+	}
+
+	public TextField getNumCAPSSATextField() {
+		return numCAPSSATextField;
+	}
+
+	public TextField getCoefficientTextField() {
+		return coefficientTextField;
+	}
+	
+
 }

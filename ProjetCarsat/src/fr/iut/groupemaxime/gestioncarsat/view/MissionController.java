@@ -156,4 +156,37 @@ public class MissionController {
 		dateDebut.setDayCellFactory(dayCellFactory);
 	}
 
+	public RadioButton getOrdrePermanentRadioBtn() {
+		return ordrePermanentRadioBtn;
+	}
+
+	public RadioButton getOrdrePonctuelRadioBtn() {
+		return ordrePonctuelRadioBtn;
+	}
+
+	public RadioButton getFonctionHabituelleRadioBtn() {
+		return fonctionHabituelleRadioBtn;
+	}
+
+	public RadioButton getFormationRadioBtn() {
+		return formationRadioBtn;
+	}
+
+	public TextField getMotifDeplacementTextField() {
+		return motifDeplacementTextField;
+	}
+
+	public TextField getLieuDeplacementTextField() {
+		return lieuDeplacementTextField;
+	}
+
+	public DatePicker getDateDebut() {
+		return dateDebut;
+	}
+
+	public DatePicker getDateFin() {
+		return dateFin;
+	}
+	
+
 }
