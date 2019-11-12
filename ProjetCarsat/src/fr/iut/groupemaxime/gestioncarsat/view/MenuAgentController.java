@@ -28,7 +28,7 @@ public class MenuAgentController {
 	@FXML
 	public void initialize() {
 		listeOm = new ListeOrdreMission();
-		listeOm.chargerOM(new File("target/PDF/"));
+		listeOm.chargerOM(new File("target/OM/"));
 		for (OrdreMission om : listeOm.getListeOM()) {
 			listeOmVBox.getChildren().add(MenuAgentController.creerItemOM(om));
 		}
@@ -36,10 +36,14 @@ public class MenuAgentController {
 
 	private static VBox creerItemOM(OrdreMission om) {
 		VBox item = null;
+		itemOrdreMissionController ctrl = null;
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/itemOrdreMission.fxml"));
 			item = loader.load();
+			
+			ctrl = loader.getController();
+			ctrl.chargerOM(om);
 
 		} catch (IOException e) {
 			e.printStackTrace();
