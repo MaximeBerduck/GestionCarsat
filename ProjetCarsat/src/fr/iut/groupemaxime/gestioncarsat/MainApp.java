@@ -136,6 +136,6 @@ public class MainApp extends Application {
 	}
 
 	public void validerOrdreMission() {
-		System.out.println(this.controllerAgent.getFonctionTextField().getText());
+		//TODO
 	}
 }
