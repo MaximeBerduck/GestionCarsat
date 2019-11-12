@@ -222,7 +222,7 @@ public class OrdreMission {
 		agent.appendChild(coefficient);
 	}
 
-	private static OrdreMission importer(File file) {
+	public static OrdreMission importer(File file) {
 		Agent agentOM = null;
 		Transport transportOM = null;
 		OrdreMission om = null;
