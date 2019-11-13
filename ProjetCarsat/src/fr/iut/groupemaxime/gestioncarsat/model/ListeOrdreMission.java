@@ -18,8 +18,10 @@ public class ListeOrdreMission {
 		}
 		else {
 			for(String fichier : liste) {
-				OrdreMission om = OrdreMission.importer(new File(file.toString() + '/' + fichier));
-				listeOM.add(om);
+				if(fichier.endsWith(".xml")) {
+					OrdreMission om = OrdreMission.importer(new File(file.toString() + '/' + fichier));
+					listeOM.add(om);
+				}
 			}
 		}
 	}
