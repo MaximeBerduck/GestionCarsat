@@ -30,19 +30,20 @@ public class MenuAgentController {
 		listeOm = new ListeOrdreMission();
 		listeOm.chargerOM(new File("target/OM/"));
 		for (OrdreMission om : listeOm.getListeOM()) {
-			listeOmVBox.getChildren().add(MenuAgentController.creerItemOM(om));
+			listeOmVBox.getChildren().add(this.creerItemOM(om));
 		}
 	}
 
-	private static VBox creerItemOM(OrdreMission om) {
+	private VBox creerItemOM(OrdreMission om) {
 		VBox item = null;
-		itemOrdreMissionController ctrl = null;
+		ItemOrdreMissionController ctrl;
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/itemOrdreMission.fxml"));
 			item = loader.load();
 			
 			ctrl = loader.getController();
+			ctrl.setMainApp(this.mainApp);
 			ctrl.chargerOM(om);
 
 		} catch (IOException e) {

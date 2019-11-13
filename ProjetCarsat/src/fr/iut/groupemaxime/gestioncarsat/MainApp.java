@@ -48,7 +48,7 @@ public class MainApp extends Application {
 
 	}
 
-	private void afficherListOm() {
+	public void afficherListOm() {
 		listeOM.chargerOM(new File("target/OM/"));
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -168,10 +168,10 @@ public class MainApp extends Application {
 			mission = new MissionPermanent();
 		} else {
 			String dateDebut = String.valueOf(controllerMission.getDateDebut().getValue().getDayOfMonth()) + '/'
-					+ String.valueOf(controllerMission.getDateDebut().getValue().getMonth()) + '/'
+					+ String.valueOf(controllerMission.getDateDebut().getValue().getMonthValue()) + '/'
 					+ String.valueOf(controllerMission.getDateDebut().getValue().getYear());
 			String dateFin = String.valueOf(controllerMission.getDateFin().getValue().getDayOfMonth()) + '/'
-					+ String.valueOf(controllerMission.getDateFin().getValue().getMonth()) + '/'
+					+ String.valueOf(controllerMission.getDateFin().getValue().getMonthValue()) + '/'
 					+ String.valueOf(controllerMission.getDateFin().getValue().getYear());
 			String titre;
 			if (controllerMission.getFonctionHabituelleRadioBtn().isSelected()) {
@@ -235,5 +235,10 @@ public class MainApp extends Application {
 	
 	public void creerNouveauOm() {
 		afficherFormInfoPerso();
+	}
+
+	public void enleverOm(OrdreMission om) {
+		this.listeOM.supprimerOM(om);
+		afficherListOm();
 	}
 }

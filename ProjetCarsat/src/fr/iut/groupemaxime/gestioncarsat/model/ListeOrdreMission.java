@@ -13,7 +13,7 @@ public class ListeOrdreMission {
 	public void chargerOM(File file) {
 		String liste[] = {};
 		liste = file.list();
-		if(liste.length == 0) {
+		if(liste == null) {
 			System.out.println("pas de fichier à charger");
 		}
 		else {
