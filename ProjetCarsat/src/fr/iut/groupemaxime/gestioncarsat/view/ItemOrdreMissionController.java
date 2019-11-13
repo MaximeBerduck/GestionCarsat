@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import fr.iut.groupemaxime.gestioncarsat.form.PDF;
+import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.model.OrdreMission;
 import javafx.event.ActionEvent;
@@ -38,18 +39,14 @@ public class ItemOrdreMissionController {
 	@FXML
 	public void afficherOrdreMissionPDF(ActionEvent event) {
 		PDF pdf;
+		System.out.println(om.getFichier());
 		try {
-			pdf = new PDF(new File("target/PDF/OM_vide.pdf"));
+			pdf = new PDF(new File(Constante.CHEMIN_PDF_VIDE));
 			pdf.remplirPDF(om);
 			pdf.sauvegarderPDF();
 			pdf.fermerPDF();
-			try {
-				Desktop.getDesktop().browse(
-						new URI("file:///C:/Users/mylan/git/GestionCarsat/ProjetCarsat/target/PDF/Doc1modif.pdf"));
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			Desktop.getDesktop().browse(
+					new File(Constante.CHEMIN_PDF + om.getFichier() + Constante.EXTENSION_PDF).toURI());
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

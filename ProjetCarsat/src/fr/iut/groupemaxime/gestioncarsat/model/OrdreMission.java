@@ -24,17 +24,16 @@ public class OrdreMission {
 	private Mission mission;
 	private Transport transport;
 	private String fichier;
-	
+
 	public OrdreMission(Agent agent, Mission mission, Transport transport, String fichier) {
 		this.agent = agent;
 		this.mission = mission;
 		this.transport = transport;
 		this.fichier = fichier;
 	}
-	
-	
+
 	public OrdreMission(Agent agent, Mission mission, Transport transport) {
-		this(agent,mission,transport,null);
+		this(agent, mission, transport, null);
 	}
 
 	public void sauvegarder(File file) {
@@ -73,7 +72,8 @@ public class OrdreMission {
 				final TransformerFactory transformerFactory = TransformerFactory.newInstance();
 				final Transformer transformer = transformerFactory.newTransformer();
 				final DOMSource source = new DOMSource(document);
-				final StreamResult sortie = new StreamResult(file);
+				final StreamResult sortie = new StreamResult(
+						new File(Constante.CHEMIN_OM + file.toString() + Constante.EXTENSION_XML));
 				// final StreamResult result = new StreamResult(System.out);
 
 				// prologue
@@ -239,7 +239,7 @@ public class OrdreMission {
 		try {
 			final DocumentBuilder builder = factory.newDocumentBuilder();
 			try {
-				final Document document = builder.parse(file);
+				final Document document = builder.parse(Constante.CHEMIN_OM + file + Constante.EXTENSION_XML);
 
 				// Importation de l'agent
 				agentOM = importerAgent(agentOM, document);
@@ -268,7 +268,7 @@ public class OrdreMission {
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		}
-		om = new OrdreMission(agentOM, missionOM, transportOM,file.toString());
+		om = new OrdreMission(agentOM, missionOM, transportOM, file.toString());
 		return om;
 	}
 
@@ -282,8 +282,7 @@ public class OrdreMission {
 				Element avionElement = (Element) node;
 
 				// Objet MissionTemporaire
-				transportOM = new Avion(
-						avionElement.getElementsByTagName("prisParCRAMCO").item(0).getTextContent());
+				transportOM = new Avion(avionElement.getElementsByTagName("prisParCRAMCO").item(0).getTextContent());
 			}
 		}
 		return transportOM;
@@ -299,8 +298,7 @@ public class OrdreMission {
 				Element voitureElement = (Element) node;
 
 				// Objet MissionTemporaire
-				transportOM = new Voiture(
-						voitureElement.getElementsByTagName("typeVoiture").item(0).getTextContent(),
+				transportOM = new Voiture(voitureElement.getElementsByTagName("typeVoiture").item(0).getTextContent(),
 						voitureElement.getElementsByTagName("immatriculation").item(0).getTextContent(),
 						Integer.parseInt(voitureElement.getElementsByTagName("nbrCV").item(0).getTextContent()),
 						voitureElement.getElementsByTagName("appartenanceVehicule").item(0).getTextContent());
@@ -377,15 +375,12 @@ public class OrdreMission {
 				// Objet Agent
 				agentOM = new Agent(agentElement.getElementsByTagName("nom").item(0).getTextContent(),
 						agentElement.getElementsByTagName("prenom").item(0).getTextContent(),
-						Integer.parseInt(
-								agentElement.getElementsByTagName("numCAPSSA").item(0).getTextContent()),
+						Integer.parseInt(agentElement.getElementsByTagName("numCAPSSA").item(0).getTextContent()),
 						agentElement.getElementsByTagName("fonction").item(0).getTextContent(),
 						agentElement.getElementsByTagName("residenceAdmin").item(0).getTextContent(),
 						agentElement.getElementsByTagName("uniteTravail").item(0).getTextContent(),
-						Integer.parseInt(
-								agentElement.getElementsByTagName("coefficient").item(0).getTextContent()),
-						Integer.parseInt(
-								agentElement.getElementsByTagName("codeAnalytique").item(0).getTextContent()));
+						Integer.parseInt(agentElement.getElementsByTagName("coefficient").item(0).getTextContent()),
+						Integer.parseInt(agentElement.getElementsByTagName("codeAnalytique").item(0).getTextContent()));
 			}
 		}
 		return agentOM;
@@ -402,7 +397,7 @@ public class OrdreMission {
 	public Transport getTransport() {
 		return transport;
 	}
-	
+
 	public String getFichier() {
 		return fichier;
 	}
@@ -418,11 +413,11 @@ public class OrdreMission {
 		OrdreMission OM1 = new OrdreMission(agent, mission, train);
 		OrdreMission OM2 = new OrdreMission(agent, mission, voiture);
 
-		OM.sauvegarder(new File("target/PDF/OM.xml"));
-		OM1.sauvegarder(new File("target/PDF/OM1.xml"));
+		OM.sauvegarder(new File("OM"));
+		OM1.sauvegarder(new File("OM1"));
 		// OM2.sauvegarder(new File("target/PDF/OM2.xml"));
 
-		OrdreMission OM3 = importer(new File("target/PDF/OM2.xml"));
-		OM3.sauvegarder(new File("target/PDF/OM3.xml"));
+		OrdreMission OM3 = importer(new File("OM2"));
+		OM3.sauvegarder(new File("OM3"));
 	}
 }

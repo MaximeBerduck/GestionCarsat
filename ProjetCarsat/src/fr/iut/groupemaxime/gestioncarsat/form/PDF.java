@@ -12,6 +12,7 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
 import fr.iut.groupemaxime.gestioncarsat.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.model.Avion;
+import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.model.Mission;
 import fr.iut.groupemaxime.gestioncarsat.model.MissionPermanent;
 import fr.iut.groupemaxime.gestioncarsat.model.MissionTemporaire;
@@ -24,6 +25,7 @@ public class PDF {
 	private PDDocument modele;
 	private PDAcroForm formulaire;
 	private PDField champ;
+	private String nomFichier;
 
 	public PDF(File source) throws IOException {
 		this.modele = PDDocument.load(source);
@@ -42,7 +44,7 @@ public class PDF {
 	}
 
 	public void sauvegarderPDF() throws IOException {
-		this.modele.save("target/PDF/Doc1modif.pdf");
+		this.modele.save(Constante.CHEMIN_PDF + this.nomFichier + Constante.EXTENSION_PDF);
 	}
 
 	public void fermerPDF() throws IOException {
@@ -51,6 +53,7 @@ public class PDF {
 
 	public void remplirPDF(OrdreMission om) {
 		if (null != om) {
+			this.nomFichier = om.getAgent().getNom();
 			this.remplirChamp("nomPrenom", om.getAgent().getNom() + ' ' + om.getAgent().getPrenom());
 			this.remplirChamp("numCAPSSA", String.valueOf(om.getAgent().getNumCAPSSA()));
 			this.remplirChamp("fonction", om.getAgent().getFonction());
@@ -125,7 +128,7 @@ public class PDF {
 		pdf.sauvegarderPDF();
 		pdf.fermerPDF();
 		try {
-			Desktop.getDesktop().browse(new URI("file:///C:/Users/mylan/git/GestionCarsat/ProjetCarsat/target/PDF/Doc1modif.pdf"));
+			Desktop.getDesktop().browse(new URI("target/PDF/Doc1modif.pdf"));
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
