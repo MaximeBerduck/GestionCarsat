@@ -34,6 +34,8 @@ public class ListeOrdreMission {
 	
 	public void supprimerOM(OrdreMission om){
 		if(null != om) {
+			File fichier = new File(om.getFichier());
+			fichier.delete();
 			this.listeOM.remove(om);
 		}
 	}

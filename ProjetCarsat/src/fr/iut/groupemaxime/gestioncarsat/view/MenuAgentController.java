@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
+import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.model.OrdreMission;
 import javafx.event.ActionEvent;
@@ -27,8 +28,12 @@ public class MenuAgentController {
 
 	@FXML
 	public void initialize() {
+		
+	}
+	
+	public void chargerOM() {
 		listeOm = new ListeOrdreMission();
-		listeOm.chargerOM(new File("target/OM/"));
+		listeOm.chargerOM(new File(Constante.CHEMIN_OM));
 		for (OrdreMission om : listeOm.getListeOM()) {
 			listeOmVBox.getChildren().add(this.creerItemOM(om));
 		}

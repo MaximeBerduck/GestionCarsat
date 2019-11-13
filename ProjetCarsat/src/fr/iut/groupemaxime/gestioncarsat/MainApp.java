@@ -32,9 +32,11 @@ public class MainApp extends Application {
 	private AnchorPane pageAgent;
 	private AnchorPane pageMission;
 	private AnchorPane pageTransport;
+	private AnchorPane pageMenuAgent;
 	private AgentController controllerAgent;
 	private MissionController controllerMission;
 	private TransportController controllerTransport;
+	private MenuAgentController controllerMenuAgent;
 	private ListeOrdreMission listeOM;
 
 	@Override
@@ -49,16 +51,17 @@ public class MainApp extends Application {
 	}
 
 	public void afficherListOm() {
-		listeOM.chargerOM(new File("target/OM/"));
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/MenuAgent.fxml"));
-			AnchorPane page = loader.load();
-
-			rootLayout.setLeft(page);
 			
-			MenuAgentController controller = loader.getController();
-			controller.setMainApp(this);
+			pageMenuAgent = loader.load();
+
+			rootLayout.setLeft(pageMenuAgent);
+			
+			controllerMenuAgent = loader.getController();
+			controllerMenuAgent.setMainApp(this);
+			controllerMenuAgent.chargerOM();
 
 		} catch (IOException e) {
 			e.printStackTrace();

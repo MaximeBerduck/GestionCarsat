@@ -23,11 +23,18 @@ public class OrdreMission {
 	private Agent agent;
 	private Mission mission;
 	private Transport transport;
-
-	public OrdreMission(Agent agent, Mission mission, Transport transport) {
+	private String fichier;
+	
+	public OrdreMission(Agent agent, Mission mission, Transport transport, String fichier) {
 		this.agent = agent;
 		this.mission = mission;
 		this.transport = transport;
+		this.fichier = fichier;
+	}
+	
+	
+	public OrdreMission(Agent agent, Mission mission, Transport transport) {
+		this(agent,mission,transport,null);
 	}
 
 	public void sauvegarder(File file) {
@@ -80,6 +87,7 @@ public class OrdreMission {
 
 				// sortie
 				transformer.transform(source, sortie);
+				this.fichier = file.toString();
 			} catch (ParserConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -260,7 +268,7 @@ public class OrdreMission {
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
 		}
-		om = new OrdreMission(agentOM, missionOM, transportOM);
+		om = new OrdreMission(agentOM, missionOM, transportOM,file.toString());
 		return om;
 	}
 
@@ -393,6 +401,10 @@ public class OrdreMission {
 
 	public Transport getTransport() {
 		return transport;
+	}
+	
+	public String getFichier() {
+		return fichier;
 	}
 
 	public static void main(String[] args) {
