@@ -150,6 +150,13 @@ public class TransportController {
 		if(null == nbrCVTextField.getText() || 0 == nbrCVTextField.getText().length()) {
 			erreur += "Vous n'avez pas indiqué le nombre de cheveaux de la voiture!\n";
 		}
+		else {
+			try {
+				Integer.parseInt(nbrCVTextField.getText());
+			} catch (NumberFormatException e) {
+				erreur += "Le champ nombre de CV est invalide (entrez un nombre entier)!\n";
+			}
+		}
 		if(!vehiculePersoRadioBtn.isSelected() && !vehiculeServiceRadioBtn.isSelected()) {
 			erreur += "Vous n'avez pas indiqué à qui appartient la voiture";
 		}
