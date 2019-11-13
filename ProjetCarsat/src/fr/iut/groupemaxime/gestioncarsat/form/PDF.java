@@ -52,6 +52,7 @@ public class PDF {
 	}
 
 	public void remplirPDF(OrdreMission om) {
+		
 		if (null != om) {
 			this.nomFichier = om.getAgent().getNom();
 			this.remplirChamp("nomPrenom", om.getAgent().getNom() + ' ' + om.getAgent().getPrenom());
@@ -112,6 +113,8 @@ public class PDF {
 
 				}
 			}
+		}else {
+			System.out.println("oui");
 		}
 	}
 

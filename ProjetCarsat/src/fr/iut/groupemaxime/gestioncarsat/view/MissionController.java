@@ -1,8 +1,10 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
+import fr.iut.groupemaxime.gestioncarsat.model.MissionTemporaire;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
@@ -15,6 +17,7 @@ import javafx.scene.control.DateCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import javafx.util.converter.LocalDateStringConverter;
 
 public class MissionController {
 
@@ -65,7 +68,7 @@ public class MissionController {
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
-	
+
 	public void retournerAInfoPerso() {
 		this.mainApp.afficherFormInfoPerso();
 	}
@@ -187,6 +190,19 @@ public class MissionController {
 	public DatePicker getDateFin() {
 		return dateFin;
 	}
-	
+
+	public void setChamps(MissionTemporaire mission) {
+		this.dateDebut.setValue(LocalDate.parse(mission.getDateDebut(), DateTimeFormatter.ofPattern("d/M/yyyy")));
+		this.onDateDebutModifier();
+		
+		this.dateFin.setValue(LocalDate.parse(mission.getDateFin(), DateTimeFormatter.ofPattern("d/M/yyyy")));
+		this.onDateFinModifier();
+		
+		this.lieuDeplacementTextField.setText(mission.getLieuDeplacement());
+		this.motifDeplacementTextField.setText(mission.getMotifDeplacement());
+		if ("formation".equals(mission.getTitre()))
+			this.formationRadioBtn.setSelected(true);
+
+	}
 
 }

@@ -43,8 +43,7 @@ public class MainApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("OM");
-		// this.primaryStage.isResizable(); --> propriete redimensionnement de la
-		// fenetre
+		this.primaryStage.setResizable(false);
 		initialiseRootLayout();
 		afficherListOm();
 
@@ -237,11 +236,51 @@ public class MainApp extends Application {
 	}
 
 	public void creerNouveauOm() {
+		this.controllerAgent = null;
+		this.controllerMission = null;
+		this.controllerTransport = null;
+		this.pageAgent = null;
+		this.pageMission = null;
+		this.pageTransport = null;
 		afficherFormInfoPerso();
 	}
 
 	public void enleverOm(OrdreMission om) {
 		this.listeOM.supprimerOM(om);
 		afficherListOm();
+	}
+
+	public void modifierOm(OrdreMission om) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/Agent.fxml"));
+			pageAgent = loader.load();
+
+			rootLayout.setCenter(pageAgent);
+
+			controllerAgent = loader.getController();
+			controllerAgent.setMainApp(this);
+			controllerAgent.setChamps(om.getAgent());
+
+			loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/Mission.fxml"));
+			pageMission = loader.load();
+
+			controllerMission = loader.getController();
+			controllerMission.setMainApp(this);
+			controllerMission.setChamps((MissionTemporaire) om.getMission());
+
+			loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/Transport.fxml"));
+			pageTransport = loader.load();
+
+			controllerTransport = loader.getController();
+			controllerTransport.setMainApp(this);
+			controllerTransport.setChamps(om.getTransport());
+			
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

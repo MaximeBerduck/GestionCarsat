@@ -1,6 +1,10 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
 
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
+import fr.iut.groupemaxime.gestioncarsat.model.Avion;
+import fr.iut.groupemaxime.gestioncarsat.model.Train;
+import fr.iut.groupemaxime.gestioncarsat.model.Transport;
+import fr.iut.groupemaxime.gestioncarsat.model.Voiture;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.RadioButton;
@@ -119,7 +123,8 @@ public class TransportController {
 
 	public void VoitureSelectionne() {
 		this.page.getChildren().removeAll(cramcoVBox, trainClasseHBox);
-		this.page.getChildren().add(2, detailsVoiture);
+		if (!this.page.getChildren().contains(detailsVoiture))
+			this.page.getChildren().add(2, detailsVoiture);
 	}
 	
 	public String getErreurTrain() {
@@ -219,6 +224,46 @@ public class TransportController {
 
 	public TextField getNbrCVTextField() {
 		return nbrCVTextField;
+	}
+
+	public void setChamps(Transport transport) {
+		if (transport instanceof Avion) {
+			this.avionRadioBtn.setSelected(true);
+			this.AvionSelectionne();
+			if ("oui".equals(((Avion) transport).getPrisParCRAMCO())){
+				this.cramcoOuiRadioBtn.setSelected(true);
+			} else {
+				this.cramcoNonRadioBtn.setSelected(true);
+			}
+		}else if(transport instanceof Train){
+			this.trainRadioBtn.setSelected(true);
+			this.TrainSelectionne();
+			if("premiereClasse".equals(((Train) transport).getClasse())){
+				this.train1ereClasseRadioBtn.setSelected(true);
+			} else {
+				this.train2emeClasseRadioBtn.setSelected(true);
+			}
+			if("oui".equals(((Train) transport).getPrisParCRAMCO())) {
+				this.cramcoOuiRadioBtn.setSelected(true);
+			} else {
+				this.cramcoNonRadioBtn.setSelected(true);
+			}
+		} else {
+			this.voitureRadioBtn.setSelected(true);
+			this.VoitureSelectionne();
+			this.typeVoitureTextField.setText(((Voiture) transport).getTypeVoiture());
+			this.nbrCVTextField.setText(String.valueOf(((Voiture) transport).getNbrCV()));
+			this.immatriculationTextField.setText(((Voiture) transport).getImmatriculation());
+			if ("vehiculeService".equals(((Voiture) transport).getAppartenanceVehicule())){
+				this.vehiculeServiceRadioBtn.setSelected(true);
+			} else {
+				this.vehiculePersoRadioBtn.setSelected(true);
+			}
+
+			
+		}
+		
+		
 	}
 	
 }
