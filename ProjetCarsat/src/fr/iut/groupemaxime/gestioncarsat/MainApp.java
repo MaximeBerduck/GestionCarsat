@@ -43,8 +43,8 @@ public class MainApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("OM");
-		// this.primaryStage.isResizable(); --> propri�t� redimensionnement de la
-		// fen�tre
+		// this.primaryStage.isResizable(); --> propriete redimensionnement de la
+		// fenetre
 		initialiseRootLayout();
 		afficherListOm();
 
@@ -54,11 +54,11 @@ public class MainApp extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/MenuAgent.fxml"));
-			
+
 			pageMenuAgent = loader.load();
 
 			rootLayout.setLeft(pageMenuAgent);
-			
+
 			controllerMenuAgent = loader.getController();
 			controllerMenuAgent.setMainApp(this);
 			controllerMenuAgent.chargerOM();
@@ -227,15 +227,15 @@ public class MainApp extends Application {
 			}
 			transport = new Train(classe, cramco);
 		}
-		
-		OrdreMission om = new OrdreMission(agent,mission,transport);
+
+		OrdreMission om = new OrdreMission(agent, mission, transport);
 		listeOM.ajouterOM(om);
 		rootLayout.setCenter(null);
 		om.sauvegarder(new File(om.getAgent().getNom()));
 		afficherListOm();
 
 	}
-	
+
 	public void creerNouveauOm() {
 		afficherFormInfoPerso();
 	}

@@ -93,7 +93,7 @@ public class MissionController {
 	private String getErreurDates() {
 		String erreur = "";
 		if (null == dateDebut.getValue())
-			erreur += "Le champ date de début est vide !\n";
+			erreur += "Le champ date de debut est vide !\n";
 		if (null == dateFin.getValue())
 			erreur += "Le champ date de fin est vide !\n";
 		return erreur;
@@ -102,9 +102,9 @@ public class MissionController {
 	private String getErreurMotifEtLieu() {
 		String erreur = "";
 		if (null == motifDeplacementTextField.getText() || 0 == motifDeplacementTextField.getText().length())
-			erreur += "Le champ motif du déplacement est vide !\n";
+			erreur += "Le champ motif du deplacement est vide !\n";
 		if (null == lieuDeplacementTextField.getText() || 0 == lieuDeplacementTextField.getText().length())
-			erreur += "Le champ lieu du déplacement est vide !\n";
+			erreur += "Le champ lieu du deplacement est vide !\n";
 		return erreur;
 	}
 

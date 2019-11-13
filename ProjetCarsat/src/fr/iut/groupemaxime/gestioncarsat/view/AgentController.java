@@ -62,20 +62,20 @@ public class AgentController {
 		if (nomTextField.getText() == null || nomTextField.getText().length() == 0)
 			erreur += "Le champ nom est vide !\n";
 		if (prenomTextField.getText() == null || prenomTextField.getText().length() == 0)
-			erreur += "Le champ prénom est vide !\n";
+			erreur += "Le champ prenom est vide !\n";
 		if (fonctionTextField.getText() == null || fonctionTextField.getText().length() == 0)
 			erreur += "Le champ fonction est vide !\n";
 		if (uniteTavailTextField.getText() == null || uniteTavailTextField.getText().length() == 0)
-			erreur += "Le champ unité de travail est vide !\n";
+			erreur += "Le champ unite de travail est vide !\n";
 		if (residenceAdminTextField.getText() == null || residenceAdminTextField.getText().length() == 0)
-			erreur += "Le champ résidence administrative est vide !\n";
+			erreur += "Le champ residence administrative est vide !\n";
 		if (numCAPSSATextField.getText() == null || numCAPSSATextField.getText().length() == 0)
-			erreur += "Le champ numéro CAPSSA est vide !\n";
+			erreur += "Le champ numero CAPSSA est vide !\n";
 		else {
 			try {
 				Integer.parseInt(numCAPSSATextField.getText());
 			} catch (NumberFormatException e) {
-				erreur += "Le champ numéro CAPSSA est invalide (entrez un nombre entier)!\n";
+				erreur += "Le champ numero CAPSSA est invalide (entrez un nombre entier)!\n";
 			}
 		}
 		if (coefficientTextField.getText() == null || coefficientTextField.getText().length() == 0)
