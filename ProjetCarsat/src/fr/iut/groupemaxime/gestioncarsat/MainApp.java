@@ -43,7 +43,7 @@ public class MainApp extends Application {
 	private TransportController controllerTransport;
 	private MenuAgentController controllerMenuAgent;
 	private ListeOrdreMission listeOM;
-	
+
 	private Options options;
 
 	@Override
@@ -56,7 +56,7 @@ public class MainApp extends Application {
 		afficherListOm(this.options);
 
 	}
-	
+
 	public void modifierOptions() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -123,7 +123,7 @@ public class MainApp extends Application {
 				controllerAgent = loader.getController();
 				controllerAgent.setMainApp(this);
 				controllerAgent.setChamps(this.options.getAgent());
-				
+
 				rootLayout.setCenter(pageAgent);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -305,19 +305,18 @@ public class MainApp extends Application {
 			controllerTransport = loader.getController();
 			controllerTransport.setMainApp(this);
 			controllerTransport.setChamps(om.getTransport());
-			
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setOptions(Options options) {
 		this.options = options;
 		options.sauvegarderOptions();
 		afficherListOm(this.options);
 	}
-	
+
 	public void fermerSecondaryStage() {
 		this.secondaryStage.close();
 	}
