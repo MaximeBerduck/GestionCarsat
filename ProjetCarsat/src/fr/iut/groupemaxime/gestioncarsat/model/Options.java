@@ -15,13 +15,15 @@ import com.google.gson.Gson;
 
 public class Options {
 	String cheminOM;
+	Agent agent;
 
-	public Options(String cheminOM) {
+	public Options(String cheminOM, Agent agent) {
 		this.cheminOM = cheminOM;
+		this.agent = agent;
 	}
 
 	public Options() {
-		this("");
+		this("", new Agent());
 	}
 
 	public void sauvegarderOptions() {
@@ -75,6 +77,14 @@ public class Options {
 
 	public void setCheminOM(String cheminOM) {
 		this.cheminOM = cheminOM;
+	}
+	
+	public Agent getAgent() {
+		return this.agent;
+	}
+	
+	public void setAgent(Agent agent) {
+		this.agent = agent;
 	}
 
 }

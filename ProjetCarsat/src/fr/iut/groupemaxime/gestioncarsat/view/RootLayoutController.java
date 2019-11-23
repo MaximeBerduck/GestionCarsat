@@ -15,7 +15,6 @@ public class RootLayoutController {
 	// Event Listener on MenuItem.onAction
 	@FXML
 	public void modifierOptions(ActionEvent event) {
-		System.out.println(null == mainApp);
 		mainApp.modifierOptions();
 	}
 	
