@@ -15,15 +15,15 @@ import com.google.gson.Gson;
 
 public class Options {
 	String cheminOM;
-	
+
 	public Options(String cheminOM) {
 		this.cheminOM = cheminOM;
 	}
-	
+
 	public Options() {
-		this(null);
+		this("");
 	}
-	
+
 	public void sauvegarderOptions() {
 		Gson g = new Gson();
 		String s = g.toJson(this);
@@ -37,38 +37,44 @@ public class Options {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static Options chargerOptions() {
 		Gson g = new Gson();
-		Options options = null;
+		Options options = new Options();
 		InputStream is;
-        try {
-            is = new FileInputStream(new File(Constante.CHEMIN_OPTIONS));
-            // Creation du JsonReader depuis Json.
-            JsonReader reader = Json.createReader(is);
-            // Recuperer la structure JsonObject depuis le JsonReader.
-            JsonObject objetJson = reader.readObject();
-            reader.close();            
-            options = g.fromJson(objetJson.toString(), Options.class);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return options;
+		if (fichierOptionsExiste()) {
+			try {
+				is = new FileInputStream(new File(Constante.CHEMIN_OPTIONS));
+				// Creation du JsonReader depuis Json.
+				JsonReader reader = Json.createReader(is);
+				// Recuperer la structure JsonObject depuis le JsonReader.
+				JsonObject objetJson = reader.readObject();
+				reader.close();
+				options = g.fromJson(objetJson.toString(), Options.class);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return options;
 	}
-	
-	public static boolean fichierExiste() {
+
+	public static boolean fichierOptionsExiste() {
 		boolean existe = false;
 		File f = new File(Constante.CHEMIN_OPTIONS);
-		if(f.isFile())
-		{ 
+		if (f.isFile()) {
 			existe = true;
 		}
 		return existe;
 	}
-	
+
 	public String getCheminOM() {
 		return this.cheminOM;
+	}
+
+	public void setCheminOM(String cheminOM) {
+		this.cheminOM = cheminOM;
 	}
 
 }

@@ -10,6 +10,7 @@ import fr.iut.groupemaxime.gestioncarsat.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.model.Mission;
 import fr.iut.groupemaxime.gestioncarsat.model.MissionPermanent;
 import fr.iut.groupemaxime.gestioncarsat.model.MissionTemporaire;
+import fr.iut.groupemaxime.gestioncarsat.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.model.Train;
 import fr.iut.groupemaxime.gestioncarsat.model.Transport;
@@ -18,6 +19,8 @@ import fr.iut.groupemaxime.gestioncarsat.view.AgentController;
 import fr.iut.groupemaxime.gestioncarsat.view.MenuAgentController;
 import fr.iut.groupemaxime.gestioncarsat.view.TransportController;
 import fr.iut.groupemaxime.gestioncarsat.view.MissionController;
+import fr.iut.groupemaxime.gestioncarsat.view.OptionsController;
+import fr.iut.groupemaxime.gestioncarsat.view.RootLayoutController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,25 +31,47 @@ import javafx.stage.Stage;
 public class MainApp extends Application {
 
 	private Stage primaryStage;
+	private Stage secondaryStage;
 	private BorderPane rootLayout;
 	private AnchorPane pageAgent;
 	private AnchorPane pageMission;
 	private AnchorPane pageTransport;
 	private AnchorPane pageMenuAgent;
+	private RootLayoutController controllerRoot;
 	private AgentController controllerAgent;
 	private MissionController controllerMission;
 	private TransportController controllerTransport;
 	private MenuAgentController controllerMenuAgent;
 	private ListeOrdreMission listeOM;
+	
+	private Options options;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("OM");
 		this.primaryStage.setResizable(false);
+		this.options = Options.chargerOptions();
 		initialiseRootLayout();
 		afficherListOm();
 
+	}
+	
+	public void modifierOptions() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/Options.fxml"));
+			AnchorPane optionsLayout = loader.load();
+
+			Scene scene = new Scene(optionsLayout);
+			secondaryStage = new Stage();
+			OptionsController controllerOptions = loader.getController();
+			controllerOptions.chargerPage(this, options);
+			secondaryStage.setScene(scene);
+			secondaryStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void afficherListOm() {
@@ -74,6 +99,8 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
 			rootLayout = loader.load();
+			controllerRoot = loader.getController();
+			controllerRoot.setMainApp(this);
 
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
@@ -282,5 +309,14 @@ public class MainApp extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setOptions(Options options) {
+		this.options = options;
+		options.sauvegarderOptions();
+	}
+	
+	public void fermerSecondaryStage() {
+		this.secondaryStage.close();
 	}
 }
