@@ -46,7 +46,7 @@ public class AgentController {
 
 	@FXML
 	private void initialize() {
-		
+
 	}
 
 	public void setMainApp(MainApp mainApp) {
@@ -98,7 +98,7 @@ public class AgentController {
 				erreur += "Le champ code analytique est invalide (entrez un nombre entier)!\n";
 			}
 		}
-		
+
 		if (erreur.length() > 0) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.initOwner(mainApp.getPrimaryStage());
@@ -147,15 +147,16 @@ public class AgentController {
 	}
 
 	public void setChamps(Agent agent) {
-		this.nomTextField.setText(agent.getNom());
-		this.prenomTextField.setText(agent.getPrenom());
-		this.fonctionTextField.setText(agent.getFonction());
-		this.numCAPSSATextField.setText(String.valueOf(agent.getNumCAPSSA()));
-		this.residenceAdminTextField.setText(agent.getResidenceAdmin());
-		this.coefficientTextField.setText(String.valueOf(agent.getCoefficient()));
-		this.uniteTavailTextField.setText(agent.getUniteTravail());
-		this.codeAnalytiqueTextField.setText(String.valueOf(agent.getCodeAnalytique()));
+		if (-1 != agent.getNumCAPSSA()) {
+			this.nomTextField.setText(agent.getNom());
+			this.prenomTextField.setText(agent.getPrenom());
+			this.fonctionTextField.setText(agent.getFonction());
+			this.numCAPSSATextField.setText(String.valueOf(agent.getNumCAPSSA()));
+			this.residenceAdminTextField.setText(agent.getResidenceAdmin());
+			this.coefficientTextField.setText(String.valueOf(agent.getCoefficient()));
+			this.uniteTavailTextField.setText(agent.getUniteTravail());
+			this.codeAnalytiqueTextField.setText(String.valueOf(agent.getCodeAnalytique()));
+		}
 	}
-	
 
 }

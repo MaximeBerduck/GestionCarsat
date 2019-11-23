@@ -23,7 +23,7 @@ public class Options {
 	}
 
 	public Options() {
-		this("", new Agent());
+		this(Constante.CHEMIN_OM_DEFAUT, new Agent());
 	}
 
 	public void sauvegarderOptions() {
@@ -57,6 +57,9 @@ public class Options {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		else {
+			options.sauvegarderOptions();
 		}
 
 		return options;

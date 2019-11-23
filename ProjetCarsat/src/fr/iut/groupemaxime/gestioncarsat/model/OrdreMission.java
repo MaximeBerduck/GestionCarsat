@@ -73,7 +73,7 @@ public class OrdreMission {
 				final Transformer transformer = transformerFactory.newTransformer();
 				final DOMSource source = new DOMSource(document);
 				final StreamResult sortie = new StreamResult(
-						new File(Constante.CHEMIN_OM + file.toString() + Constante.EXTENSION_XML));
+						new File(Constante.CHEMIN_OM_DEFAUT + file.toString() + Constante.EXTENSION_XML));
 				// final StreamResult result = new StreamResult(System.out);
 
 				// prologue
@@ -239,7 +239,7 @@ public class OrdreMission {
 		try {
 			final DocumentBuilder builder = factory.newDocumentBuilder();
 			try {
-				final Document document = builder.parse(Constante.CHEMIN_OM + file + Constante.EXTENSION_XML);
+				final Document document = builder.parse(Constante.CHEMIN_OM_DEFAUT + file + Constante.EXTENSION_XML);
 
 				// Importation de l'agent
 				agentOM = importerAgent(agentOM, document);

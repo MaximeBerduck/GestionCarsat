@@ -34,7 +34,7 @@ public class ListeOrdreMission {
 
 	public void supprimerOM(OrdreMission om) {
 		if (null != om) {
-			File fichier = new File(Constante.CHEMIN_OM + om.getFichier() + Constante.EXTENSION_XML);
+			File fichier = new File(Constante.CHEMIN_OM_DEFAUT + om.getFichier() + Constante.EXTENSION_XML);
 			fichier.delete();
 			fichier = new File(Constante.CHEMIN_PDF + om.getFichier() + Constante.EXTENSION_PDF);
 			fichier.delete();

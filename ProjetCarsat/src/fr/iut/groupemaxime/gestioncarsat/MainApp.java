@@ -120,11 +120,11 @@ public class MainApp extends Application {
 				loader.setLocation(MainApp.class.getResource("view/Agent.fxml"));
 				pageAgent = loader.load();
 
-				rootLayout.setCenter(pageAgent);
-
 				controllerAgent = loader.getController();
 				controllerAgent.setMainApp(this);
-
+				controllerAgent.setChamps(this.options.getAgent());
+				
+				rootLayout.setCenter(pageAgent);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

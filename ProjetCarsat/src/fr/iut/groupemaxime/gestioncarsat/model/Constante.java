@@ -3,7 +3,7 @@ package fr.iut.groupemaxime.gestioncarsat.model;
 import java.util.HashMap;
 
 public class Constante {
-	public static String CHEMIN_OM = "target/OM/";
+	public static String CHEMIN_OM_DEFAUT = "target/OM/";
 	public static String CHEMIN_PDF = "target/PDF/";
 	public static String EXTENSION_XML = ".xml";
 	public static String EXTENSION_PDF = ".pdf";
