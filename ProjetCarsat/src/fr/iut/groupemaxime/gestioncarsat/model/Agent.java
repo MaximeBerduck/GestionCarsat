@@ -21,6 +21,10 @@ public class Agent {
 		this.codeAnalytique = codeAnalytique;
 		this.coefficient = coefficient;
 	}
+	
+	public Agent() {
+		this("","",-1,"","","",-1,-1);
+	}
 
 	public String getNom() {
 		return nom;
