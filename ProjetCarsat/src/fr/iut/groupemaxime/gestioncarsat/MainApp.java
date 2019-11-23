@@ -53,7 +53,7 @@ public class MainApp extends Application {
 		this.primaryStage.setResizable(false);
 		this.options = Options.chargerOptions();
 		initialiseRootLayout();
-		afficherListOm();
+		afficherListOm(this.options);
 
 	}
 	
@@ -74,7 +74,7 @@ public class MainApp extends Application {
 		}
 	}
 
-	public void afficherListOm() {
+	public void afficherListOm(Options options) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/MenuAgent.fxml"));
@@ -85,6 +85,7 @@ public class MainApp extends Application {
 
 			controllerMenuAgent = loader.getController();
 			controllerMenuAgent.setMainApp(this);
+			controllerMenuAgent.setOptions(this.options);
 			controllerMenuAgent.chargerOM();
 
 		} catch (IOException e) {
@@ -258,7 +259,7 @@ public class MainApp extends Application {
 		listeOM.ajouterOM(om);
 		rootLayout.setCenter(null);
 		om.sauvegarder(new File(om.getAgent().getNom()));
-		afficherListOm();
+		afficherListOm(this.options);
 
 	}
 
@@ -274,7 +275,7 @@ public class MainApp extends Application {
 
 	public void enleverOm(OrdreMission om) {
 		this.listeOM.supprimerOM(om);
-		afficherListOm();
+		afficherListOm(this.options);
 	}
 
 	public void modifierOm(OrdreMission om) {
@@ -314,6 +315,7 @@ public class MainApp extends Application {
 	public void setOptions(Options options) {
 		this.options = options;
 		options.sauvegarderOptions();
+		afficherListOm(this.options);
 	}
 	
 	public void fermerSecondaryStage() {
