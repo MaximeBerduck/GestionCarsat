@@ -7,6 +7,7 @@ import fr.iut.groupemaxime.gestioncarsat.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.view.MenuAgentController;
 import fr.iut.groupemaxime.gestioncarsat.model.Avion;
 import fr.iut.groupemaxime.gestioncarsat.model.ListeOrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.model.Mail;
 import fr.iut.groupemaxime.gestioncarsat.model.Mission;
 import fr.iut.groupemaxime.gestioncarsat.model.MissionPermanent;
 import fr.iut.groupemaxime.gestioncarsat.model.MissionTemporaire;
@@ -16,6 +17,7 @@ import fr.iut.groupemaxime.gestioncarsat.model.Train;
 import fr.iut.groupemaxime.gestioncarsat.model.Transport;
 import fr.iut.groupemaxime.gestioncarsat.model.Voiture;
 import fr.iut.groupemaxime.gestioncarsat.view.AgentController;
+import fr.iut.groupemaxime.gestioncarsat.view.MailController;
 import fr.iut.groupemaxime.gestioncarsat.view.MenuAgentController;
 import fr.iut.groupemaxime.gestioncarsat.view.TransportController;
 import fr.iut.groupemaxime.gestioncarsat.view.MissionController;
@@ -43,6 +45,9 @@ public class MainApp extends Application {
 	private TransportController controllerTransport;
 	private MenuAgentController controllerMenuAgent;
 	private ListeOrdreMission listeOM;
+	
+	private AnchorPane pageMail;
+	private MailController controllerMail;
 
 	private Options options;
 
@@ -56,6 +61,8 @@ public class MainApp extends Application {
 		afficherListOm(this.options);
 
 	}
+	
+	
 
 	public void modifierOptions() {
 		try {
@@ -183,6 +190,43 @@ public class MainApp extends Application {
 			}
 		}
 	}
+	
+	public void afficherEnvoiMail() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/Mail.fxml"));
+			
+			pageMail = loader.load();
+			
+			controllerMail = loader.getController();
+			
+			rootLayout.setCenter(pageMail);			
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+//	public void envoyerLeMail() {
+//		String[] listDest;
+//		int i=0;
+//		String[] listEnCopie;
+//		int j=0;
+//		for (String email : controllerMail.getDestinataireTextField().getText().split(",")) {
+//			listDest[i] = email;
+//			i++;
+//		}
+//		for (String email : controllerMail.getEnCopieTextField().getText().split(",")) {
+//			listEnCopie[j] = email;
+//			j++;
+//		}
+//		Mail mail = new Mail(controllerMail.getExpediteurTextField().getText(),
+//				listDest, 
+//				listEnCopie, 
+//				controllerMail.getObjetDuMail().getText(), 
+//				controllerMail.getCorpsDuMail().getText(),
+//				controllerMail.getFileEnPieceJointe()); //Le problème est que je ne sais pas comment récuperer le fichier File dans la class ControllerMail
+//	}
+	
 
 	public void validerOrdreMission() {
 		Agent agent = new Agent(controllerAgent.getNomTextField().getText(),

@@ -12,6 +12,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class MailController {
+	
+	@FXML 
+	private TextField expediteurTextField;
+
 	@FXML
 	private TextField destinataireTextField;
 	
@@ -50,11 +54,20 @@ public class MailController {
 		Pattern pattern = Pattern.compile(regex);
 		Boolean mailCorrect=true;
 		String erreur=""; 
+		int verifMailExpediteur = 0;
 		int verifSiMailDestIncorrect=0;
 		int verifSiMailEnCopieIncorrect =0;
+		
+		Matcher matcher1 = pattern.matcher(expediteurTextField.getText());
+		if (matcher1.matches()==false) {
+			verifMailExpediteur = 1;
+		}
+		if (verifMailExpediteur == 1) {
+			erreur+="Le mail de l'expediteur a été mail saisie !\n";
+		}
  
 		for(String email : destinataireTextField.getText().split(",")){ 
-			//la méthode split() va permettre de remplir un tableau de string avec le String 
+			//la méthode split() va permettre de vérifier chaque mail un par un, en optenant plusieurs String qui sont mis dans email 
 			//qui aura permis de remplir destinataireTextField, en séparant les adresses par des ","
 			Matcher matcher = pattern.matcher(email);
 			//permet de verifier si une adresse mail des destinataires est inccorect.
@@ -91,6 +104,16 @@ public class MailController {
 		}
 		return mailCorrect;
 	}
+	
+	public TextField getExpediteurTextField() {
+		return expediteurTextField;
+	}
+
+
+	public void setExpediteurTextField(TextField expediteurTextField) {
+		this.expediteurTextField = expediteurTextField;
+	}
+	
 	public TextField getDestinataireTextField() {
 		return destinataireTextField;
 	}
@@ -124,6 +147,7 @@ public class MailController {
 	}
 	
 	public void setChamps(Mail mail) {
+		this.expediteurTextField.setText(mail.getExpediteur());
 		this.destinataireTextField.setText(mail.getDestinatairesEnString());
 		this.enCopieTextField.setText(mail.getEnCopieEnString());
 		this.objetDuMail.setText(mail.getObjetDuMail());

@@ -88,10 +88,5 @@
     		<artifactId>javax.mail-api</artifactId>
     		<version>1.6.2</version>
 		</dependency>
-		<dependency>
-    		<groupId>jaf</groupId>
-    		<artifactId>activation</artifactId>
-    		<version>1.0.2</version>
-		</dependency>
 	</dependencies>
 </project>
