@@ -3,7 +3,6 @@ package fr.iut.groupemaxime.gestioncarsat.view;
 import java.io.File;
 import java.io.IOException;
 
-import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.model.Options;
@@ -20,10 +19,10 @@ public class MenuAgentController {
 	@FXML
 	private VBox listeOmVBox;
 
-	private MainApp mainApp;
+	private OrdreMissionController mainApp;
 	private Options options;
 
-	public void setMainApp(MainApp mainApp) {
+	public void setMenuController(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
 	}
 	public void setOptions(Options options) {
@@ -48,7 +47,9 @@ public class MenuAgentController {
 		ItemOrdreMissionController ctrl;
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/itemOrdreMission.fxml"));
+			loader.setLocation(this.getClass().getResource("/"
+					+ ItemOrdreMissionController.class.getCanonicalName().replace(".", "/").replace("Controller", "")
+					+ ".fxml"));
 			item = loader.load();
 			
 			ctrl = loader.getController();
@@ -65,5 +66,12 @@ public class MenuAgentController {
 	public void creerNouveauOm(ActionEvent event) {
 		this.mainApp.creerNouveauOm();
 
+	}
+	public ListeOrdreMission getListeOm() {
+		return this.listeOm;
+	}
+	
+	public void setListeOm(ListeOrdreMission listeOm) {
+		this.listeOm = listeOm;
 	}
 }

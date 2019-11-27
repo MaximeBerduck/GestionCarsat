@@ -1,6 +1,5 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
 
-import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import fr.iut.groupemaxime.gestioncarsat.model.Avion;
 import fr.iut.groupemaxime.gestioncarsat.model.Train;
 import fr.iut.groupemaxime.gestioncarsat.model.Transport;
@@ -15,7 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class TransportController {
-	private MainApp mainApp;
+	private OrdreMissionController mainApp;
 	// menu choix moyen transport
 	@FXML
 	private RadioButton voitureRadioBtn;
@@ -75,7 +74,7 @@ public class TransportController {
 		this.page.getChildren().removeAll(trainClasseHBox, cramcoVBox);
 	}
 
-	public void setMainApp(MainApp mainApp) {
+	public void setMainApp(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
 	}
 	

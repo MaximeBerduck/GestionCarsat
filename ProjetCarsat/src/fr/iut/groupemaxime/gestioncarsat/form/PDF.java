@@ -117,25 +117,4 @@ public class PDF {
 			System.out.println("oui");
 		}
 	}
-
-	public static void main(String[] args) throws IOException {
-		PDF pdf = new PDF(new File("target/PDF/OM_vide.pdf"));
-		Agent agent = new Agent("Berduck", "Maxime", 12345, "progr", "DUT", "2A", 200, 1234567891);
-		Transport avion = new Avion("oui");
-		Transport voiture = new Voiture("course", "11-qqq-44", 120, "vehiculePersonnel");
-		Transport train = new Train("premiereClasse", "bonjour");
-		Mission mission = new MissionTemporaire("12/12/2019", "12:12", "14/12/2019", "20:12", "test", "Limoges",
-				"formation");
-		OrdreMission OM = new OrdreMission(agent, mission, train);
-		pdf.remplirPDF(OM);
-		pdf.sauvegarderPDF();
-		pdf.fermerPDF();
-		try {
-			Desktop.getDesktop().browse(new URI("target/PDF/Doc1modif.pdf"));
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
 }

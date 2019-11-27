@@ -11,12 +11,5 @@ public class Constante {
 
 	public static String[] CHAMPS_AGENT = { "nomPrenom", "numCAPSSA", "fonction", "residenceAdmin", "uniteTravail",
 			"codeAnalytique", "coefficient" };
-	private static HashMap<String,String> MAP_AGENT = new HashMap<String,String>();
-	static
-	{
-		MAP_AGENT.put("nomPrenom","toto");
-		MAP_AGENT.put("numCAPSSA","titi");
-	}
-	
 	public static String CHEMIN_OPTIONS = "target/options.json";
 }

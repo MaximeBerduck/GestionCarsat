@@ -1,6 +1,5 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
 
-import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import fr.iut.groupemaxime.gestioncarsat.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.model.OrdreMission;
 import javafx.fxml.FXML;
@@ -42,14 +41,14 @@ public class AgentController {
 	@FXML
 	private Button suivantBtn;
 
-	private MainApp mainApp;
+	private OrdreMissionController mainApp;
 
 	@FXML
 	private void initialize() {
 
 	}
 
-	public void setMainApp(MainApp mainApp) {
+	public void setMainApp(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
 	}
 

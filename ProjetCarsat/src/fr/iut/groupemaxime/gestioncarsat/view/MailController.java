@@ -2,7 +2,6 @@ package fr.iut.groupemaxime.gestioncarsat.view;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import fr.iut.groupemaxime.gestioncarsat.model.Mail;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -37,9 +36,9 @@ public class MailController {
 	@FXML
 	private Button btnAnnulerMail;
 	
-	private MainApp mainApp;
+	private OrdreMissionController mainApp;
 	
-	public void setMainApp(MainApp mainApp) {
+	public void setMainApp(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
 	}
 	

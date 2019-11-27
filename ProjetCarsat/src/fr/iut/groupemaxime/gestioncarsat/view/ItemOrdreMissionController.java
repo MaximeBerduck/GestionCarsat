@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import fr.iut.groupemaxime.gestioncarsat.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.model.MissionTemporaire;
@@ -28,7 +27,7 @@ public class ItemOrdreMissionController {
 
 	private OrdreMission om;
 	
-	private MainApp mainApp;
+	private OrdreMissionController mainApp;
 
 	@FXML
 	private void initialize() {
@@ -73,7 +72,7 @@ public class ItemOrdreMissionController {
 
 	}
 	
-	public void setMainApp(MainApp mainApp) {
+	public void setMainApp(OrdreMissionController mainApp) {
 		this.mainApp=mainApp;
 	}
 }

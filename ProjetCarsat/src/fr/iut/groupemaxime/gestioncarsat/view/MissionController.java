@@ -3,7 +3,6 @@ package fr.iut.groupemaxime.gestioncarsat.view;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import fr.iut.groupemaxime.gestioncarsat.model.MissionTemporaire;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -57,7 +56,7 @@ public class MissionController {
 	@FXML
 	private DatePicker dateFin;
 
-	private MainApp mainApp;
+	private OrdreMissionController mainApp;
 
 	@FXML
 	private Label labelDu;
@@ -65,7 +64,7 @@ public class MissionController {
 	@FXML
 	private Label labelAu;
 
-	public void setMainApp(MainApp mainApp) {
+	public void setMainApp(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
 	}
 

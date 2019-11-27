@@ -1,24 +1,43 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
 
-import javafx.fxml.FXML;
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
-import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class RootLayoutController {
 	private MainApp mainApp;
 
 	@FXML
-	private void initialize() {
+	private ImageView imageV;
 
+	@FXML
+	private void initialize() {
+		this.imageV.setImage(new Image("file:target/images/Carsat_transparence.png"));
 	}
 
-	// Event Listener on MenuItem.onAction
+	// Event Listener sur Btn Parametres
 	@FXML
-	public void modifierOptions(ActionEvent event) {
+	public void modifierOptions() {
 		mainApp.modifierOptions();
 	}
 	
+	@FXML
+	public void afficherFraisMission() {
+		mainApp.afficherFraisMission();
+	}
+	
+	@FXML
+	public void afficherOrdresMission() {
+		mainApp.afficherOrdresMission();
+	}
+	
+	@FXML
+	public void afficherHorairesTravail() {
+		mainApp.afficherHorairesTravail();
+	}
+
 	public void setMainApp(MainApp mainApp) {
-		this.mainApp=mainApp;
+		this.mainApp = mainApp;
 	}
 }

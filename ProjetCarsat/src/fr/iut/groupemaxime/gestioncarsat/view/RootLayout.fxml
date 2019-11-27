@@ -1,20 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="400.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.RootLayoutController">
+<BorderPane prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.RootLayoutController">
    <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="Paramètres">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#modifierOptions" text="Modifier les options" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
+      <HBox prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="imageV" fitHeight="69.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <viewport>
+                  <Rectangle2D height="69.0" width="200.0" />
+               </viewport>
+            </ImageView>
+         </children>
+      </HBox>
    </top>
+   <left>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox onMouseClicked="#afficherOrdresMission" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Ordres de mission" />
+               </children>
+            </VBox>
+            <VBox onMouseClicked="#afficherFraisMission" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Frais de mission" />
+               </children>
+            </VBox>
+            <VBox onMouseClicked="#afficherHorairesTravail" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Horaires de travail" />
+               </children>
+            </VBox>
+            <VBox onMouseClicked="#modifierOptions" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label text="Paramètres" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
 </BorderPane>
