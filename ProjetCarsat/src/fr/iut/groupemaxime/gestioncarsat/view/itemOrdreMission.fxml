@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="boite" prefHeight="100.0" prefWidth="298.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.ItemOrdreMissionController">
+<VBox fx:id="boite" prefHeight="100.0" prefWidth="298.0" style="-fx-border-color: black;" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.ItemOrdreMissionController">
    <children>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -22,7 +22,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#afficherOrdreMissionPDF" prefWidth="75.0" text="Afficher" />
             <Button mnemonicParsing="false" onAction="#modifierOM" prefWidth="75.0" text="Modifier" />
-            <Button mnemonicParsing="false" onAction="#supprimerOM" prefWidth="75.0" text="Supprimer" />
+            <Button mnemonicParsing="false" onAction="#supprimerOM" prefHeight="27.0" prefWidth="81.0" text="Supprimer" />
          </children>
          <VBox.margin>
             <Insets />

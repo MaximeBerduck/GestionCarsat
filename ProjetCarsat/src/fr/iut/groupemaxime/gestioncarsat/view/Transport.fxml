@@ -14,11 +14,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.TransportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.TransportController">
    <children>
       <VBox fx:id="page" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <Label alignment="CENTER" prefHeight="27.0" prefWidth="611.0" text="Moyen de transport autorisé">
+            <Label id="titre" alignment="CENTER" prefHeight="27.0" prefWidth="611.0" style="-fx-font-size: 17px;" styleClass="titre" text="Moyen de transport autorisé">
                <font>
                   <Font size="18.0" />
                </font>
@@ -90,7 +90,7 @@
                         <Insets right="150.0" />
                      </GridPane.margin>
                   </TextField>
-                  <RadioButton fx:id="vehiculeServiceRadioBtn" mnemonicParsing="false" text="Utilisation de véhicule de service" GridPane.rowIndex="3">
+                  <RadioButton fx:id="vehiculeServiceRadioBtn" mnemonicParsing="false" prefHeight="17.0" prefWidth="232.0" text="Utilisation de véhicule de service" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="50.0" />
                      </GridPane.margin>
@@ -98,7 +98,7 @@
                         <ToggleGroup fx:id="utilisationVehicule" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton fx:id="vehiculePersoRadioBtn" mnemonicParsing="false" text="Utilisation à titre exceptionnel du véhicule personnel" toggleGroup="$utilisationVehicule" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <RadioButton fx:id="vehiculePersoRadioBtn" mnemonicParsing="false" text="Utilisation du véhicule personnel" toggleGroup="$utilisationVehicule" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
                <VBox.margin>
                   <Insets />
@@ -115,7 +115,7 @@
             </HBox>
             <VBox fx:id="cramcoVBox" prefWidth="100.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="25.0" prefWidth="606.0" text="Billet pris par la C.R.A.M.C.O.">
+                  <Label id="titre" alignment="CENTER" prefHeight="25.0" prefWidth="606.0" style="-fx-font-size: 17;" styleClass="titre" text="Billet pris par la C.R.A.M.C.O.">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -133,8 +133,14 @@
             </VBox>
             <HBox prefHeight="50.0" prefWidth="600.0" spacing="35.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#retournerATypeOM" prefWidth="75.0" text="Retour" />
-                  <Button mnemonicParsing="false" onAction="#validerOM" prefWidth="75.0" text="Valider" />
+                  <Button mnemonicParsing="false" onAction="#retournerATypeOM" prefWidth="75.0" text="Retour">
+                     <HBox.margin>
+                        <Insets top="25.0" />
+                     </HBox.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#validerOM" prefWidth="75.0" text="Valider">
+                     <HBox.margin>
+                        <Insets top="25.0" />
+                     </HBox.margin></Button>
                </children>
                <padding>
                   <Insets left="200.0" top="10.0" />
