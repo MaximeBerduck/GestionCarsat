@@ -10,11 +10,28 @@ public class RootLayoutController {
 	private MainApp mainApp;
 
 	@FXML
-	private ImageView imageV;
+	private ImageView banniereCarsat;
+
+	@FXML
+	private ImageView imageParametre;
+
+	@FXML
+	private ImageView imageOM;
+
+	@FXML
+	private ImageView imageFM;
+
+	@FXML
+	private ImageView imageHT;
 
 	@FXML
 	private void initialize() {
-		this.imageV.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "Carsat_transparence.png"));
+		this.banniereCarsat.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "banniereCarsat.png"));
+		this.imageParametre.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "parametres.png"));
+		this.imageHT.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "horaires.png"));
+		this.imageFM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "frais.png"));
+		this.imageOM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "ordre.png"));
+
 	}
 
 	// Event Listener sur Btn Parametres
@@ -22,17 +39,17 @@ public class RootLayoutController {
 	public void modifierOptions() {
 		mainApp.modifierOptions();
 	}
-	
+
 	@FXML
 	public void afficherFraisMission() {
 		mainApp.afficherFraisMission();
 	}
-	
+
 	@FXML
 	public void afficherOrdresMission() {
 		mainApp.afficherOrdresMission();
 	}
-	
+
 	@FXML
 	public void afficherHorairesTravail() {
 		mainApp.afficherHorairesTravail();
