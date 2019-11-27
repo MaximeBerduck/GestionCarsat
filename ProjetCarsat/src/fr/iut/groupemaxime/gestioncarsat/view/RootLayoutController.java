@@ -1,6 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
 
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
+import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,7 +14,7 @@ public class RootLayoutController {
 
 	@FXML
 	private void initialize() {
-		this.imageV.setImage(new Image("file:target/images/Carsat_transparence.png"));
+		this.imageV.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "Carsat_transparence.png"));
 	}
 
 	// Event Listener sur Btn Parametres

@@ -1,7 +1,5 @@
 package fr.iut.groupemaxime.gestioncarsat.model;
 
-import java.util.HashMap;
-
 public class Constante {
 	public static String CHEMIN_OM_DEFAUT = "target/OM/";
 	public static String CHEMIN_PDF = "target/PDF/";
@@ -12,4 +10,5 @@ public class Constante {
 	public static String[] CHAMPS_AGENT = { "nomPrenom", "numCAPSSA", "fonction", "residenceAdmin", "uniteTravail",
 			"codeAnalytique", "coefficient" };
 	public static String CHEMIN_OPTIONS = "target/options.json";
+	public static String CHEMIN_IMAGES = "ressources/images/";
 }

@@ -2,6 +2,7 @@ package fr.iut.groupemaxime.gestioncarsat;
 
 import java.io.IOException;
 
+import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.view.OptionsController;
 import fr.iut.groupemaxime.gestioncarsat.view.OrdreMissionController;
@@ -33,7 +34,7 @@ public class MainApp extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Carsat - Gestion des déplacement");
-		this.primaryStage.getIcons().add(new Image("file:target/images/logo.png"));
+		this.primaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
 		this.primaryStage.setResizable(false);
 		this.options = Options.chargerOptions();
 		initialiseRootLayout();
