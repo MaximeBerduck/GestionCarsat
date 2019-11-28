@@ -22,7 +22,6 @@ public class MainApp extends Application {
 	private Stage secondaryStage;
 	private BorderPane rootLayout;
 	private Options options;
-	private RootLayoutController controllerRoot;
 	private OrdreMissionController omCtrl;
 	private AnchorPane ordreMission;
 
@@ -45,8 +44,8 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
 			this.rootLayout = loader.load();
-			this.controllerRoot = loader.getController();
-			this.controllerRoot.setMainApp(this);
+			RootLayoutController controllerRoot = loader.getController();
+			controllerRoot.setMainApp(this);
 
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
@@ -63,10 +62,13 @@ public class MainApp extends Application {
 			AnchorPane optionsLayout = loader.load();
 
 			Scene scene = new Scene(optionsLayout);
-			secondaryStage = new Stage();
+			this.secondaryStage = new Stage();
 			OptionsController controllerOptions = loader.getController();
 			controllerOptions.chargerPage(this, options);
 			secondaryStage.setScene(scene);
+			this.secondaryStage.setTitle("Paramètres");
+			this.secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
+
 			secondaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();

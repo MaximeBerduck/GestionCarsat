@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.IOException;
 
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
+import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.model.Options;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -19,7 +21,7 @@ public class OptionsController {
 	
 	private MainApp mainApp;
 	private Options options;
-	private Stage secondaryStage;
+	private Stage optionAgentStage;
 	
 	@FXML
 	private void initialize() {
@@ -51,19 +53,21 @@ public class OptionsController {
 			AnchorPane optionsLayout = loader.load();
 
 			Scene scene = new Scene(optionsLayout);
-			secondaryStage = new Stage();
+			this.optionAgentStage = new Stage();
 			AgentOptionsController agentOptionsController = loader.getController();
 			agentOptionsController.chargerPage(this, options);
 			agentOptionsController.setChamps(options.getAgent());
-			secondaryStage.setScene(scene);
-			secondaryStage.show();
+			this.optionAgentStage.setScene(scene);
+			this.optionAgentStage.setTitle("Options Agent");
+			this.optionAgentStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
+			optionAgentStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void fermerSecondaryStage() {
-		this.secondaryStage.close();
+		this.optionAgentStage.close();
 	}
 	
 	public void sauvegarder() {
