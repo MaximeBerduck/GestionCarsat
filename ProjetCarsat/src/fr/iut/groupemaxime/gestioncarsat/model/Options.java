@@ -13,7 +13,9 @@ import javax.json.JsonReader;
 
 import com.google.gson.Gson;
 
-public class Options {
+import fr.iut.groupemaxime.gestioncarsat.interfaces.DocJson;
+
+public class Options implements DocJson<Options> {
 	String cheminOM;
 	Agent agent;
 
@@ -25,8 +27,9 @@ public class Options {
 	public Options() {
 		this(Constante.CHEMIN_OM_DEFAUT, new Agent());
 	}
-
-	public void sauvegarderOptions() {
+	
+	@Override
+	public void sauvegarderJson(String adresseFichier) {
 		Gson g = new Gson();
 		String s = g.toJson(this);
 		FileWriter f;
@@ -40,7 +43,8 @@ public class Options {
 		}
 	}
 
-	public static Options chargerOptions() {
+	@Override
+	public Options chargerJson(String adresseFichier) {
 		Gson g = new Gson();
 		Options options = new Options();
 		InputStream is;
@@ -57,9 +61,6 @@ public class Options {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		else {
-			options.sauvegarderOptions();
 		}
 
 		return options;
