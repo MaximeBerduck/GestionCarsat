@@ -3,8 +3,11 @@ package fr.iut.groupemaxime.gestioncarsat.view;
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.VBox;
 
 public class RootLayoutController {
 	private MainApp mainApp;
@@ -23,6 +26,21 @@ public class RootLayoutController {
 
 	@FXML
 	private ImageView imageHT;
+
+	@FXML
+	private VBox boxOM;
+
+	@FXML
+	private VBox boxFM;
+
+	@FXML
+	private VBox boxHT;
+
+	@FXML
+	private VBox boxParam;
+
+	@FXML
+	private VBox boxMenu;
 
 	@FXML
 	private void initialize() {

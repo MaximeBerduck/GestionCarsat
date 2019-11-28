@@ -24,9 +24,9 @@
       </HBox>
    </top>
    <left>
-      <VBox prefHeight="200.0" prefWidth="150.0" stylesheets="@../menu.css" BorderPane.alignment="CENTER">
+      <VBox fx:id="boxMenu" prefHeight="200.0" prefWidth="150.0" stylesheets="@../menu.css" BorderPane.alignment="CENTER">
          <children>
-            <VBox id="hov" onMouseClicked="#afficherOrdresMission" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
+            <VBox id="hov" fx:id="boxOM" onMouseClicked="#afficherOrdresMission" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
                <children>
                   <ImageView fx:id="imageOM" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <VBox.margin>
@@ -39,7 +39,7 @@
                      </padding></Label>
                </children>
             </VBox>
-            <VBox id="hov" onMouseClicked="#afficherFraisMission" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
+            <VBox id="hov" fx:id="boxFM" onMouseClicked="#afficherFraisMission" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
                <children>
                   <ImageView fx:id="imageFM" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <VBox.margin>
@@ -52,7 +52,7 @@
                      </padding></Label>
                </children>
             </VBox>
-            <VBox id="hov" onMouseClicked="#afficherHorairesTravail" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
+            <VBox id="hov" fx:id="boxHT" onMouseClicked="#afficherHorairesTravail" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
                <children>
                   <ImageView fx:id="imageHT" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <VBox.margin>
@@ -62,7 +62,7 @@
                   <Label alignment="CENTER" prefHeight="35.0" prefWidth="150.0" text="Horaires de travail" />
                </children>
             </VBox>
-            <VBox id="hov" onMouseClicked="#modifierOptions" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
+            <VBox id="hov" fx:id="boxParam" onMouseClicked="#modifierOptions" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
                <children>
                   <ImageView fx:id="imageParametre" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <VBox.margin>
