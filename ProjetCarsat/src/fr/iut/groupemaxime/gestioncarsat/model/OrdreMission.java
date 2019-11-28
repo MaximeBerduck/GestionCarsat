@@ -401,23 +401,4 @@ public class OrdreMission {
 	public String getFichier() {
 		return fichier;
 	}
-
-	public static void main(String[] args) {
-		Agent agent = new Agent("Berduck", "Maxime", 12345, "progr", "DUT", "2A", 200, 123);
-		Transport avion = new Avion("oui");
-		Transport voiture = new Voiture("course", "11-qqq-44", 120, "vehiculePersonnel");
-		Transport train = new Train("premiereClasse", "oui");
-		Mission mission = new MissionTemporaire("12/12/2019", "12:12", "14/12/2019", "20:12", "test", "Limoges",
-				"formation");
-		OrdreMission OM = new OrdreMission(agent, mission, avion);
-		OrdreMission OM1 = new OrdreMission(agent, mission, train);
-		OrdreMission OM2 = new OrdreMission(agent, mission, voiture);
-
-		OM.sauvegarder(new File("OM"));
-		OM1.sauvegarder(new File("OM1"));
-		// OM2.sauvegarder(new File("target/PDF/OM2.xml"));
-
-		OrdreMission OM3 = importer(new File("OM2"));
-		OM3.sauvegarder(new File("OM3"));
-	}
 }
