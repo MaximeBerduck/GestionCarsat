@@ -12,6 +12,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import fr.iut.groupemaxime.gestioncarsat.interfaces.DocJson;
 
@@ -30,8 +31,10 @@ public class Options implements DocJson<Options> {
 	
 	@Override
 	public void sauvegarderJson(String adresseFichier) {
-		Gson g = new Gson();
-		String s = g.toJson(this);
+		Gson gson = new GsonBuilder()
+				  .setPrettyPrinting()
+				  .create();
+		String s = gson.toJson(this);
 		FileWriter f;
 		try {
 			f = new FileWriter(new File(Constante.CHEMIN_OPTIONS));
