@@ -1,5 +1,6 @@
 package fr.iut.groupemaxime.gestioncarsat;
 
+import java.io.File;
 import java.io.IOException;
 
 import fr.iut.groupemaxime.gestioncarsat.model.Constante;
@@ -9,7 +10,6 @@ import fr.iut.groupemaxime.gestioncarsat.view.OrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.view.RootLayoutController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -37,6 +37,7 @@ public class MainApp extends Application {
 		this.primaryStage.setResizable(false);
 		this.options = new Options();
 		this.options = this.options.chargerJson(Constante.CHEMIN_OPTIONS);
+		this.creerDossier(this.options.getCheminOM());
 		initialiseRootLayout();
 	}
 
@@ -113,6 +114,13 @@ public class MainApp extends Application {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public void creerDossier(String chemin) {
+		File fichier = new File(chemin);
+		if(!fichier.exists()) {
+			fichier.mkdir();
 		}
 	}
 
