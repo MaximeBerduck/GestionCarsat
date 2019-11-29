@@ -283,7 +283,14 @@ public class OrdreMissionController {
 		OrdreMission om = new OrdreMission(agent, mission, transport);
 		this.listeOM.ajouterOM(om);
 		this.ordreMissionSplit.getItems().remove(1);
-		om.sauvegarderJson(this.options.getCheminOM() + "OM" + '_' + om.getAgent().getNom() + '_'
+
+		if (om.getFichier() == null) {
+			om.setFichier(this.options.getCheminOM() + ((MissionTemporaire) om.getMission()).getLieuDeplacement() + '_'
+					+ ((MissionTemporaire) om.getMission()).getDates() + '/');
+			mainApp.creerDossier(om.getFichier());
+		}
+
+		om.sauvegarderJson(om.getFichier() + "OM" + '_' + om.getAgent().getNom() + '_'
 				+ ((MissionTemporaire) om.getMission()).getLieuDeplacement() + '_'
 				+ ((MissionTemporaire) om.getMission()).getDates() + ".json");
 		afficherListOm();

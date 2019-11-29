@@ -11,16 +11,21 @@ public class ListeOrdreMission {
 	}
 
 	public void chargerOM(File file) {
-		String liste[] = {};
-		liste = file.list();
-		if (liste == null) {
+		File listeDossiers[] = {};
+		listeDossiers = file.listFiles();
+		if (listeDossiers == null) {
 			System.out.println("pas de fichier à charger");
 		} else {
-			for (String fichier : liste) {
-				if (fichier.endsWith(".json")) {
-					OrdreMission om = new OrdreMission();
-					om = om.chargerJson(file.toString() + '/' + fichier);
-					listeOM.add(om);
+			for (File dossier : listeDossiers) {
+				if (dossier.isDirectory()) {
+					for (String fichier : dossier.list()) {
+						if (fichier.endsWith(".json")) {
+							OrdreMission om = new OrdreMission();
+							System.out.println(dossier.toString() + '/' + fichier);
+							om = om.chargerJson(dossier.toString() + '/' + fichier);
+							listeOM.add(om);
+						}
+					}
 				}
 			}
 		}
@@ -34,7 +39,7 @@ public class ListeOrdreMission {
 
 	public void supprimerOM(OrdreMission om) {
 		if (null != om) {
-			File fichier = new File(Constante.CHEMIN_OM_DEFAUT + om.getFichier() + Constante.EXTENSION_XML);
+			File fichier = new File(om.getFichier() + Constante.EXTENSION_XML);
 			fichier.delete();
 			fichier = new File(Constante.CHEMIN_PDF + om.getFichier() + Constante.EXTENSION_PDF);
 			fichier.delete();

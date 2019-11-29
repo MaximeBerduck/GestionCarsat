@@ -17,16 +17,16 @@ import com.google.gson.GsonBuilder;
 import fr.iut.groupemaxime.gestioncarsat.interfaces.DocJson;
 
 public class Options implements DocJson<Options> {
-	String cheminOM;
+	String cheminFichiers;
 	Agent agent;
 
-	public Options(String cheminOM, Agent agent) {
-		this.cheminOM = cheminOM;
+	public Options(String cheminFichiers, Agent agent) {
+		this.cheminFichiers = cheminFichiers;
 		this.agent = agent;
 	}
 
 	public Options() {
-		this(Constante.CHEMIN_OM_DEFAUT, new Agent());
+		this(Constante.CHEMIN_FICHIERS_DEFAUT, new Agent());
 	}
 	
 	@Override
@@ -79,11 +79,11 @@ public class Options implements DocJson<Options> {
 	}
 
 	public String getCheminOM() {
-		return this.cheminOM;
+		return this.cheminFichiers;
 	}
 
 	public void setCheminOM(String cheminOM) {
-		this.cheminOM = cheminOM;
+		this.cheminFichiers = cheminOM;
 	}
 	
 	public Agent getAgent() {

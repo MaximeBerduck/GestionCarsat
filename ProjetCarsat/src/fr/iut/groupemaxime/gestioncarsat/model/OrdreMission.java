@@ -109,4 +109,8 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	public String getFichier() {
 		return fichier;
 	}
+
+	public void setFichier(String fichier) {
+		this.fichier = fichier;
+	}
 }
