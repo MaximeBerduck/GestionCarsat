@@ -1,13 +1,13 @@
 package fr.iut.groupemaxime.gestioncarsat.model;
 
 public abstract class Transport {
-	private String nom;
+	private String typeTransport;
 	
-	public Transport(String nom) {
-		this.nom = nom;
+	public Transport(String typeTransport) {
+		this.typeTransport = typeTransport;
 	}
 	
-	public String toString() {
-		return this.nom;
+	public String getTypeTransport() {
+		return this.typeTransport;
 	}
 }

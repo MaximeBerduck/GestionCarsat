@@ -2,10 +2,13 @@ package fr.iut.groupemaxime.gestioncarsat.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.util.Date;
 
 import fr.iut.groupemaxime.gestioncarsat.MainApp;
 import fr.iut.groupemaxime.gestioncarsat.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.model.Avion;
+import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.model.Mail;
 import fr.iut.groupemaxime.gestioncarsat.model.Mission;
@@ -203,7 +206,7 @@ public class OrdreMissionController {
 //				listEnCopie, 
 //				controllerMail.getObjetDuMail().getText(), 
 //				controllerMail.getCorpsDuMail().getText(),
-//				controllerMail.getFileEnPieceJointe()); //Le problème est que je ne sais pas comment récuperer le fichier File dans la class ControllerMail
+//				controllerMail.getFileEnPieceJointe()); //Le problï¿½me est que je ne sais pas comment rï¿½cuperer le fichier File dans la class ControllerMail
 //	}
 
 	public void validerOrdreMission() {
@@ -280,7 +283,9 @@ public class OrdreMissionController {
 		OrdreMission om = new OrdreMission(agent, mission, transport);
 		this.listeOM.ajouterOM(om);
 		this.ordreMissionSplit.getItems().remove(1);
-		om.sauvegarder(new File(om.getAgent().getNom()));
+		om.sauvegarderJson(this.options.getCheminOM() + "OM" + '_' + om.getAgent().getNom() + '_'
+				+ ((MissionTemporaire) om.getMission()).getLieuDeplacement() + '_'
+				+ ((MissionTemporaire) om.getMission()).getDates() + ".json");
 		afficherListOm();
 
 	}
@@ -311,7 +316,6 @@ public class OrdreMissionController {
 				this.ordreMissionSplit.getItems().set(1, this.pageAgent);
 			else
 				this.ordreMissionSplit.getItems().add(1, this.pageAgent);
-
 
 			controllerAgent = loader.getController();
 			controllerAgent.setMainApp(this);

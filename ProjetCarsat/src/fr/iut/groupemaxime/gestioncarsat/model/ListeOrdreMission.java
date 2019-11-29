@@ -17,9 +17,9 @@ public class ListeOrdreMission {
 			System.out.println("pas de fichier à charger");
 		} else {
 			for (String fichier : liste) {
-				if (fichier.endsWith(".xml")) {
-					OrdreMission om = OrdreMission
-							.importer(new File(fichier.substring(0, fichier.length() - 4)));
+				if (fichier.endsWith(".json")) {
+					OrdreMission om = new OrdreMission();
+					om = om.chargerJson(file.toString() + '/' + fichier);
 					listeOM.add(om);
 				}
 			}
