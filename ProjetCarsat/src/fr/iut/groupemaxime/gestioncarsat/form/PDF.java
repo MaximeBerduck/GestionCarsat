@@ -53,7 +53,7 @@ public class PDF {
 	}
 
 	public void remplirPDF(OrdreMission om) {
-		
+
 		if (null != om) {
 			this.cheminFichier = om.getCheminDossier() + om.getNomOM() + Constante.EXTENSION_PDF;
 			this.remplirChamp("nomPrenom", om.getAgent().getNom() + ' ' + om.getAgent().getPrenom());
@@ -92,29 +92,33 @@ public class PDF {
 				} else {
 					this.remplirChamp("vehiculePerso", "Yes");
 				}
-			} else {
-				if (om.getTransport() instanceof Train) {
-					Train train = (Train) om.getTransport();
-					this.remplirChamp("train", "Yes");
-					if ("premiereClasse".equals(train.getClasse())) {
-						this.remplirChamp("premiereClasse", "Yes");
-					} else {
-						this.remplirChamp("deuxiemeClasse", "Yes");
-					}
-					if ("oui".equals(train.getPrisParCRAMCO())) {
-						this.remplirChamp("oui", "Yes");
-					} else if ("non".equals(train.getPrisParCRAMCO())) {
-						this.remplirChamp("non", "Yes");
-					} else {
-						this.remplirChamp("autre", "Yes");
-						this.remplirChamp("non", "Yes");
-						this.remplirChamp("infos", train.getPrisParCRAMCO());
-					}
+			} else if (om.getTransport() instanceof Train) {
+				Train train = (Train) om.getTransport();
+				this.remplirChamp("train", "Yes");
+				if ("premiereClasse".equals(train.getClasse())) {
+					this.remplirChamp("premiereClasse", "Yes");
 				} else {
-
+					this.remplirChamp("deuxiemeClasse", "Yes");
+				}
+				if ("oui".equals(train.getPrisParCRAMCO())) {
+					this.remplirChamp("oui", "Yes");
+				} else if ("non".equals(train.getPrisParCRAMCO())) {
+					this.remplirChamp("non", "Yes");
+				} else {
+					this.remplirChamp("autre", "Yes");
+					this.remplirChamp("non", "Yes");
+					this.remplirChamp("infos", train.getPrisParCRAMCO());
+				}
+			} else if (om.getTransport() instanceof Avion) {
+				Avion avion = (Avion) om.getTransport();
+				this.remplirChamp("avion", "Yes");
+				if ("oui".equals(avion.getPrisParCRAMCO())) {
+					this.remplirChamp("oui", "Yes");
+				} else if ("non".equals(avion.getPrisParCRAMCO())) {
+					this.remplirChamp("non", "Yes");
 				}
 			}
-		}else {
+		} else {
 			System.out.println("oui");
 		}
 	}
