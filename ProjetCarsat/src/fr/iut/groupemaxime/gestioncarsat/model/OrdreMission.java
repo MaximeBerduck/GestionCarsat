@@ -36,38 +36,42 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	private Agent agent;
 	private Mission mission;
 	private Transport transport;
-	private String fichier;
+	private String cheminDossier;
+	private String nomOM;
 
-	public OrdreMission(Agent agent, Mission mission, Transport transport, String fichier) {
+	public OrdreMission(Agent agent, Mission mission, Transport transport, String cheminDossier, String nomOM) {
 		this.agent = agent;
 		this.mission = mission;
 		this.transport = transport;
-		this.fichier = fichier;
+		this.cheminDossier = cheminDossier;
+		this.nomOM = nomOM;
 	}
 
 	public OrdreMission(Agent agent, Mission mission, Transport transport) {
-		this(agent, mission, transport, null);
+		this(agent, mission, transport, null, null);
 	}
 
 	public OrdreMission() {
-		this(null, null, null, null);
+		this(null, null, null, null, null);
 	}
 
 	@Override
-	public void sauvegarderJson(String adresseFichier) {
-		this.fichier = adresseFichier;
-		// Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	public void sauvegarderJson(String cheminDossier) {
+		if (null == this.nomOM) {
+			this.nomOM = "OM" + '_' + this.getAgent().getNom() + '_'
+					+ ((MissionTemporaire) this.getMission()).getLieuDeplacement() + '_'
+					+ ((MissionTemporaire) this.getMission()).getDates() + ".json";
+		}
 
 		Gson gson = new GsonBuilder().registerTypeAdapter(Mission.class, new InterfaceAdapter())
 				.registerTypeAdapter(Transport.class, new InterfaceAdapter()).setPrettyPrinting().create();
 		String s = gson.toJson(this);
 		FileWriter f;
 		try {
-			f = new FileWriter(new File(adresseFichier));
+			f = new FileWriter(new File(cheminDossier + this.getNomOM()));
 			f.write(s);
 			f.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -81,8 +85,10 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		InputStream is;
 		try {
 			is = new FileInputStream(new File(adresseFichier));
+
 			// Creation du JsonReader depuis Json.
 			JsonReader reader = Json.createReader(is);
+
 			// Recuperer la structure JsonObject depuis le JsonReader.
 			JsonObject objetJson = reader.readObject();
 			reader.close();
@@ -106,11 +112,19 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		return transport;
 	}
 
-	public String getFichier() {
-		return fichier;
+	public String getCheminDossier() {
+		return cheminDossier;
 	}
 
-	public void setFichier(String fichier) {
-		this.fichier = fichier;
+	public void setCheminDossier(String cheminDossier) {
+		this.cheminDossier = cheminDossier;
+	}
+
+	public String getNomOM() {
+		return nomOM;
+	}
+
+	public void setNomOM(String nomOM) {
+		this.nomOM = nomOM;
 	}
 }

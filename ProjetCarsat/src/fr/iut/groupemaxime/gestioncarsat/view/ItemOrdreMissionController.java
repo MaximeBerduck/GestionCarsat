@@ -44,7 +44,7 @@ public class ItemOrdreMissionController {
 			pdf.sauvegarderPDF();
 			pdf.fermerPDF();
 			Desktop.getDesktop().browse(
-					new File(Constante.CHEMIN_PDF + om.getFichier() + Constante.EXTENSION_PDF).toURI());
+					new File(Constante.CHEMIN_PDF + om.getCheminDossier() + Constante.EXTENSION_PDF).toURI());
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

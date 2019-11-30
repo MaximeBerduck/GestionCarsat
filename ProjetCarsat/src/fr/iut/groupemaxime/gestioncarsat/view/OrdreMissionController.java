@@ -284,15 +284,14 @@ public class OrdreMissionController {
 		this.listeOM.ajouterOM(om);
 		this.ordreMissionSplit.getItems().remove(1);
 
-		if (om.getFichier() == null) {
-			om.setFichier(this.options.getCheminOM() + ((MissionTemporaire) om.getMission()).getLieuDeplacement() + '_'
+		if (om.getCheminDossier() == null) {
+			om.setCheminDossier(this.options.getCheminOM() + ((MissionTemporaire) om.getMission()).getLieuDeplacement() + '_'
 					+ ((MissionTemporaire) om.getMission()).getDates() + '/');
-			mainApp.creerDossier(om.getFichier());
+			mainApp.creerDossier(om.getCheminDossier());
 		}
 
-		om.sauvegarderJson(om.getFichier() + "OM" + '_' + om.getAgent().getNom() + '_'
-				+ ((MissionTemporaire) om.getMission()).getLieuDeplacement() + '_'
-				+ ((MissionTemporaire) om.getMission()).getDates() + ".json");
+		om.sauvegarderJson(om.getCheminDossier());
+		
 		afficherListOm();
 
 	}
