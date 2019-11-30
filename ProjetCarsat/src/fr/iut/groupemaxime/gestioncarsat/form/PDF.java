@@ -25,12 +25,13 @@ public class PDF {
 	private PDDocument modele;
 	private PDAcroForm formulaire;
 	private PDField champ;
-	private String nomFichier;
+	private String cheminFichier;
 
 	public PDF(File source) throws IOException {
 		this.modele = PDDocument.load(source);
 		this.formulaire = this.modele.getDocumentCatalog().getAcroForm();
 		this.champ = null;
+		this.cheminFichier = null;
 	}
 
 	public void remplirChamp(String champ, String valeur) {
@@ -44,7 +45,7 @@ public class PDF {
 	}
 
 	public void sauvegarderPDF() throws IOException {
-		this.modele.save(Constante.CHEMIN_PDF + this.nomFichier + Constante.EXTENSION_PDF);
+		this.modele.save(this.cheminFichier);
 	}
 
 	public void fermerPDF() throws IOException {
@@ -54,7 +55,7 @@ public class PDF {
 	public void remplirPDF(OrdreMission om) {
 		
 		if (null != om) {
-			this.nomFichier = om.getAgent().getNom();
+			this.cheminFichier = om.getCheminDossier() + om.getNomOM() + Constante.EXTENSION_PDF;
 			this.remplirChamp("nomPrenom", om.getAgent().getNom() + ' ' + om.getAgent().getPrenom());
 			this.remplirChamp("numCAPSSA", String.valueOf(om.getAgent().getNumCAPSSA()));
 			this.remplirChamp("fonction", om.getAgent().getFonction());

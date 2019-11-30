@@ -60,7 +60,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		if (null == this.nomOM) {
 			this.nomOM = "OM" + '_' + this.getAgent().getNom() + '_'
 					+ ((MissionTemporaire) this.getMission()).getLieuDeplacement() + '_'
-					+ ((MissionTemporaire) this.getMission()).getDates() + ".json";
+					+ ((MissionTemporaire) this.getMission()).getDates();
 		}
 
 		Gson gson = new GsonBuilder().registerTypeAdapter(Mission.class, new InterfaceAdapter())
@@ -68,7 +68,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		String s = gson.toJson(this);
 		FileWriter f;
 		try {
-			f = new FileWriter(new File(cheminDossier + this.getNomOM()));
+			f = new FileWriter(new File(cheminDossier + this.getNomOM() + Constante.EXTENSION_JSON));
 			f.write(s);
 			f.close();
 		} catch (IOException e) {
