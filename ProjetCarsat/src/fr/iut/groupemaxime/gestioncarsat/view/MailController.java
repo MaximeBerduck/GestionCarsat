@@ -1,40 +1,54 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
+import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.model.Mail;
+import fr.iut.groupemaxime.gestioncarsat.model.OrdreMission;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+
 import javafx.scene.control.TextField;
 
 public class MailController {
 	
 	@FXML 
-	private TextField expediteurTextField;
+	private TextField expediteur;
 
 	@FXML
-	private TextField destinataireTextField;
+	private TextField destinataires;
 	
 	@FXML
-	private TextField enCopieTextField;
-	
+	private TextField destEnCopie;
+
 	@FXML
 	private TextField objetDuMail;
 	
 	@FXML
-	private TextArea corpsDuMail;
+	private TextField corpsDuMail;
 	
-	@FXML
-	private Button btnPieceJointe;
-	
-	@FXML
-	private Button btnEnvoyerMail;
-	
-	@FXML
-	private Button btnAnnulerMail;
+	private OrdreMission om;
 	
 	private OrdreMissionController mainApp;
 	
@@ -42,9 +56,109 @@ public class MailController {
 		this.mainApp = mainApp;
 	}
 	
+	public Properties configurationSmtp() {
+		Properties props = new Properties();
+	    
+	    props.put("mail.smtp.socketFactory.port", "587");
+	    props.put("mail.smtp.socketFactory.class",
+	            "javax.net.ssl.SSLSocketFactory");
+	    props.put("mail.smtp.auth", "true");
+	    props.put("mail.smtp.starttls.enable", "true");
+	    
+	    //configuration pour envoyer un mail depuis et vers gmail
+	    //props.put("mail.smtp.host","smtp.gmail.com");
+	    
+	    //Configuration pour envoyer un mail depuis et vers outlook
+	    props.put("mail.smtp.host", "smtp-mail.outlook.com");
+	    
+	    props.put("mail.smtp.port", "587");
+	    
+	    return props;
+	}
+	
+	public Message configurationMessage(Session session) {
+		//création du message
+		Message message = new MimeMessage(session);
+		try {
+		    //Pièces jointes
+		    File file=new File(Constante.CHEMIN_PDF_VIDE); //Constante.CHEMIN_PDF + om.getFichier() + Constante.EXTENSION_PDF Je n'ai pas utilisé le chemin en commentaire car il bugait sur mon pc
+		    
+		    FileDataSource source = new FileDataSource(file);
+		    DataHandler handler = new DataHandler(source);
+		    MimeBodyPart fichier = new MimeBodyPart();
+		   
+		    fichier.setDataHandler(handler);
+		    fichier.setFileName(source.getName());
+		    
+		    
+		    MimeBodyPart content = new MimeBodyPart();
+		    
+		    content.setText(corpsDuMail.getText());
+		    
+
+		    
+		    MimeMultipart mimeMultipart = new MimeMultipart();
+		    
+		    mimeMultipart.addBodyPart(content);
+		    mimeMultipart.addBodyPart(fichier);
+		   
+		    
+		    
+		    message.setContent(mimeMultipart);
+		    message.setSubject(objetDuMail.getText());
+		        
+		    //Expediteur et destinataires
+			message.setFrom(new InternetAddress(expediteur.getText()));
+			
+			//Récupération de la liste des destinataires
+			List<String> listDest = getDestinatairesTab();
+			//On transforme notre list<String> en un String pour n'avoir qu'une ligne : message.setRecepients
+			String listDestEnUnString = String.join(", ",listDest);
+			//Ajout des destinataires du message
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(listDestEnUnString));
+			
+			//récupération de la liste en copie
+			List<String> listEnCopie = getDestEnCopieTab();
+			String listDestEnCopieEnUnString = String.join(", ", listEnCopie);
+			//Ajout des dest en copie du message 
+			message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(listDestEnCopieEnUnString));
+			
+			//Est censé faire l'accusé de reception setHeader
+			message.setHeader("Disposition-Notification-To",expediteur.getText());
+			message.setHeader("Return-Receipt-To",expediteur.getText());
+			
+		}catch(Exception ex){
+			Logger.getLogger(MailController.class.getName()).log(Level.SEVERE,null,ex);
+		}
+		return message;
+	}
+	
+	@FXML
+	public void envoyerMail(ActionEvent event) {
+	    Properties props = configurationSmtp();
+	    Session session = Session.getDefaultInstance(props,
+	            new javax.mail.Authenticator() {
+	                protected PasswordAuthentication getPasswordAuthentication() {
+	                    return new PasswordAuthentication(expediteur.getText(),"Azerty19");//ICI IL FAUDRA REFLECHIR POUR LA SAISIE DU MDP POUR LE MAIL DE L'EXPEDITEUR
+	                }
+	            });
+	    
+	    try {
+	    	Message message = configurationMessage(session);
+	    	if(adressesMailValides()) {
+	    		Transport.send(message);
+
+		        System.out.println("Le mail a été envoyé avec succès.");
+	    	}
+	    }catch (MessagingException e) {
+	        System.out.println("Une erreur s'est produite.");
+	        e.printStackTrace();
+	    }
+	}
+	
 	
 	private boolean adressesMailValides() {
-		//verifi les mails en destinataires et en copie
+		//verif les mails en destinataires, en expediteur et en copie si une adresse mail en copie est saisie 
 		
 		
 		//regex permet de vérifier la composition des adresses mails saisies.
@@ -53,43 +167,52 @@ public class MailController {
 		Pattern pattern = Pattern.compile(regex);
 		Boolean mailCorrect=true;
 		String erreur=""; 
-		int verifMailExpediteur = 0;
-		int verifSiMailDestIncorrect=0;
-		int verifSiMailEnCopieIncorrect =0;
 		
-		Matcher matcher1 = pattern.matcher(expediteurTextField.getText());
+		int verifMailExpediteur = 0;
+		
+		
+		//j'utilise des List<String> a la place de String[] car mon élément n'a pas de taille défini à l'avance
+		List<String> listDest = getDestinatairesTab();
+		ListIterator<String> itDest = listDest.listIterator();
+		int verifSiMailDestIncorrect=0;
+		
+		List<String> listEnCopie = getDestEnCopieTab();
+		if(listEnCopie!=null) {
+			ListIterator<String> itEnCopie = listEnCopie.listIterator();
+			int verifSiMailEnCopieIncorrect =0;
+			
+			while(itEnCopie.hasNext()) {
+				Matcher matcher = pattern.matcher(itEnCopie.next());
+				if(!matcher.matches())
+					verifSiMailEnCopieIncorrect = 1;
+			}
+				
+			if(verifSiMailEnCopieIncorrect==1) {
+				erreur+="L'une au moins des adresses mails en copie a été mal saisie !\n";
+			}
+		}
+		
+		
+		Matcher matcher1= pattern.matcher(expediteur.getText());
 		if (matcher1.matches()==false) {
 			verifMailExpediteur = 1;
 		}
 		if (verifMailExpediteur == 1) {
 			erreur+="Le mail de l'expediteur a été mail saisie !\n";
 		}
- 
-		for(String email : destinataireTextField.getText().split(",")){ 
-			//la méthode split() va permettre de vérifier chaque mail un par un, en optenant plusieurs String qui sont mis dans email 
-			//qui aura permis de remplir destinataireTextField, en séparant les adresses par des ","
-			Matcher matcher = pattern.matcher(email);
-			//permet de verifier si une adresse mail des destinataires est inccorect.
-			if (matcher.matches()==false) {
-				verifSiMailDestIncorrect =1;
-			}
-		}
 		
+		while(itDest.hasNext()) {
+			Matcher matcher = pattern.matcher(itDest.next());
+			//verif si adresse mail d'un dest est incorrect
+			if(!matcher.matches())
+				verifSiMailDestIncorrect = 1;
+		}
 		if(verifSiMailDestIncorrect==1) {
-			erreur+= "L'une des adresses mails du destinataires a été mal saisies !\n";
+			erreur+= "L'une au moins des adresses mails du destinataire a été mal saisie !\n";
 		}
 		
-		for(String email : enCopieTextField.getText().split(",")) {
-			Matcher matcher = pattern.matcher(email);
-			//permet de verifier si une adresse mail en copie est inccorect.
-			if (matcher.matches()==false) {
-				verifSiMailEnCopieIncorrect =1;
-			}
-		}
+	
 		
-		if(verifSiMailEnCopieIncorrect==1) {
-			erreur+="L'une des adresses mails en copie a été mal saisies !\n";
-		}
 		
 		if(erreur.length()>0) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -104,29 +227,59 @@ public class MailController {
 		return mailCorrect;
 	}
 	
-	public TextField getExpediteurTextField() {
-		return expediteurTextField;
-	}
-
-
-	public void setExpediteurTextField(TextField expediteurTextField) {
-		this.expediteurTextField = expediteurTextField;
+	
+	public void setChamps(Mail mail) {
+		this.expediteur.setText(mail.getExpediteur());
+		this.destinataires.setText(mail.getDestinatairesEnString());
+		this.destEnCopie.setText(mail.getEnCopieEnString());
+		this.objetDuMail.setText(mail.getObjetDuMail());
+		this.corpsDuMail.setText(mail.getCorpsDuMail());
 	}
 	
-	public TextField getDestinataireTextField() {
-		return destinataireTextField;
+	public TextField getExpediteur() {
+		return expediteur;
 	}
 
-	public void setDestinataireTextField(TextField destinataireTextField) {
-		this.destinataireTextField = destinataireTextField;
+	public void setExpediteur(TextField expediteur) {
+		this.expediteur = expediteur;
 	}
 
-	public TextField getEnCopieTextField() {
-		return enCopieTextField;
+	public TextField getDestinataires() {
+		return destinataires;
+	}
+	
+	public List<String> getDestinatairesTab() {
+		List<String> listDest = new ArrayList<String>();
+		//la méthode split permet de lister les destinataires un par un s'ils sont séparés par une ","
+		for(String email : destinataires.getText().split(",")) {
+			listDest.add(email);
+		}
+		return listDest;
 	}
 
-	public void setEnCopieTextField(TextField enCopieTextField) {
-		this.enCopieTextField = enCopieTextField;
+	public void setDestinataires(TextField destinataires) {
+		this.destinataires = destinataires;
+	}
+
+	public TextField getDestEnCopie() {
+		return destEnCopie;
+	}
+	
+	
+	public List<String> getDestEnCopieTab() {
+		List<String> listEnCopie = null; //new ArrayList<String>();
+		//la méthode split permet de lister les destinataires un par un s'ils sont séparés par une ","
+		if(!destEnCopie.getText().equals("")){
+			for(String email : destEnCopie.getText().split(",")) {
+				listEnCopie = new ArrayList<String>();
+				listEnCopie.add(email);
+			}
+		}
+		return listEnCopie;
+	}
+
+	public void setDestEnCopie(TextField destEnCopie) {
+		this.destEnCopie = destEnCopie;
 	}
 
 	public TextField getObjetDuMail() {
@@ -137,19 +290,15 @@ public class MailController {
 		this.objetDuMail = objetDuMail;
 	}
 
-	public TextArea getCorpsDuMail() {
+	public TextField getCorpsDuMail() {
 		return corpsDuMail;
 	}
 
-	public void setCorpsDuMail(TextArea corpsDuMail) {
+	public void setCorpsDuMail(TextField corpsDuMail) {
 		this.corpsDuMail = corpsDuMail;
 	}
-	
-	public void setChamps(Mail mail) {
-		this.expediteurTextField.setText(mail.getExpediteur());
-		this.destinataireTextField.setText(mail.getDestinatairesEnString());
-		this.enCopieTextField.setText(mail.getEnCopieEnString());
-		this.objetDuMail.setText(mail.getObjetDuMail());
-		this.corpsDuMail.setText(mail.getCorpsDuMail());
+
+	public OrdreMissionController getMainApp() {
+		return mainApp;
 	}
 }

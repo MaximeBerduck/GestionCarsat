@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 public class Mail {
 	private String expediteur;
-	private static String[] destinataires; //il y a des types static devant ces 2 variables car sinon je n'arrivais pas a les utiliser dans le mailController
-	private static String[] enCopie;
+	private String[] destinataires; //il y a des types static devant ces 2 variables car sinon je n'arrivais pas a les utiliser dans le mailController
+	private String[] enCopie;
 	private String objetDuMail;
 	private String corpsDuMail;
 	private File fileEnPieceJointe;
@@ -14,8 +14,8 @@ public class Mail {
 	
 	public Mail(String expe, String[] destinataires, String[] enCopie, String objetDuMail, String corpsDuMail, File fileEnPJ) {
 		this.expediteur=expe;
-		Mail.destinataires= destinataires;
-		Mail.enCopie=enCopie;
+		this.destinataires= destinataires;
+		this.enCopie=enCopie;
 		this.objetDuMail=objetDuMail;
 		this.corpsDuMail=corpsDuMail;
 		this.fileEnPieceJointe=fileEnPJ;
@@ -28,9 +28,8 @@ public class Mail {
 	public void setExpediteur(String expediteur) {
 		this.expediteur = expediteur;
 	}
-	
-	public static String[] getDestinataires(){
-		return destinataires;
+	public String[] getDestinataires(){
+		return this.destinataires;
 	}
 	
 	public String getDestinatairesEnString() {
@@ -38,11 +37,11 @@ public class Mail {
 	}
 	
 	public void setDestinataires(String[] destinataires) {
-		Mail.destinataires = destinataires;
+		this.destinataires = destinataires;
 	}
 
-	public static String[] getEnCopie() {
-		return enCopie;
+	public String[] getEnCopie() {
+		return this.enCopie;
 	}
 	
 	public String getEnCopieEnString(){
@@ -50,7 +49,7 @@ public class Mail {
 	}
 
 	public void setEnCopie(String[] enCopie) {
-		Mail.enCopie = enCopie;
+		this.enCopie = enCopie;
 	}
 
 	public String getObjetDuMail() {

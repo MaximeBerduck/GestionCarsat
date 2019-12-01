@@ -22,7 +22,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#afficherOrdreMissionPDF" prefWidth="75.0" text="Afficher" />
             <Button mnemonicParsing="false" onAction="#modifierOM" prefWidth="75.0" text="Modifier" />
-            <Button mnemonicParsing="false" onAction="#supprimerOM" prefHeight="27.0" prefWidth="81.0" text="Supprimer" />
+            <Button mnemonicParsing="false" onAction="#afficherEnvoiMail" prefHeight="27.0" prefWidth="81.0" text="Envoyer" />
          </children>
          <VBox.margin>
             <Insets />
