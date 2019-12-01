@@ -39,13 +39,12 @@ public class OrdreMissionController {
 	private AnchorPane pageMission;
 	private AnchorPane pageTransport;
 	private AnchorPane pageMenuAgent;
+	private AnchorPane pageMail;
 	private AgentController controllerAgent;
 	private MissionController controllerMission;
 	private TransportController controllerTransport;
 	private MenuAgentController controllerMenuAgent;
 	private ListeOrdreMission listeOM;
-
-	private AnchorPane pageMail;
 	private MailController controllerMail;
 
 	private Stage primaryStage;
@@ -143,6 +142,25 @@ public class OrdreMissionController {
 		}
 
 	}
+	
+	public void afficherEnvoiDuMail() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(MainApp.class.getResource("view/Mail.fxml"));
+			this.pageMail = loader.load();
+			
+			if (1 < this.ordreMissionSplit.getItems().size())
+				this.ordreMissionSplit.getItems().set(1, this.pageMail);
+			else
+				this.ordreMissionSplit.getItems().add(1, this.pageMail);
+
+			controllerMail = loader.getController();
+			controllerMail.setMainApp(this);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void afficherFormMoyenTransport() {
 		if (this.pageTransport != null) {
@@ -172,42 +190,6 @@ public class OrdreMissionController {
 			}
 		}
 	}
-
-	public void afficherEnvoiMail() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(OrdreMissionController.class.getResource("view/Mail.fxml"));
-
-			pageMail = loader.load();
-
-			controllerMail = loader.getController();
-
-			this.ordreMissionSplit.getItems().add(1, this.pageMail);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-//	public void envoyerLeMail() {
-//		String[] listDest;
-//		int i=0;
-//		String[] listEnCopie;
-//		int j=0;
-//		for (String email : controllerMail.getDestinataireTextField().getText().split(",")) {
-//			listDest[i] = email;
-//			i++;
-//		}
-//		for (String email : controllerMail.getEnCopieTextField().getText().split(",")) {
-//			listEnCopie[j] = email;
-//			j++;
-//		}
-//		Mail mail = new Mail(controllerMail.getExpediteurTextField().getText(),
-//				listDest, 
-//				listEnCopie, 
-//				controllerMail.getObjetDuMail().getText(), 
-//				controllerMail.getCorpsDuMail().getText(),
-//				controllerMail.getFileEnPieceJointe()); //Le probl�me est que je ne sais pas comment r�cuperer le fichier File dans la class ControllerMail
-//	}
 
 	public void validerOrdreMission() {
 		Agent agent = new Agent(controllerAgent.getNomTextField().getText(),

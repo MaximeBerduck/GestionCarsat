@@ -60,10 +60,10 @@ public class ItemOrdreMissionController {
 
 	// Event Listener on Button.onAction
 	@FXML
-	public void supprimerOM(ActionEvent event) {
-		this.mainApp.enleverOm(this.om);
+	public void afficherEnvoiMail(ActionEvent event) {
+		this.mainApp.afficherEnvoiDuMail();
 	}
-
+	
 	public void chargerOM(OrdreMission om) {
 		this.om = om;
 		this.lieuLabel.setText(((MissionTemporaire) om.getMission()).getLieuDeplacement());

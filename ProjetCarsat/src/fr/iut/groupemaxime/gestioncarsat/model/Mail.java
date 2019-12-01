@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class Mail {
 	private String expediteur;
-	private String[] destinataires; //il y a des types static devant ces 2 variables car sinon je n'arrivais pas a les utiliser dans le mailController
+	private String[] destinataires;
 	private String[] enCopie;
 	private String objetDuMail;
 	private String corpsDuMail;
