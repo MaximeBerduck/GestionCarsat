@@ -48,9 +48,8 @@ public class OptionsController {
 	public void modifierAgent() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(this.getClass().getResource("/"
-					+ AgentOptionsController.class.getCanonicalName().replace(".", "/").replace("Controller", "") + ".fxml"));
-			AnchorPane optionsLayout = loader.load();
+			loader.setLocation(MainApp.class.getResource("view/AgentOptions.fxml"));
+					AnchorPane optionsLayout = loader.load();
 
 			Scene scene = new Scene(optionsLayout);
 			this.optionAgentStage = new Stage();

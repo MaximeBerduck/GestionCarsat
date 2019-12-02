@@ -47,9 +47,7 @@ public class MenuAgentController {
 		ItemOrdreMissionController ctrl;
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(this.getClass().getResource("/"
-					+ ItemOrdreMissionController.class.getCanonicalName().replace(".", "/").replace("Controller", "")
-					+ ".fxml"));
+			loader.setLocation(this.getClass().getResource("ItemOrdreMission.fxml"));
 			item = loader.load();
 			
 			ctrl = loader.getController();

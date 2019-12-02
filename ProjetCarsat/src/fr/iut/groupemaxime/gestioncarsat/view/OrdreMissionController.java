@@ -61,10 +61,7 @@ public class OrdreMissionController {
 	public void afficherListOm() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(this.getClass()
-					.getResource("/"
-							+ MenuAgentController.class.getCanonicalName().replace(".", "/").replace("Controller", "")
-							+ ".fxml"));
+			loader.setLocation(this.getClass().getResource("MenuAgent.fxml"));
 
 			this.pageMenuAgent = loader.load();
 			if (!this.ordreMissionSplit.getItems().isEmpty()) {
@@ -93,10 +90,7 @@ public class OrdreMissionController {
 		} else {
 			try {
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(this.getClass()
-						.getResource("/"
-								+ AgentController.class.getCanonicalName().replace(".", "/").replace("Controller", "")
-								+ ".fxml"));
+				loader.setLocation(this.getClass().getResource("Agent.fxml"));
 				this.pageAgent = loader.load();
 
 				controllerAgent = loader.getController();
@@ -122,10 +116,7 @@ public class OrdreMissionController {
 		} else {
 			try {
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(this.getClass()
-						.getResource("/"
-								+ MissionController.class.getCanonicalName().replace(".", "/").replace("Controller", "")
-								+ ".fxml"));
+				loader.setLocation(this.getClass().getResource("Mission.fxml"));
 				pageMission = loader.load();
 
 				if (1 < this.ordreMissionSplit.getItems().size())
@@ -142,13 +133,13 @@ public class OrdreMissionController {
 		}
 
 	}
-	
+
 	public void afficherEnvoiDuMail() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(MainApp.class.getResource("view/Mail.fxml"));
+			loader.setLocation(this.getClass().getResource("Mail.fxml"));
 			this.pageMail = loader.load();
-			
+
 			if (1 < this.ordreMissionSplit.getItems().size())
 				this.ordreMissionSplit.getItems().set(1, this.pageMail);
 			else
@@ -156,7 +147,7 @@ public class OrdreMissionController {
 
 			controllerMail = loader.getController();
 			controllerMail.setMainApp(this);
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -172,9 +163,7 @@ public class OrdreMissionController {
 		} else {
 			try {
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(this.getClass().getResource(
-						"/" + TransportController.class.getCanonicalName().replace(".", "/").replace("Controller", "")
-								+ ".fxml"));
+				loader.setLocation(this.getClass().getResource("Transport.fxml"));
 				pageTransport = loader.load();
 
 				if (1 < this.ordreMissionSplit.getItems().size())
@@ -267,13 +256,13 @@ public class OrdreMissionController {
 		this.ordreMissionSplit.getItems().remove(1);
 
 		if (om.getCheminDossier() == null) {
-			om.setCheminDossier(this.options.getCheminOM() + ((MissionTemporaire) om.getMission()).getLieuDeplacement() + '_'
-					+ ((MissionTemporaire) om.getMission()).getDates() + '/');
+			om.setCheminDossier(this.options.getCheminOM() + ((MissionTemporaire) om.getMission()).getLieuDeplacement()
+					+ '_' + ((MissionTemporaire) om.getMission()).getDates() + '/');
 			mainApp.creerDossier(om.getCheminDossier());
 		}
 
 		om.sauvegarderJson(om.getCheminDossier());
-		
+
 		afficherListOm();
 
 	}
@@ -296,8 +285,7 @@ public class OrdreMissionController {
 	public void modifierOm(OrdreMission om) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(this.getClass().getResource("/"
-					+ AgentController.class.getCanonicalName().replace(".", "/").replace("Controller", "") + ".fxml"));
+			loader.setLocation(this.getClass().getResource("Agent.fxml"));
 			pageAgent = loader.load();
 
 			if (1 < this.ordreMissionSplit.getItems().size())
@@ -310,9 +298,7 @@ public class OrdreMissionController {
 			controllerAgent.setChamps(om.getAgent());
 
 			loader = new FXMLLoader();
-			loader.setLocation(this.getClass().getResource(
-					"/" + MissionController.class.getCanonicalName().replace(".", "/").replace("Controller", "")
-							+ ".fxml"));
+			loader.setLocation(this.getClass().getResource("Mission.fxml"));
 			pageMission = loader.load();
 
 			controllerMission = loader.getController();
@@ -320,10 +306,7 @@ public class OrdreMissionController {
 			controllerMission.setChamps((MissionTemporaire) om.getMission());
 
 			loader = new FXMLLoader();
-			loader.setLocation(this.getClass()
-					.getResource("/"
-							+ TransportController.class.getCanonicalName().replace(".", "/").replace("Controller", "")
-							+ ".fxml"));
+			loader.setLocation(this.getClass().getResource("Transport.fxml"));
 			pageTransport = loader.load();
 
 			controllerTransport = loader.getController();
