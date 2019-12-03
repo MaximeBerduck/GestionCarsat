@@ -147,11 +147,20 @@ public class MailController {
 	    	Message message = configurationMessage(session);
 	    	if(adressesMailValides()) {
 	    		Transport.send(message);
+	    		Alert alert = new Alert(AlertType.INFORMATION);
+	    		alert.setTitle("Etat d'envoi du mail");
+	    		alert.setHeaderText("Regardez, une information importante est présente.");
+	    		alert.setContentText("Le mail a été envoyé avec succès.");
 
-		        System.out.println("Le mail a été envoyé avec succès.");
+	    		alert.showAndWait();
 	    	}
 	    }catch (MessagingException e) {
-	        System.out.println("Une erreur s'est produite.");
+	    	Alert alert = new Alert(AlertType.ERROR);
+	    	alert.setTitle("Etat d'envoi du mail");
+	    	alert.setHeaderText("Oups une erreur est survenue.");
+	    	alert.setContentText("Veuillez vérifier que les adresses ont été saisies correctement");
+
+	    	alert.showAndWait();
 	        e.printStackTrace();
 	    }
 	}
@@ -270,8 +279,8 @@ public class MailController {
 		List<String> listEnCopie = null; //new ArrayList<String>();
 		//la méthode split permet de lister les destinataires un par un s'ils sont séparés par une ","
 		if(!destEnCopie.getText().equals("")){
+			listEnCopie = new ArrayList<String>();
 			for(String email : destEnCopie.getText().split(",")) {
-				listEnCopie = new ArrayList<String>();
 				listEnCopie.add(email);
 			}
 		}
