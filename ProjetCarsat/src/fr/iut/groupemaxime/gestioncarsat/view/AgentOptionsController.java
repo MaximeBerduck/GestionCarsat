@@ -1,6 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.view;
 
 import fr.iut.groupemaxime.gestioncarsat.model.Agent;
+import fr.iut.groupemaxime.gestioncarsat.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.model.Options;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -85,6 +86,8 @@ public class AgentOptionsController {
 		else {
 			try {
 				Integer.parseInt(numCAPSSATextField.getText());
+				if(numCAPSSATextField.getText().length() > Constante.TAILLE_NUMCAPSSA)
+					erreur += "Le numéro CAPSSA ne doit pas dépasser " + Constante.TAILLE_NUMCAPSSA + " chiffres\n";
 			} catch (NumberFormatException e) {
 				erreur += "Le champ numero CAPSSA est invalide (entrez un nombre entier)!\n";
 			}
@@ -103,6 +106,8 @@ public class AgentOptionsController {
 		else {
 			try {
 				Integer.parseInt(codeAnalytiqueTextField.getText());
+				if(codeAnalytiqueTextField.getText().length() > Constante.TAILLE_CODE_ANALYTIQUE)
+					erreur += "Le code analytique ne doit pas dépasser " + Constante.TAILLE_CODE_ANALYTIQUE + " chiffres\n";
 			} catch (NumberFormatException e) {
 				erreur += "Le champ code analytique est invalide (entrez un nombre entier)!\n";
 			}

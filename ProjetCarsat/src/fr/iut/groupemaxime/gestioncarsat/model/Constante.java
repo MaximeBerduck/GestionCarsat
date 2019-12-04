@@ -15,4 +15,9 @@ public class Constante {
 	public static String CHEMIN_IMAGES = "ressources/images/";
 	
 	public static SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
+	
+	public static int TAILLE_NUMCAPSSA = 8;
+	public static int TAILLE_CODE_ANALYTIQUE = 10;
+
+
 }
