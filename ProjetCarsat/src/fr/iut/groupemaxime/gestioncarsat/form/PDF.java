@@ -57,11 +57,21 @@ public class PDF {
 		if (null != om) {
 			this.cheminFichier = om.getCheminDossier() + om.getNomOM() + Constante.EXTENSION_PDF;
 			this.remplirChamp("nomPrenom", om.getAgent().getNom() + ' ' + om.getAgent().getPrenom());
-			this.remplirChamp("numCAPSSA", String.valueOf(om.getAgent().getNumCAPSSA()));
+			
+			char[] numCapssa = String.valueOf(om.getAgent().getNumCAPSSA()).toCharArray();
+			for (int i = 0; i < numCapssa.length; i++) {
+				this.remplirChamp("numCAPSSA" + i, String.valueOf(numCapssa[i]));
+			}
+			
 			this.remplirChamp("fonction", om.getAgent().getFonction());
 			this.remplirChamp("residenceAdmin", om.getAgent().getResidenceAdmin());
 			this.remplirChamp("uniteTravail", om.getAgent().getUniteTravail());
-			this.remplirChamp("codeAnalytique", String.valueOf(om.getAgent().getCodeAnalytique()));
+			
+			char[] codeAnalytique = String.valueOf(om.getAgent().getCodeAnalytique()).toCharArray();
+			for (int i = 0; i < codeAnalytique.length; i++) {
+				this.remplirChamp("codeAnalytique" + i, String.valueOf(codeAnalytique[i]));
+			}
+			
 			this.remplirChamp("coefficient", String.valueOf(om.getAgent().getCoefficient()));
 
 			if (om.getMission() instanceof MissionPermanent) {
