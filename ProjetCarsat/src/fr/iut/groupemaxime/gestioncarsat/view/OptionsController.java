@@ -13,11 +13,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class OptionsController {
 	@FXML
-	private TextField labelCheminDossierOM;
+	private TextField textFieldCheminDossierOM;
+	@FXML
+	private TextField textFieldCheminSignature;
 	
 	private MainApp mainApp;
 	private Options options;
@@ -29,20 +32,32 @@ public class OptionsController {
 	}
 	
 	@FXML
-	public void ouvrirFileChooser() {
+	public void ouvrirDirectoryChooser() {
 		DirectoryChooser directoryChooser = new DirectoryChooser();
 		Stage stage = new Stage();
 		File dossier = directoryChooser.showDialog(stage);
 		if(null != dossier) {
-			this.labelCheminDossierOM.setText(String.valueOf(dossier));
+			this.textFieldCheminDossierOM.setText(String.valueOf(dossier));
 			this.options.setCheminOM(String.valueOf(dossier));
+		}
+	}
+	
+	@FXML
+	public void ouvrirFileChooser() {
+		FileChooser fileChooser = new FileChooser();
+		Stage stage = new Stage();
+		File signature = fileChooser.showOpenDialog(stage);
+		if(null != signature) {
+			this.textFieldCheminSignature.setText(String.valueOf(signature));
+			this.options.setCheminSignature(String.valueOf(signature));
 		}
 	}
 	
 	public void chargerPage(MainApp mainApp, Options options) {
 		this.mainApp = mainApp;
 		this.options = options;
-		this.labelCheminDossierOM.setText(this.options.getCheminOM());
+		this.textFieldCheminDossierOM.setText(this.options.getCheminOM());
+		this.textFieldCheminSignature.setText(this.options.getCheminSignature());
 	}
 	
 	public void modifierAgent() {

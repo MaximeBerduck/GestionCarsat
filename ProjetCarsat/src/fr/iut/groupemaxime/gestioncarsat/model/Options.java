@@ -18,15 +18,17 @@ import fr.iut.groupemaxime.gestioncarsat.interfaces.DocJson;
 
 public class Options implements DocJson<Options> {
 	String cheminFichiers;
+	String cheminSignature;
 	Agent agent;
 
-	public Options(String cheminFichiers, Agent agent) {
+	public Options(String cheminFichiers, String cheminSignature, Agent agent) {
 		this.cheminFichiers = cheminFichiers;
+		this.cheminSignature = cheminSignature;
 		this.agent = agent;
 	}
 
 	public Options() {
-		this(Constante.CHEMIN_FICHIERS_DEFAUT, new Agent());
+		this(Constante.CHEMIN_FICHIERS_DEFAUT,null, new Agent());
 	}
 	
 	@Override
@@ -92,6 +94,14 @@ public class Options implements DocJson<Options> {
 	
 	public void setAgent(Agent agent) {
 		this.agent = agent;
+	}
+
+	public String getCheminSignature() {
+		return cheminSignature;
+	}
+
+	public void setCheminSignature(String cheminSignature) {
+		this.cheminSignature = cheminSignature;
 	}
 
 }

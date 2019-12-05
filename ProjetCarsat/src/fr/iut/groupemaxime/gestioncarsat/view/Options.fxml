@@ -5,13 +5,16 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.OptionsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.view.OptionsController">
    <children>
-      <TextField fx:id="labelCheminDossierOM" layoutX="258.0" layoutY="60.0" maxWidth="200.0" />
-      <Label fx:id="labelCheminDossierOMlabelCheminDossierOM" layoutX="35.0" layoutY="65.0" text="Chemin vers les ordres de mission :" />
-      <Button layoutX="419.0" layoutY="60.0" mnemonicParsing="false" onAction="#ouvrirFileChooser" text="..." />
+      <TextField fx:id="textFieldCheminDossierOM" layoutX="258.0" layoutY="60.0" maxWidth="200.0" />
+      <Label fx:id="labelCheminDossierOM" layoutX="35.0" layoutY="65.0" text="Chemin vers les ordres de mission :" />
+      <Button layoutX="419.0" layoutY="60.0" mnemonicParsing="false" onAction="#ouvrirDirectoryChooser" text="..." />
       <Button layoutX="226.0" layoutY="310.0" mnemonicParsing="false" onAction="#sauvegarder" text="Sauvegarder les options" />
-      <Label layoutX="35.0" layoutY="130.0" text="Modifier vos coordonnées :" />
-      <Button layoutX="258.0" layoutY="125.0" mnemonicParsing="false" onAction="#modifierAgent" text="Modifier" />
+      <Label layoutX="35.0" layoutY="187.0" text="Modifier vos coordonnées :" />
+      <Button layoutX="258.0" layoutY="182.0" mnemonicParsing="false" onAction="#modifierAgent" text="Modifier" />
+      <TextField fx:id="textFieldCheminSignature" layoutX="258.0" layoutY="119.0" maxWidth="200.0" />
+      <Label fx:id="labelCheminSignature" layoutX="35.0" layoutY="124.0" text="Chemin votre signature :" />
+      <Button layoutX="419.0" layoutY="119.0" mnemonicParsing="false" onAction="#ouvrirFileChooser" text="..." />
    </children>
 </AnchorPane>
