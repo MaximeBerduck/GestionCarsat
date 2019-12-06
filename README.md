@@ -1,5 +1,3 @@
-<<<<<<< HEAD
 # GestionMissionCarsat
-=======
-# GestionCarsat
->>>>>>> branch 'master' of https://github.com/MaximeBerduck/GestionCarsat.git
+
+> Cette application a pour but de gérer les missions des agents de la CARSAT Centre-Ouest.
