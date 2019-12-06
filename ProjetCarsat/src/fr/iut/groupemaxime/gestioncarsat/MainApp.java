@@ -32,7 +32,7 @@ public class MainApp extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("Carsat - Gestion des d�placement");
+		this.primaryStage.setTitle("Carsat - Gestion des déplacement");
 		this.primaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
 		this.primaryStage.setResizable(false);
 		this.options = new Options();
@@ -69,7 +69,7 @@ public class MainApp extends Application {
 			OptionsController controllerOptions = loader.getController();
 			controllerOptions.chargerPage(this, options);
 			secondaryStage.setScene(scene);
-			this.secondaryStage.setTitle("Param�tres");
+			this.secondaryStage.setTitle("Paramétres");
 			this.secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
 
 			secondaryStage.show();
