@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.DateFMController">
+   <children>
+      <HBox prefHeight="41.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <RadioButton mnemonicParsing="false" text="L">
+               <HBox.margin>
+                  <Insets left="110.0" top="20.0" />
+               </HBox.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Ma">
+               <HBox.margin>
+                  <Insets left="25.0" top="20.0" />
+               </HBox.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="Me">
+               <HBox.margin>
+                  <Insets left="25.0" top="20.0" />
+               </HBox.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="J">
+               <HBox.margin>
+                  <Insets left="25.0" top="20.0" />
+               </HBox.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="V">
+               <HBox.margin>
+                  <Insets left="25.0" top="20.0" />
+               </HBox.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="S">
+               <HBox.margin>
+                  <Insets left="25.0" top="20.0" />
+               </HBox.margin>
+            </RadioButton>
+            <RadioButton mnemonicParsing="false" text="D">
+               <HBox.margin>
+                  <Insets left="25.0" top="20.0" />
+               </HBox.margin>
+            </RadioButton>
+         </children>
+      </HBox>
+      <HBox layoutX="-2.0" prefHeight="52.0" prefWidth="600.0" AnchorPane.bottomAnchor="348.0">
+         <children>
+            <Label style="-fx-font-size: 14; -fx-font-weight: bold;" text="Etat de frais semaine du">
+               <HBox.margin>
+                  <Insets left="20.0" top="20.0" />
+               </HBox.margin>
+            </Label>
+            <DatePicker>
+               <HBox.margin>
+                  <Insets left="20.0" top="18.0" />
+               </HBox.margin>
+            </DatePicker>
+            <Label style="-fx-font-size: 14; -fx-font-weight: bold;" text="au">
+               <HBox.margin>
+                  <Insets left="20.0" top="20.0" />
+               </HBox.margin>
+            </Label>
+            <DatePicker>
+               <HBox.margin>
+                  <Insets left="20.0" top="18.0" />
+               </HBox.margin>
+            </DatePicker>
+         </children></HBox>
+      <GridPane layoutY="103.0" prefHeight="297.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="103.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="348.0" minWidth="10.0" prefWidth="292.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="452.0" minWidth="10.0" prefWidth="308.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="156.0" minHeight="9.0" prefHeight="57.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="185.0" minHeight="0.0" prefHeight="27.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="295.0" minHeight="0.0" prefHeight="102.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="15.0" right="265.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField prefHeight="25.0" prefWidth="26.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="70.0" right="210.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="55.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Départ (date et heure) :">
+               <GridPane.margin>
+                  <Insets left="100.0" />
+               </GridPane.margin></Label>
+            <DatePicker GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </DatePicker>
+            <Label text="Retour (date et heure) :" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="100.0" />
+               </GridPane.margin></Label>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="70.0" right="210.0" />
+               </GridPane.margin></TextField>
+            <TextField prefHeight="25.0" prefWidth="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="15.0" right="265.0" />
+               </GridPane.margin></TextField>
+            <Label text=":" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="55.0" />
+               </GridPane.margin></Label>
+            <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button mnemonicParsing="false" text="Suivant &gt;&gt;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
