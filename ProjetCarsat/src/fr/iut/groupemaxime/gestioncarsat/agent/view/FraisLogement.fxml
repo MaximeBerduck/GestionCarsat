@@ -35,7 +35,7 @@
                <GridPane.margin>
                   <Insets left="100.0" />
                </GridPane.margin></Label>
-            <Label text="Nombre de fortfaits découchers :" GridPane.rowIndex="2">
+            <Label text="Nombre de forfaits découchers :" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="100.0" />
                </GridPane.margin></Label>
