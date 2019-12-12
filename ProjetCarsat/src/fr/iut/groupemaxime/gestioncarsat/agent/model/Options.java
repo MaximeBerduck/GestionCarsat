@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -20,22 +21,25 @@ public class Options implements DocJson<Options> {
 	String cheminFichiers;
 	String cheminSignature;
 	Agent agent;
+	String mailAgent;
+	HashSet<String> mailsResponsables;
 
-	public Options(String cheminFichiers, String cheminSignature, Agent agent) {
+	public Options(String cheminFichiers, String cheminSignature, Agent agent, String mailAgent,
+			HashSet<String> mailsRespomsables) {
 		this.cheminFichiers = cheminFichiers;
 		this.cheminSignature = cheminSignature;
 		this.agent = agent;
+		this.mailAgent = mailAgent;
+		this.mailsResponsables = mailsRespomsables;
 	}
 
 	public Options() {
-		this(Constante.CHEMIN_FICHIERS_DEFAUT,null, new Agent());
+		this(Constante.CHEMIN_FICHIERS_DEFAUT, null, new Agent(), null, new HashSet<String>());
 	}
-	
+
 	@Override
 	public void sauvegarderJson(String adresseFichier) {
-		Gson gson = new GsonBuilder()
-				  .setPrettyPrinting()
-				  .create();
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String s = gson.toJson(this);
 		FileWriter f;
 		try {
@@ -87,11 +91,11 @@ public class Options implements DocJson<Options> {
 	public void setCheminOM(String cheminOM) {
 		this.cheminFichiers = cheminOM;
 	}
-	
+
 	public Agent getAgent() {
 		return this.agent;
 	}
-	
+
 	public void setAgent(Agent agent) {
 		this.agent = agent;
 	}
@@ -102,6 +106,22 @@ public class Options implements DocJson<Options> {
 
 	public void setCheminSignature(String cheminSignature) {
 		this.cheminSignature = cheminSignature;
+	}
+
+	public String getMailAgent() {
+		return mailAgent;
+	}
+
+	public void setMailAgent(String mailAgent) {
+		this.mailAgent = mailAgent;
+	}
+
+	public HashSet<String> getMailsResponsables() {
+		return mailsResponsables;
+	}
+
+	public void setMailsResponsables(HashSet<String> mailsResponsables) {
+		this.mailsResponsables = mailsResponsables;
 	}
 
 }

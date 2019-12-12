@@ -21,6 +21,8 @@ public class OptionsController {
 	private TextField textFieldCheminDossierOM;
 	@FXML
 	private TextField textFieldCheminSignature;
+	@FXML
+	private TextField textFieldMailAgent;
 	
 	private AgentApp mainApp;
 	private Options options;
@@ -28,7 +30,6 @@ public class OptionsController {
 	
 	@FXML
 	private void initialize() {
-
 	}
 	
 	@FXML
@@ -58,6 +59,7 @@ public class OptionsController {
 		this.options = options;
 		this.textFieldCheminDossierOM.setText(this.options.getCheminOM());
 		this.textFieldCheminSignature.setText(this.options.getCheminSignature());
+		this.textFieldMailAgent.setText(this.options.getMailAgent());
 	}
 	
 	public void modifierAgent() {
@@ -85,6 +87,7 @@ public class OptionsController {
 	}
 	
 	public void sauvegarder() {
+		this.options.setMailAgent(this.textFieldMailAgent.getText());
 		mainApp.setOptions(options);
 		mainApp.fermerSecondaryStage();
 	}
