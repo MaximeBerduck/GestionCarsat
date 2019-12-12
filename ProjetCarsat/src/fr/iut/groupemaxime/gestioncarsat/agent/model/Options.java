@@ -43,7 +43,7 @@ public class Options implements DocJson<Options> {
 		String s = gson.toJson(this);
 		FileWriter f;
 		try {
-			f = new FileWriter(new File(Constante.CHEMIN_OPTIONS));
+			f = new FileWriter(new File(adresseFichier));
 			f.write(s);
 			f.close();
 		} catch (IOException e) {
@@ -59,7 +59,7 @@ public class Options implements DocJson<Options> {
 		InputStream is;
 		if (fichierOptionsExiste()) {
 			try {
-				is = new FileInputStream(new File(Constante.CHEMIN_OPTIONS));
+				is = new FileInputStream(new File(adresseFichier));
 				// Creation du JsonReader depuis Json.
 				JsonReader reader = Json.createReader(is);
 				// Recuperer la structure JsonObject depuis le JsonReader.
@@ -71,7 +71,6 @@ public class Options implements DocJson<Options> {
 				e.printStackTrace();
 			}
 		}
-
 		return options;
 	}
 
