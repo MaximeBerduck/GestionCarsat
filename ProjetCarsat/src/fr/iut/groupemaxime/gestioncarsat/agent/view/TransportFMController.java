@@ -13,4 +13,9 @@ public class TransportFMController {
 	private void afficherFraisLogement() {
 		this.fraisMissionController.afficherFMLogement();
 	}
+	
+	@FXML
+	private void sauvegarderFrais() {
+		this.fraisMissionController.sauvegarderFrais();
+	}
 }

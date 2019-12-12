@@ -3,26 +3,25 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 import java.io.IOException;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 
 public class FraisMissionController {
 
 	@FXML
 	private SplitPane fraisMissionSplit;
+	
 	private AnchorPane pageDate;
 	private DateFMController dateController;
 
 	private AnchorPane pageLogement;
 	private LogementFMController logementController;
 
+	private AnchorPane pageTransport;
 	private TransportFMController transportController;
-	private SplitPane pageTransport;
 
 	private AgentApp agentApp;
 	private Options options;
@@ -93,7 +92,7 @@ public class FraisMissionController {
 			try {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(this.getClass().getResource("FraisTransport.fxml"));
-				this.pageLogement = loader.load();
+				this.pageTransport = loader.load();
 
 				this.transportController = loader.getController();
 				this.transportController.setFraisMissionController(this);
@@ -107,6 +106,10 @@ public class FraisMissionController {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void sauvegarderFrais() {
+		
 	}
 
 	public void setMainApp(AgentApp agentApp) {
