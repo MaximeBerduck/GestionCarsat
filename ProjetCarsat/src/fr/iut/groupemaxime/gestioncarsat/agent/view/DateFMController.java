@@ -4,16 +4,20 @@ import javafx.fxml.FXML;
 
 public class DateFMController {
 
-	private FraisMissionController mainApp;
+	private FraisMissionController fraisMissionController;
 	
-	public void setMainApp(FraisMissionController fraisMissionController) {
-		// TODO Auto-generated method stub
-		this.mainApp = mainApp;
+	public void setFraisMissionController(FraisMissionController fraisMissionController) {
+		this.fraisMissionController = fraisMissionController;
 	}
 	
 	@FXML
 	private void passerATypeOM() {
-			this.mainApp.afficherFMDate();
+			this.fraisMissionController.afficherFMDate();
+	}
+	
+	@FXML
+	private void afficherFraisLogement() {
+		this.fraisMissionController.afficherFMLogement();
 	}
 
 }
