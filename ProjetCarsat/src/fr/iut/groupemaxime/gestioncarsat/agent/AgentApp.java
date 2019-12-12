@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
+import fr.iut.groupemaxime.gestioncarsat.agent.view.FraisMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OptionsController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.RootLayoutController;
@@ -24,6 +25,9 @@ public class AgentApp extends Application {
 	private Options options;
 	private OrdreMissionController omCtrl;
 	private AnchorPane ordreMission;
+	
+	private AnchorPane fraisMission;
+	private FraisMissionController fmCtrl;
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -88,8 +92,24 @@ public class AgentApp extends Application {
 	}
 
 	public void afficherFraisMission() {
-		// TODO Auto-generated method stub
+		if (this.fmCtrl != null) {
+			this.rootLayout.setCenter(this.fraisMission);
+		} else {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(AgentApp.class.getResource("view/FraisMission.fxml"));
+				this.fraisMission = loader.load();
 
+				this.fmCtrl = loader.getController();
+				this.fmCtrl.setMainApp(this);
+				this.rootLayout.setCenter(this.fraisMission);
+				this.fmCtrl.setOptions(this.options);
+				this.fmCtrl.afficherFMDate();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void afficherHorairesTravail() {
