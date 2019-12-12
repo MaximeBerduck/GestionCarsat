@@ -1,24 +1,23 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.form;
 
-import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.PDPageTree;
+import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Mission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionPermanent;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Train;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Transport;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Voiture;
 
 public class PDF {
@@ -57,21 +56,21 @@ public class PDF {
 		if (null != om) {
 			this.cheminFichier = om.getCheminDossier() + om.getNomOM() + Constante.EXTENSION_PDF;
 			this.remplirChamp("nomPrenom", om.getAgent().getNom() + ' ' + om.getAgent().getPrenom());
-			
+
 			char[] numCapssa = String.valueOf(om.getAgent().getNumCAPSSA()).toCharArray();
 			for (int i = 0; i < numCapssa.length; i++) {
 				this.remplirChamp("numCAPSSA" + i, String.valueOf(numCapssa[i]));
 			}
-			
+
 			this.remplirChamp("fonction", om.getAgent().getFonction());
 			this.remplirChamp("residenceAdmin", om.getAgent().getResidenceAdmin());
 			this.remplirChamp("uniteTravail", om.getAgent().getUniteTravail());
-			
+
 			char[] codeAnalytique = String.valueOf(om.getAgent().getCodeAnalytique()).toCharArray();
 			for (int i = 0; i < codeAnalytique.length; i++) {
 				this.remplirChamp("codeAnalytique" + i, String.valueOf(codeAnalytique[i]));
 			}
-			
+
 			this.remplirChamp("coefficient", String.valueOf(om.getAgent().getCoefficient()));
 
 			if (om.getMission() instanceof MissionPermanent) {
@@ -130,6 +129,26 @@ public class PDF {
 			}
 		} else {
 			System.out.println("oui");
+		}
+	}
+
+	public static void signerPDF(int x, int y, int taille, OrdreMission om, String signature) {
+		String cheminFichier = om.getCheminDossier() + om.getNomOM() + Constante.EXTENSION_PDF;
+		try {
+			PDDocument pdf = PDDocument.load(new File(cheminFichier));
+			PDPage page = pdf.getPage(0);
+
+			PDImageXObject pdImage = PDImageXObject.createFromFile(signature, pdf);
+			PDPageContentStream contentStream = new PDPageContentStream(pdf, page, AppendMode.APPEND, true);
+
+			contentStream.drawImage(pdImage, x, y, taille, taille);
+			contentStream.close();
+			pdf.save(cheminFichier);
+			pdf.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

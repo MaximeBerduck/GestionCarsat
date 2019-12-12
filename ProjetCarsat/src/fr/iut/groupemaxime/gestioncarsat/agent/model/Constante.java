@@ -18,6 +18,10 @@ public class Constante {
 	
 	public static int TAILLE_NUMCAPSSA = 8;
 	public static int TAILLE_CODE_ANALYTIQUE = 10;
+	
+	public static final int TAILLE_SIGNATURE = 60;
+	public static final int SIGNATURE_AGENT_Y = 230;
+	public static final int SIGNATURE_AGENT_X = 330;
 
 
 }
