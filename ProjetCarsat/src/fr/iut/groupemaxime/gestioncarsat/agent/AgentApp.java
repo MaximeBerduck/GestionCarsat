@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeMails;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.FraisMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OptionsController;
@@ -28,6 +29,8 @@ public class AgentApp extends Application {
 	
 	private AnchorPane fraisMission;
 	private FraisMissionController fmCtrl;
+	
+	private ListeMails mailsEnAttente;
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -42,6 +45,8 @@ public class AgentApp extends Application {
 		this.options = new Options();
 		this.options = this.options.chargerJson(Constante.CHEMIN_OPTIONS);
 		this.creerDossier(this.options.getCheminOM());
+		this.mailsEnAttente = new ListeMails();
+		this.mailsEnAttente.chargerJson(Constante.CHEMIN_MAILS_EN_ATTENTE);
 		initialiseRootLayout();
 	}
 
