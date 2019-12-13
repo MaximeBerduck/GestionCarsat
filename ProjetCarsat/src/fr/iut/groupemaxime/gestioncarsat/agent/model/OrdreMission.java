@@ -38,21 +38,23 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	private Transport transport;
 	private String cheminDossier;
 	private String nomOM;
+	private boolean signatureAgent;
 
-	public OrdreMission(Agent agent, Mission mission, Transport transport, String cheminDossier, String nomOM) {
+	public OrdreMission(Agent agent, Mission mission, Transport transport, String cheminDossier, String nomOM, boolean signatureAgent) {
 		this.agent = agent;
 		this.mission = mission;
 		this.transport = transport;
 		this.cheminDossier = cheminDossier;
 		this.nomOM = nomOM;
+		this.signatureAgent = signatureAgent;
 	}
 
 	public OrdreMission(Agent agent, Mission mission, Transport transport) {
-		this(agent, mission, transport, null, null);
+		this(agent, mission, transport, null, null, false);
 	}
 
 	public OrdreMission() {
-		this(null, null, null, null, null);
+		this(null, null, null);
 	}
 
 	@Override
@@ -126,5 +128,13 @@ public class OrdreMission implements DocJson<OrdreMission> {
 
 	public void setNomOM(String nomOM) {
 		this.nomOM = nomOM;
+	}
+
+	public boolean agentSigne() {
+		return signatureAgent;
+	}
+
+	public void setSignatureAgent(boolean signatureAgent) {
+		this.signatureAgent = signatureAgent;
 	}
 }

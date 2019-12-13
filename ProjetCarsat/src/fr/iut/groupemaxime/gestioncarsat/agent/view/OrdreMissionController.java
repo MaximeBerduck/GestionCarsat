@@ -1,16 +1,10 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Date;
-
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Mail;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Mission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionPermanent;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
@@ -19,16 +13,11 @@ import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Train;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Transport;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Voiture;
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 public class OrdreMissionController {
 
@@ -252,6 +241,10 @@ public class OrdreMissionController {
 		}
 
 		OrdreMission om = new OrdreMission(agent, mission, transport);
+		if(this.controllerTransport.agentSigne()) {
+			om.setSignatureAgent(true);
+		}
+		
 		this.listeOM.ajouterOM(om);
 		this.ordreMissionSplit.getItems().remove(1);
 
@@ -328,5 +321,9 @@ public class OrdreMissionController {
 
 	public void setOptions(Options options) {
 		this.options = options;
+	}
+	
+	public Options getOptions() {
+		return this.options;
 	}
 }

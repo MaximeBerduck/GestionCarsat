@@ -135,8 +135,13 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#retournerATypeOM" prefWidth="75.0" text="Retour">
                      <HBox.margin>
-                        <Insets top="25.0" />
+                        <Insets left="-30.0" top="25.0" />
                      </HBox.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#signerOM" prefWidth="75.0" text="Signer">
+                     <HBox.margin>
+                        <Insets top="25.0" />
+                     </HBox.margin>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#validerOM" prefWidth="75.0" text="Valider">
                      <HBox.margin>
                         <Insets top="25.0" />

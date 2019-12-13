@@ -1,14 +1,24 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import java.io.File;
+import java.util.Optional;
+
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Bibliotheque;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Train;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Transport;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Voiture;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -70,6 +80,8 @@ public class TransportController {
 	@FXML
 	private VBox page;
 
+	private boolean signatureAgent = false;
+
 	public void initialize() {
 		this.page.getChildren().removeAll(trainClasseHBox, cramcoVBox);
 	}
@@ -77,20 +89,18 @@ public class TransportController {
 	public void setMainApp(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
 	}
-	
+
 	public void retournerATypeOM() {
 		this.mainApp.afficherFormTypeOM();
 	}
-	
+
 	public void validerOM() {
 		String erreur = "";
-		if(avionRadioBtn.isSelected()) {
+		if (avionRadioBtn.isSelected()) {
 			erreur = getErreurAvion();
-		}
-		else if(voitureRadioBtn.isSelected()) {
+		} else if (voitureRadioBtn.isSelected()) {
 			erreur = getErreurVoiture();
-		}
-		else {
+		} else {
 			erreur = getErreurTrain();
 		}
 		if (erreur.length() > 0) {
@@ -125,48 +135,47 @@ public class TransportController {
 		if (!this.page.getChildren().contains(detailsVoiture))
 			this.page.getChildren().add(2, detailsVoiture);
 	}
-	
+
 	public String getErreurTrain() {
 		String erreur = "";
-		if(!train1ereClasseRadioBtn.isSelected() && !train2emeClasseRadioBtn.isSelected()) {
+		if (!train1ereClasseRadioBtn.isSelected() && !train2emeClasseRadioBtn.isSelected()) {
 			erreur += "Vous n'avez pas sélectionné la classe de votre billet! \n";
 		}
 		erreur += getErreurCRAMCO();
 		return erreur;
 	}
-	
+
 	public String getErreurCRAMCO() {
 		String erreur = "";
-		if(!cramcoNonRadioBtn.isSelected() && !cramcoOuiRadioBtn.isSelected()) {
+		if (!cramcoNonRadioBtn.isSelected() && !cramcoOuiRadioBtn.isSelected()) {
 			erreur += "Vous n'avez pas dit si la C.R.A.M.C.O a pris votre billet ! \n";
 		}
 		return erreur;
 	}
-	
-	public String getErreurVoiture(){
+
+	public String getErreurVoiture() {
 		String erreur = "";
-		if(null == typeVoitureTextField.getText() || 0 == typeVoitureTextField.getText().length()) {
+		if (null == typeVoitureTextField.getText() || 0 == typeVoitureTextField.getText().length()) {
 			erreur += "Vous n'avez pas indiqué le type de la voiture! \n";
 		}
-		if(null == immatriculationTextField.getText() || 0 == immatriculationTextField.getText().length()) {
+		if (null == immatriculationTextField.getText() || 0 == immatriculationTextField.getText().length()) {
 			erreur += "Vous n'avez pas indiqué le numéro d'immatriculation de la voiture!\n";
 		}
-		if(null == nbrCVTextField.getText() || 0 == nbrCVTextField.getText().length()) {
+		if (null == nbrCVTextField.getText() || 0 == nbrCVTextField.getText().length()) {
 			erreur += "Vous n'avez pas indiqué le nombre de cheveaux de la voiture!\n";
-		}
-		else {
+		} else {
 			try {
 				Integer.parseInt(nbrCVTextField.getText());
 			} catch (NumberFormatException e) {
 				erreur += "Le champ nombre de CV est invalide (entrez un nombre entier)!\n";
 			}
 		}
-		if(!vehiculePersoRadioBtn.isSelected() && !vehiculeServiceRadioBtn.isSelected()) {
+		if (!vehiculePersoRadioBtn.isSelected() && !vehiculeServiceRadioBtn.isSelected()) {
 			erreur += "Vous n'avez pas indiqué à qui appartient la voiture";
 		}
 		return erreur;
 	}
-	
+
 	public String getErreurAvion() {
 		String erreur = "";
 		erreur += getErreurCRAMCO();
@@ -229,20 +238,20 @@ public class TransportController {
 		if (transport instanceof Avion) {
 			this.avionRadioBtn.setSelected(true);
 			this.AvionSelectionne();
-			if ("oui".equals(((Avion) transport).getPrisParCRAMCO())){
+			if ("oui".equals(((Avion) transport).getPrisParCRAMCO())) {
 				this.cramcoOuiRadioBtn.setSelected(true);
 			} else {
 				this.cramcoNonRadioBtn.setSelected(true);
 			}
-		}else if(transport instanceof Train){
+		} else if (transport instanceof Train) {
 			this.trainRadioBtn.setSelected(true);
 			this.TrainSelectionne();
-			if("premiereClasse".equals(((Train) transport).getClasse())){
+			if ("premiereClasse".equals(((Train) transport).getClasse())) {
 				this.train1ereClasseRadioBtn.setSelected(true);
 			} else {
 				this.train2emeClasseRadioBtn.setSelected(true);
 			}
-			if("oui".equals(((Train) transport).getPrisParCRAMCO())) {
+			if ("oui".equals(((Train) transport).getPrisParCRAMCO())) {
 				this.cramcoOuiRadioBtn.setSelected(true);
 			} else {
 				this.cramcoNonRadioBtn.setSelected(true);
@@ -253,16 +262,65 @@ public class TransportController {
 			this.typeVoitureTextField.setText(((Voiture) transport).getTypeVoiture());
 			this.nbrCVTextField.setText(String.valueOf(((Voiture) transport).getNbrCV()));
 			this.immatriculationTextField.setText(((Voiture) transport).getImmatriculation());
-			if ("vehiculeService".equals(((Voiture) transport).getAppartenanceVehicule())){
+			if ("vehiculeService".equals(((Voiture) transport).getAppartenanceVehicule())) {
 				this.vehiculeServiceRadioBtn.setSelected(true);
 			} else {
 				this.vehiculePersoRadioBtn.setSelected(true);
 			}
 
-			
 		}
-		
-		
+
 	}
-	
+
+	@FXML
+	public void signerOM() {
+		if (Bibliotheque.fichierExiste(this.mainApp.getOptions().getCheminSignature())) {
+			this.signatureAgent = true;
+		}
+		else {
+			TextInputDialog dialog = new TextInputDialog("");
+			dialog.setTitle("Signature non renseignée");
+			dialog.setHeaderText("Vous n'avez pas encore renseigné le chemin vers votre signature.");
+			
+			GridPane pageAlert = new GridPane();
+			TextField tfCheminSignature = new TextField();
+			tfCheminSignature.setPromptText("Chemin vers votre signature");
+			
+			Button boutonCheminSignature = new Button();
+			boutonCheminSignature.setText("...");
+			boutonCheminSignature.setOnAction(new EventHandler<ActionEvent>() {
+				 
+			    @Override
+			    public void handle(ActionEvent event) {
+			    	File cheminSignature = Bibliotheque.ouvrirFileChooser(Constante.IMAGE_FILTER);
+			    	if(null != cheminSignature) {
+			    		tfCheminSignature.setText(cheminSignature.toString());
+			    	}
+			    }
+			});
+			
+			pageAlert.add(new Label("Chemin vers votre signature :"), 0, 0);
+			pageAlert.add(tfCheminSignature, 1, 0);
+			pageAlert.add(boutonCheminSignature,2,0);
+			
+			dialog.getDialogPane().setContent(pageAlert);
+			
+			// Traditional way to get the response value.
+			dialog.showAndWait();
+			if("".equals(tfCheminSignature.getText())) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Erreur chemin signature");
+				alert.setHeaderText("Vous n'avez pas saisi l'adresse vers votre signature !");
+				alert.showAndWait();
+			}
+			else {
+				this.mainApp.getOptions().setCheminSignature(tfCheminSignature.getText());
+				this.signatureAgent = true;
+			}
+		}
+	}
+
+	public boolean agentSigne() {
+		return this.signatureAgent;
+	}
 }
