@@ -26,7 +26,7 @@ public class ItemOrdreMissionController {
 	private VBox boite;
 
 	private OrdreMission om;
-	
+
 	private OrdreMissionController mainApp;
 
 	@FXML
@@ -47,8 +47,8 @@ public class ItemOrdreMissionController {
 						mainApp.getOptions().getCheminSignature());
 			}
 			pdf.fermerPDF();
-			Desktop.getDesktop().browse(
-					new File(om.getCheminDossier() + om.getNomOM() + Constante.EXTENSION_PDF).toURI());
+			Desktop.getDesktop()
+					.browse(new File(om.getCheminDossier() + om.getNomOM() + Constante.EXTENSION_PDF).toURI());
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -67,7 +67,7 @@ public class ItemOrdreMissionController {
 	public void afficherEnvoiMail(ActionEvent event) {
 		this.mainApp.afficherEnvoiDuMail();
 	}
-	
+
 	public void chargerOM(OrdreMission om) {
 		this.om = om;
 		this.lieuLabel.setText(((MissionTemporaire) om.getMission()).getLieuDeplacement());
@@ -75,8 +75,8 @@ public class ItemOrdreMissionController {
 				+ ((MissionTemporaire) om.getMission()).getDateFin());
 
 	}
-	
+
 	public void setMainApp(OrdreMissionController mainApp) {
-		this.mainApp=mainApp;
+		this.mainApp = mainApp;
 	}
 }

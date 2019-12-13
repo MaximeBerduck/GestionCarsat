@@ -79,6 +79,8 @@ public class TransportController {
 
 	@FXML
 	private VBox page;
+	@FXML
+	private Button boutonSigner;
 
 	private boolean signatureAgent = false;
 
@@ -276,6 +278,7 @@ public class TransportController {
 	public void signerOM() {
 		if (Bibliotheque.fichierExiste(this.mainApp.getOptions().getCheminSignature())) {
 			this.signatureAgent = true;
+			this.boutonSigner.setVisible(false);
 		}
 		else {
 			TextInputDialog dialog = new TextInputDialog("");
@@ -299,14 +302,13 @@ public class TransportController {
 			    }
 			});
 			
-			pageAlert.add(new Label("Chemin vers votre signature :"), 0, 0);
+			pageAlert.add(new Label("Chemin vers votre signature : "), 0, 0);
 			pageAlert.add(tfCheminSignature, 1, 0);
 			pageAlert.add(boutonCheminSignature,2,0);
 			
 			dialog.getDialogPane().setContent(pageAlert);
-			
-			// Traditional way to get the response value.
 			dialog.showAndWait();
+			
 			if("".equals(tfCheminSignature.getText())) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Erreur chemin signature");
@@ -315,7 +317,9 @@ public class TransportController {
 			}
 			else {
 				this.mainApp.getOptions().setCheminSignature(tfCheminSignature.getText());
+				this.mainApp.getOptions().sauvegarderJson(Constante.CHEMIN_OPTIONS);
 				this.signatureAgent = true;
+				this.boutonSigner.setVisible(false);
 			}
 		}
 	}
