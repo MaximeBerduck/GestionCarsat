@@ -16,6 +16,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionPermanent;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Train;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Voiture;
@@ -127,8 +128,6 @@ public class PDF {
 					this.remplirChamp("non", "Yes");
 				}
 			}
-		} else {
-			System.out.println("oui");
 		}
 	}
 

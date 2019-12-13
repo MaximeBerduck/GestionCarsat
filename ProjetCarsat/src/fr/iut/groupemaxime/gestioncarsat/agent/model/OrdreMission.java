@@ -137,4 +137,8 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	public void setSignatureAgent(boolean signatureAgent) {
 		this.signatureAgent = signatureAgent;
 	}
+	
+	public boolean estSigne() {
+		return this.signatureAgent;
+	}
 }

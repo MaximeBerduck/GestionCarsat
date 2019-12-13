@@ -42,6 +42,10 @@ public class ItemOrdreMissionController {
 			pdf = new PDF(new File(Constante.CHEMIN_PDF_VIDE));
 			pdf.remplirPDF(om);
 			pdf.sauvegarderPDF();
+			if (om.estSigne()) {
+				PDF.signerPDF(Constante.SIGNATURE_AGENT_X, Constante.SIGNATURE_AGENT_Y, Constante.TAILLE_SIGNATURE, om,
+						mainApp.getOptions().getCheminSignature());
+			}
 			pdf.fermerPDF();
 			Desktop.getDesktop().browse(
 					new File(om.getCheminDossier() + om.getNomOM() + Constante.EXTENSION_PDF).toURI());
