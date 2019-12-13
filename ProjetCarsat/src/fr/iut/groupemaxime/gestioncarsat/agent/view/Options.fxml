@@ -9,13 +9,13 @@
    <children>
       <TextField fx:id="textFieldCheminDossierOM" layoutX="258.0" layoutY="60.0" maxWidth="200.0" />
       <Label fx:id="labelCheminDossierOM" layoutX="35.0" layoutY="65.0" text="Chemin vers les ordres de mission :" />
-      <Button layoutX="419.0" layoutY="60.0" mnemonicParsing="false" onAction="#ouvrirDirectoryChooser" text="..." />
+      <Button layoutX="419.0" layoutY="60.0" mnemonicParsing="false" onAction="#choisirCheminDossierMission" text="..." />
       <Button layoutX="225.0" layoutY="332.0" mnemonicParsing="false" onAction="#sauvegarder" text="Sauvegarder les options" />
       <Label layoutX="35.0" layoutY="178.0" text="Modifier vos coordonnées :" />
       <Button layoutX="258.0" layoutY="173.0" mnemonicParsing="false" onAction="#modifierAgent" text="Modifier" />
       <TextField fx:id="textFieldCheminSignature" layoutX="258.0" layoutY="119.0" maxWidth="200.0" />
       <Label fx:id="labelCheminSignature" layoutX="35.0" layoutY="124.0" text="Chemin votre signature :" />
-      <Button layoutX="419.0" layoutY="119.0" mnemonicParsing="false" onAction="#ouvrirFileChooser" text="..." />
+      <Button layoutX="419.0" layoutY="119.0" mnemonicParsing="false" onAction="#choisirCheminSignature" text="..." />
       <Label layoutX="35.0" layoutY="229.0" text="Votre adresse mail :" />
       <TextField fx:id="textFieldMailAgent" layoutX="258.0" layoutY="224.0" prefHeight="27.0" prefWidth="250.0" />
       <Label layoutX="35.0" layoutY="278.0" text="Mail de votre/vos responsable(s)" />
