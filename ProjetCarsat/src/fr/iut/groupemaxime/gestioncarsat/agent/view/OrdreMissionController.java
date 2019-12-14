@@ -3,6 +3,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 import java.io.IOException;
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Agent;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.AutreTransport;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Mission;
@@ -223,7 +224,7 @@ public class OrdreMissionController {
 					Integer.parseInt(controllerTransport.getNbrCVTextField().getText()), appartenanceVehicule);
 		}
 
-		else {
+		else if (controllerTransport.getTrainRadioBtn().isSelected()){
 			String classe;
 			if (controllerTransport.getTrain1ereClasseRadioBtn().isSelected()) {
 				classe = "premiereClasse";
@@ -238,6 +239,9 @@ public class OrdreMissionController {
 				cramco = "oui";
 			}
 			transport = new Train(classe, cramco);
+		}
+		else {
+			transport = new AutreTransport(controllerTransport.getAutreTransport().getText());
 		}
 
 		OrdreMission om = new OrdreMission(agent, mission, transport);

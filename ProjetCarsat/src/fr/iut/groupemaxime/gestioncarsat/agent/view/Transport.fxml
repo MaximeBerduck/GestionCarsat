@@ -45,7 +45,11 @@
                      <font>
                         <Font size="14.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
                   </RadioButton>
+                  <RadioButton fx:id="autreRadioBtn" mnemonicParsing="false" onAction="#autreSelectionne" text="Autre" toggleGroup="$moyenTransport" />
                </children>
             </HBox>
             <GridPane fx:id="detailsVoiture" prefHeight="101.0" prefWidth="400.0" vgap="20.0">
@@ -131,6 +135,27 @@
                   </HBox>
                </children>
             </VBox>
+            <GridPane fx:id="detailsAutreTransport" prefHeight="25.0" prefWidth="400.0" vgap="20.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="476.0" minWidth="10.0" prefWidth="302.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="341.0" minWidth="10.0" prefWidth="300.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="477.0" text="Préciser le moyen de transport :">
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <TextField fx:id="autreTransportTextField" prefHeight="27.0" prefWidth="161.0" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets right="150.0" />
+                     </GridPane.margin>
+                  </TextField>
+               </children>
+            </GridPane>
             <HBox prefHeight="50.0" prefWidth="600.0" spacing="35.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#retournerATypeOM" prefWidth="75.0" text="Retour">

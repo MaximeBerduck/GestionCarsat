@@ -12,6 +12,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.model.AutreTransport;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionPermanent;
@@ -127,6 +128,9 @@ public class PDF {
 				} else if ("non".equals(avion.getPrisParCRAMCO())) {
 					this.remplirChamp("non", "Yes");
 				}
+			} else if (om.getTransport() instanceof AutreTransport) {
+				this.remplirChamp("autre", "Yes");
+				this.remplirChamp("autreChamp", ((AutreTransport) om.getTransport()).getAutreTransport());
 			}
 		}
 	}

@@ -3,6 +3,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 import java.io.File;
 import java.util.Optional;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.model.AutreTransport;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
@@ -81,11 +82,17 @@ public class TransportController {
 	private VBox page;
 	@FXML
 	private Button boutonSigner;
+	@FXML
+	private RadioButton autreRadioBtn;
+	@FXML
+	private GridPane detailsAutreTransport;
+	@FXML
+	private TextField autreTransportTextField;
 
 	private boolean signatureAgent = false;
 
 	public void initialize() {
-		this.page.getChildren().removeAll(trainClasseHBox, cramcoVBox);
+		this.page.getChildren().removeAll(trainClasseHBox, cramcoVBox, detailsAutreTransport);
 	}
 
 	public void setMainApp(OrdreMissionController mainApp) {
@@ -102,8 +109,11 @@ public class TransportController {
 			erreur = getErreurAvion();
 		} else if (voitureRadioBtn.isSelected()) {
 			erreur = getErreurVoiture();
-		} else {
+		} else if (trainRadioBtn.isSelected()){
 			erreur = getErreurTrain();
+		}
+		else {
+			erreur = getErreurAutre();
 		}
 		if (erreur.length() > 0) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -119,23 +129,30 @@ public class TransportController {
 	}
 
 	public void AvionSelectionne() {
-		this.page.getChildren().removeAll(detailsVoiture, trainClasseHBox);
+		this.page.getChildren().removeAll(detailsVoiture, trainClasseHBox, detailsAutreTransport);
 		if (!this.page.getChildren().contains(cramcoVBox))
 			this.page.getChildren().add(2, cramcoVBox);
 
 	}
 
 	public void TrainSelectionne() {
-		this.page.getChildren().remove(detailsVoiture);
+		this.page.getChildren().removeAll(detailsVoiture, detailsAutreTransport);
 		if (!this.page.getChildren().contains(cramcoVBox))
 			this.page.getChildren().add(2, cramcoVBox);
 		this.page.getChildren().add(2, trainClasseHBox);
 	}
 
 	public void VoitureSelectionne() {
-		this.page.getChildren().removeAll(cramcoVBox, trainClasseHBox);
+		this.page.getChildren().removeAll(cramcoVBox, trainClasseHBox, detailsAutreTransport);
 		if (!this.page.getChildren().contains(detailsVoiture))
 			this.page.getChildren().add(2, detailsVoiture);
+	}
+
+	@FXML
+	public void autreSelectionne() {
+		this.page.getChildren().removeAll(cramcoVBox, trainClasseHBox, detailsVoiture);
+		if (!this.page.getChildren().contains(detailsAutreTransport))
+			this.page.getChildren().add(2, detailsAutreTransport);
 	}
 
 	public String getErreurTrain() {
@@ -181,6 +198,14 @@ public class TransportController {
 	public String getErreurAvion() {
 		String erreur = "";
 		erreur += getErreurCRAMCO();
+		return erreur;
+	}
+	
+	public String getErreurAutre() {
+		String erreur = "";
+		if(null == autreTransportTextField.getText() || 0 == autreTransportTextField.getText().length()) {
+			erreur += "Vous n'avez pas indiqué le moyen de transport utilisé! \n";
+		}
 		return erreur;
 	}
 
@@ -235,6 +260,10 @@ public class TransportController {
 	public TextField getNbrCVTextField() {
 		return nbrCVTextField;
 	}
+	
+	public TextField getAutreTransport() {
+		return autreTransportTextField;
+	}
 
 	public void setChamps(Transport transport) {
 		if (transport instanceof Avion) {
@@ -258,7 +287,7 @@ public class TransportController {
 			} else {
 				this.cramcoNonRadioBtn.setSelected(true);
 			}
-		} else {
+		} else if (transport instanceof Voiture) {
 			this.voitureRadioBtn.setSelected(true);
 			this.VoitureSelectionne();
 			this.typeVoitureTextField.setText(((Voiture) transport).getTypeVoiture());
@@ -270,6 +299,10 @@ public class TransportController {
 				this.vehiculePersoRadioBtn.setSelected(true);
 			}
 
+		} else {
+			this.autreRadioBtn.setSelected(true);
+			this.autreSelectionne();
+			this.autreTransportTextField.setText(((AutreTransport) transport).getAutreTransport());
 		}
 
 	}
@@ -279,43 +312,41 @@ public class TransportController {
 		if (Bibliotheque.fichierExiste(this.mainApp.getOptions().getCheminSignature())) {
 			this.signatureAgent = true;
 			this.boutonSigner.setVisible(false);
-		}
-		else {
+		} else {
 			TextInputDialog dialog = new TextInputDialog("");
 			dialog.setTitle("Signature non renseignée");
 			dialog.setHeaderText("Vous n'avez pas encore renseigné le chemin vers votre signature.");
-			
+
 			GridPane pageAlert = new GridPane();
 			TextField tfCheminSignature = new TextField();
 			tfCheminSignature.setPromptText("Chemin vers votre signature");
-			
+
 			Button boutonCheminSignature = new Button();
 			boutonCheminSignature.setText("...");
 			boutonCheminSignature.setOnAction(new EventHandler<ActionEvent>() {
-				 
-			    @Override
-			    public void handle(ActionEvent event) {
-			    	File cheminSignature = Bibliotheque.ouvrirFileChooser(Constante.IMAGE_FILTER);
-			    	if(null != cheminSignature) {
-			    		tfCheminSignature.setText(cheminSignature.toString());
-			    	}
-			    }
+
+				@Override
+				public void handle(ActionEvent event) {
+					File cheminSignature = Bibliotheque.ouvrirFileChooser(Constante.IMAGE_FILTER);
+					if (null != cheminSignature) {
+						tfCheminSignature.setText(cheminSignature.toString());
+					}
+				}
 			});
-			
+
 			pageAlert.add(new Label("Chemin vers votre signature : "), 0, 0);
 			pageAlert.add(tfCheminSignature, 1, 0);
-			pageAlert.add(boutonCheminSignature,2,0);
-			
+			pageAlert.add(boutonCheminSignature, 2, 0);
+
 			dialog.getDialogPane().setContent(pageAlert);
 			dialog.showAndWait();
-			
-			if("".equals(tfCheminSignature.getText())) {
+
+			if ("".equals(tfCheminSignature.getText())) {
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.setTitle("Erreur chemin signature");
 				alert.setHeaderText("Vous n'avez pas saisi l'adresse vers votre signature !");
 				alert.showAndWait();
-			}
-			else {
+			} else {
 				this.mainApp.getOptions().setCheminSignature(tfCheminSignature.getText());
 				this.mainApp.getOptions().sauvegarderJson(Constante.CHEMIN_OPTIONS);
 				this.signatureAgent = true;
