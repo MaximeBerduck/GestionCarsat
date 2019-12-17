@@ -2,7 +2,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.model;
 
 import java.util.Date;
 
-public class MissionTemporaire extends Mission {
+public class MissionTemporaire extends TypeMission {
 	private String dateDebut; // Format dd/mm/aaaa
 	private String heureDebut; // Format hh:mm
 	private String dateFin; // Format dd/mm/aaaa

@@ -6,7 +6,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.AutreTransport;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Mission;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.TypeMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionPermanent;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
@@ -179,7 +179,7 @@ public class OrdreMissionController {
 				controllerAgent.getUniteTavailTextField().getText(),
 				Integer.parseInt(controllerAgent.getCoefficientTextField().getText()),
 				Integer.parseInt(controllerAgent.getCodeAnalytiqueTextField().getText()));
-		Mission mission;
+		TypeMission mission;
 		if (controllerMission.getOrdrePermanentRadioBtn().isSelected()) {
 			mission = new MissionPermanent();
 		} else {

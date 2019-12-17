@@ -34,13 +34,13 @@ import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
 public class OrdreMission implements DocJson<OrdreMission> {
 
 	private Agent agent;
-	private Mission mission;
+	private TypeMission mission;
 	private Transport transport;
 	private String cheminDossier;
 	private String nomOM;
 	private boolean signatureAgent;
 
-	public OrdreMission(Agent agent, Mission mission, Transport transport, String cheminDossier, String nomOM, boolean signatureAgent) {
+	public OrdreMission(Agent agent, TypeMission mission, Transport transport, String cheminDossier, String nomOM, boolean signatureAgent) {
 		this.agent = agent;
 		this.mission = mission;
 		this.transport = transport;
@@ -49,7 +49,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		this.signatureAgent = signatureAgent;
 	}
 
-	public OrdreMission(Agent agent, Mission mission, Transport transport) {
+	public OrdreMission(Agent agent, TypeMission mission, Transport transport) {
 		this(agent, mission, transport, null, null, false);
 	}
 
@@ -65,7 +65,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 					+ ((MissionTemporaire) this.getMission()).getDates();
 		}
 
-		Gson gson = new GsonBuilder().registerTypeAdapter(Mission.class, new InterfaceAdapter())
+		Gson gson = new GsonBuilder().registerTypeAdapter(TypeMission.class, new InterfaceAdapter())
 				.registerTypeAdapter(Transport.class, new InterfaceAdapter()).setPrettyPrinting().create();
 		String s = gson.toJson(this);
 		FileWriter f;
@@ -81,7 +81,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	@Override
 	public OrdreMission chargerJson(String adresseFichier) {
 		Gson g = new Gson();
-		Gson gson = new GsonBuilder().registerTypeAdapter(Mission.class, new InterfaceAdapter())
+		Gson gson = new GsonBuilder().registerTypeAdapter(TypeMission.class, new InterfaceAdapter())
 				.registerTypeAdapter(Transport.class, new InterfaceAdapter()).setPrettyPrinting().create();
 		OrdreMission om = new OrdreMission();
 		InputStream is;
@@ -106,7 +106,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		return agent;
 	}
 
-	public Mission getMission() {
+	public TypeMission getMission() {
 		return mission;
 	}
 

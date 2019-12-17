@@ -1,9 +1,9 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.model;
 
-public abstract class Mission {
+public abstract class TypeMission {
 	String typeMission;
 	
-	public Mission(String typeMission) {
+	public TypeMission(String typeMission) {
 		this.typeMission = typeMission;
 	}
 }
