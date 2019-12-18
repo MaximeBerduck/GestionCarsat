@@ -7,6 +7,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeMails;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.FraisMissionController;
+import fr.iut.groupemaxime.gestioncarsat.agent.view.HorairesTravailController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OptionsController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.RootLayoutController;
@@ -29,6 +30,9 @@ public class AgentApp extends Application {
 	
 	private AnchorPane fraisMission;
 	private FraisMissionController fmCtrl;
+
+	private AnchorPane horairesTravail;
+	private HorairesTravailController htCtrl;
 	
 	private ListeMails mailsEnAttente;
 
@@ -118,8 +122,24 @@ public class AgentApp extends Application {
 	}
 
 	public void afficherHorairesTravail() {
-		// TODO Auto-generated method stub
+		if (this.htCtrl != null) {
+			this.rootLayout.setCenter(this.horairesTravail);
+		} else {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(AgentApp.class.getResource("view/HorairesTravail.fxml"));
+				this.horairesTravail = loader.load();
 
+				this.htCtrl = loader.getController();
+				this.htCtrl.setMainApp(this);
+				this.rootLayout.setCenter(this.horairesTravail);
+				this.htCtrl.setOptions(this.options);
+				this.htCtrl.afficherHorairesTravail();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void afficherOrdresMission() {
