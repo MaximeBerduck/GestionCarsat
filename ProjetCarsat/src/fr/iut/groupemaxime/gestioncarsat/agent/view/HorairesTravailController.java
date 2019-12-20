@@ -89,7 +89,7 @@ public class HorairesTravailController {
 	private VBox vBoxAjoutHoraire;
 	
 	@FXML
-	private SplitPane fraisMissionSplit;
+	private SplitPane horaireTravailSplit;
 	
 	private AnchorPane pageHoraires;
 	private DateHTravailController horairesController;
@@ -116,23 +116,23 @@ public class HorairesTravailController {
 
 	public void afficherHorairesTravail() {
 		if(this.pageHoraires!=null) {
-			if(0<this.fraisMissionSplit.getItems().size())
-				this.fraisMissionSplit.getItems().set(0, this.pageHoraires);
+			if(0<this.horaireTravailSplit.getItems().size())
+				this.horaireTravailSplit.getItems().set(0, this.pageHoraires);
 			else 
-				this.fraisMissionSplit.getItems().add(0, this.pageHoraires);
+				this.horaireTravailSplit.getItems().add(0, this.pageHoraires);
 		} else {
 			try {
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(this.getClass().getResource("HorairesTravail.fxml"));
+				loader.setLocation(this.getClass().getResource("DateHTravail.fxml"));
 				this.pageHoraires = loader.load();
 				
 				this.horairesController = loader.getController();
 				this.horairesController.setHorairesTravailController(this);
 				
-				if (0 < this.fraisMissionSplit.getItems().size())
-					this.fraisMissionSplit.getItems().set(0, this.pageHoraires);
+				if (0 < this.horaireTravailSplit.getItems().size())
+					this.horaireTravailSplit.getItems().set(0, this.pageHoraires);
 				else
-					this.fraisMissionSplit.getItems().add(0, this.pageHoraires);
+					this.horaireTravailSplit.getItems().add(0, this.pageHoraires);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

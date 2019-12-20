@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="pageHorairesTravail" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.DateHTravailController">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="28.0" prefWidth="600.0">
+               <children>
+                  <Label text="Date de début : " />
+                  <DatePicker fx:id="datedeb" />
+                  <Label text="Date de fin : ">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <DatePicker fx:id="datefin" />
+               </children>
+            </HBox>
+            <VBox prefHeight="81.0" prefWidth="600.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="600.0">
+                     <children>
+                        <Label fx:id="labelLundiDate" text="       Lundi xx/xx/xxxx :" />
+                        <RadioButton fx:id="aiTravailleLundi" mnemonicParsing="false" selected="true" text="J'ai travaillé">
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="pasTravailleLundi" mnemonicParsing="false" text="Je n'ai pas travaillé" />
+                        <Button mnemonicParsing="false" text="Afficher">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <VBox fx:id="vBoxAjoutHoraire" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="32.0" prefWidth="600.0">
+                           <children>
+                              <Label text="De :" />
+                              <TextField fx:id="heure1Deb" prefHeight="25.0" prefWidth="28.0" text="8" />
+                              <Label text="h" />
+                              <TextField fx:id="min1Deb" prefHeight="25.0" prefWidth="28.0" text="00" />
+                              <Label text="min" />
+                              <Label text="A :">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="heure1Fin" prefHeight="25.0" prefWidth="28.0" text="12" />
+                              <Label text="h" />
+                              <TextField fx:id="min1Fin" prefHeight="25.0" prefWidth="28.0" text="00" />
+                              <Label text="min" />
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="32.0" prefWidth="600.0">
+                           <children>
+                              <Label text="De :" />
+                              <TextField fx:id="heure2Deb" prefHeight="25.0" prefWidth="28.0" text="14" />
+                              <Label text="h" />
+                              <TextField fx:id="min2Deb" prefHeight="25.0" prefWidth="28.0" text="00" />
+                              <Label text="min" />
+                              <Label text="A :">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="heure2Fin" prefHeight="25.0" prefWidth="28.0" text="17" />
+                              <Label text="h" />
+                              <TextField fx:id="min2Fin" prefHeight="25.0" prefWidth="28.0" text="00" />
+                              <Label text="min" />
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" text="Supprimer" />
+                                    <Button mnemonicParsing="false" text="Ajouter" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets left="50.0" />
+                                 </padding>
+                              </HBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox prefHeight="21.0" prefWidth="600.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="600.0">
+                     <children>
+                        <Label fx:id="labelMardiDate" text="       Mardi xx/xx/xxxx :" />
+                        <RadioButton fx:id="aiTravailleMardi" mnemonicParsing="false" text="J'ai travaillé">
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="pasTravailleMardi" mnemonicParsing="false" text="Je n'ai pas travaillé" />
+                        <Button mnemonicParsing="false" text="Afficher">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="38.0" prefWidth="600.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="600.0">
+                     <children>
+                        <Label fx:id="labelMercrediDate" text="  Mercredi xx/xx/xxxx :" />
+                        <RadioButton fx:id="aiTravailleMercredi" mnemonicParsing="false" text="J'ai travaillé">
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="pasTravailleMercredi" mnemonicParsing="false" text="Je n'ai pas travaillé" />
+                        <Button mnemonicParsing="false" text="Afficher">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="32.0" prefWidth="600.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="600.0">
+                     <children>
+                        <Label fx:id="labelJeudiDate" text="        Jeudi xx/xx/xxxx :" />
+                        <RadioButton fx:id="aiTravailleJeudi" mnemonicParsing="false" text="J'ai travaillé">
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="pasTravailleJeudi" mnemonicParsing="false" text="Je n'ai pas travaillé" />
+                        <Button mnemonicParsing="false" text="Afficher">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </VBox>
+            <VBox prefHeight="39.0" prefWidth="600.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="600.0">
+                     <children>
+                        <Label fx:id="labelVendrediDate" text="  Vendredi xx/xx/xxxx :" />
+                        <RadioButton fx:id="aiTravailleVendredi" mnemonicParsing="false" text="J'ai travaillé">
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="pasTravailleVendredi" mnemonicParsing="false" text="Je n'ai pas travaillé" />
+                        <Button mnemonicParsing="false" text="Afficher">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="600.0">
+                     <children>
+                        <Label fx:id="labelSamediDate" text="     Samedi xx/xx/xxxx :" />
+                        <RadioButton fx:id="aiTravailleSamedi" mnemonicParsing="false" text="J'ai travaillé">
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="pasTravailleSamedi" mnemonicParsing="false" selected="true" text="Je n'ai pas travaillé" />
+                        <Button mnemonicParsing="false" text="Afficher">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="600.0">
+                     <children>
+                        <Label fx:id="labelDimancheDate" text=" Dimanche xx/xx/xxxx :" />
+                        <RadioButton fx:id="aiTravailleDimanche" mnemonicParsing="false" text="J'ai travaillé">
+                           <HBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="pasTravailleDimanche" mnemonicParsing="false" selected="true" text="Je n'ai pas travaillé" />
+                        <Button mnemonicParsing="false" text="Afficher">
+                           <HBox.margin>
+                              <Insets left="40.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <HBox prefHeight="44.0" prefWidth="342.0" />
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Enregistrer" />
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Valider" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
