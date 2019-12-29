@@ -49,6 +49,7 @@ public class App extends Application {
 
 	public void agentAppOpen() {
 		AgentApp agentApp = new AgentApp();
+		this.primaryStage.close();
 		try {
 			agentApp.start(primaryStage);
 		} catch (Exception e) {
@@ -59,6 +60,7 @@ public class App extends Application {
 	
 	public void responsableAppOpen() {
 		ResponsableApp responsableApp = new ResponsableApp();
+		this.primaryStage.close();
 		try {
 			responsableApp.start(primaryStage);
 		} catch (Exception e) {
