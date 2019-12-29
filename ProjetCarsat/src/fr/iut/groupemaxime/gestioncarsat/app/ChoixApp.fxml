@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../agent/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.app.ChoixAppController">
+   <children>
+      <Label layoutX="214.0" layoutY="46.0" scaleX="2.0" scaleY="2.0" scaleZ="2.0" text="Choisissez l'application à lancer" />
+      <Button fx:id="buttonAgent" layoutX="165.0" layoutY="187.0" mnemonicParsing="false" onAction="#ouvrirAppAgent" prefWidth="100.0" text="Agent" />
+      <Button fx:id="buttonResponsable" layoutX="346.0" layoutY="187.0" mnemonicParsing="false" onAction="#ouvrirAppResponsable" prefWidth="100.0" text="Responsable" />
+   </children>
+</AnchorPane>
