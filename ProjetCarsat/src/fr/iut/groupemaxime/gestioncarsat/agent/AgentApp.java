@@ -82,7 +82,7 @@ public class AgentApp extends Application {
 			OptionsController controllerOptions = loader.getController();
 			controllerOptions.chargerPage(this, options);
 			secondaryStage.setScene(scene);
-			this.secondaryStage.setTitle("Paramétres");
+			this.secondaryStage.setTitle("Paramètres");
 			this.secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
 
 			secondaryStage.show();

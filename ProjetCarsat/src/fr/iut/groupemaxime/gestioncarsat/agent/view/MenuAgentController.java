@@ -3,7 +3,6 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 import java.io.File;
 import java.io.IOException;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;

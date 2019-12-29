@@ -1,6 +1,5 @@
 package fr.iut.groupemaxime.gestioncarsat.app;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

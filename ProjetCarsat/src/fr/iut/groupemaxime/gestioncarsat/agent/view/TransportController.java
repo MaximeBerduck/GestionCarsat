@@ -1,7 +1,6 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import java.io.File;
-import java.util.Optional;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.model.AutreTransport;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
