@@ -5,10 +5,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="500.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.RootLayoutController">
+<BorderPane prefHeight="500.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.RootLayoutController">
    <top>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -24,55 +27,69 @@
       </HBox>
    </top>
    <left>
-      <VBox fx:id="boxMenu" prefHeight="200.0" prefWidth="150.0" stylesheets="@../menu.css" BorderPane.alignment="CENTER">
+      <GridPane fx:id="gridRoot" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="298.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" prefWidth="602.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <VBox id="hov" fx:id="boxOM" onMouseClicked="#afficherOrdresMission" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
+            <VBox fx:id="boxMenu" prefHeight="200.0" prefWidth="150.0" stylesheets="@../menu.css" GridPane.columnIndex="1">
                <children>
-                  <ImageView fx:id="imageOM" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <VBox.margin>
-                        <Insets left="55.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="150.0" text="Ordres de mission">
-                     <padding>
-                        <Insets bottom="15.0" top="15.0" />
-                     </padding></Label>
-               </children>
-            </VBox>
-            <VBox id="hov" fx:id="boxFM" onMouseClicked="#afficherFraisMission" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
-               <children>
-                  <ImageView fx:id="imageFM" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <VBox.margin>
-                        <Insets left="55.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="150.0" text="Frais de mission">
-                     <padding>
-                        <Insets bottom="15.0" top="15.0" />
-                     </padding></Label>
-               </children>
-            </VBox>
-            <VBox id="hov" fx:id="boxHT" onMouseClicked="#afficherHorairesTravail" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
-               <children>
-                  <ImageView fx:id="imageHT" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <VBox.margin>
-                        <Insets left="55.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="150.0" text="Horaires de travail" />
-               </children>
-            </VBox>
-            <VBox id="hov" fx:id="boxParam" onMouseClicked="#modifierOptions" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
-               <children>
-                  <ImageView fx:id="imageParametre" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                     <VBox.margin>
-                        <Insets left="55.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="150.0" text="Paramètres" />
+                  <VBox id="hov" fx:id="boxOM" onMouseClicked="#afficherOrdresMission" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
+                     <children>
+                        <ImageView fx:id="imageOM" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets left="55.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="35.0" prefWidth="150.0" text="Ordres de mission">
+                           <padding>
+                              <Insets bottom="15.0" top="15.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox id="hov" fx:id="boxFM" onMouseClicked="#afficherFraisMission" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
+                     <children>
+                        <ImageView fx:id="imageFM" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets left="55.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="35.0" prefWidth="150.0" text="Frais de mission">
+                           <padding>
+                              <Insets bottom="15.0" top="15.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox id="hov" fx:id="boxHT" onMouseClicked="#afficherHorairesTravail" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
+                     <children>
+                        <ImageView fx:id="imageHT" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets left="55.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="35.0" prefWidth="150.0" text="Horaires de travail" />
+                     </children>
+                  </VBox>
+                  <VBox id="hov" fx:id="boxParam" onMouseClicked="#modifierOptions" prefHeight="75.0" prefWidth="150.0" stylesheets="@../hover.css">
+                     <children>
+                        <ImageView fx:id="imageParametre" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <VBox.margin>
+                              <Insets left="55.0" />
+                           </VBox.margin>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="35.0" prefWidth="150.0" text="Paramètres" />
+                     </children>
+                  </VBox>
                </children>
             </VBox>
          </children>
-      </VBox>
+      </GridPane>
    </left>
 </BorderPane>

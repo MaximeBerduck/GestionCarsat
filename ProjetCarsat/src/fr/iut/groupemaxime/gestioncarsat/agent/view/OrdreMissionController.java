@@ -73,10 +73,10 @@ public class OrdreMissionController {
 
 	public void afficherFormInfoPerso() {
 		if (this.pageAgent != null) {
-			if (1 < this.ordreMissionSplit.getItems().size())
-				this.ordreMissionSplit.getItems().set(1, this.pageAgent);
+			if (1 == this.ordreMissionSplit.getItems().size())
+				this.ordreMissionSplit.getItems().set(0, this.pageAgent);
 			else
-				this.ordreMissionSplit.getItems().add(1, this.pageAgent);
+				this.ordreMissionSplit.getItems().add(0, this.pageAgent);
 		} else {
 			try {
 				FXMLLoader loader = new FXMLLoader();
@@ -86,10 +86,10 @@ public class OrdreMissionController {
 				controllerAgent = loader.getController();
 				controllerAgent.setMainApp(this);
 				controllerAgent.setChamps(this.options.getAgent());
-				if (1 < this.ordreMissionSplit.getItems().size())
-					this.ordreMissionSplit.getItems().set(1, this.pageAgent);
+				if (1 == this.ordreMissionSplit.getItems().size())
+					this.ordreMissionSplit.getItems().set(0, this.pageAgent);
 				else
-					this.ordreMissionSplit.getItems().add(1, this.pageAgent);
+					this.ordreMissionSplit.getItems().add(0, this.pageAgent);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -99,20 +99,20 @@ public class OrdreMissionController {
 
 	public void afficherFormTypeOM() {
 		if (this.pageMission != null) {
-			if (1 < this.ordreMissionSplit.getItems().size())
-				this.ordreMissionSplit.getItems().set(1, this.pageMission);
+			if (1 == this.ordreMissionSplit.getItems().size())
+				this.ordreMissionSplit.getItems().set(0, this.pageMission);
 			else
-				this.ordreMissionSplit.getItems().add(1, this.pageMission);
+				this.ordreMissionSplit.getItems().add(0, this.pageMission);
 		} else {
 			try {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(this.getClass().getResource("Mission.fxml"));
 				pageMission = loader.load();
 
-				if (1 < this.ordreMissionSplit.getItems().size())
-					this.ordreMissionSplit.getItems().set(1, this.pageMission);
+				if (1 == this.ordreMissionSplit.getItems().size())
+					this.ordreMissionSplit.getItems().set(0, this.pageMission);
 				else
-					this.ordreMissionSplit.getItems().add(1, this.pageMission);
+					this.ordreMissionSplit.getItems().add(0, this.pageMission);
 
 				controllerMission = loader.getController();
 				controllerMission.setMainApp(this);
@@ -130,10 +130,10 @@ public class OrdreMissionController {
 			loader.setLocation(this.getClass().getResource("Mail.fxml"));
 			this.pageMail = loader.load();
 
-			if (1 < this.ordreMissionSplit.getItems().size())
-				this.ordreMissionSplit.getItems().set(1, this.pageMail);
+			if (1 == this.ordreMissionSplit.getItems().size())
+				this.ordreMissionSplit.getItems().set(0, this.pageMail);
 			else
-				this.ordreMissionSplit.getItems().add(1, this.pageMail);
+				this.ordreMissionSplit.getItems().add(0, this.pageMail);
 
 			controllerMail = loader.getController();
 			controllerMail.setMainApp(this);
@@ -145,10 +145,10 @@ public class OrdreMissionController {
 
 	public void afficherFormMoyenTransport() {
 		if (this.pageTransport != null) {
-			if (1 < this.ordreMissionSplit.getItems().size())
-				this.ordreMissionSplit.getItems().set(1, this.pageTransport);
+			if (1 == this.ordreMissionSplit.getItems().size())
+				this.ordreMissionSplit.getItems().set(0, this.pageTransport);
 			else
-				this.ordreMissionSplit.getItems().add(1, this.pageTransport);
+				this.ordreMissionSplit.getItems().add(0, this.pageTransport);
 
 		} else {
 			try {
@@ -156,10 +156,10 @@ public class OrdreMissionController {
 				loader.setLocation(this.getClass().getResource("Transport.fxml"));
 				pageTransport = loader.load();
 
-				if (1 < this.ordreMissionSplit.getItems().size())
-					this.ordreMissionSplit.getItems().set(1, this.pageTransport);
+				if (1 == this.ordreMissionSplit.getItems().size())
+					this.ordreMissionSplit.getItems().set(0, this.pageTransport);
 				else
-					this.ordreMissionSplit.getItems().add(1, this.pageTransport);
+					this.ordreMissionSplit.getItems().add(0, this.pageTransport);
 
 				controllerTransport = loader.getController();
 				controllerTransport.setMainApp(this);
@@ -250,7 +250,7 @@ public class OrdreMissionController {
 		}
 		
 		this.listeOM.ajouterOM(om);
-		this.ordreMissionSplit.getItems().remove(1);
+		this.ordreMissionSplit.getItems().remove(0);
 
 		if (om.getCheminDossier() == null) {
 			om.setCheminDossier(this.options.getCheminOM() + ((MissionTemporaire) om.getMission()).getLieuDeplacement()
@@ -260,8 +260,7 @@ public class OrdreMissionController {
 
 		om.sauvegarderJson(om.getCheminDossier());
 
-		afficherListOm();
-
+		this.mainApp.afficherListeMissions();
 	}
 
 	public void creerNouveauOm() {
@@ -285,10 +284,10 @@ public class OrdreMissionController {
 			loader.setLocation(this.getClass().getResource("Agent.fxml"));
 			pageAgent = loader.load();
 
-			if (1 < this.ordreMissionSplit.getItems().size())
-				this.ordreMissionSplit.getItems().set(1, this.pageAgent);
+			if (1 == this.ordreMissionSplit.getItems().size())
+				this.ordreMissionSplit.getItems().set(0, this.pageAgent);
 			else
-				this.ordreMissionSplit.getItems().add(1, this.pageAgent);
+				this.ordreMissionSplit.getItems().add(0, this.pageAgent);
 
 			controllerAgent = loader.getController();
 			controllerAgent.setMainApp(this);

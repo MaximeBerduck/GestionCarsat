@@ -3,6 +3,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 import java.io.File;
 import java.io.IOException;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
@@ -21,18 +22,21 @@ public class MenuAgentController {
 	private OrdreMissionController mainApp;
 	private Options options;
 
+	private AgentApp agentApp;
+
 	public void setMenuController(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
 	}
+
 	public void setOptions(Options options) {
 		this.options = options;
 	}
 
 	@FXML
 	public void initialize() {
-		
+
 	}
-	
+
 	public void chargerOM() {
 		listeOm = new ListeOrdreMission();
 		listeOm.chargerOM(new File(options.getCheminOM()));
@@ -48,10 +52,11 @@ public class MenuAgentController {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(this.getClass().getResource("ItemOrdreMission.fxml"));
 			item = loader.load();
-			
+
 			ctrl = loader.getController();
 			ctrl.setMainApp(this.mainApp);
 			ctrl.chargerOM(om);
+			ctrl.setMenuAgent(this);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -61,14 +66,26 @@ public class MenuAgentController {
 
 	@FXML
 	public void creerNouveauOm(ActionEvent event) {
-		this.mainApp.creerNouveauOm();
-
+		this.agentApp.getOMCtrl().creerNouveauOm();
 	}
+
 	public ListeOrdreMission getListeOm() {
 		return this.listeOm;
 	}
-	
+
 	public void setListeOm(ListeOrdreMission listeOm) {
 		this.listeOm = listeOm;
+	}
+
+	public void setAgentApp(AgentApp agentApp) {
+		this.agentApp = agentApp;
+	}
+
+	public void setMissionActive(OrdreMission om) {
+		this.agentApp.setMissionActive(om);
+	}
+
+	public AgentApp getAgentApp() {
+		return this.agentApp;
 	}
 }

@@ -5,6 +5,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 public class RootLayoutController {
@@ -39,6 +40,10 @@ public class RootLayoutController {
 
 	@FXML
 	private VBox boxMenu;
+	
+	@FXML
+	private GridPane gridRoot;
+
 
 	@FXML
 	private void initialize() {
@@ -73,5 +78,9 @@ public class RootLayoutController {
 
 	public void setMainApp(AgentApp mainApp) {
 		this.mainApp = mainApp;
+	}
+	
+	public GridPane getGridRoot() {
+		return this.gridRoot;
 	}
 }

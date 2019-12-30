@@ -1,11 +1,10 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
-import javafx.fxml.FXML;
-
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
@@ -13,12 +12,13 @@ import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -28,7 +28,7 @@ public class ItemOrdreMissionController {
 	@FXML
 	private Label datesLabel;
 	@FXML
-	private VBox boite;
+	private VBox itemMission;
 	@FXML
 	private Button boutonSigner;
 	@FXML
@@ -37,6 +37,9 @@ public class ItemOrdreMissionController {
 	private OrdreMission om;
 
 	private OrdreMissionController mainApp;
+	
+	private AgentApp agentApp;
+	private MenuAgentController menuAgentCtrl;
 
 	@FXML
 	private void initialize() {
@@ -53,7 +56,7 @@ public class ItemOrdreMissionController {
 			pdf.sauvegarderPDF();
 			if (om.estSigne()) {
 				PDF.signerPDF(Constante.SIGNATURE_AGENT_X, Constante.SIGNATURE_AGENT_Y, Constante.TAILLE_SIGNATURE, om,
-						mainApp.getOptions().getCheminSignature());
+						menuAgentCtrl.getAgentApp().getOptions().getCheminSignature());
 			}
 			pdf.fermerPDF();
 			Desktop.getDesktop()
@@ -130,6 +133,11 @@ public class ItemOrdreMissionController {
 			}
 		}
 	}
+	
+	@FXML
+	public void choisirMission() {
+		this.menuAgentCtrl.setMissionActive(this.om);
+	}
 
 	public void chargerOM(OrdreMission om) {
 		this.om = om;
@@ -149,5 +157,9 @@ public class ItemOrdreMissionController {
 
 	public void setMainApp(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
+	}
+	
+	public void setMenuAgent(MenuAgentController menuAgentCtrl) {
+		this.menuAgentCtrl = menuAgentCtrl;
 	}
 }
