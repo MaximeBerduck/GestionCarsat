@@ -35,8 +35,6 @@ public class ItemOrdreMissionController {
 	private Button boutonEnvoyer;
 
 	private OrdreMission om;
-
-	private OrdreMissionController mainApp;
 	
 	private AgentApp agentApp;
 	private MenuAgentController menuAgentCtrl;
@@ -71,18 +69,18 @@ public class ItemOrdreMissionController {
 	// Event Listener on Button.onAction
 	@FXML
 	public void modifierOM(ActionEvent event) {
-		this.mainApp.modifierOm(this.om);
+		menuAgentCtrl.getAgentApp().modifierOm(this.om);
 	}
 
 	// Event Listener on Button.onAction
 	@FXML
 	public void afficherEnvoiMail(ActionEvent event) {
-		this.mainApp.afficherEnvoiDuMail();
+		menuAgentCtrl.getAgentApp().afficherEnvoiDuMail();
 	}
 	
 	@FXML
 	public void signerOM() {
-		if (Bibliotheque.fichierExiste(this.mainApp.getOptions().getCheminSignature())) {
+		if (Bibliotheque.fichierExiste(menuAgentCtrl.getAgentApp().getOptions().getCheminSignature())) {
 			this.om.setSignatureAgent(true);
 			this.boutonSigner.setVisible(false);
 			this.boutonEnvoyer.setVisible(true);
@@ -124,12 +122,12 @@ public class ItemOrdreMissionController {
 				alert.showAndWait();
 			}
 			else {
-				this.mainApp.getOptions().setCheminSignature(tfCheminSignature.getText());
-				this.mainApp.getOptions().sauvegarderJson(Constante.CHEMIN_OPTIONS);
+				menuAgentCtrl.getAgentApp().getOptions().setCheminSignature(tfCheminSignature.getText());
+				menuAgentCtrl.getAgentApp().getOptions().sauvegarderJson(Constante.CHEMIN_OPTIONS);
 				this.om.setSignatureAgent(true);
 				this.boutonSigner.setVisible(false);
 				this.boutonEnvoyer.setVisible(true);
-				this.om.sauvegarderJson(this.mainApp.getOptions().getCheminOM());
+				this.om.sauvegarderJson(menuAgentCtrl.getAgentApp().getOptions().getCheminOM());
 			}
 		}
 	}
@@ -153,10 +151,6 @@ public class ItemOrdreMissionController {
 			this.boutonEnvoyer.setVisible(false);
 		}
 
-	}
-
-	public void setMainApp(OrdreMissionController mainApp) {
-		this.mainApp = mainApp;
 	}
 	
 	public void setMenuAgent(MenuAgentController menuAgentCtrl) {

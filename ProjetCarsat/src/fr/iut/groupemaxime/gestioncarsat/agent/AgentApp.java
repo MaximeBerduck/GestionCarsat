@@ -114,66 +114,54 @@ public class AgentApp extends Application {
 
 	public void afficherFraisMission() {
 		retirerDocActif();
-		if (this.fmCtrl != null) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AgentApp.class.getResource("view/FraisMission.fxml"));
+			this.fraisMission = loader.load();
+
+			this.fmCtrl = loader.getController();
+			this.fmCtrl.setMainApp(this);
 			this.rootLayoutCtrl.getGridRoot().add(this.fraisMission, 2, 0);
-		} else {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(AgentApp.class.getResource("view/FraisMission.fxml"));
-				this.fraisMission = loader.load();
+			this.fmCtrl.setOptions(this.options);
+			this.fmCtrl.afficherFMDate();
 
-				this.fmCtrl = loader.getController();
-				this.fmCtrl.setMainApp(this);
-				this.rootLayoutCtrl.getGridRoot().add(this.fraisMission, 2, 0);
-				this.fmCtrl.setOptions(this.options);
-				this.fmCtrl.afficherFMDate();
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	public void afficherHorairesTravail() {
 		retirerDocActif();
-		if (this.htCtrl != null) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AgentApp.class.getResource("view/HorairesTravail.fxml"));
+			this.horairesTravail = loader.load();
+
+			this.htCtrl = loader.getController();
+			this.htCtrl.setMainApp(this);
 			this.rootLayoutCtrl.getGridRoot().add(this.horairesTravail, 2, 0);
-		} else {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(AgentApp.class.getResource("view/HorairesTravail.fxml"));
-				this.horairesTravail = loader.load();
+			this.htCtrl.setOptions(this.options);
+			this.htCtrl.afficherHorairesTravail();
 
-				this.htCtrl = loader.getController();
-				this.htCtrl.setMainApp(this);
-				this.rootLayoutCtrl.getGridRoot().add(this.horairesTravail, 2, 0);
-				this.htCtrl.setOptions(this.options);
-				this.htCtrl.afficherHorairesTravail();
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	public void afficherOrdresMission() {
 		retirerDocActif();
-		if (this.omCtrl != null) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AgentApp.class.getResource("view/OrdreMission.fxml"));
+			this.ordreMission = loader.load();
+
+			this.omCtrl = loader.getController();
+			this.omCtrl.setMainApp(this);
 			this.rootLayoutCtrl.getGridRoot().add(this.ordreMission, 2, 0);
-		} else {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(AgentApp.class.getResource("view/OrdreMission.fxml"));
-				this.ordreMission = loader.load();
+			this.omCtrl.setOptions(this.options);
 
-				this.omCtrl = loader.getController();
-				this.omCtrl.setMainApp(this);
-				this.rootLayoutCtrl.getGridRoot().add(this.ordreMission, 2, 0);
-				this.omCtrl.setOptions(this.options);
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -217,9 +205,18 @@ public class AgentApp extends Application {
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.horairesTravail);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.fraisMission);
 	}
-	
+
 	public Options getOptions() {
 		return this.options;
+	}
+
+	public void modifierOm(OrdreMission om) {
+		this.afficherOrdresMission();
+		this.omCtrl.modifierOm(om);
+	}
+
+	public void afficherEnvoiDuMail() {
+		this.omCtrl.afficherEnvoiDuMail();
 	}
 
 }

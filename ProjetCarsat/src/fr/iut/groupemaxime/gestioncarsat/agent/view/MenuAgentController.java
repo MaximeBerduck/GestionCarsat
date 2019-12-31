@@ -54,7 +54,6 @@ public class MenuAgentController {
 			item = loader.load();
 
 			ctrl = loader.getController();
-			ctrl.setMainApp(this.mainApp);
 			ctrl.chargerOM(om);
 			ctrl.setMenuAgent(this);
 
