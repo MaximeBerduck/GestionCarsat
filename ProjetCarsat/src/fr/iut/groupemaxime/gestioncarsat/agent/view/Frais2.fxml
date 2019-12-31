@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.Frais2Controller">
+   <children>
+      <Label layoutX="236.0" layoutY="6.0" text="Journée du " />
+      <Label fx:id="dateJournée" layoutX="300.0" layoutY="6.0" text="12/34/5678" />
+      <Label layoutX="252.0" layoutY="47.0" text="Frais de transport" underline="true" />
+      <Label layoutX="216.0" layoutY="74.0" text="Type :" />
+      <TextField fx:id="typeFraisTransport" layoutX="279.0" layoutY="69.0" prefHeight="27.0" prefWidth="115.0" />
+      <Label layoutX="207.0" layoutY="112.0" text="Montant :" />
+      <TextField fx:id="montantFraisTransport" layoutX="313.0" layoutY="107.0" prefHeight="27.0" prefWidth="42.0" />
+      <Label layoutX="363.0" layoutY="112.0" text="€" />
+      <VBox fx:id="nbrKilometreLayout" alignment="TOP_CENTER" layoutX="-1.0" layoutY="161.0" prefHeight="100.0" prefWidth="600.0">
+         <children>
+            <Label text="Nombre de kilomètres parcourus" underline="true">
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </Label>
+            <AnchorPane fx:id="vehiculeServiceLayout" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="199.0" layoutY="10.0" text="Véhicule de service :" />
+                  <TextField fx:id="nbrKmService" layoutX="345.0" layoutY="7.0" prefHeight="27.0" prefWidth="42.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="vehiculePersonnelLayout" prefHeight="40.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="200.0" layoutY="12.0" text="Véhicule personnel :" />
+                  <TextField fx:id="nbrKmPerso" layoutX="345.0" layoutY="7.0" prefHeight="27.0" prefWidth="42.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <Button layoutX="451.0" layoutY="294.0" mnemonicParsing="false" onAction="#validerJournee" text="Journée suivante" />
+      <Button layoutX="366.0" layoutY="294.0" mnemonicParsing="false" onAction="#retourFrais1" text="Retour" />
+   </children>
+</AnchorPane>

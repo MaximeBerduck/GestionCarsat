@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="348.0" prefWidth="600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.Frais1Controller">
+   <children>
+      <Label layoutX="236.0" layoutY="6.0" text="Journée du " />
+      <Label fx:id="dateJournée" layoutX="300.0" layoutY="6.0" text="12/34/5678" />
+      <Label layoutX="148.0" layoutY="41.0" text="Heure de départ :" />
+      <TextField fx:id="heureDepart" layoutX="268.0" layoutY="36.0" prefHeight="27.0" prefWidth="42.0" />
+      <Label layoutX="332.0" layoutY="41.0" text=":" />
+      <TextField fx:id="minDepart" layoutX="358.0" layoutY="36.0" prefHeight="27.0" prefWidth="42.0" />
+      <Label layoutX="150.0" layoutY="75.0" text="Heure de retour :" />
+      <TextField fx:id="heureRetour" layoutX="268.0" layoutY="70.0" prefHeight="27.0" prefWidth="42.0" />
+      <Label layoutX="332.0" layoutY="75.0" text=":" />
+      <TextField fx:id="minRetour" layoutX="358.0" layoutY="70.0" prefHeight="27.0" prefWidth="42.0" />
+      <Label layoutX="253.0" layoutY="110.0" text="Nombre de repas" underline="true" />
+      <Label layoutX="223.0" layoutY="137.0" text="Forfait :" />
+      <TextField fx:id="nbrForfaitRepas" layoutX="316.0" layoutY="132.0" prefHeight="27.0" prefWidth="42.0" />
+      <Label layoutX="212.0" layoutY="175.0" text="Justificatif :" />
+      <TextField fx:id="nbrJustificatifRepas" layoutX="316.0" layoutY="170.0" prefHeight="27.0" prefWidth="42.0" />
+      <Label layoutX="236.0" layoutY="207.0" text="Nombre de découchers" underline="true" />
+      <Label layoutX="222.0" layoutY="236.0" text="Forfait :" />
+      <TextField fx:id="nbrForfaitDecouchers" layoutX="315.0" layoutY="231.0" prefHeight="27.0" prefWidth="42.0" />
+      <Label layoutX="211.0" layoutY="274.0" text="Justificatif :" />
+      <TextField fx:id="nbrJustifDecouchers" layoutX="315.0" layoutY="269.0" prefHeight="27.0" prefWidth="42.0" />
+      <Button layoutX="449.0" layoutY="307.0" mnemonicParsing="false" onAction="#afficherFrais2" text="Suivant &gt;&gt;" />
+   </children>
+</AnchorPane>

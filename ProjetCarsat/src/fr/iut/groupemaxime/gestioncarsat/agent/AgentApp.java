@@ -17,6 +17,8 @@ import fr.iut.groupemaxime.gestioncarsat.agent.view.RootLayoutController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -113,20 +115,31 @@ public class AgentApp extends Application {
 	}
 
 	public void afficherFraisMission() {
-		retirerDocActif();
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(AgentApp.class.getResource("view/FraisMission.fxml"));
-			this.fraisMission = loader.load();
+		if (null == missionActive) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Erreur");
+			alert.setHeaderText("Vous n'avez pas sélectionné de mission !");
+			alert.setContentText("Veuillez choisir une mission avant de recommencer.");
 
-			this.fmCtrl = loader.getController();
-			this.fmCtrl.setMainApp(this);
-			this.rootLayoutCtrl.getGridRoot().add(this.fraisMission, 2, 0);
-			this.fmCtrl.setOptions(this.options);
-			this.fmCtrl.afficherFMDate();
+			alert.showAndWait();
+		} else {
+			retirerDocActif();
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(AgentApp.class.getResource("view/FraisMission.fxml"));
+				this.fraisMission = loader.load();
 
-		} catch (IOException e) {
-			e.printStackTrace();
+				this.fmCtrl = loader.getController();
+				this.fmCtrl.setAgentApp(this);
+				this.rootLayoutCtrl.getGridRoot().add(this.fraisMission, 2, 0);
+				this.fmCtrl.setOptions(this.options);
+				this.fmCtrl.setMissionActive(missionActive);
+
+				this.fmCtrl.creerAllJours();
+				this.fmCtrl.afficherPremierJour();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

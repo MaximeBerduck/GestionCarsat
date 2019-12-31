@@ -16,7 +16,9 @@ public class Constante {
 	public static String CHEMIN_IMAGES = "ressources/images/";
 	public static final String CHEMIN_MAILS_EN_ATTENTE = "target/mails_en_attente.json";
 
-	public static SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd-MM-yyyy");
+	public static SimpleDateFormat FORMAT_DATE_TIRET = new SimpleDateFormat("dd-MM-yyyy");
+	public static SimpleDateFormat FORMAT_DATE_SLASH = new SimpleDateFormat("dd/MM/yyyy");
+
 
 	public static int TAILLE_NUMCAPSSA = 8;
 	public static int TAILLE_CODE_ANALYTIQUE = 10;
