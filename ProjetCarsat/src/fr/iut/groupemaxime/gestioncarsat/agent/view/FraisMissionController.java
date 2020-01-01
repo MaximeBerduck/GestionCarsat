@@ -10,6 +10,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Voiture;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
@@ -68,6 +69,8 @@ public class FraisMissionController {
 		this.ajouterJour(stringDebut);
 		this.listeDate.put(i, stringDebut);
 		this.listeDateInverse.put(stringDebut, i);
+		
+		System.out.println(stringFin);
 
 		while (!stringDebut.equals(stringFin)) {
 			Calendar c = Calendar.getInstance();
@@ -106,6 +109,18 @@ public class FraisMissionController {
 			frais2Ctrl.setDateJournee(jour);
 			frais2Ctrl.setPageFrais2(pageFrais2);
 			frais2Ctrl.setFmController(this);
+			
+			if("voiture".equals(this.missionActive.getTransport().getTypeTransport())) {
+				frais2Ctrl.getNbrKilometreLayout().setDisable(false);
+				Voiture voiture = (Voiture) this.missionActive.getTransport();
+				if("vehiculeService".equals(voiture.getAppartenanceVehicule())) {
+					frais2Ctrl.getNbrKmService().setVisible(true);
+					frais2Ctrl.getNbrKmPerso().setVisible(false);
+				}
+			}
+			else {
+				frais2Ctrl.getNbrKilometreLayout().setVisible(false);
+			}
 
 			this.listeFrais2.put(jour, frais2Ctrl);
 		} catch (IOException e) {

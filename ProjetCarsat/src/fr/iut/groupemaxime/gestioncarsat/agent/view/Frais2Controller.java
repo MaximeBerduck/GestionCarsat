@@ -36,7 +36,7 @@ public class Frais2Controller {
 	public void setPageFrais2(AnchorPane pageFrais2) {
 		this.pageFrais2 = pageFrais2;
 	}
-	
+
 	public void setFmController(FraisMissionController fmController) {
 		this.fmController = fmController;
 	}
@@ -60,4 +60,17 @@ public class Frais2Controller {
 	public AnchorPane getPage() {
 		return this.pageFrais2;
 	}
+
+	public VBox getNbrKilometreLayout() {
+		return nbrKilometreLayout;
+	}
+
+	public TextField getNbrKmService() {
+		return nbrKmService;
+	}
+
+	public TextField getNbrKmPerso() {
+		return nbrKmPerso;
+	}
+
 }

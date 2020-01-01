@@ -1,6 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.model;
 
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 import javafx.stage.FileChooser;
 
@@ -18,6 +19,8 @@ public class Constante {
 
 	public static SimpleDateFormat FORMAT_DATE_TIRET = new SimpleDateFormat("dd-MM-yyyy");
 	public static SimpleDateFormat FORMAT_DATE_SLASH = new SimpleDateFormat("dd/MM/yyyy");
+	public static DateTimeFormatter FORMATTER_DATEPICKER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 
 
 	public static int TAILLE_NUMCAPSSA = 8;

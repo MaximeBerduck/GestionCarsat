@@ -5,6 +5,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.AutreTransport;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.TypeMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionPermanent;
@@ -183,13 +184,11 @@ public class OrdreMissionController {
 		if (controllerMission.getOrdrePermanentRadioBtn().isSelected()) {
 			mission = new MissionPermanent();
 		} else {
-			String dateDebut = String.valueOf(controllerMission.getDateDebut().getValue().getDayOfMonth()) + '/'
-					+ String.valueOf(controllerMission.getDateDebut().getValue().getMonthValue()) + '/'
-					+ String.valueOf(controllerMission.getDateDebut().getValue().getYear());
-			String dateFin = String.valueOf(controllerMission.getDateFin().getValue().getDayOfMonth()) + '/'
-					+ String.valueOf(controllerMission.getDateFin().getValue().getMonthValue()) + '/'
-					+ String.valueOf(controllerMission.getDateFin().getValue().getYear());
+			String dateDebut = Constante.FORMATTER_DATEPICKER.format(controllerMission.getDateDebut().getValue());
+			String dateFin = Constante.FORMATTER_DATEPICKER.format(controllerMission.getDateFin().getValue());
+
 			String titre;
+
 			if (controllerMission.getFonctionHabituelleRadioBtn().isSelected()) {
 				titre = "fonctionHabituelle";
 			} else {
@@ -224,7 +223,7 @@ public class OrdreMissionController {
 					Integer.parseInt(controllerTransport.getNbrCVTextField().getText()), appartenanceVehicule);
 		}
 
-		else if (controllerTransport.getTrainRadioBtn().isSelected()){
+		else if (controllerTransport.getTrainRadioBtn().isSelected()) {
 			String classe;
 			if (controllerTransport.getTrain1ereClasseRadioBtn().isSelected()) {
 				classe = "premiereClasse";
@@ -239,16 +238,15 @@ public class OrdreMissionController {
 				cramco = "oui";
 			}
 			transport = new Train(classe, cramco);
-		}
-		else {
+		} else {
 			transport = new AutreTransport(controllerTransport.getAutreTransport().getText());
 		}
 
 		OrdreMission om = new OrdreMission(agent, mission, transport);
-		if(this.controllerTransport.agentSigne()) {
+		if (this.controllerTransport.agentSigne()) {
 			om.setSignatureAgent(true);
 		}
-		
+
 		this.listeOM.ajouterOM(om);
 		this.ordreMissionSplit.getItems().remove(0);
 
@@ -325,7 +323,7 @@ public class OrdreMissionController {
 	public void setOptions(Options options) {
 		this.options = options;
 	}
-	
+
 	public Options getOptions() {
 		return this.options;
 	}
