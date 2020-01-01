@@ -83,6 +83,10 @@ public class Options implements DocJson<Options> {
 		return existe;
 	}
 
+	public void ajouterResponsable(String responsable) {
+		this.mailsResponsables.add(responsable);
+	}
+
 	public String getCheminOM() {
 		return this.cheminFichiers;
 	}
@@ -121,6 +125,11 @@ public class Options implements DocJson<Options> {
 
 	public void setMailsResponsables(HashSet<String> mailsResponsables) {
 		this.mailsResponsables = mailsResponsables;
+	}
+
+	public void modifierResponsable(String oldResponsable, String newResponsable) {
+		this.mailsResponsables.remove(oldResponsable);
+		this.mailsResponsables.add(newResponsable);
 	}
 
 }

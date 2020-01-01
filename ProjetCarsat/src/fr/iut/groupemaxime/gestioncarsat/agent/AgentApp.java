@@ -95,6 +95,7 @@ public class AgentApp extends Application {
 			this.secondaryStage = new Stage();
 			OptionsController controllerOptions = loader.getController();
 			controllerOptions.chargerPage(this, options);
+			controllerOptions.chargerMailsResponsable();
 			secondaryStage.setScene(scene);
 			this.secondaryStage.setTitle("Paramètres");
 			this.secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));

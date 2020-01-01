@@ -2,15 +2,19 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -22,6 +26,8 @@ public class OptionsController {
 	private TextField textFieldCheminSignature;
 	@FXML
 	private TextField textFieldMailAgent;
+	@FXML
+	private ChoiceBox<String> selectMailResponsable;
 
 	private AgentApp mainApp;
 	private Options options;
@@ -29,6 +35,9 @@ public class OptionsController {
 
 	@FXML
 	private void initialize() {
+		this.selectMailResponsable.getSelectionModel().selectedItemProperty()
+				.addListener((ObservableValue<? extends String> observable, String oldValue,
+						String newValue) -> modifierResponsable(newValue));
 	}
 
 	@FXML
@@ -46,6 +55,27 @@ public class OptionsController {
 		if (null != signature) {
 			this.textFieldCheminSignature.setText(String.valueOf(signature));
 			this.options.setCheminSignature(String.valueOf(signature));
+		}
+	}
+
+	@FXML
+	public void ajouterResponsable() {
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle("Ajouter un nouveau responsable");
+		dialog.setContentText("Veuillez saisir l'adresse mail du responsable à ajouter :");
+
+		// Récupérer la valeur saisie
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()) {
+			this.options.ajouterResponsable(result.get());
+			this.selectMailResponsable.getItems().add(result.get());
+		}
+	}
+
+	public void chargerMailsResponsable() {
+		if (!this.options.getMailsResponsables().isEmpty()) {
+			for (String res : this.options.getMailsResponsables())
+				this.selectMailResponsable.getItems().add(res);
 		}
 	}
 
@@ -85,5 +115,19 @@ public class OptionsController {
 		this.options.setMailAgent(this.textFieldMailAgent.getText());
 		mainApp.setOptions(options);
 		mainApp.fermerSecondaryStage();
+	}
+
+	public void modifierResponsable(String responsable) {
+		TextInputDialog dialog = new TextInputDialog(responsable);
+		dialog.setTitle("Modifier l'adresse de votre responsable");
+		dialog.setContentText("Veuillez modifier l'adresse mail de votre responsable :");
+
+		// Récupérer la valeur saisie
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()) {
+			this.options.modifierResponsable(responsable, result.get());
+			this.selectMailResponsable.getItems().remove(responsable);
+			this.selectMailResponsable.getItems().add(result.get());
+		}
 	}
 }
