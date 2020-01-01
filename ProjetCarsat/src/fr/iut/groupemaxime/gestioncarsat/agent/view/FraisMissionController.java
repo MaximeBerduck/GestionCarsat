@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
+import fr.iut.groupemaxime.gestioncarsat.agent.fraisModel.FraisJournalier;
+import fr.iut.groupemaxime.gestioncarsat.agent.fraisModel.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
@@ -33,12 +35,20 @@ public class FraisMissionController {
 	private HashMap<Integer, String> listeDate;
 	private HashMap<String, Integer> listeDateInverse;
 
+	private FraisMission fraisMission;
+
 	@FXML
 	private void initialize() {
 		this.listeFrais1 = new HashMap<String, Frais1Controller>();
 		this.listeFrais2 = new HashMap<String, Frais2Controller>();
 		this.listeDate = new HashMap<Integer, String>();
 		this.listeDateInverse = new HashMap<String, Integer>();
+	}
+
+	public void creerFraisMission() {
+		this.fraisMission = new FraisMission(this.missionActive.getCheminDossier() + "FM_"
+				+ ((MissionTemporaire) this.missionActive.getMission()).getLieuDeplacement() + '_'
+				+ ((MissionTemporaire) this.missionActive.getMission()).getDates() + Constante.EXTENSION_JSON);
 	}
 
 	public void sauvegarderFrais() {
@@ -51,13 +61,56 @@ public class FraisMissionController {
 
 	public void afficherJourSuivant(String date) {
 		Integer i = this.listeDateInverse.get(date);
+		this.sauvegarderJournee(date);
 		i++;
 		if (null != this.listeDate.get(i)) {
 			this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
 		} else {
 			this.fraisMissionSplit.getItems().remove(1);
 			this.fraisMissionSplit.getItems().remove(0);
+			this.fraisMission.sauvegarderJson(this.fraisMission.getAdresseFichier());
 		}
+	}
+
+	private void sauvegarderJournee(String date) {
+		// TODO Ajouter conditions pour ajouter dans les frais
+		FraisJournalier fraisJournalier = new FraisJournalier(date);
+		Frais1Controller frais1Ctrl = this.listeFrais1.get(date);
+		Frais2Controller frais2Ctrl = this.listeFrais2.get(date);
+
+		if (!"".equals(frais1Ctrl.getHeureDepart()))
+			fraisJournalier.setHeureDepart(
+					String.valueOf(frais1Ctrl.getHeureDepart()) + ":" + String.valueOf(frais1Ctrl.getMinDepart()));
+
+		if (!"".equals(frais1Ctrl.getHeureRetour()))
+			fraisJournalier.setHeureRetour(
+					String.valueOf(frais1Ctrl.getHeureRetour()) + ":" + String.valueOf(frais1Ctrl.getMinRetour()));
+
+		if (!"".equals(frais1Ctrl.getNbrForfaitRepas()))
+			fraisJournalier.setNbrRepasForfait(Integer.parseInt(frais1Ctrl.getNbrForfaitRepas()));
+
+		if (!"".equals(frais1Ctrl.getNbrJustificatifRepas()))
+			fraisJournalier.setNbrRepasJustif(Integer.parseInt(frais1Ctrl.getNbrJustificatifRepas()));
+
+		if (!"".equals(frais1Ctrl.getNbrForfaitDecouchers()))
+			fraisJournalier.setNbrDecouchForfait(Integer.parseInt(frais1Ctrl.getNbrForfaitDecouchers()));
+
+		if (!"".equals(frais1Ctrl.getNbrJustifDecouchers()))
+			fraisJournalier.setNbrDecouchJustif(Integer.parseInt(frais1Ctrl.getNbrJustifDecouchers()));
+
+		if (!"".equals(frais2Ctrl.getTypeFraisTransport()))
+			fraisJournalier.setTypeFraisTransport(frais2Ctrl.getTypeFraisTransport());
+
+		if (!"".equals(frais2Ctrl.getMontantFraisTransport()))
+			fraisJournalier.setMontantFraisTransport(Integer.parseInt(frais2Ctrl.getMontantFraisTransport()));
+
+		if (!"".equals(frais2Ctrl.getNbrKmPerso()))
+			fraisJournalier.setNbrKmVehiPerso(Integer.parseInt(frais2Ctrl.getNbrKmPerso()));
+
+		if (!"".equals(frais2Ctrl.getNbrKmService()))
+			fraisJournalier.setNbrKmVehiService(Integer.parseInt(frais2Ctrl.getNbrKmService()));
+
+		this.fraisMission.ajouterJournee(fraisJournalier);
 	}
 
 	public void creerAllJours() {
@@ -69,8 +122,6 @@ public class FraisMissionController {
 		this.ajouterJour(stringDebut);
 		this.listeDate.put(i, stringDebut);
 		this.listeDateInverse.put(stringDebut, i);
-		
-		System.out.println(stringFin);
 
 		while (!stringDebut.equals(stringFin)) {
 			Calendar c = Calendar.getInstance();
@@ -109,16 +160,15 @@ public class FraisMissionController {
 			frais2Ctrl.setDateJournee(jour);
 			frais2Ctrl.setPageFrais2(pageFrais2);
 			frais2Ctrl.setFmController(this);
-			
-			if("voiture".equals(this.missionActive.getTransport().getTypeTransport())) {
+
+			if ("voiture".equals(this.missionActive.getTransport().getTypeTransport())) {
 				frais2Ctrl.getNbrKilometreLayout().setDisable(false);
 				Voiture voiture = (Voiture) this.missionActive.getTransport();
-				if("vehiculeService".equals(voiture.getAppartenanceVehicule())) {
-					frais2Ctrl.getNbrKmService().setVisible(true);
-					frais2Ctrl.getNbrKmPerso().setVisible(false);
+				if ("vehiculeService".equals(voiture.getAppartenanceVehicule())) {
+					frais2Ctrl.getVehiculeServiceLayout().setVisible(true);
+					frais2Ctrl.getVehiculePersoLayout().setVisible(false);
 				}
-			}
-			else {
+			} else {
 				frais2Ctrl.getNbrKilometreLayout().setVisible(false);
 			}
 

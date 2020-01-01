@@ -52,4 +52,41 @@ public class Frais1Controller {
 	public void setFmController(FraisMissionController fmController) {
 		this.fmController = fmController;
 	}
+
+	public String getHeureDepart() {
+		return heureDepart.getText();
+	}
+
+	public String getMinDepart() {
+		return minDepart.getText();
+	}
+
+	public String getHeureRetour() {
+		return heureRetour.getText();
+	}
+
+	public String getMinRetour() {
+		return minRetour.getText();
+	}
+
+	public String getNbrForfaitRepas() {
+		return nbrForfaitRepas.getText();
+	}
+
+	public String getNbrJustificatifRepas() {
+		return nbrJustificatifRepas.getText();
+	}
+
+	public String getNbrForfaitDecouchers() {
+		return nbrForfaitDecouchers.getText();
+	}
+
+	public String getNbrJustifDecouchers() {
+		return nbrJustifDecouchers.getText();
+	}
+
+	public FraisMissionController getFmController() {
+		return fmController;
+	}
+
 }

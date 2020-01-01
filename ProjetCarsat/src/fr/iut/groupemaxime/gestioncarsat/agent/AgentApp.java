@@ -134,6 +134,7 @@ public class AgentApp extends Application {
 				this.rootLayoutCtrl.getGridRoot().add(this.fraisMission, 2, 0);
 				this.fmCtrl.setOptions(this.options);
 				this.fmCtrl.setMissionActive(missionActive);
+				this.fmCtrl.creerFraisMission();
 
 				this.fmCtrl.creerAllJours();
 				this.fmCtrl.afficherSemaine();

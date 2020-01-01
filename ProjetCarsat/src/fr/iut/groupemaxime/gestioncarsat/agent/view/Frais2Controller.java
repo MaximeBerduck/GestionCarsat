@@ -64,13 +64,29 @@ public class Frais2Controller {
 	public VBox getNbrKilometreLayout() {
 		return nbrKilometreLayout;
 	}
-
-	public TextField getNbrKmService() {
-		return nbrKmService;
+	
+	public AnchorPane getVehiculeServiceLayout() {
+		return this.vehiculeServiceLayout;
+	}
+	
+	public AnchorPane getVehiculePersoLayout() {
+		return this.vehiculePersonnelLayout;
 	}
 
-	public TextField getNbrKmPerso() {
-		return nbrKmPerso;
+	public String getNbrKmService() {
+		return nbrKmService.getText();
+	}
+
+	public String getNbrKmPerso() {
+		return nbrKmPerso.getText();
+	}
+	
+	public String getTypeFraisTransport() {
+		return typeFraisTransport.getText();
+	}
+	
+	public String getMontantFraisTransport() {
+		return montantFraisTransport.getText();
 	}
 
 }
