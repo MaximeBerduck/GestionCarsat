@@ -19,7 +19,7 @@ public class ListeOrdreMission {
 			for (File dossier : listeDossiers) {
 				if (dossier.isDirectory()) {
 					for (String fichier : dossier.list()) {
-						if (fichier.endsWith(".json")) {
+						if (fichier.endsWith(".json") && fichier.startsWith("OM_")) {
 							OrdreMission om = new OrdreMission();
 							om = om.chargerJson(dossier.toString() + '/' + fichier);
 							listeOM.add(om);
