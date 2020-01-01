@@ -20,18 +20,12 @@ public class FraisMissionController {
 	@FXML
 	private SplitPane fraisMissionSplit;
 
-	private AnchorPane pageDate;
-	private DateFMController dateController;
-
-	private AnchorPane pageLogement;
-	private LogementFMController logementController;
-
-	private AnchorPane pageTransport;
-	private TransportFMController transportController;
-
 	private AgentApp agentApp;
 	private Options options;
 	private OrdreMission missionActive;
+
+	private FraisDateSemaineController fraisDateSemaineCtrl;
+	private AnchorPane pageFraisDateSemaine;
 
 	private HashMap<String, Frais1Controller> listeFrais1;
 	private HashMap<String, Frais2Controller> listeFrais2;
@@ -46,98 +40,21 @@ public class FraisMissionController {
 		this.listeDateInverse = new HashMap<String, Integer>();
 	}
 
-	public void afficherFMDate() {
-		if (this.pageDate != null) {
-			if (0 < this.fraisMissionSplit.getItems().size())
-				this.fraisMissionSplit.getItems().set(0, this.pageDate);
-			else
-				this.fraisMissionSplit.getItems().add(0, this.pageDate);
-		} else {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(this.getClass().getResource("FraisDate.fxml"));
-				this.pageDate = loader.load();
-
-				this.dateController = loader.getController();
-				this.dateController.setFraisMissionController(this);
-
-				if (0 < this.fraisMissionSplit.getItems().size())
-					this.fraisMissionSplit.getItems().set(0, this.pageDate);
-				else
-					this.fraisMissionSplit.getItems().add(0, this.pageDate);
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
-
-	public void afficherFMLogement() {
-		if (this.pageLogement != null) {
-			if (0 < this.fraisMissionSplit.getItems().size())
-				this.fraisMissionSplit.getItems().set(0, this.pageLogement);
-			else
-				this.fraisMissionSplit.getItems().add(0, this.pageLogement);
-		} else {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(this.getClass().getResource("FraisLogement.fxml"));
-				this.pageLogement = loader.load();
-
-				this.logementController = loader.getController();
-				this.logementController.setFraisMissionController(this);
-				if (0 < this.fraisMissionSplit.getItems().size())
-					this.fraisMissionSplit.getItems().set(0, this.pageLogement);
-				else
-					this.fraisMissionSplit.getItems().add(0, this.pageLogement);
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public void afficherFMTransport() {
-		if (this.pageTransport != null) {
-			if (0 < this.fraisMissionSplit.getItems().size())
-				this.fraisMissionSplit.getItems().set(0, this.pageTransport);
-			else
-				this.fraisMissionSplit.getItems().add(0, this.pageTransport);
-		} else {
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(this.getClass().getResource("FraisTransport.fxml"));
-				this.pageTransport = loader.load();
-
-				this.transportController = loader.getController();
-				this.transportController.setFraisMissionController(this);
-
-				if (0 < this.fraisMissionSplit.getItems().size())
-					this.fraisMissionSplit.getItems().set(0, this.pageTransport);
-				else
-					this.fraisMissionSplit.getItems().add(0, this.pageTransport);
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
 	public void sauvegarderFrais() {
 		// TODO
 	}
 
 	public void afficherPremierJour() {
-		this.fraisMissionSplit.getItems().add(0, this.listeFrais1.get(this.listeDate.get(0)).getPage());
+		this.fraisMissionSplit.getItems().add(1, this.listeFrais1.get(this.listeDate.get(0)).getPage());
 	}
 
 	public void afficherJourSuivant(String date) {
 		Integer i = this.listeDateInverse.get(date);
 		i++;
 		if (null != this.listeDate.get(i)) {
-			this.fraisMissionSplit.getItems().set(0, this.listeFrais1.get(this.listeDate.get(i)).getPage());
+			this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
 		} else {
+			this.fraisMissionSplit.getItems().remove(1);
 			this.fraisMissionSplit.getItems().remove(0);
 		}
 	}
@@ -196,6 +113,27 @@ public class FraisMissionController {
 		}
 	}
 
+	public void afficherSemaine() {
+		String stringDebut = ((MissionTemporaire) missionActive.getMission()).getDateDebut();
+		String stringFin = ((MissionTemporaire) missionActive.getMission()).getDateFin();
+
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(this.getClass().getResource("FraisDateSemaine.fxml"));
+			this.pageFraisDateSemaine = loader.load();
+
+			this.fraisDateSemaineCtrl = loader.getController();
+
+			this.fraisDateSemaineCtrl.setLabelDateDebut(stringDebut);
+			this.fraisDateSemaineCtrl.setLabelDateFin(stringFin);
+
+			this.fraisMissionSplit.getItems().add(0, this.pageFraisDateSemaine);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public void setAgentApp(AgentApp agentApp) {
 		this.agentApp = agentApp;
 	}
@@ -209,6 +147,10 @@ public class FraisMissionController {
 	}
 
 	public void afficherFrais2(String date) {
-		this.fraisMissionSplit.getItems().set(0, this.listeFrais2.get(date).getPage());
+		this.fraisMissionSplit.getItems().set(1, this.listeFrais2.get(date).getPage());
+	}
+
+	public void retourFrais1(String date) {
+		this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(date).getPage());
 	}
 }

@@ -136,6 +136,7 @@ public class AgentApp extends Application {
 				this.fmCtrl.setMissionActive(missionActive);
 
 				this.fmCtrl.creerAllJours();
+				this.fmCtrl.afficherSemaine();
 				this.fmCtrl.afficherPremierJour();
 			} catch (IOException e) {
 				e.printStackTrace();

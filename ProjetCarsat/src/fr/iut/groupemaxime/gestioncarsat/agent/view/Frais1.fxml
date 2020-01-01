@@ -27,6 +27,6 @@
       <TextField fx:id="nbrForfaitDecouchers" layoutX="315.0" layoutY="231.0" prefHeight="27.0" prefWidth="42.0" />
       <Label layoutX="211.0" layoutY="274.0" text="Justificatif :" />
       <TextField fx:id="nbrJustifDecouchers" layoutX="315.0" layoutY="269.0" prefHeight="27.0" prefWidth="42.0" />
-      <Button layoutX="449.0" layoutY="307.0" mnemonicParsing="false" onAction="#afficherFrais2" text="Suivant &gt;&gt;" />
+      <Button layoutX="451.0" layoutY="294.0" mnemonicParsing="false" onAction="#afficherFrais2" text="Suivant" />
    </children>
 </AnchorPane>
