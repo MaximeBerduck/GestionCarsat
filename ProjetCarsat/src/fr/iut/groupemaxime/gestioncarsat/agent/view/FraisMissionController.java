@@ -73,7 +73,6 @@ public class FraisMissionController {
 	}
 
 	private void sauvegarderJournee(String date) {
-		// TODO Ajouter conditions pour ajouter dans les frais
 		FraisJournalier fraisJournalier = new FraisJournalier(date);
 		Frais1Controller frais1Ctrl = this.listeFrais1.get(date);
 		Frais2Controller frais2Ctrl = this.listeFrais2.get(date);

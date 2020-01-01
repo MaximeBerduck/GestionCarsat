@@ -64,11 +64,11 @@ public class Frais2Controller {
 	public VBox getNbrKilometreLayout() {
 		return nbrKilometreLayout;
 	}
-	
+
 	public AnchorPane getVehiculeServiceLayout() {
 		return this.vehiculeServiceLayout;
 	}
-	
+
 	public AnchorPane getVehiculePersoLayout() {
 		return this.vehiculePersonnelLayout;
 	}
@@ -80,11 +80,11 @@ public class Frais2Controller {
 	public String getNbrKmPerso() {
 		return nbrKmPerso.getText();
 	}
-	
+
 	public String getTypeFraisTransport() {
 		return typeFraisTransport.getText();
 	}
-	
+
 	public String getMontantFraisTransport() {
 		return montantFraisTransport.getText();
 	}
