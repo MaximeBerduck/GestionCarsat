@@ -23,6 +23,16 @@
                   <Insets left="20.0" top="15.0" />
                </HBox.margin>
             </ImageView>
+            <Label text="Mission sélectionnée : ">
+               <HBox.margin>
+                  <Insets left="250.0" right="5.0" top="40.0" />
+               </HBox.margin>
+            </Label>
+            <Label fx:id="labelMissionSelectionnee" text="Aucune">
+               <HBox.margin>
+                  <Insets top="40.0" />
+               </HBox.margin>
+            </Label>
          </children>
       </HBox>
    </top>

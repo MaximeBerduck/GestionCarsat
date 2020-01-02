@@ -8,6 +8,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.model.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeMails;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.FraisMissionController;
@@ -209,6 +210,9 @@ public class AgentApp extends Application {
 
 	public void setMissionActive(OrdreMission missionActive) {
 		this.missionActive = missionActive;
+		MissionTemporaire mission = (MissionTemporaire) missionActive.getMission();
+		String om = mission.getLieuDeplacement() + " du " + mission.getDateDebut() + " au " + mission.getDateFin();
+		this.rootLayoutCtrl.setLabelMissionSelectionnee(om);
 	}
 
 	public void retirerDocActif() {

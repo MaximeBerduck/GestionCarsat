@@ -3,6 +3,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -43,6 +44,9 @@ public class RootLayoutController {
 
 	@FXML
 	private GridPane gridRoot;
+	
+	@FXML
+	private Label labelMissionSelectionnee;
 
 	@FXML
 	private void initialize() {
@@ -77,6 +81,10 @@ public class RootLayoutController {
 	@FXML
 	public void afficherHorairesTravail() {
 		agentApp.afficherHorairesTravail();
+	}
+	
+	public void setLabelMissionSelectionnee(String om) {
+		this.labelMissionSelectionnee.setText(om);
 	}
 
 	public void setAgentApp(AgentApp agentApp) {
