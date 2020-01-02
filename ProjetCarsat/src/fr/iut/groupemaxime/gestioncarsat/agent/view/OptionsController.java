@@ -61,6 +61,7 @@ public class OptionsController {
 	@FXML
 	public void ajouterResponsable() {
 		TextInputDialog dialog = new TextInputDialog();
+		dialog.setHeaderText("Ajout d'un responsable");
 		dialog.setTitle("Ajouter un nouveau responsable");
 		dialog.setContentText("Veuillez saisir l'adresse mail du responsable à ajouter :");
 
@@ -119,6 +120,7 @@ public class OptionsController {
 
 	public void modifierResponsable(String responsable) {
 		TextInputDialog dialog = new TextInputDialog(responsable);
+		dialog.setHeaderText("Modification de l'adresse d'un responsable");
 		dialog.setTitle("Modifier l'adresse de votre responsable");
 		dialog.setContentText("Veuillez modifier l'adresse mail de votre responsable :");
 
