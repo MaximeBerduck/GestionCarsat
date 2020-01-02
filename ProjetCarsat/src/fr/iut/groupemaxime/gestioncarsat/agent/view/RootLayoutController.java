@@ -44,7 +44,7 @@ public class RootLayoutController {
 
 	@FXML
 	private GridPane gridRoot;
-	
+
 	@FXML
 	private Label labelMissionSelectionnee;
 
@@ -75,14 +75,18 @@ public class RootLayoutController {
 
 	@FXML
 	public void afficherOrdresMission() {
-		agentApp.afficherOrdresMission();
+		if (agentApp.missionActiveIsNull()) {
+			agentApp.alertChoisirMission();
+		} else {
+			agentApp.demanderActionOM();
+		}
 	}
 
 	@FXML
 	public void afficherHorairesTravail() {
 		agentApp.afficherHorairesTravail();
 	}
-	
+
 	public void setLabelMissionSelectionnee(String om) {
 		this.labelMissionSelectionnee.setText(om);
 	}

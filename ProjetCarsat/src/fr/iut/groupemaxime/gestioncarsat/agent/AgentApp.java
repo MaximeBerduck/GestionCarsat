@@ -1,9 +1,11 @@
 package fr.iut.groupemaxime.gestioncarsat.agent;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeMails;
@@ -18,15 +20,23 @@ import fr.iut.groupemaxime.gestioncarsat.agent.view.OptionsController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.RootLayoutController;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class AgentApp extends Application {
@@ -80,7 +90,6 @@ public class AgentApp extends Application {
 			this.rootLayout = loader.load();
 			rootLayoutCtrl = loader.getController();
 			rootLayoutCtrl.setAgentApp(this);
-			rootLayoutCtrl.afficherOrdresMission();
 
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
@@ -244,7 +253,7 @@ public class AgentApp extends Application {
 			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
 			ButtonType buttonTypeModif = new ButtonType("Modifier");
 			ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
-			ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
 			alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeEnvoyer, buttonTypeCancel);
 
@@ -256,11 +265,119 @@ public class AgentApp extends Application {
 			} else if (result.get() == buttonTypeEnvoyer) {
 				// TODO envoyer FM
 			} else {
-				// Ne fait rien == bouton "annulé"
+				// Ne fait rien == bouton "annuler"
 			}
 		} else {
 			// Créer les frais de mission
 			this.afficherFraisMission();
+		}
+	}
+
+	public void demanderActionOM() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Choix de l'action");
+		alert.setHeaderText("Choisissez l'action souhaitée");
+		alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre ordre de mission.");
+
+		ButtonType buttonTypeAfficher = new ButtonType("Afficher");
+		ButtonType buttonTypeModif = new ButtonType("Modifier");
+		alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif);
+
+		ButtonType buttonTypeEnvoyer = null;
+		ButtonType buttonTypeSigner = null;
+		if (this.missionActive.agentSigne()) {
+			buttonTypeEnvoyer = new ButtonType("Envoyer");
+			alert.getButtonTypes().add(buttonTypeEnvoyer);
+		} else {
+			buttonTypeSigner = new ButtonType("Signer");
+			alert.getButtonTypes().add(buttonTypeSigner);
+		}
+
+		ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().add(buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeAfficher) {
+			this.afficherOrdreMissionPDF();
+		} else if (result.get() == buttonTypeModif) {
+			this.modifierOm(missionActive);
+		} else if (result.get() == buttonTypeSigner) {
+			this.signerOM();
+		} else if (result.get() == buttonTypeEnvoyer) {
+			this.afficherEnvoiDuMail();
+		} else {
+			// Ne fait rien == bouton "annuler"
+		}
+		
+		this.afficherListeMissions();
+	}
+
+	public void afficherOrdreMissionPDF() {
+		PDF pdf;
+		try {
+			pdf = new PDF(new File(Constante.CHEMIN_PDF_VIDE));
+			pdf.remplirPDF(this.missionActive);
+			pdf.sauvegarderPDF();
+			if (this.missionActive.estSigne()) {
+				PDF.signerPDF(Constante.SIGNATURE_AGENT_X, Constante.SIGNATURE_AGENT_Y, Constante.TAILLE_SIGNATURE,
+						this.missionActive, this.getOptions().getCheminSignature());
+			}
+			pdf.fermerPDF();
+			Desktop.getDesktop().browse(new File(
+					this.missionActive.getCheminDossier() + this.missionActive.getNomOM() + Constante.EXTENSION_PDF)
+							.toURI());
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+
+	public void signerOM() {
+		if (Bibliotheque.fichierExiste(this.getOptions().getCheminSignature())) {
+			this.missionActive.setSignatureAgent(true);
+			this.missionActive.sauvegarderJson(this.missionActive.getCheminDossier());
+		} else {
+			TextInputDialog dialog = new TextInputDialog("");
+			dialog.setTitle("Signature non renseignée");
+			dialog.setHeaderText("Vous n'avez pas encore renseigné le chemin vers votre signature.");
+
+			GridPane pageAlert = new GridPane();
+			TextField tfCheminSignature = new TextField();
+			tfCheminSignature.setPromptText("Chemin vers votre signature");
+
+			Button boutonCheminSignature = new Button();
+			boutonCheminSignature.setText("...");
+			boutonCheminSignature.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					File cheminSignature = Bibliotheque.ouvrirFileChooser(Constante.IMAGE_FILTER);
+					if (null != cheminSignature) {
+						tfCheminSignature.setText(cheminSignature.toString());
+					}
+				}
+			});
+
+			pageAlert.add(new Label("Chemin vers votre signature : "), 0, 0);
+			pageAlert.add(tfCheminSignature, 1, 0);
+			pageAlert.add(boutonCheminSignature, 2, 0);
+
+			dialog.getDialogPane().setContent(pageAlert);
+			dialog.showAndWait();
+
+			if ("".equals(tfCheminSignature.getText())) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Erreur chemin signature");
+				alert.setHeaderText("Vous n'avez pas saisi l'adresse vers votre signature !");
+				alert.showAndWait();
+			} else {
+				this.getOptions().setCheminSignature(tfCheminSignature.getText());
+				this.getOptions().sauvegarderJson(Constante.CHEMIN_OPTIONS);
+				this.missionActive.setSignatureAgent(true);
+				this.missionActive.sauvegarderJson(this.getOptions().getCheminOM());
+			}
 		}
 	}
 
