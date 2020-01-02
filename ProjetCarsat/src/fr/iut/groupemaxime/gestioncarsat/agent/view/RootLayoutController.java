@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 public class RootLayoutController {
-	private AgentApp mainApp;
+	private AgentApp agentApp;
 
 	@FXML
 	private ImageView banniereCarsat;
@@ -40,10 +40,9 @@ public class RootLayoutController {
 
 	@FXML
 	private VBox boxMenu;
-	
+
 	@FXML
 	private GridPane gridRoot;
-
 
 	@FXML
 	private void initialize() {
@@ -58,28 +57,32 @@ public class RootLayoutController {
 	// Event Listener sur Btn Parametres
 	@FXML
 	public void modifierOptions() {
-		mainApp.modifierOptions();
+		agentApp.modifierOptions();
 	}
 
 	@FXML
 	public void afficherFraisMission() {
-		mainApp.afficherFraisMission();
+		if (agentApp.missionActiveIsNull()) {
+			agentApp.alertChoisirMission();
+		} else {
+			agentApp.demanderActionFM();
+		}
 	}
 
 	@FXML
 	public void afficherOrdresMission() {
-		mainApp.afficherOrdresMission();
+		agentApp.afficherOrdresMission();
 	}
 
 	@FXML
 	public void afficherHorairesTravail() {
-		mainApp.afficherHorairesTravail();
+		agentApp.afficherHorairesTravail();
 	}
 
-	public void setMainApp(AgentApp mainApp) {
-		this.mainApp = mainApp;
+	public void setAgentApp(AgentApp agentApp) {
+		this.agentApp = agentApp;
 	}
-	
+
 	public GridPane getGridRoot() {
 		return this.gridRoot;
 	}

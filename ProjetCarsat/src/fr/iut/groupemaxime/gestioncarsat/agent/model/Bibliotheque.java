@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class Bibliotheque {
 	public static boolean fichierExiste(String cheminFichier) {
 		boolean existe = false;
-		if(cheminFichier == null)
+		if (cheminFichier == null)
 			return false;
 		File f = new File(cheminFichier);
 		if (f.isFile()) {
@@ -37,5 +37,21 @@ public class Bibliotheque {
 			return fichier;
 		else
 			return null;
+	}
+
+	public static boolean fichierFmMissionExiste(OrdreMission om) {
+		File chemin = new File(om.getCheminDossier());
+		String listeFichiers[] = {};
+		listeFichiers = chemin.list();
+		if (listeFichiers == null) {
+			return false;
+		} else {
+			for (String fichier : listeFichiers) {
+				if (fichier.endsWith(".json") && fichier.startsWith("FM_")) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

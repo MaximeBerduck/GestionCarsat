@@ -2,7 +2,9 @@ package fr.iut.groupemaxime.gestioncarsat.agent;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeMails;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
@@ -19,6 +21,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -74,7 +78,7 @@ public class AgentApp extends Application {
 			loader.setLocation(AgentApp.class.getResource("view/RootLayout.fxml"));
 			this.rootLayout = loader.load();
 			rootLayoutCtrl = loader.getController();
-			rootLayoutCtrl.setMainApp(this);
+			rootLayoutCtrl.setAgentApp(this);
 			rootLayoutCtrl.afficherOrdresMission();
 
 			Scene scene = new Scene(rootLayout);
@@ -116,33 +120,24 @@ public class AgentApp extends Application {
 	}
 
 	public void afficherFraisMission() {
-		if (null == missionActive) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setTitle("Erreur");
-			alert.setHeaderText("Vous n'avez pas sélectionné de mission !");
-			alert.setContentText("Veuillez choisir une mission avant de recommencer.");
+		retirerDocActif();
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AgentApp.class.getResource("view/FraisMission.fxml"));
+			this.fraisMission = loader.load();
 
-			alert.showAndWait();
-		} else {
-			retirerDocActif();
-			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(AgentApp.class.getResource("view/FraisMission.fxml"));
-				this.fraisMission = loader.load();
+			this.fmCtrl = loader.getController();
+			this.fmCtrl.setAgentApp(this);
+			this.rootLayoutCtrl.getGridRoot().add(this.fraisMission, 2, 0);
+			this.fmCtrl.setOptions(this.options);
+			this.fmCtrl.setMissionActive(missionActive);
+			this.fmCtrl.creerFraisMission();
 
-				this.fmCtrl = loader.getController();
-				this.fmCtrl.setAgentApp(this);
-				this.rootLayoutCtrl.getGridRoot().add(this.fraisMission, 2, 0);
-				this.fmCtrl.setOptions(this.options);
-				this.fmCtrl.setMissionActive(missionActive);
-				this.fmCtrl.creerFraisMission();
-
-				this.fmCtrl.creerAllJours();
-				this.fmCtrl.afficherSemaine();
-				this.fmCtrl.afficherPremierJour();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			this.fmCtrl.creerAllJours();
+			this.fmCtrl.afficherSemaine();
+			this.fmCtrl.afficherPremierJour();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -233,6 +228,49 @@ public class AgentApp extends Application {
 
 	public void afficherEnvoiDuMail() {
 		this.omCtrl.afficherEnvoiDuMail();
+	}
+
+	public void demanderActionFM() {
+		if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Choix de l'action");
+			alert.setHeaderText("Choisissez l'action souhaitée");
+			alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre mission.");
+
+			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
+			ButtonType buttonTypeModif = new ButtonType("Modifier");
+			ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
+			ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+			alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeEnvoyer, buttonTypeCancel);
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == buttonTypeAfficher) {
+				// TODO Afficher FM
+			} else if (result.get() == buttonTypeModif) {
+				// TODO modifier FM
+			} else if (result.get() == buttonTypeEnvoyer) {
+				// TODO envoyer FM
+			} else {
+				// Ne fait rien == bouton "annulé"
+			}
+		} else {
+			// Créer les frais de mission
+			this.afficherFraisMission();
+		}
+	}
+
+	public boolean missionActiveIsNull() {
+		return null == this.missionActive;
+	}
+
+	public void alertChoisirMission() {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setTitle("Erreur");
+		alert.setHeaderText("Vous n'avez pas sélectionné de mission !");
+		alert.setContentText("Veuillez choisir une mission avant de recommencer.");
+
+		alert.showAndWait();
 	}
 
 }
