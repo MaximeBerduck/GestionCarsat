@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
+import fr.iut.groupemaxime.gestioncarsat.agent.horaireModel.HoraireTravail;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeMails;
@@ -238,6 +239,11 @@ public class AgentApp extends Application {
 		this.afficherOrdresMission();
 		this.omCtrl.modifierOm(om);
 	}
+	
+	public void modifierHt(OrdreMission om) {
+		this.afficherHorairesTravail();
+		//this.htCtrl.modifierHt(om);
+	}
 
 	public void afficherEnvoiDuMail() {
 		this.omCtrl.afficherEnvoiDuMail();
@@ -338,16 +344,16 @@ public class AgentApp extends Application {
 		if (result.get() == buttonTypeAfficher) {
 			this.afficherOrdreMissionPDF();
 		} else if (result.get() == buttonTypeModif) {
-			//this.modifierOm(missionActive);  DEVRA ETRE modifierHT(missionActive)
+			this.modifierHt(missionActive);
 		} else if (result.get() == buttonTypeSigner) {
 			//this.signerOM(); DEVRA ETRE signerHT()
 		} else if (result.get() == buttonTypeEnvoyer) {
 			this.afficherEnvoiDuMail();
-		} else if (result.get() == buttonTypeCancel){
+		} else {
 			// Ne fait rien == bouton "annuler"
 		}
 		
-		this.afficherHorairesTravail();
+		this.afficherListeMissions();
 	}
 
 	public void afficherOrdreMissionPDF() {
