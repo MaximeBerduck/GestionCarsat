@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="348.0" prefWidth="600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.JourHoraireTravailController">
+   <children>
+      <VBox fx:id="pageHoraire" alignment="CENTER" prefHeight="348.0" prefWidth="600.0">
+         <children>
+            <Label alignment="TOP_LEFT" text="Veuillez sélectionner les horaires de travail réalisés lors de la journée du ">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="dateJournee" text="12/34/5678">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Label>
+            <VBox fx:id="bye" prefHeight="94.0" prefWidth="600.0">
+               <children>
+                  <HBox fx:id="hbox1Horaire" alignment="CENTER" prefHeight="32.0" prefWidth="600.0">
+                     <children>
+                        <Label text="De :" />
+                        <TextField fx:id="heure1Deb" prefHeight="25.0" prefWidth="28.0" text="8" />
+                        <Label text="h" />
+                        <TextField fx:id="min1Deb" prefHeight="25.0" prefWidth="28.0" text="00" />
+                        <Label text="min" />
+                        <Label text="A :">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="heure1Fin" prefHeight="25.0" prefWidth="28.0" text="12" />
+                        <Label text="h" />
+                        <TextField fx:id="min1Fin" prefHeight="25.0" prefWidth="28.0" text="00" />
+                        <Label text="min" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="hbox2Horaire" alignment="CENTER" prefHeight="32.0" prefWidth="600.0">
+                     <children>
+                        <Label text="De :" />
+                        <TextField fx:id="heure2Deb" prefHeight="25.0" prefWidth="28.0" text="14" />
+                        <Label text="h" />
+                        <TextField fx:id="min2Deb" prefHeight="25.0" prefWidth="28.0" text="00" />
+                        <Label text="min" />
+                        <Label text="A :">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="heure2Fin" prefHeight="25.0" prefWidth="28.0" text="17" />
+                        <Label text="h" />
+                        <TextField fx:id="min2Fin" prefHeight="25.0" prefWidth="28.0" text="00" />
+                        <Label text="min" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="hbox3Horaire" alignment="CENTER" prefHeight="32.0" prefWidth="600.0">
+                     <children>
+                        <Label text="De :" />
+                        <TextField fx:id="heure3Deb" prefHeight="25.0" prefWidth="28.0" text="0" />
+                        <Label text="h" />
+                        <TextField fx:id="min3Deb" prefHeight="25.0" prefWidth="28.0" text="00" />
+                        <Label text="min" />
+                        <Label text="A :">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="heure3Fin" prefHeight="25.0" prefWidth="28.0" text="0" />
+                        <Label text="h" />
+                        <TextField fx:id="min3Fin" prefHeight="25.0" prefWidth="28.0" text="00" />
+                        <Label text="min" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox fx:id="hbox4Horaire" alignment="CENTER" prefHeight="32.0" prefWidth="600.0">
+                     <children>
+                        <Label text="De :" />
+                        <TextField fx:id="heure2Deb11" prefHeight="25.0" prefWidth="28.0" text="0" />
+                        <Label text="h" />
+                        <TextField fx:id="min2Deb11" prefHeight="25.0" prefWidth="28.0" text="00" />
+                        <Label text="min" />
+                        <Label text="A :">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="heure2Fin11" prefHeight="25.0" prefWidth="28.0" text="0" />
+                        <Label text="h" />
+                        <TextField fx:id="min2Fin11" prefHeight="25.0" prefWidth="28.0" text="00" />
+                        <Label text="min" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </VBox>
+            <HBox prefHeight="40.0" prefWidth="600.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="607.0" />
+                  <HBox prefHeight="45.0" prefWidth="600.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#btnSupprimerHoraire" text="Supprimer" />
+                        <Button mnemonicParsing="false" onAction="#btnAjouterHoraire" text="Ajouter" />
+                        <Button mnemonicParsing="false" onAction="#btnSuivantHoraire" text="Suivant" />
+                     </children>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

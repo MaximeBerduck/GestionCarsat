@@ -13,105 +13,26 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class HorairesTravailController {
-	@FXML
-	private DatePicker dateDeb; 
 	
-	@FXML
-	private DatePicker dateFin;
-	
-	@FXML
-	private Label labelLundiDate;
-	
-	@FXML 
-	private Label labelMardiDate;
-	
-	@FXML
-	private Label labelMercrediDate;
-	
-	@FXML
-	private Label labelJeudiDate;
-	
-	@FXML
-	private Label labelVendredidate;
-	
-	@FXML
-	private Label labelSamedidate;
-	
-	@FXML
-	private Label labelDimancheDate;
-	
-	@FXML 
-	private RadioButton aiTravailleLundi;
-	
-	@FXML 
-	private RadioButton aiTravailleMardi;
-	
-	@FXML 
-	private RadioButton aiTravailleMercredi;
-	
-	@FXML 
-	private RadioButton aiTravailleJeudi;
-	
-	@FXML 
-	private RadioButton aiTravailleVendredi;
-	
-	@FXML 
-	private RadioButton aiTravailleSamedi;
-	
-	@FXML 
-	private RadioButton aiTravailleDimanche;
-	
-	@FXML 
-	private RadioButton pasTravailleLundi;
-	
-	@FXML 
-	private RadioButton pasTravailleMardi;
-	
-	@FXML 
-	private RadioButton pasTravailleMercredi;
-	
-	@FXML 
-	private RadioButton pasTravailleJeudi;
-	
-	@FXML 
-	private RadioButton pasTravailleVendredi;
-	
-	@FXML 
-	private RadioButton pasTravailleSamedi;
-	
-	@FXML 
-	private RadioButton pasTravailleDimanche;
-	
-	@FXML
-	private VBox vBoxAjoutHoraire;
+	private Stage primaryStage;
+	private AgentApp mainApp;
+	private Options options;
 	
 	@FXML
 	private SplitPane horaireTravailSplit;
 	
 	private AnchorPane pageHoraires;
-	private DateHTravailController horairesController;
+	private JourHoraireTravailController horairesController;
 	
-	private AgentApp agentApp;
-	private Options options;
 	
 	@FXML
 	private void initialize() {
-	}
-	
-	
-	public void setMainApp(AgentApp agentApp) {
-		this.agentApp = agentApp;
-	}
-
-	public void setOptions(Options options) {
-		this.options = options;
-	}
-	
-	public void sauvegarderHoraires() {
 		
 	}
+	
 
 	public void afficherHorairesTravail() {
 		if(this.pageHoraires!=null) {
@@ -122,19 +43,39 @@ public class HorairesTravailController {
 		} else {
 			try {
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(this.getClass().getResource("DateHTravail.fxml"));
+				loader.setLocation(this.getClass().getResource("JourHoraireTravail.fxml"));
 				this.pageHoraires = loader.load();
-				
-				this.horairesController = loader.getController();
-				this.horairesController.setHorairesTravailController(this);
 				
 				if (0 < this.horaireTravailSplit.getItems().size())
 					this.horaireTravailSplit.getItems().set(0, this.pageHoraires);
 				else
 					this.horaireTravailSplit.getItems().add(0, this.pageHoraires);
+				
+				this.horairesController = loader.getController();
+				this.horairesController.setHtController(this);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void validerHoraireTravail() {
+		
+	}
+	
+	public Stage getPrimaryStage() {
+		return this.primaryStage;
+	}
+	
+	public void setMainApp(AgentApp agentApp) {
+		this.mainApp = agentApp;
+	}
+
+	public void setOptions(Options options) {
+		this.options = options;
+	}
+
+	public Options getOptions() {
+		return this.options;
 	}
 }

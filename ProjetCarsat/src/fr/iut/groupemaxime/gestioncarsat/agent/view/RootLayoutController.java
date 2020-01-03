@@ -84,7 +84,11 @@ public class RootLayoutController {
 
 	@FXML
 	public void afficherHorairesTravail() {
-		agentApp.afficherHorairesTravail();
+		if(agentApp.missionActiveIsNull()) {
+			agentApp.alertChoisirMission();
+		}else {
+			agentApp.demanderActionHT();
+		}
 	}
 
 	public void setLabelMissionSelectionnee(String om) {

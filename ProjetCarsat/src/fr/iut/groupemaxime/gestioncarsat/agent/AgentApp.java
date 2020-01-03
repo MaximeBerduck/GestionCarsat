@@ -276,6 +276,43 @@ public class AgentApp extends Application {
 	public void demanderActionOM() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Choix de l'action");
+		alert.setHeaderText("Choisissez l'action souhaitee");
+		alert.setContentText("Choisissez l'action que vous voulez realiser sur votre ordre de mission.");
+		ButtonType buttonTypeAfficher = new ButtonType("Afficher");
+		ButtonType buttonTypeModif = new ButtonType("Modifier");
+		alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif);
+
+		ButtonType buttonTypeEnvoyer = null;
+		ButtonType buttonTypeSigner = null;
+		if (this.missionActive.agentSigne()) {
+			buttonTypeEnvoyer = new ButtonType("Envoyer");
+			alert.getButtonTypes().add(buttonTypeEnvoyer);
+		} else {
+			buttonTypeSigner = new ButtonType("Signer");
+			alert.getButtonTypes().add(buttonTypeSigner);
+		}
+
+		ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().add(buttonTypeCancel);
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeAfficher) {
+			this.afficherOrdreMissionPDF();
+		} else if (result.get() == buttonTypeModif) {
+			this.modifierOm(missionActive);
+		} else if (result.get() == buttonTypeSigner) {
+			this.signerOM();
+		} else if (result.get() == buttonTypeEnvoyer) {
+			this.afficherEnvoiDuMail();
+		} else {
+			// Ne fait rien == bouton "annuler"
+		}
+		this.afficherListeMissions();
+	}
+	
+	public void demanderActionHT() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Choix de l'action");
 		alert.setHeaderText("Choisissez l'action souhaitée");
 		alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre ordre de mission.");
 
@@ -301,16 +338,16 @@ public class AgentApp extends Application {
 		if (result.get() == buttonTypeAfficher) {
 			this.afficherOrdreMissionPDF();
 		} else if (result.get() == buttonTypeModif) {
-			this.modifierOm(missionActive);
+			//this.modifierOm(missionActive);  DEVRA ETRE modifierHT(missionActive)
 		} else if (result.get() == buttonTypeSigner) {
-			this.signerOM();
+			//this.signerOM(); DEVRA ETRE signerHT()
 		} else if (result.get() == buttonTypeEnvoyer) {
 			this.afficherEnvoiDuMail();
-		} else {
+		} else if (result.get() == buttonTypeCancel){
 			// Ne fait rien == bouton "annuler"
 		}
 		
-		this.afficherListeMissions();
+		this.afficherHorairesTravail();
 	}
 
 	public void afficherOrdreMissionPDF() {
