@@ -18,11 +18,11 @@ import com.google.gson.GsonBuilder;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
 
 public class Options implements DocJson<Options> {
-	String cheminFichiers;
-	String cheminSignature;
-	Agent agent;
-	String mailAgent;
-	HashSet<String> mailsResponsables;
+	private String cheminFichiers;
+	private String cheminSignature;
+	private Agent agent;
+	private String mailAgent;
+	private HashSet<String> mailsResponsables;
 
 	public Options(String cheminFichiers, String cheminSignature, Agent agent, String mailAgent,
 			HashSet<String> mailsRespomsables) {
