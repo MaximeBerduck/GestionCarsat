@@ -33,7 +33,7 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 	}
 
 	@Override
-	public void sauvegarderJson(String cheminDossier) {
+	public void sauvegarderJson(String adresseFichier) {
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String s = gson.toJson(this);
 		FileWriter f;
