@@ -436,5 +436,10 @@ public class AgentApp extends Application {
 
 		alert.showAndWait();
 	}
+	
+	public void creerOrdreMission() {
+		this.afficherOrdresMission();
+		this.omCtrl.creerNouveauOm();
+	}
 
 }

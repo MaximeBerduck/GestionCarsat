@@ -65,7 +65,7 @@ public class MenuAgentController {
 
 	@FXML
 	public void creerNouveauOm(ActionEvent event) {
-		this.agentApp.getOMCtrl().creerNouveauOm();
+		this.agentApp.creerOrdreMission();
 	}
 
 	public ListeOrdreMission getListeOm() {
