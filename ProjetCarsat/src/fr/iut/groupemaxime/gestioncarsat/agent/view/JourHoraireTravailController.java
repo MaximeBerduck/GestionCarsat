@@ -1,5 +1,6 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.horaireModel.HoraireTravail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -187,6 +188,10 @@ public class JourHoraireTravailController {
 			nbHoraire-=1;
 		}
 		
+		
+	}
+	
+	public void setChamps(HoraireTravail horaire) {
 		
 	}
 	
