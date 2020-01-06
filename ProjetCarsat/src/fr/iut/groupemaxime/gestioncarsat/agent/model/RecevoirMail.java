@@ -18,6 +18,10 @@ import com.sun.mail.pop3.POP3Store;
 public class RecevoirMail {
 	public static void recevoirEmail(String host, String user, String password, String folder) {
 		try {
+			File dossier = new File(folder + "responsable/");
+			if (!dossier.exists()) {
+				dossier.mkdir();
+			}
 			Properties properties = new Properties();
 			properties.put("mail.pop3.host", host);
 			Session emailSession = Session.getDefaultInstance(properties);
@@ -39,10 +43,7 @@ public class RecevoirMail {
 					for (int i1 = 0; i1 < multiPart.getCount(); i1++) {
 						MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(i1);
 						if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-							File dossier = new File(folder + "responsable/");
-							if (!dossier.exists()) {
-								dossier.mkdir();
-							}
+							
 							String nomDossier = part.getFileName().substring(0, part.getFileName().lastIndexOf('.'));
 							nomDossier = nomDossier.substring(nomDossier.indexOf('_') + 1);
 							dossier = new File(folder + "responsable/" + nomDossier);
