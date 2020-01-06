@@ -2,24 +2,27 @@ package fr.iut.groupemaxime.gestioncarsat.agent.form;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.AutreTransport;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionPermanent;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Train;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Transport;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.TypeMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Voiture;
 
 public class PDF {
@@ -43,6 +46,76 @@ public class PDF {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public OrdreMission chargerPDFtoOM() {
+		StringBuilder sb = new StringBuilder();
+		String part;
+		for (int i = 0; i < 8; i++) {
+			part = this.formulaire.getField("numCAPSSA" + i).getValueAsString();
+			sb.append(part);
+		}
+		int cappsa = Integer.valueOf(sb.toString());
+		for (int i = 0; i < 8; i++) {
+			part = this.formulaire.getField("codeAnalytique" + i).getValueAsString();
+			sb.append(part);
+		}
+		int codeAnalytique = Integer.valueOf(sb.toString());
+		Agent agent = new Agent(this.formulaire.getField("nomPrenom").getValueAsString().split(" ")[0],
+				this.formulaire.getField("nomPrenom").getValueAsString().split(" ")[1], cappsa,
+				this.formulaire.getField("fonction").getValueAsString(),
+				this.formulaire.getField("residenceAdmin").getValueAsString(),
+				this.formulaire.getField("uniteTravail").getValueAsString(),
+				Integer.valueOf(this.formulaire.getField("coefficient").getValueAsString()), codeAnalytique);
+		String titre;
+		if (this.formulaire.getField("fonctionHabituelle").getValueAsString().equals("Yes")) {
+			titre = "fonctionHabituelle";
+		} else {
+			titre = "formation";
+		}
+		TypeMission mission = new MissionTemporaire(this.formulaire.getField("dateOM").getValueAsString().split(" ")[1],
+				this.formulaire.getField("dateOM").getValueAsString().split(" ")[2],
+				this.formulaire.getField("dateOM").getValueAsString().split(" ")[4],
+				this.formulaire.getField("dateOM").getValueAsString().split(" ")[5],
+				this.formulaire.getField("motifDeplacement").getValueAsString(),
+				this.formulaire.getField("lieuDeplacement").getValueAsString(), titre);
+		Transport transport;
+		if (this.formulaire.getField("train").getValueAsString().equals("Yes")) {
+			String classe;
+			if (this.formulaire.getField("deuxiemeClasse").getValueAsString().equals("Yes")) {
+				classe = "deuxiemeClasse";
+			} else {
+				classe = "premiereClasse";
+			}
+			String cramco;
+			if (this.formulaire.getField("oui").getValueAsString().equals("Yes")) {
+				cramco = "Oui";
+			} else {
+				cramco = "Non";
+			}
+			transport = new Train(classe, cramco);
+		} else if (this.formulaire.getField("avion").getValueAsString().equals("Yes")) {
+			String cramco;
+			if (this.formulaire.getField("oui").getValueAsString().equals("Yes")) {
+				cramco = "Oui";
+			} else {
+				cramco = "Non";
+			}
+			transport = new Avion(cramco);
+		} else if (this.formulaire.getField("voiture").getValueAsString().equals("Yes")) {
+			String appartenance;
+			if (this.formulaire.getField("vehiculePerso").getValueAsString().equals("Yes")) {
+				appartenance = "vehiculePerso";
+			}else {
+				appartenance = "vehiculeService";
+			}
+			transport = new Voiture(this.formulaire.getField("typeVoiture").getValueAsString(),
+					this.formulaire.getField("immatriculation").getValueAsString(),
+					Integer.valueOf(this.formulaire.getField("nbrCV").getValueAsString()), appartenance);
+		} else {
+			transport = new AutreTransport(this.formulaire.getField("autreChamp").getValueAsString());
+		}
+		return new OrdreMission(agent, mission, transport);
 	}
 
 	public void sauvegarderPDF() throws IOException {

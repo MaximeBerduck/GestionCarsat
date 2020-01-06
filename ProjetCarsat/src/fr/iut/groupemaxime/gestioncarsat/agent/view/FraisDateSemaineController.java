@@ -1,7 +1,6 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import javafx.fxml.FXML;
-
 import javafx.scene.control.Label;
 
 public class FraisDateSemaineController {

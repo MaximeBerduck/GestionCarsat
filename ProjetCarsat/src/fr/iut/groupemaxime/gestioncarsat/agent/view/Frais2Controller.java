@@ -1,15 +1,10 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
-import javafx.fxml.FXML;
-
-import javafx.scene.control.TextField;
-
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-
 import javafx.scene.layout.VBox;
 
 public class Frais2Controller {
