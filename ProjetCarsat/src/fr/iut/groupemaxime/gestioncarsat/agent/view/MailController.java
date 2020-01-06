@@ -58,19 +58,11 @@ public class MailController {
 	public Properties configurationSmtp() {
 		Properties props = new Properties();
 	    
-	    props.put("mail.smtp.socketFactory.port", "587");
-	    props.put("mail.smtp.socketFactory.class",
-	            "javax.net.ssl.SSLSocketFactory");
-	    props.put("mail.smtp.auth", "true");
 	    props.put("mail.smtp.starttls.enable", "true");
 	    
-	    //configuration pour envoyer un mail depuis et vers gmail
-	    //props.put("mail.smtp.host","smtp.gmail.com");
+	    props.put("mail.smtp.host", "groupemaxime.ddns.net");
 	    
-	    //Configuration pour envoyer un mail depuis et vers outlook
-	    props.put("mail.smtp.host", "smtp-mail.outlook.com");
-	    
-	    props.put("mail.smtp.port", "587");
+	    props.put("mail.smtp.port", "25");
 	    
 	    return props;
 	}
@@ -80,8 +72,8 @@ public class MailController {
 		Message message = new MimeMessage(session);
 		try {
 		    //Pi�ces jointes
-		    File file=new File(Constante.CHEMIN_PDF_VIDE); //Constante.CHEMIN_PDF + om.getFichier() + Constante.EXTENSION_PDF Je n'ai pas utilis� le chemin en commentaire car il bugait sur mon pc
-		    
+		    File file=new File(this.mainApp.getMainApp().getMissionActive().getCheminDossier() + "/" + this.mainApp.getMainApp().getMissionActive().getNomOM() + Constante.EXTENSION_PDF);
+		    System.out.println(file.getAbsolutePath());
 		    FileDataSource source = new FileDataSource(file);
 		    DataHandler handler = new DataHandler(source);
 		    MimeBodyPart fichier = new MimeBodyPart();
@@ -122,10 +114,6 @@ public class MailController {
 			//Ajout des dest en copie du message 
 			message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(listDestEnCopieEnUnString));
 			
-			//Est cens� faire l'accus� de reception setHeader
-			message.setHeader("Disposition-Notification-To",expediteur.getText());
-			message.setHeader("Return-Receipt-To",expediteur.getText());
-			
 		}catch(Exception ex){
 			Logger.getLogger(MailController.class.getName()).log(Level.SEVERE,null,ex);
 		}
@@ -138,7 +126,7 @@ public class MailController {
 	    Session session = Session.getDefaultInstance(props,
 	            new javax.mail.Authenticator() {
 	                protected PasswordAuthentication getPasswordAuthentication() {
-	                    return new PasswordAuthentication(expediteur.getText(),"Azerty19");//ICI IL FAUDRA REFLECHIR POUR LA SAISIE DU MDP POUR LE MAIL DE L'EXPEDITEUR
+	                    return new PasswordAuthentication(expediteur.getText(),"root");
 	                }
 	            });
 	    

@@ -330,4 +330,8 @@ public class OrdreMissionController {
 	public Options getOptions() {
 		return this.options;
 	}
+	
+	public AgentApp getMainApp() {
+		return mainApp;
+	}
 }

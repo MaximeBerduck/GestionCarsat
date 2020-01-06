@@ -443,4 +443,10 @@ public class AgentApp extends Application {
 		this.omCtrl.creerNouveauOm();
 	}
 
+	public OrdreMission getMissionActive() {
+		return missionActive;
+	}
+	
+	
+
 }

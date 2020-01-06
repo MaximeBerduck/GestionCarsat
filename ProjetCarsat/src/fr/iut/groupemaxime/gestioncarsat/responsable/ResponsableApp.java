@@ -94,8 +94,6 @@ public class ResponsableApp extends Application {
 			if (!this.rootLayoutCtrl.getGridRoot().getChildren().contains(this.listeMissionsResponsable))
 				this.rootLayoutCtrl.getGridRoot().add(this.listeMissionsResponsable, 0, 0);
 			controllerListeMissionsResponsable = loader.getController();
-			if (controllerListeMissionsResponsable == null)
-				System.out.println("gg");
 			controllerListeMissionsResponsable.setResponsableApp(this);
 			controllerListeMissionsResponsable.setOptions(this.options);
 			controllerListeMissionsResponsable.chargerOM();
