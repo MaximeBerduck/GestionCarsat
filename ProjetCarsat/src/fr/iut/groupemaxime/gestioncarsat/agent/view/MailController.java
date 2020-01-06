@@ -62,7 +62,9 @@ public class MailController {
 	    
 	    props.put("mail.smtp.host", "groupemaxime.ddns.net");
 	    
-	    props.put("mail.smtp.port", "25");
+	    props.put("mail.smtp.port", "587");
+	    
+	    props.put("mail.smtp.auth", "true");
 	    
 	    return props;
 	}
@@ -123,11 +125,11 @@ public class MailController {
 	@FXML
 	public void envoyerMail(ActionEvent event) {
 	    Properties props = configurationSmtp();
-	    Session session = Session.getDefaultInstance(props,
+	    Session session = Session.getInstance(props,
 	            new javax.mail.Authenticator() {
-	                protected PasswordAuthentication getPasswordAuthentication() {
-	                    return new PasswordAuthentication(expediteur.getText(),"root");
-	                }
+	              protected PasswordAuthentication getPasswordAuthentication() {
+	                  return new PasswordAuthentication(expediteur.getText(), "root");
+	              }
 	            });
 	    
 	    try {
