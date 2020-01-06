@@ -1,10 +1,16 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 public class ItemOrdreMissionController {
 	@FXML
@@ -21,6 +27,16 @@ public class ItemOrdreMissionController {
 	@FXML
 	public void choisirMission() {
 		this.menuAgentCtrl.setMissionActive(this.om);
+		this.ajouterStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+	}
+
+	public void ajouterStyle(String style) {
+		this.itemMission.setStyle(this.itemMission.getStyle() + style);
+	}
+
+	public void retirerStyle(String style) {
+		this.itemMission.setStyle(this.itemMission.getStyle().replace(style, ""));
+
 	}
 
 	public void chargerOM(OrdreMission om) {

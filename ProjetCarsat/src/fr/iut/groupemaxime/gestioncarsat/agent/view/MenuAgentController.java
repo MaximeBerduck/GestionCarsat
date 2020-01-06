@@ -2,8 +2,10 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
@@ -24,6 +26,8 @@ public class MenuAgentController {
 
 	private AgentApp agentApp;
 
+	private HashSet<ItemOrdreMissionController> listeOmCtrl;
+
 	public void setMenuController(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
 	}
@@ -34,10 +38,11 @@ public class MenuAgentController {
 
 	@FXML
 	public void initialize() {
-
+		this.listeOmCtrl = new HashSet<ItemOrdreMissionController>();
 	}
 
 	public void chargerOM() {
+		this.listeOmCtrl = new HashSet<ItemOrdreMissionController>();
 		listeOm = new ListeOrdreMission();
 		listeOm.chargerOM(new File(options.getCheminOM()));
 		for (OrdreMission om : listeOm.getListeOM()) {
@@ -56,6 +61,7 @@ public class MenuAgentController {
 			ctrl = loader.getController();
 			ctrl.chargerOM(om);
 			ctrl.setMenuAgent(this);
+			this.listeOmCtrl.add(ctrl);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -82,6 +88,9 @@ public class MenuAgentController {
 
 	public void setMissionActive(OrdreMission om) {
 		this.agentApp.setMissionActive(om);
+		for (ItemOrdreMissionController item : listeOmCtrl) {
+			item.retirerStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		}
 	}
 
 	public AgentApp getAgentApp() {

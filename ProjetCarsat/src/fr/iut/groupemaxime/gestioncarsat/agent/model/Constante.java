@@ -32,4 +32,6 @@ public class Constante {
 
 	public static final FileChooser.ExtensionFilter IMAGE_FILTER = new FileChooser.ExtensionFilter("Fichier image (.jpg .png .gif)",
 			"*.jpg", "*.png", "*.gif");
+	
+	public static final String BACKGROUND_COLOR_MISSION_SELECTIONNE = "-fx-background-color: #D6D39D;";
 }
