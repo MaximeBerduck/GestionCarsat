@@ -246,6 +246,7 @@ public class AgentApp extends Application {
 	}
 
 	public void afficherEnvoiDuMail() {
+		this.afficherOrdresMission();
 		this.omCtrl.afficherEnvoiDuMail();
 	}
 

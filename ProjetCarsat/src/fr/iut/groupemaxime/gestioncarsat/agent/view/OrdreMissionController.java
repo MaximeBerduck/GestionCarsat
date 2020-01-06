@@ -139,6 +139,8 @@ public class OrdreMissionController {
 
 			controllerMail = loader.getController();
 			controllerMail.setMainApp(this);
+			controllerMail.setExpediteur(this.options.getMailAgent());
+			controllerMail.setDestinataires(this.options.getMailsResponsables().toArray()[0].toString());
 
 		} catch (IOException e) {
 			e.printStackTrace();

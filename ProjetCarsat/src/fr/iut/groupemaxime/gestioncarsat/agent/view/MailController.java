@@ -248,8 +248,8 @@ public class MailController {
 		return expediteur;
 	}
 
-	public void setExpediteur(TextField expediteur) {
-		this.expediteur = expediteur;
+	public void setExpediteur(String expediteur) {
+		this.expediteur.setText(expediteur);
 	}
 
 	public TextField getDestinataires() {
@@ -265,8 +265,8 @@ public class MailController {
 		return listDest;
 	}
 
-	public void setDestinataires(TextField destinataires) {
-		this.destinataires = destinataires;
+	public void setDestinataires(String destinataires) {
+		this.destinataires.setText(destinataires);
 	}
 
 	public TextField getDestEnCopie() {
