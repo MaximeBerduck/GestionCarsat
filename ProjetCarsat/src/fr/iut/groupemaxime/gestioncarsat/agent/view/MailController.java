@@ -70,10 +70,10 @@ public class MailController {
 	}
 	
 	public Message configurationMessage(Session session) {
-		//cr�ation du message
+		//création du message
 		Message message = new MimeMessage(session);
 		try {
-		    //Pi�ces jointes
+		    //Piéces jointes
 		    File file=new File(this.mainApp.getMainApp().getMissionActive().getCheminDossier() + "/" + this.mainApp.getMainApp().getMissionActive().getNomOM() + Constante.EXTENSION_PDF);
 		    System.out.println(file.getAbsolutePath());
 		    FileDataSource source = new FileDataSource(file);
@@ -103,14 +103,14 @@ public class MailController {
 		    //Expediteur et destinataires
 			message.setFrom(new InternetAddress(expediteur.getText()));
 			
-			//R�cup�ration de la liste des destinataires
+			//Récupération de la liste des destinataires
 			List<String> listDest = getDestinatairesTab();
 			//On transforme notre list<String> en un String pour n'avoir qu'une ligne : message.setRecepients
 			String listDestEnUnString = String.join(", ",listDest);
 			//Ajout des destinataires du message
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(listDestEnUnString));
 			
-			//r�cup�ration de la liste en copie
+			//récupération de la liste en copie
 			List<String> listEnCopie = getDestEnCopieTab();
 			String listDestEnCopieEnUnString = String.join(", ", listEnCopie);
 			//Ajout des dest en copie du message 
@@ -138,8 +138,8 @@ public class MailController {
 	    		Transport.send(message);
 	    		Alert alert = new Alert(AlertType.INFORMATION);
 	    		alert.setTitle("Etat d'envoi du mail");
-	    		alert.setHeaderText("Regardez, une information importante est pr�sente.");
-	    		alert.setContentText("Le mail a �t� envoy� avec succ�s.");
+	    		alert.setHeaderText("Regardez, une information importante est présente.");
+	    		alert.setContentText("Le mail a été envoyé avec succés.");
 
 	    		alert.showAndWait();
 	    	}
@@ -147,7 +147,7 @@ public class MailController {
 	    	Alert alert = new Alert(AlertType.ERROR);
 	    	alert.setTitle("Etat d'envoi du mail");
 	    	alert.setHeaderText("Oups une erreur est survenue.");
-	    	alert.setContentText("Veuillez v�rifier que les adresses ont �t� saisies correctement");
+	    	alert.setContentText("Veuillez vérifier que les adresses ont été saisies correctement");
 
 	    	alert.showAndWait();
 	        e.printStackTrace();
@@ -159,7 +159,7 @@ public class MailController {
 		//verif les mails en destinataires, en expediteur et en copie si une adresse mail en copie est saisie 
 		
 		
-		//regex permet de v�rifier la composition des adresses mails saisies.
+		//regex permet de vérifier la composition des adresses mails saisies.
 		// voir ce lien pour plus d'info ->        https://howtodoinjava.com/regex/java-regex-validate-email-address/
 		String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 		Pattern pattern = Pattern.compile(regex);
@@ -169,7 +169,7 @@ public class MailController {
 		int verifMailExpediteur = 0;
 		
 		
-		//j'utilise des List<String> a la place de String[] car mon �l�ment n'a pas de taille d�fini � l'avance
+		//j'utilise des List<String> a la place de String[] car mon élément n'a pas de taille défini é l'avance
 		List<String> listDest = getDestinatairesTab();
 		ListIterator<String> itDest = listDest.listIterator();
 		int verifSiMailDestIncorrect=0;
@@ -186,7 +186,7 @@ public class MailController {
 			}
 				
 			if(verifSiMailEnCopieIncorrect==1) {
-				erreur+="L'une au moins des adresses mails en copie a �t� mal saisie !\n";
+				erreur+="L'une au moins des adresses mails en copie a été mal saisie !\n";
 			}
 		}
 		
@@ -196,7 +196,7 @@ public class MailController {
 			verifMailExpediteur = 1;
 		}
 		if (verifMailExpediteur == 1) {
-			erreur+="Le mail de l'expediteur a �t� mail saisie !\n";
+			erreur+="Le mail de l'expediteur a été mail saisie !\n";
 		}
 		
 		while(itDest.hasNext()) {
@@ -206,7 +206,7 @@ public class MailController {
 				verifSiMailDestIncorrect = 1;
 		}
 		if(verifSiMailDestIncorrect==1) {
-			erreur+= "L'une au moins des adresses mails du destinataire a �t� mal saisie !\n";
+			erreur+= "L'une au moins des adresses mails du destinataire a été mal saisie !\n";
 		}
 		
 	
@@ -248,7 +248,7 @@ public class MailController {
 	
 	public List<String> getDestinatairesTab() {
 		List<String> listDest = new ArrayList<String>();
-		//la m�thode split permet de lister les destinataires un par un s'ils sont s�par�s par une ","
+		//la méthode split permet de lister les destinataires un par un s'ils sont séparés par une ","
 		for(String email : destinataires.getText().split(",")) {
 			listDest.add(email);
 		}
@@ -266,7 +266,7 @@ public class MailController {
 	
 	public List<String> getDestEnCopieTab() {
 		List<String> listEnCopie = null; //new ArrayList<String>();
-		//la m�thode split permet de lister les destinataires un par un s'ils sont s�par�s par une ","
+		//la méthode split permet de lister les destinataires un par un s'ils sont séparés par une ","
 		if(!destEnCopie.getText().equals("")){
 			listEnCopie = new ArrayList<String>();
 			for(String email : destEnCopie.getText().split(",")) {
