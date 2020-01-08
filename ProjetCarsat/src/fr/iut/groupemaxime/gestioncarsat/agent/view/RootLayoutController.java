@@ -84,9 +84,9 @@ public class RootLayoutController {
 
 	@FXML
 	public void afficherHorairesTravail() {
-		if(agentApp.missionActiveIsNull()) {
+		if (agentApp.missionActiveIsNull()) {
 			agentApp.alertChoisirMission();
-		}else {
+		} else {
 			agentApp.demanderActionHT();
 		}
 	}

@@ -239,10 +239,10 @@ public class AgentApp extends Application {
 		this.afficherOrdresMission();
 		this.omCtrl.modifierOm(om);
 	}
-	
+
 	public void modifierHt(OrdreMission om) {
 		this.afficherHorairesTravail();
-		//this.htCtrl.modifierHt(om);
+		// this.htCtrl.modifierHt(om);
 	}
 
 	public void afficherEnvoiDuMail() {
@@ -316,7 +316,7 @@ public class AgentApp extends Application {
 		}
 		this.afficherListeMissions();
 	}
-	
+
 	public void demanderActionHT() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Choix de l'action");
@@ -347,13 +347,13 @@ public class AgentApp extends Application {
 		} else if (result.get() == buttonTypeModif) {
 			this.modifierHt(missionActive);
 		} else if (result.get() == buttonTypeSigner) {
-			//this.signerOM(); DEVRA ETRE signerHT()
+			// this.signerOM(); DEVRA ETRE signerHT()
 		} else if (result.get() == buttonTypeEnvoyer) {
 			this.afficherEnvoiDuMail();
 		} else {
 			// Ne fait rien == bouton "annuler"
 		}
-		
+
 		this.afficherListeMissions();
 	}
 
@@ -437,7 +437,7 @@ public class AgentApp extends Application {
 
 		alert.showAndWait();
 	}
-	
+
 	public void creerOrdreMission() {
 		this.afficherOrdresMission();
 		this.omCtrl.creerNouveauOm();
@@ -446,7 +446,5 @@ public class AgentApp extends Application {
 	public OrdreMission getMissionActive() {
 		return missionActive;
 	}
-	
-	
 
 }

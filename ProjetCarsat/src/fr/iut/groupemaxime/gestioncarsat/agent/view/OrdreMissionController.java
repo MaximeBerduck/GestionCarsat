@@ -1,11 +1,14 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import java.io.File;
 import java.io.IOException;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
+import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.AutreTransport;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionPermanent;
@@ -127,6 +130,22 @@ public class OrdreMissionController {
 	}
 
 	public void afficherEnvoiDuMail() {
+		if (!Bibliotheque.fichierExiste(this.getMainApp().getMissionActive().getCheminDossier() + "/"
+				+ this.getMainApp().getMissionActive().getNomOM() + Constante.EXTENSION_PDF)) {
+			PDF pdf;
+			try {
+				pdf = new PDF(new File(Constante.CHEMIN_PDF_VIDE));
+				pdf.remplirPDF(this.mainApp.getMissionActive());
+				pdf.sauvegarderPDF();
+				if (this.getMainApp().getMissionActive().estSigne()) {
+					PDF.signerPDF(Constante.SIGNATURE_AGENT_X, Constante.SIGNATURE_AGENT_Y, Constante.TAILLE_SIGNATURE,
+							this.getMainApp().getMissionActive(), this.getOptions().getCheminSignature());
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(this.getClass().getResource("Mail.fxml"));
@@ -330,7 +349,7 @@ public class OrdreMissionController {
 	public Options getOptions() {
 		return this.options;
 	}
-	
+
 	public AgentApp getMainApp() {
 		return mainApp;
 	}

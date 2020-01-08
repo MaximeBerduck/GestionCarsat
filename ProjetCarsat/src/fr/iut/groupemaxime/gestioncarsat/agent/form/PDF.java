@@ -106,7 +106,7 @@ public class PDF {
 			String appartenance;
 			if (this.formulaire.getField("vehiculePerso").getValueAsString().equals("Yes")) {
 				appartenance = "vehiculePerso";
-			}else {
+			} else {
 				appartenance = "vehiculeService";
 			}
 			transport = new Voiture(this.formulaire.getField("typeVoiture").getValueAsString(),
