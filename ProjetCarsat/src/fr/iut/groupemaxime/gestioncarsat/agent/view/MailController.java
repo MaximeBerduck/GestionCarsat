@@ -24,11 +24,13 @@ import javax.mail.internet.MimeMultipart;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.Mail;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class MailController {
@@ -46,14 +48,23 @@ public class MailController {
 	private TextField objetDuMail;
 
 	@FXML
-	private TextField corpsDuMail;
+	private TextArea corpsDuMail;
 
 	private OrdreMission om;
 
 	private OrdreMissionController mainApp;
-
+	
+	@FXML
+	private void initialize() {
+	}
+	
 	public void setMainApp(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
+	}
+	
+	public void chargerOptions() {
+		Options options = this.mainApp.getOptions();
+		this.corpsDuMail.setText(options.getCorpsDuMail());
 	}
 
 	public Properties configurationSmtp() {
@@ -277,16 +288,16 @@ public class MailController {
 		return objetDuMail;
 	}
 
-	public void setObjetDuMail(TextField objetDuMail) {
-		this.objetDuMail = objetDuMail;
+	public void setObjetDuMail(String objetDuMail) {
+		this.objetDuMail.setText(objetDuMail);
 	}
 
-	public TextField getCorpsDuMail() {
+	public TextArea getCorpsDuMail() {
 		return corpsDuMail;
 	}
 
-	public void setCorpsDuMail(TextField corpsDuMail) {
-		this.corpsDuMail = corpsDuMail;
+	public void setCorpsDuMail(String corpsDuMail) {
+		this.corpsDuMail.setText(corpsDuMail);
 	}
 
 	public OrdreMissionController getMainApp() {

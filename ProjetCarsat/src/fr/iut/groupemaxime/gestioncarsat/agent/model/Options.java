@@ -23,9 +23,10 @@ public class Options implements DocJson<Options> {
 	private Agent agent;
 	private String mailAgent;
 	private HashSet<String> mailsResponsables;
+	private String corpsDuMail;
 
 	public Options(String cheminFichiers, String cheminSignature, Agent agent, String mailAgent,
-			HashSet<String> mailsRespomsables) {
+			HashSet<String> mailsRespomsables, String corpsDuMail) {
 		this.cheminFichiers = cheminFichiers;
 		this.cheminSignature = cheminSignature;
 		this.agent = agent;
@@ -34,7 +35,8 @@ public class Options implements DocJson<Options> {
 	}
 
 	public Options() {
-		this(Constante.CHEMIN_FICHIERS_DEFAUT, null, new Agent(), null, new HashSet<String>());
+		this(Constante.CHEMIN_FICHIERS_DEFAUT, null, new Agent(), null, new HashSet<String>(),
+				Constante.OBJET_DU_MAIL_DEFAUT);
 	}
 
 	@Override
@@ -130,6 +132,14 @@ public class Options implements DocJson<Options> {
 	public void modifierResponsable(String oldResponsable, String newResponsable) {
 		this.mailsResponsables.remove(oldResponsable);
 		this.mailsResponsables.add(newResponsable);
+	}
+
+	public String getCorpsDuMail() {
+		return corpsDuMail;
+	}
+
+	public void setCorpsDuMail(String corpsDuMail) {
+		this.corpsDuMail = corpsDuMail;
 	}
 
 }

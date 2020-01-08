@@ -21,8 +21,6 @@ public class Constante {
 	public static SimpleDateFormat FORMAT_DATE_SLASH = new SimpleDateFormat("dd/MM/yyyy");
 	public static DateTimeFormatter FORMATTER_DATEPICKER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-
-
 	public static int TAILLE_NUMCAPSSA = 8;
 	public static int TAILLE_CODE_ANALYTIQUE = 10;
 
@@ -30,8 +28,10 @@ public class Constante {
 	public static final int SIGNATURE_AGENT_Y = 230;
 	public static final int SIGNATURE_AGENT_X = 330;
 
-	public static final FileChooser.ExtensionFilter IMAGE_FILTER = new FileChooser.ExtensionFilter("Fichier image (.jpg .png .gif)",
-			"*.jpg", "*.png", "*.gif");
-	
+	public static final FileChooser.ExtensionFilter IMAGE_FILTER = new FileChooser.ExtensionFilter(
+			"Fichier image (.jpg .png .gif)", "*.jpg", "*.png", "*.gif");
+
 	public static final String BACKGROUND_COLOR_MISSION_SELECTIONNE = "-fx-background-color: #D6D39D;";
+
+	public static final String OBJET_DU_MAIL_DEFAUT = "Bonjour, \nVeuillez trouver ci-joint mon ordre de mission. \n\nRespectueusement.";
 }

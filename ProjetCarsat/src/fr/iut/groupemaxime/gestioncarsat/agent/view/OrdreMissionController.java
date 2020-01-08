@@ -160,6 +160,7 @@ public class OrdreMissionController {
 			controllerMail.setMainApp(this);
 			controllerMail.setExpediteur(this.options.getMailAgent());
 			controllerMail.setDestinataires(this.options.getMailsResponsables().toArray()[0].toString());
+			controllerMail.chargerOptions();
 
 		} catch (IOException e) {
 			e.printStackTrace();
