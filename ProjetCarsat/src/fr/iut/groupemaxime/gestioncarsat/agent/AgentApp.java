@@ -75,8 +75,12 @@ public class AgentApp extends Application {
 		this.primaryStage.setTitle("Carsat - Gestion des déplacement");
 		this.primaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
 		this.primaryStage.setResizable(true);
-		this.options = new Options();
-		this.options = this.options.chargerJson(Constante.CHEMIN_OPTIONS);
+		if (Bibliotheque.fichierExiste(Constante.CHEMIN_OPTIONS))
+			this.options = this.options.chargerJson(Constante.CHEMIN_OPTIONS);
+		else {
+			this.options = new Options();
+			this.options.sauvegarderJson(Constante.CHEMIN_OPTIONS);
+		}
 		this.creerDossier(this.options.getCheminOM());
 		this.mailsEnAttente = new ListeMails();
 		this.mailsEnAttente.chargerJson(Constante.CHEMIN_MAILS_EN_ATTENTE);

@@ -32,6 +32,7 @@ public class Options implements DocJson<Options> {
 		this.agent = agent;
 		this.mailAgent = mailAgent;
 		this.mailsResponsables = mailsRespomsables;
+		this.corpsDuMail = corpsDuMail;
 	}
 
 	public Options() {
