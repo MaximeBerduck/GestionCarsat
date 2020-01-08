@@ -54,7 +54,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" prefWidth="75.0" text="Afficher" />
+            <Button mnemonicParsing="false" onAction="#afficherPDF" prefWidth="75.0" text="Afficher" />
             <Button fx:id="boutonEnvoyer" disable="true" mnemonicParsing="false" prefHeight="27.0" prefWidth="81.0" text="Envoyer" GridPane.columnIndex="2" />
             <Button fx:id="boutonSigner" mnemonicParsing="false" prefHeight="27.0" prefWidth="81.0" text="Signer" GridPane.columnIndex="1" />
          </children>

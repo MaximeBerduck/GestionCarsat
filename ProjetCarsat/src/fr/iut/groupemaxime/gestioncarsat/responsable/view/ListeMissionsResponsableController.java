@@ -44,10 +44,13 @@ public class ListeMissionsResponsableController {
 		File[] pdfs = dossier.listFiles();
 		PDF pdf;
 		for (File file : pdfs) {
-			file = new File(file.getAbsolutePath() + "/OM_" + file.getName() + Constante.EXTENSION_PDF);
+			File filee = new File(file.getAbsolutePath() + "/OM_" + file.getName() + Constante.EXTENSION_PDF);
 			try {
-				pdf = new PDF(file);
-				listeOm.ajouterOM(pdf.chargerPDFtoOM());
+				pdf = new PDF(filee);
+				OrdreMission om = pdf.chargerPDFtoOM();
+				om.setCheminDossier(file.getAbsolutePath());
+				om.setNomOM(filee.getAbsolutePath().substring(filee.getAbsolutePath().lastIndexOf('\\')));
+				listeOm.ajouterOM(om);
 				pdf.fermerPDF();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

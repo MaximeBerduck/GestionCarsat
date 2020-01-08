@@ -1,6 +1,11 @@
 package fr.iut.groupemaxime.gestioncarsat.responsable.view;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
+import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.MenuAgentController;
@@ -44,5 +49,17 @@ public class ItemMissionResponsableController {
 
 	public void setMenuAgent(ListeMissionsResponsableController menuAgentCtrl) {
 		this.menuAgentCtrl = menuAgentCtrl;
+	}
+	
+	public void afficherPDF() {
+		try {
+			
+			Desktop.getDesktop().browse(new File(
+					this.om.getCheminDossier() + this.om.getNomOM())
+							.toURI());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
