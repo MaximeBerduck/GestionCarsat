@@ -53,18 +53,19 @@ public class MailController {
 	private OrdreMission om;
 
 	private OrdreMissionController mainApp;
-	
+
 	@FXML
 	private void initialize() {
 	}
-	
+
 	public void setMainApp(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
 	}
-	
+
 	public void chargerOptions() {
 		Options options = this.mainApp.getOptions();
 		this.corpsDuMail.setText(options.getCorpsDuMail());
+		this.objetDuMail.setText(Constante.OBJET_DU_MAIL_DEFAUT);
 	}
 
 	public Properties configurationSmtp() {

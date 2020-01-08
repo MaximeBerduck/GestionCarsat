@@ -33,5 +33,6 @@ public class Constante {
 
 	public static final String BACKGROUND_COLOR_MISSION_SELECTIONNE = "-fx-background-color: #D6D39D;";
 
-	public static final String OBJET_DU_MAIL_DEFAUT = "Bonjour, \nVeuillez trouver ci-joint mon ordre de mission. \n\nRespectueusement.";
+	public static final String CORPS_DU_MAIL_DEFAUT = "Bonjour, \nVeuillez trouver ci-joint mon ordre de mission. \n\nRespectueusement.";
+	public static final String OBJET_DU_MAIL_DEFAUT = "Ordre de mission";
 }
