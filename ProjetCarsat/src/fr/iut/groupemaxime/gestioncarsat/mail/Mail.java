@@ -3,99 +3,40 @@ package fr.iut.groupemaxime.gestioncarsat.mail;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.Flags;
+import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.NoSuchProviderException;
 import javax.mail.Part;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import com.sun.mail.pop3.POP3Store;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.view.MailController;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+
 public class Mail {
-	private String expediteur;
-	private String[] destinataires;
-	private String[] enCopie;
-	private String objetDuMail;
-	private String corpsDuMail;
-	private File fileEnPieceJointe;
-
-	public Mail(String expe, String[] destinataires, String[] enCopie, String objetDuMail, String corpsDuMail,
-			File fileEnPJ) {
-		this.expediteur = expe;
-		this.destinataires = destinataires;
-		this.enCopie = enCopie;
-		this.objetDuMail = objetDuMail;
-		this.corpsDuMail = corpsDuMail;
-		this.fileEnPieceJointe = fileEnPJ;
-	}
-
-	public String getExpediteur() {
-		return expediteur;
-	}
-
-	public void setExpediteur(String expediteur) {
-		this.expediteur = expediteur;
-	}
-
-	public String[] getDestinataires() {
-		return this.destinataires;
-	}
-
-	public String getDestinatairesEnString() {
-		return Arrays.toString(destinataires);
-	}
-
-	public void setDestinataires(String[] destinataires) {
-		this.destinataires = destinataires;
-	}
-
-	public String[] getEnCopie() {
-		return this.enCopie;
-	}
-
-	public String getEnCopieEnString() {
-		return Arrays.toString(enCopie);
-	}
-
-	public void setEnCopie(String[] enCopie) {
-		this.enCopie = enCopie;
-	}
-
-	public String getObjetDuMail() {
-		return objetDuMail;
-	}
-
-	public void setObjetDuMail(String objetDuMail) {
-		this.objetDuMail = objetDuMail;
-	}
-
-	public String getCorpsDuMail() {
-		return corpsDuMail;
-	}
-
-	public void setCorpsDuMail(String corpsDuMail) {
-		this.corpsDuMail = corpsDuMail;
-	}
-
-	public File getFileEnPieceJointe() {
-		return fileEnPieceJointe;
-	}
-
-	public void setFileEnPieceJointe(File fileEnPieceJointe) {
-		this.fileEnPieceJointe = fileEnPieceJointe;
-	}
-
-	public String toString() {
-		return "Mail [expediteur=" + expediteur + ", destinataires=" + Arrays.toString(destinataires) + ", enCopie="
-				+ Arrays.toString(enCopie) + ", objetDuMail=" + objetDuMail + ", corpsDuMail=" + corpsDuMail
-				+ ", fileEnPieceJointe=" + fileEnPieceJointe + "]";
-	}
-
 	public static void recevoirEmail(String host, String user, String password, String folder) {
 		try {
 			File dossier = new File(folder + "responsable/");
@@ -110,7 +51,7 @@ public class Mail {
 			emailStore.connect(user, password);
 
 			Folder emailFolder = emailStore.getFolder("INBOX");
-			emailFolder.open(Folder.READ_WRITE);
+			emailFolder.open(Folder.READ_ONLY);
 
 			Message[] messages = emailFolder.getMessages();
 			for (int i = 0; i < messages.length; i++) {
@@ -120,8 +61,8 @@ public class Mail {
 				if (contentType.contains("multipart")) {
 					Multipart multiPart = (Multipart) message.getContent();
 
-					for (int i1 = 0; i1 < multiPart.getCount(); i1++) {
-						MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(i1);
+					for (int j = 0; j < multiPart.getCount(); j++) {
+						MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(j);
 						if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
 
 							String nomDossier = part.getFileName().substring(0, part.getFileName().lastIndexOf('.'));
@@ -134,18 +75,88 @@ public class Mail {
 						}
 					}
 				}
-
-				emailFolder.close(false);
-				emailStore.close();
+				message.setFlag(Flags.Flag.DELETED, true);
 			}
-
-		} catch (NoSuchProviderException e) {
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+			emailFolder.close(true);
+			emailStore.close();
+		} catch (MessagingException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static Properties configurationSmtp() {
+		Properties props = new Properties();
+
+		props.put("mail.smtp.starttls.enable", "true");
+
+		props.put("mail.smtp.host", Constante.HOSTNAME);
+
+		props.put("mail.smtp.port", "587");
+
+		props.put("mail.smtp.auth", "true");
+
+		return props;
+	}
+
+	private static Message configurationMessage(Session session, MailController mailCtrl) {
+		Message message = new MimeMessage(session);
+		try {
+			// Piéces jointes
+			File file = new File(mailCtrl.getMainApp().getMainApp().getMissionActive().getCheminDossier() + "/"
+					+ mailCtrl.getMainApp().getMainApp().getMissionActive().getNomOM() + Constante.EXTENSION_PDF);
+			FileDataSource source = new FileDataSource(file);
+			DataHandler handler = new DataHandler(source);
+			MimeBodyPart pieceJointe = new MimeBodyPart();
+			pieceJointe.setDataHandler(handler);
+			pieceJointe.setFileName(source.getName());
+
+			MimeBodyPart texteMessage = new MimeBodyPart();
+
+			texteMessage.setText(mailCtrl.getCorpsDuMail().getText());
+
+			MimeMultipart contenuMessage = new MimeMultipart();
+
+			contenuMessage.addBodyPart(texteMessage);
+			contenuMessage.addBodyPart(pieceJointe);
+
+			message.setContent(contenuMessage);
+			message.setSubject(mailCtrl.getObjetDuMail().getText());
+
+			message.setFrom(new InternetAddress(mailCtrl.getExpediteur().getText()));
+
+			List<String> listDest = mailCtrl.getDestinatairesTab();
+	
+			String listDestEnUnString = String.join(", ", listDest);
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(listDestEnUnString));
+
+			List<String> listEnCopie = mailCtrl.getDestEnCopieTab();
+			if (listEnCopie != null) {
+				String listDestEnCopieEnUnString = String.join(", ", listEnCopie);				
+				message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(listDestEnCopieEnUnString));
+
+			}
+
+		} catch (Exception ex) {
+			Logger.getLogger(MailController.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		return message;
+	}
+
+	public static void envoyerMail(MailController mailCtrl) {
+		Properties props = configurationSmtp();
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(mailCtrl.getExpediteur().getText(), Constante.MOT_DE_PASSE);
+			}
+		});
+		try {
+			Transport.send(configurationMessage(session, mailCtrl));
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 }

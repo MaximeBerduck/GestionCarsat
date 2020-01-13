@@ -37,4 +37,5 @@ public class Constante {
 	public static final String OBJET_DU_MAIL_DEFAUT = "Ordre de mission";
 	
 	public static final String HOSTNAME = "groupemaxime.ddns.net";
+	public static final String MOT_DE_PASSE = "root";
 }
