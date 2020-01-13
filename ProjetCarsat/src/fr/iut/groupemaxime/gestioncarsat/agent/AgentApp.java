@@ -298,6 +298,7 @@ public class AgentApp extends Application {
 		
 		this.afficherFraisMission();
 		this.fmCtrl.modifierFraisMission(fm);
+		this.fmCtrl.setFraisMission(fm);
 	}
 
 	public void demanderActionOM() {

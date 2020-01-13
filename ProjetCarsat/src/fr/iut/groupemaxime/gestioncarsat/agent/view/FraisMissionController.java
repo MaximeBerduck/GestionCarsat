@@ -108,13 +108,15 @@ public class FraisMissionController {
 			fraisJournalier.setTypeFraisTransport(frais2Ctrl.getTypeFraisTransport());
 
 		if (!"".equals(frais2Ctrl.getMontantFraisTransport()))
-			fraisJournalier.setMontantFraisTransport(Integer.parseInt(frais2Ctrl.getMontantFraisTransport()));
+			fraisJournalier.setMontantFraisTransport(Float.parseFloat(frais2Ctrl.getMontantFraisTransport()));
 
 		if (!"".equals(frais2Ctrl.getNbrKmPerso()))
-			fraisJournalier.setNbrKmVehiPerso(Integer.parseInt(frais2Ctrl.getNbrKmPerso()));
+			fraisJournalier.setNbrKmVehiPerso(Float.parseFloat(frais2Ctrl.getNbrKmPerso()));
 
 		if (!"".equals(frais2Ctrl.getNbrKmService()))
-			fraisJournalier.setNbrKmVehiService(Integer.parseInt(frais2Ctrl.getNbrKmService()));
+			fraisJournalier.setNbrKmVehiService(Float.parseFloat(frais2Ctrl.getNbrKmService()));
+
+		this.fraisMission.retirerJournee(fraisJournalier);
 
 		this.fraisMission.ajouterJournee(fraisJournalier);
 	}
@@ -218,12 +220,13 @@ public class FraisMissionController {
 			this.listeDateInverse.put(fj.getDate(), 0);
 			i++;
 		}
+		this.fraisMission = new FraisMission(fm.getAdresseFichier());
 		this.afficherSemaine();
 		this.afficherPremierJour();
 	}
 
 	private void modifierFraisJournalier(FraisJournalier fj) {
-		// TODO Auto-generated method stub
+		// TODO
 		this.ajouterJour(fj.getDate(), ((MissionTemporaire) missionActive.getMission()).getDateFin());
 		this.listeFrais1.get(fj.getDate()).modifierFraisJournalier(fj);
 		this.listeFrais2.get(fj.getDate()).modifierFraisJournalier(fj);
@@ -240,6 +243,10 @@ public class FraisMissionController {
 
 	public void setMissionActive(OrdreMission om) {
 		this.missionActive = om;
+	}
+
+	public void setFraisMission(FraisMission fm) {
+		this.fraisMission = fm;
 	}
 
 	public void afficherFrais2(String date) {

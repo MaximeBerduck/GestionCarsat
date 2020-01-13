@@ -78,4 +78,12 @@ public class FraisMission implements DocJson<FraisMission> {
 		return this.adresseFichier;
 	}
 
+	public void retirerJournee(FraisJournalier fraisJournalier) {
+		for (FraisJournalier fj : this.fraisMission) {
+			if (fj.getDate().equals(fraisJournalier.getDate())) {
+				this.fraisMission.remove(fj);
+			}
+		}
+	}
+
 }
