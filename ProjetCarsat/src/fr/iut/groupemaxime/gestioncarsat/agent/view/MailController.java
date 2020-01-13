@@ -89,7 +89,6 @@ public class MailController {
 			// Piéces jointes
 			File file = new File(this.mainApp.getMainApp().getMissionActive().getCheminDossier() + "/"
 					+ this.mainApp.getMainApp().getMissionActive().getNomOM() + Constante.EXTENSION_PDF);
-			System.out.println(file.getAbsolutePath());
 			FileDataSource source = new FileDataSource(file);
 			DataHandler handler = new DataHandler(source);
 			MimeBodyPart fichier = new MimeBodyPart();
