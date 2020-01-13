@@ -248,6 +248,7 @@ public class AgentApp extends Application {
 	public void modifierOm(OrdreMission om) {
 		this.afficherOrdresMission();
 		this.omCtrl.modifierOm(om);
+		this.omCtrl.setTitre(Constante.TITRE_MODIF_OM);
 	}
 
 	public void modifierHt(OrdreMission om) {
@@ -299,6 +300,8 @@ public class AgentApp extends Application {
 		this.afficherFraisMission();
 		this.fmCtrl.modifierFraisMission(fm);
 		this.fmCtrl.setFraisMission(fm);
+		this.fmCtrl.setTitre(Constante.TITRE_MODIF_FM);
+
 	}
 
 	public void demanderActionOM() {

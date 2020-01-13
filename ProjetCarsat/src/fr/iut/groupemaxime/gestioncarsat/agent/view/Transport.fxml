@@ -16,7 +16,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.TransportController">
    <children>
-      <VBox fx:id="page" alignment="TOP_CENTER" prefHeight="550.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="page" alignment="TOP_CENTER" layoutY="79.0" prefHeight="471.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="79.0">
          <children>
             <Label id="titre" alignment="CENTER" prefHeight="27.0" prefWidth="611.0" style="-fx-font-size: 20;" styleClass="titre" text="Moyen de transport autorisé">
                <font>
@@ -170,7 +170,7 @@
             </GridPane>
             <HBox prefHeight="50.0" prefWidth="600.0" spacing="35.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#retournerATypeOM" prefWidth="75.0" text="Retour">
+                  <Button mnemonicParsing="false" onAction="#retournerATypeOM" prefHeight="29.0" prefWidth="94.0" text="&lt;&lt; Retour">
                      <HBox.margin>
                         <Insets top="25.0" />
                      </HBox.margin></Button>

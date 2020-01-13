@@ -38,4 +38,7 @@ public class Constante {
 	
 	public static final String HOSTNAME = "groupemaxime.ddns.net";
 	public static final String MOT_DE_PASSE = "root";
+	
+	public static final String TITRE_MODIF_OM = "Modification d'un ordre de mission";
+	public static final String TITRE_MODIF_FM = "Modification des frais mission";
 }

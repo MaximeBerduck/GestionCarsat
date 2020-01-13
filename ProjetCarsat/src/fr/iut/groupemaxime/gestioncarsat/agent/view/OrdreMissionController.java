@@ -21,6 +21,7 @@ import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -47,6 +48,14 @@ public class OrdreMissionController {
 	private AgentApp mainApp;
 
 	private Options options;
+	
+	@FXML 
+	private Label titre;
+	
+	public void setTitre(String titre)
+	{
+		this.titre.setText(titre);
+	}
 
 	@FXML
 	private void initialize() {

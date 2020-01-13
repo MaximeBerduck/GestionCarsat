@@ -6,11 +6,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class AgentController {
 
+	
 	@FXML
 	private GridPane grilleTop;
 
@@ -148,6 +150,8 @@ public class AgentController {
 	public TextField getCoefficientTextField() {
 		return coefficientTextField;
 	}
+	
+	
 
 	public void setChamps(Agent agent) {
 		if (-1 != agent.getNumCAPSSA()) {
