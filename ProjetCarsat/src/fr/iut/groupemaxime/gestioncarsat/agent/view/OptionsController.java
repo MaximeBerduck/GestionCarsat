@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
@@ -27,6 +28,8 @@ public class OptionsController {
 	@FXML
 	private TextField textFieldMailAgent;
 	@FXML
+	private Label domaineLabel;
+	@FXML
 	private ChoiceBox<String> selectMailResponsable;
 
 	private AgentApp mainApp;
@@ -38,6 +41,9 @@ public class OptionsController {
 		this.selectMailResponsable.getSelectionModel().selectedItemProperty()
 				.addListener((ObservableValue<? extends String> observable, String oldValue,
 						String newValue) -> modifierResponsable(newValue));
+		this.textFieldCheminDossierOM.setDisable(true);
+		this.textFieldCheminSignature.setDisable(true);
+		this.domaineLabel.setText('@' + Constante.HOSTNAME);
 	}
 
 	@FXML

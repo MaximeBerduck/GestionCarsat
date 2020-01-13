@@ -33,9 +33,10 @@ public class ListeOrdreMission {
 			}
 		}
 	}
-	
+
 	public void chargerOMMail(Options options) {
-		Mail.recevoirEmail(Constante.HOSTNAME, options.getMailAgent(), "root", options.getCheminOM());
+		Mail.recevoirEmail(Constante.HOSTNAME, options.getMailAgent() + '@' + Constante.HOSTNAME, "root",
+				options.getCheminOM());
 	}
 
 	public void ajouterOM(OrdreMission om) {

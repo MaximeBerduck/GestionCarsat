@@ -158,7 +158,7 @@ public class OrdreMissionController {
 
 			controllerMail = loader.getController();
 			controllerMail.setMainApp(this);
-			controllerMail.setExpediteur(this.options.getMailAgent());
+			controllerMail.setExpediteur(this.options.getMailAgent() + '@' + Constante.HOSTNAME);
 			String desti = "";
 			for (String i : this.options.getMailsResponsables())
 				desti += i + ',';
