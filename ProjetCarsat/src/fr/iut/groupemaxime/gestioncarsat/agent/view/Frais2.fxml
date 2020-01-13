@@ -7,38 +7,41 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="348.0" prefWidth="600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.Frais2Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.Frais2Controller">
    <children>
-      <Label layoutX="236.0" layoutY="6.0" text="Journée du " />
-      <Label fx:id="dateJournee" layoutX="300.0" layoutY="6.0" text="12/34/5678" />
-      <Label layoutX="252.0" layoutY="47.0" text="Frais de transport" underline="true" />
-      <Label layoutX="216.0" layoutY="74.0" text="Type :" />
-      <TextField fx:id="typeFraisTransport" layoutX="279.0" layoutY="69.0" prefHeight="27.0" prefWidth="115.0" />
-      <Label layoutX="207.0" layoutY="112.0" text="Montant :" />
-      <TextField fx:id="montantFraisTransport" layoutX="313.0" layoutY="107.0" prefHeight="27.0" prefWidth="42.0" />
-      <Label layoutX="363.0" layoutY="112.0" text="€" />
-      <VBox fx:id="nbrKilometreLayout" alignment="TOP_CENTER" layoutX="-1.0" layoutY="161.0" prefHeight="100.0" prefWidth="600.0">
+      <Label layoutX="287.0" layoutY="42.0" text="Journée du " />
+      <Label fx:id="dateJournee" layoutX="364.0" layoutY="42.0" text="12/34/5678" />
+      <Label layoutX="305.0" layoutY="105.0" text="Frais de transport" underline="true" />
+      <Label layoutX="271.0" layoutY="141.0" text="Type :" />
+      <TextField fx:id="typeFraisTransport" layoutX="334.0" layoutY="136.0" prefHeight="27.0" prefWidth="115.0" />
+      <Label layoutX="257.0" layoutY="188.0" text="Montant :" />
+      <TextField fx:id="montantFraisTransport" layoutX="363.0" layoutY="183.0" prefHeight="27.0" prefWidth="57.0" />
+      <Label layoutX="427.0" layoutY="187.0" text="€" />
+      <VBox fx:id="nbrKilometreLayout" alignment="TOP_CENTER" layoutY="260.0" prefHeight="120.0" prefWidth="700.0">
          <children>
-            <Label text="Nombre de kilomètres parcourus" underline="true">
+            <Label prefHeight="35.0" prefWidth="219.0" text="Nombre de kilomètres parcourus" underline="true">
                <VBox.margin>
                   <Insets bottom="5.0" />
                </VBox.margin>
             </Label>
             <AnchorPane fx:id="vehiculeServiceLayout" prefHeight="40.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="199.0" layoutY="10.0" text="Véhicule de service :" />
-                  <TextField fx:id="nbrKmService" layoutX="345.0" layoutY="7.0" prefHeight="27.0" prefWidth="42.0" />
+                  <Label layoutX="230.0" layoutY="10.0" text="Véhicule de service :" />
+                  <TextField fx:id="nbrKmService" layoutX="394.0" layoutY="6.0" prefHeight="27.0" prefWidth="78.0" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="vehiculePersonnelLayout" prefHeight="40.0" prefWidth="200.0">
+            <AnchorPane fx:id="vehiculePersonnelLayout" prefHeight="44.0" prefWidth="700.0">
                <children>
-                  <Label layoutX="200.0" layoutY="12.0" text="Véhicule personnel :" />
-                  <TextField fx:id="nbrKmPerso" layoutX="345.0" layoutY="7.0" prefHeight="27.0" prefWidth="42.0" />
+                  <Label layoutX="229.0" layoutY="11.0" text="Véhicule personnel :" />
+                  <TextField fx:id="nbrKmPerso" layoutX="395.0" layoutY="7.0" prefHeight="27.0" prefWidth="77.0">
+                     <padding>
+                        <Insets left="50.0" />
+                     </padding></TextField>
                </children>
             </AnchorPane>
          </children>
       </VBox>
-      <Button fx:id="boutonValider" layoutX="451.0" layoutY="294.0" mnemonicParsing="false" onAction="#validerJournee" text="Journée suivante" />
-      <Button layoutX="366.0" layoutY="294.0" mnemonicParsing="false" onAction="#retourFrais1" text="Retour" />
+      <Button fx:id="boutonValider" layoutX="515.0" layoutY="439.0" mnemonicParsing="false" onAction="#validerJournee" text="Journée suivante" />
+      <Button layoutX="387.0" layoutY="439.0" mnemonicParsing="false" onAction="#retourFrais1" text="&lt;&lt; Retour" />
    </children>
 </AnchorPane>

@@ -3,11 +3,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.FraisDateSemaineController">
+<AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.FraisDateSemaineController">
    <children>
-      <Label layoutX="196.0" layoutY="7.0" text="Mission du " />
-      <Label fx:id="labelDateDebut" layoutX="258.0" layoutY="7.0" text="12/34/5678" />
-      <Label layoutX="328.0" layoutY="6.0" text="au" />
-      <Label fx:id="labelDateFin" layoutX="344.0" layoutY="7.0" text="12/34/5678" />
+      <Label layoutX="205.0" layoutY="5.0" text="Mission du " />
+      <Label fx:id="labelDateDebut" layoutX="282.0" layoutY="5.0" text="12/34/5678" />
+      <Label layoutX="374.0" layoutY="5.0" text="au" />
+      <Label fx:id="labelDateFin" layoutX="404.0" layoutY="5.0" text="12/34/5678" />
    </children>
 </AnchorPane>

@@ -6,16 +6,19 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="itemMission" onMouseClicked="#choisirMission" prefHeight="75.0" prefWidth="298.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.ItemOrdreMissionController">
+<VBox fx:id="itemMission" onMouseClicked="#choisirMission" prefHeight="75.0" prefWidth="347.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.ItemOrdreMissionController">
    <children>
-      <HBox prefHeight="75.0" prefWidth="298.0">
+      <HBox prefHeight="75.0" prefWidth="347.0">
          <children>
-            <Label fx:id="lieuLabel" prefHeight="75.0" prefWidth="100.0" text="Limoges">
+            <Label fx:id="lieuLabel" prefHeight="75.0" prefWidth="125.0" text="Limoges">
                <padding>
                   <Insets left="10.0" />
                </padding>
             </Label>
-            <Label fx:id="datesLabel" prefHeight="75.0" prefWidth="200.0" text="Du 12/00/0000 au 00/00/0000" />
+            <Label fx:id="datesLabel" alignment="CENTER_RIGHT" prefHeight="75.0" prefWidth="225.0" text="Du 12/00/0000 au 00/00/0000" textAlignment="CENTER" wrapText="true">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin></Label>
          </children>
          <VBox.margin>
             <Insets />

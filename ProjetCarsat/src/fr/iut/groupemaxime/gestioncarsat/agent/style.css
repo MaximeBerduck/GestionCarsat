@@ -12,11 +12,11 @@
 .label, .text
 {
 	-fx-font-family:"Segoe UI";
-	-fx-font-size:13px;	
+	-fx-font-size:15px;	
 }
 
 #titre.label
 {
-	-fx-font-size:15px;
+	-fx-font-size:20px;
 }
 
