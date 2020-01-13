@@ -44,8 +44,8 @@ public class OptionsController {
 	public void choisirCheminDossierMission() {
 		File dossier = Bibliotheque.ouvrirDirectoryChooser();
 		if (null != dossier) {
-			this.textFieldCheminDossierOM.setText(String.valueOf(dossier));
-			this.options.setCheminOM(String.valueOf(dossier));
+			this.textFieldCheminDossierOM.setText(String.valueOf(dossier) + '/');
+			this.options.setCheminOM(String.valueOf(dossier) + '/');
 		}
 	}
 

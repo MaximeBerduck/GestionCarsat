@@ -26,7 +26,8 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	private String nomOM;
 	private boolean signatureAgent;
 
-	public OrdreMission(Agent agent, TypeMission mission, Transport transport, String cheminDossier, String nomOM, boolean signatureAgent) {
+	public OrdreMission(Agent agent, TypeMission mission, Transport transport, String cheminDossier, String nomOM,
+			boolean signatureAgent) {
 		this.agent = agent;
 		this.mission = mission;
 		this.transport = transport;
@@ -123,7 +124,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	public void setSignatureAgent(boolean signatureAgent) {
 		this.signatureAgent = signatureAgent;
 	}
-	
+
 	public boolean estSigne() {
 		return this.signatureAgent;
 	}

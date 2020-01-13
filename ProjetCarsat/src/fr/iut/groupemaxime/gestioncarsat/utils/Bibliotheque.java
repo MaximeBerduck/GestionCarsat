@@ -24,7 +24,7 @@ public class Bibliotheque {
 		Stage stage = new Stage();
 		File dossier = directoryChooser.showDialog(stage);
 		if (null != dossier)
-			return dossier;
+			return new File(dossier.getAbsolutePath() + '/');
 		else
 			return null;
 	}
