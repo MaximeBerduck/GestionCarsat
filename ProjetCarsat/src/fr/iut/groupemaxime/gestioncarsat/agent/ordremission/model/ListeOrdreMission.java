@@ -35,8 +35,7 @@ public class ListeOrdreMission {
 	}
 	
 	public void chargerOMMail(Options options) {
-		String host = "groupemaxime.ddns.net";
-		Mail.recevoirEmail(host, options.getMailAgent(), "root", options.getCheminOM());
+		Mail.recevoirEmail(Constante.HOSTNAME, options.getMailAgent(), "root", options.getCheminOM());
 	}
 
 	public void ajouterOM(OrdreMission om) {
