@@ -67,7 +67,7 @@
                   <Label prefHeight="50.0" prefWidth="161.0" text="Lieu du déplacement :" />
                   <TextField fx:id="lieuDeplacementTextField" prefWidth="150.0">
                      <HBox.margin>
-                        <Insets top="13.0" />
+                        <Insets left="12.0" top="13.0" />
                      </HBox.margin>
                   </TextField>
                </children>

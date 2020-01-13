@@ -30,7 +30,7 @@
                <children>
                   <RadioButton fx:id="voitureRadioBtn" mnemonicParsing="false" onAction="#VoitureSelectionne" selected="true" text="Voiture">
                      <font>
-                        <Font size="14.0" />
+                        <Font size="15.0" />
                      </font>
                      <toggleGroup>
                         <ToggleGroup fx:id="moyenTransport" />
@@ -38,7 +38,7 @@
                   </RadioButton>
                   <RadioButton fx:id="trainRadioBtn" mnemonicParsing="false" onAction="#TrainSelectionne" text="Train" toggleGroup="$moyenTransport">
                      <font>
-                        <Font size="14.0" />
+                        <Font size="15.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" />
@@ -46,13 +46,16 @@
                   </RadioButton>
                   <RadioButton fx:id="avionRadioBtn" mnemonicParsing="false" onAction="#AvionSelectionne" text="Avion" toggleGroup="$moyenTransport">
                      <font>
-                        <Font size="14.0" />
+                        <Font size="15.0" />
                      </font>
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
                   </RadioButton>
-                  <RadioButton fx:id="autreRadioBtn" mnemonicParsing="false" onAction="#autreSelectionne" text="Autre" toggleGroup="$moyenTransport" />
+                  <RadioButton fx:id="autreRadioBtn" mnemonicParsing="false" onAction="#autreSelectionne" text="Autre" toggleGroup="$moyenTransport">
+                     <font>
+                        <Font size="15.0" />
+                     </font></RadioButton>
                </children>
             </HBox>
             <GridPane fx:id="detailsVoiture" prefHeight="144.0" prefWidth="700.0" vgap="20.0">

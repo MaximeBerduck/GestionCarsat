@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="itemMission" onMouseClicked="#choisirMission" prefHeight="75.0" prefWidth="347.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.ItemOrdreMissionController">
+<VBox fx:id="itemMission" onMouseClicked="#choisirMission" prefHeight="75.0" prefWidth="347.0" style="-fx-border-color: grey; -fx-border-width: 0 1 1 1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.ItemOrdreMissionController">
    <children>
       <HBox prefHeight="75.0" prefWidth="347.0">
          <children>

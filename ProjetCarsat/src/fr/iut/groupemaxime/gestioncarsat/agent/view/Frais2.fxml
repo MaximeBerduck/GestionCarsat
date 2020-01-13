@@ -9,8 +9,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.Frais2Controller">
    <children>
-      <Label layoutX="287.0" layoutY="42.0" text="Journée du " />
-      <Label fx:id="dateJournee" layoutX="364.0" layoutY="42.0" text="12/34/5678" />
+      <Label layoutX="270.0" layoutY="14.0" text="Journée du " />
+      <Label fx:id="dateJournee" layoutX="347.0" layoutY="14.0" text="12/34/5678" />
       <Label layoutX="305.0" layoutY="105.0" text="Frais de transport" underline="true" />
       <Label layoutX="271.0" layoutY="141.0" text="Type :" />
       <TextField fx:id="typeFraisTransport" layoutX="334.0" layoutY="136.0" prefHeight="27.0" prefWidth="115.0" />
