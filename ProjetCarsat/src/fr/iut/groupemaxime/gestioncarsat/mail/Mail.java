@@ -125,19 +125,18 @@ public class Mail {
 			message.setFrom(new InternetAddress(mailCtrl.getExpediteur().getText()));
 
 			List<String> listDest = mailCtrl.getDestinatairesTab();
-	
+
 			String listDestEnUnString = String.join(", ", listDest);
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(listDestEnUnString));
 
 			List<String> listEnCopie = mailCtrl.getDestEnCopieTab();
 			if (listEnCopie != null) {
-				String listDestEnCopieEnUnString = String.join(", ", listEnCopie);				
+				String listDestEnCopieEnUnString = String.join(", ", listEnCopie);
 				message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(listDestEnCopieEnUnString));
 
 			}
+		} catch (MessagingException e) {
 
-		} catch (Exception ex) {
-			Logger.getLogger(MailController.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return message;
 	}
