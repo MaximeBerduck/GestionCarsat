@@ -26,7 +26,6 @@ public class HorairesTravailController {
 	@FXML
 	private SplitPane horaireTravailSplit;
 	
-	//private Stage primaryStage;
 	private AgentApp agentApp;
 	private Options options;
 	private OrdreMission missionActive;
