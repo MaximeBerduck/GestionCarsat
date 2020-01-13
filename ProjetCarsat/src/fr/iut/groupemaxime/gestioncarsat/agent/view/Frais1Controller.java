@@ -1,5 +1,6 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 
 public class Frais1Controller {
 	@FXML
-	private Label dateJournée;
+	private Label dateJournee;
 	@FXML
 	private TextField heureDepart;
 	@FXML
@@ -33,7 +34,59 @@ public class Frais1Controller {
 	// Event Listener on Button.onAction
 	@FXML
 	public void afficherFrais2(ActionEvent event) {
-		this.fmController.afficherFrais2(dateJournée.getText());
+		this.fmController.afficherFrais2(dateJournee.getText());
+	}
+
+	public void modifierFraisJournalier(FraisJournalier fj) {
+		// TODO
+		if (null != fj.getHeureDepart()) {
+			this.setHeureDepart(fj.getHeureDepart().split(":")[0]);
+			this.setMinDepart(fj.getHeureDepart().split(":")[1]);
+		}
+
+		if (null != fj.getHeureRetour()) {
+			this.setHeureRetour(fj.getHeureRetour().split(":")[0]);
+			this.setMinRetour(fj.getHeureRetour().split(":")[1]);
+		}
+
+		this.setNbrForfaitRepas(String.valueOf(fj.getNbrRepasForfait()));
+		this.setNbrJustificatifRepas(String.valueOf(fj.getNbrRepasJustif()));
+
+		this.setNbrForfaitDecouchers(String.valueOf(fj.getNbrDecouchForfait()));
+		this.setNbrJustifDecouchers(String.valueOf(fj.getNbrDecouchJustif()));
+
+	}
+
+	public void setHeureDepart(String heureDepart) {
+		this.heureDepart.setText(heureDepart);
+	}
+
+	public void setMinDepart(String minDepart) {
+		this.minDepart.setText(minDepart);
+	}
+
+	public void setHeureRetour(String heureRetour) {
+		this.heureRetour.setText(heureRetour);
+	}
+
+	public void setMinRetour(String minRetour) {
+		this.minRetour.setText(minRetour);
+	}
+
+	public void setNbrForfaitRepas(String nbrForfaitRepas) {
+		this.nbrForfaitRepas.setText(nbrForfaitRepas);
+	}
+
+	public void setNbrJustificatifRepas(String nbrJustificatifRepas) {
+		this.nbrJustificatifRepas.setText(nbrJustificatifRepas);
+	}
+
+	public void setNbrForfaitDecouchers(String nbrForfaitDecouchers) {
+		this.nbrForfaitDecouchers.setText(nbrForfaitDecouchers);
+	}
+
+	public void setNbrJustifDecouchers(String nbrJustifDecouchers) {
+		this.nbrJustifDecouchers.setText(nbrJustifDecouchers);
 	}
 
 	public void setPageFrais1(AnchorPane pageFrais1) {
@@ -41,7 +94,7 @@ public class Frais1Controller {
 	}
 
 	public void setDateJournee(String date) {
-		this.dateJournée.setText(date);
+		this.dateJournee.setText(date);
 	}
 
 	public void setFmController(FraisMissionController fmController) {

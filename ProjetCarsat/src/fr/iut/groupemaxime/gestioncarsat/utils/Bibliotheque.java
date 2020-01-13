@@ -55,4 +55,18 @@ public class Bibliotheque {
 		}
 		return false;
 	}
+
+	public static String recupererCheminEtNomFichierFm(OrdreMission om) {
+		File chemin = new File(om.getCheminDossier());
+		String listeFichiers[] = {};
+		listeFichiers = chemin.list();
+		if (listeFichiers != null) {
+			for (String fichier : listeFichiers) {
+				if (fichier.endsWith(".json") && fichier.startsWith("FM_")) {
+					return om.getCheminDossier() + fichier;
+				}
+			}
+		}
+		return null;
+	}
 }

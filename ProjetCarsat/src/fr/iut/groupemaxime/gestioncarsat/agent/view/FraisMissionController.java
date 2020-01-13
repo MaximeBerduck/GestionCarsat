@@ -66,9 +66,6 @@ public class FraisMissionController {
 		i++;
 		if (this.jourSuivantExiste(date)) {
 			this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
-			if (!jourSuivantExiste(this.listeDate.get(i))) {
-				this.listeFrais2.get(this.listeDate.get(i));
-			}
 		} else {
 			this.fraisMissionSplit.getItems().remove(1);
 			this.fraisMissionSplit.getItems().remove(0);
@@ -82,7 +79,7 @@ public class FraisMissionController {
 		return null != this.listeDate.get(i);
 	}
 
-	private void sauvegarderJournee(String date) {
+	public void sauvegarderJournee(String date) {
 		FraisJournalier fraisJournalier = new FraisJournalier(date);
 		Frais1Controller frais1Ctrl = this.listeFrais1.get(date);
 		Frais2Controller frais2Ctrl = this.listeFrais2.get(date);
@@ -210,6 +207,27 @@ public class FraisMissionController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void modifierFraisMission(FraisMission fm) {
+		// TODO
+		Integer i = 0;
+		for (FraisJournalier fj : fm.getFraisMission()) {
+			this.modifierFraisJournalier(fj);
+			this.listeDate.put(0, fj.getDate());
+			this.listeDateInverse.put(fj.getDate(), 0);
+			i++;
+		}
+		this.afficherSemaine();
+		this.afficherPremierJour();
+	}
+
+	private void modifierFraisJournalier(FraisJournalier fj) {
+		// TODO Auto-generated method stub
+		this.ajouterJour(fj.getDate(), ((MissionTemporaire) missionActive.getMission()).getDateFin());
+		this.listeFrais1.get(fj.getDate()).modifierFraisJournalier(fj);
+		this.listeFrais2.get(fj.getDate()).modifierFraisJournalier(fj);
+
 	}
 
 	public void setAgentApp(AgentApp agentApp) {

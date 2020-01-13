@@ -1,5 +1,6 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -45,7 +46,7 @@ public class Frais2Controller {
 	public void validerJournee(ActionEvent event) {
 		this.fmController.afficherJourSuivant(this.dateJournee.getText());
 	}
-	
+
 	// Event Listener on Button.onAction
 	@FXML
 	public void sauvegarderFraisMission(ActionEvent event) {
@@ -57,16 +58,41 @@ public class Frais2Controller {
 	public void retourFrais1(ActionEvent event) {
 		this.fmController.retourFrais1(this.dateJournee.getText());
 	}
-	
+
+	public void modifierFraisJournalier(FraisJournalier fj) {
+		// TODO Auto-generated method stub
+		this.setTypeFraisTransport(fj.getTypeFraisTransport());
+		this.setMontantFraisTransport(String.valueOf(fj.getMontantFraisTransport()));
+
+		this.setNbrKmService(String.valueOf(fj.getNbrKmVehiService()));
+		this.setNbrKmPerso(String.valueOf(fj.getNbrKmVehiPerso()));
+	}
+
 	public void setBoutonSuivantToSauvegarder() {
 		this.boutonValider.setText("Valider");
-		this.boutonValider.setOnAction(new EventHandler<ActionEvent>() 
-		{
-		    @Override public void handle(ActionEvent e) 
-		    {
+		this.boutonValider.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				fmController.sauvegarderJournee(dateJournee.getText());
 				fmController.sauvegarderFrais();
-		    }
+			}
 		});
+	}
+
+	public void setTypeFraisTransport(String typeFraisTransport) {
+		this.typeFraisTransport.setText(typeFraisTransport);
+	}
+
+	public void setMontantFraisTransport(String montantFraisTransport) {
+		this.montantFraisTransport.setText(montantFraisTransport);
+	}
+
+	public void setNbrKmService(String nbrKmService) {
+		this.nbrKmService.setText(nbrKmService);
+	}
+
+	public void setNbrKmPerso(String nbrKmPerso) {
+		this.nbrKmPerso.setText(nbrKmPerso);
 	}
 
 	public void setDateJournee(String jour) {

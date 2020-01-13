@@ -8,7 +8,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.Frais1Controller">
    <children>
       <Label layoutX="269.0" layoutY="14.0" text="Journée du " />
-      <Label fx:id="dateJournée" layoutX="350.0" layoutY="14.0" text="12/34/5678" />
+      <Label fx:id="dateJournee" layoutX="350.0" layoutY="14.0" text="12/34/5678" />
       <Label layoutX="214.0" layoutY="86.0" prefHeight="19.0" prefWidth="134.0" text="Heure de départ :" />
       <TextField fx:id="heureDepart" layoutX="346.0" layoutY="81.0" prefHeight="27.0" prefWidth="42.0" />
       <Label layoutX="410.0" layoutY="86.0" text=":" />

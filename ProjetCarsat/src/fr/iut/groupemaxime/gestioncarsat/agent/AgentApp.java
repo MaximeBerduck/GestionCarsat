@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireTravail;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
@@ -146,14 +147,19 @@ public class AgentApp extends Application {
 			this.rootLayoutCtrl.getGridRoot().add(this.fraisMission, 2, 0);
 			this.fmCtrl.setOptions(this.options);
 			this.fmCtrl.setMissionActive(missionActive);
-			this.fmCtrl.creerFraisMission();
-
-			this.fmCtrl.creerAllJours();
-			this.fmCtrl.afficherSemaine();
-			this.fmCtrl.afficherPremierJour();
 		} catch (IOException e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+
+	public void creerFraisMission() {
+		this.afficherFraisMission();
+		this.fmCtrl.creerFraisMission();
+
+		this.fmCtrl.creerAllJours();
+		this.fmCtrl.afficherSemaine();
+		this.fmCtrl.afficherPremierJour();
 	}
 
 	public void afficherHorairesTravail() {
@@ -272,7 +278,8 @@ public class AgentApp extends Application {
 			if (result.get() == buttonTypeAfficher) {
 				// TODO Afficher FM
 			} else if (result.get() == buttonTypeModif) {
-				// TODO modifier FM
+				this.afficherFraisMission();
+				this.modifierFrais(this.missionActive);
 			} else if (result.get() == buttonTypeEnvoyer) {
 				// TODO envoyer FM
 			} else {
@@ -280,8 +287,17 @@ public class AgentApp extends Application {
 			}
 		} else {
 			// Créer les frais de mission
-			this.afficherFraisMission();
+			this.creerFraisMission();
 		}
+	}
+
+	private void modifierFrais(OrdreMission missionActive) {
+		//TODO
+		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(this.missionActive));
+		fm = fm.chargerJson(fm.getAdresseFichier());
+		
+		this.afficherFraisMission();
+		this.fmCtrl.modifierFraisMission(fm);
 	}
 
 	public void demanderActionOM() {

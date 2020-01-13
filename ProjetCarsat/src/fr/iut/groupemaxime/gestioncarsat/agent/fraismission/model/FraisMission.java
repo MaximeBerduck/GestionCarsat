@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
+import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 
 public class FraisMission implements DocJson<FraisMission> {
 	private String adresseFichier;
