@@ -38,7 +38,7 @@
             </AnchorPane>
          </children>
       </VBox>
-      <Button layoutX="451.0" layoutY="294.0" mnemonicParsing="false" onAction="#validerJournee" text="Journée suivante" />
+      <Button fx:id="boutonValider" layoutX="451.0" layoutY="294.0" mnemonicParsing="false" onAction="#validerJournee" text="Journée suivante" />
       <Button layoutX="366.0" layoutY="294.0" mnemonicParsing="false" onAction="#retourFrais1" text="Retour" />
    </children>
 </AnchorPane>

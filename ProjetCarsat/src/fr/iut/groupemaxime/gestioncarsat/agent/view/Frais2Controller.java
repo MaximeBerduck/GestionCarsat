@@ -1,7 +1,9 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -24,6 +26,8 @@ public class Frais2Controller {
 	private AnchorPane vehiculePersonnelLayout;
 	@FXML
 	private TextField nbrKmPerso;
+	@FXML
+	private Button boutonValider;
 
 	private AnchorPane pageFrais2;
 	private FraisMissionController fmController;
@@ -41,11 +45,28 @@ public class Frais2Controller {
 	public void validerJournee(ActionEvent event) {
 		this.fmController.afficherJourSuivant(this.dateJournee.getText());
 	}
+	
+	// Event Listener on Button.onAction
+	@FXML
+	public void sauvegarderFraisMission(ActionEvent event) {
+		this.fmController.sauvegarderFrais();
+	}
 
 	// Event Listener on Button.onAction
 	@FXML
 	public void retourFrais1(ActionEvent event) {
 		this.fmController.retourFrais1(this.dateJournee.getText());
+	}
+	
+	public void setBoutonSuivantToSauvegarder() {
+		this.boutonValider.setText("Valider");
+		this.boutonValider.setOnAction(new EventHandler<ActionEvent>() 
+		{
+		    @Override public void handle(ActionEvent e) 
+		    {
+				fmController.sauvegarderFrais();
+		    }
+		});
 	}
 
 	public void setDateJournee(String jour) {

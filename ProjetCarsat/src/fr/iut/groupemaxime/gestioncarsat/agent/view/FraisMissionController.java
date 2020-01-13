@@ -52,7 +52,8 @@ public class FraisMissionController {
 	}
 
 	public void sauvegarderFrais() {
-		// TODO
+		this.fraisMission.sauvegarderJson(this.fraisMission.getAdresseFichier());
+		this.agentApp.retirerDocActif();
 	}
 
 	public void afficherPremierJour() {
@@ -63,13 +64,22 @@ public class FraisMissionController {
 		Integer i = this.listeDateInverse.get(date);
 		this.sauvegarderJournee(date);
 		i++;
-		if (null != this.listeDate.get(i)) {
+		if (this.jourSuivantExiste(date)) {
 			this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
+			if (!jourSuivantExiste(this.listeDate.get(i))) {
+				this.listeFrais2.get(this.listeDate.get(i));
+			}
 		} else {
 			this.fraisMissionSplit.getItems().remove(1);
 			this.fraisMissionSplit.getItems().remove(0);
-			this.fraisMission.sauvegarderJson(this.fraisMission.getAdresseFichier());
+			this.sauvegarderFrais();
 		}
+	}
+
+	public boolean jourSuivantExiste(String jour) {
+		Integer i = this.listeDateInverse.get(jour);
+		i++;
+		return null != this.listeDate.get(i);
 	}
 
 	private void sauvegarderJournee(String date) {
@@ -118,7 +128,7 @@ public class FraisMissionController {
 
 		String stringFin = ((MissionTemporaire) missionActive.getMission()).getDateFin();
 
-		this.ajouterJour(stringDebut);
+		this.ajouterJour(stringDebut, stringFin);
 		this.listeDate.put(i, stringDebut);
 		this.listeDateInverse.put(stringDebut, i);
 
@@ -128,7 +138,7 @@ public class FraisMissionController {
 				c.setTime(Constante.FORMAT_DATE_SLASH.parse(stringDebut));
 				c.add(Calendar.DATE, 1); // number of days to add
 				stringDebut = Constante.FORMAT_DATE_SLASH.format(c.getTime());
-				this.ajouterJour(stringDebut);
+				this.ajouterJour(stringDebut, stringFin);
 				i++;
 				this.listeDate.put(i, stringDebut);
 				this.listeDateInverse.put(stringDebut, i);
@@ -138,7 +148,7 @@ public class FraisMissionController {
 		}
 	}
 
-	public void ajouterJour(String jour) {
+	public void ajouterJour(String jour, String stringFin) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(this.getClass().getResource("Frais1.fxml"));
@@ -169,6 +179,10 @@ public class FraisMissionController {
 				}
 			} else {
 				frais2Ctrl.getNbrKilometreLayout().setVisible(false);
+			}
+
+			if (jour.equals(stringFin)) {
+				frais2Ctrl.setBoutonSuivantToSauvegarder();
 			}
 
 			this.listeFrais2.put(jour, frais2Ctrl);
