@@ -161,6 +161,7 @@ public class MailController {
 			alert.showAndWait();
 			e.printStackTrace();
 		}
+		this.mainApp.getMainApp().retirerDocActif();
 	}
 
 	private boolean adressesMailValides() {
