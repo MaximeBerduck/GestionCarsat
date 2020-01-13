@@ -15,20 +15,26 @@ import javax.json.JsonReader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
-import fr.iut.groupemaxime.gestioncarsat.utils.Options;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 
 public class FraisMission implements DocJson<FraisMission> {
 	private String adresseFichier;
+	private String dateDebutMission;
+	private String dateFinMission;
 	private HashSet<FraisJournalier> fraisMission;
 
-	public FraisMission(String adresseFichier, HashSet<FraisJournalier> fraisMission) {
+	public FraisMission(String adresseFichier, String dateDebutMission, String dateFinMission,
+			HashSet<FraisJournalier> fraisMission) {
 		this.adresseFichier = adresseFichier;
+		this.dateDebutMission = dateDebutMission;
+		this.dateFinMission = dateFinMission;
 		this.fraisMission = fraisMission;
 	}
 
 	public FraisMission(String adresseFichier) {
-		this(adresseFichier, new HashSet<FraisJournalier>());
+		this(adresseFichier, null, null, new HashSet<FraisJournalier>());
 	}
 
 	@Override
@@ -66,6 +72,17 @@ public class FraisMission implements DocJson<FraisMission> {
 		return fraisMission;
 	}
 
+	public void genererPDF() {
+		try {
+			PDF pdf = new PDF(new File(Constante.CHEMIN_PDF_VIDE));
+			pdf.remplirPdfFM(this);
+			pdf.sauvegarderPDF();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public HashSet<FraisJournalier> getFraisMission() {
 		return fraisMission;
 	}
@@ -84,6 +101,22 @@ public class FraisMission implements DocJson<FraisMission> {
 				this.fraisMission.remove(fj);
 			}
 		}
+	}
+
+	public String getDateDebutMission() {
+		return dateDebutMission;
+	}
+
+	public void setDateDebutMission(String dateDebutMission) {
+		this.dateDebutMission = dateDebutMission;
+	}
+
+	public String getDateFinMission() {
+		return dateFinMission;
+	}
+
+	public void setDateFinMission(String dateFinMission) {
+		this.dateFinMission = dateFinMission;
 	}
 
 }

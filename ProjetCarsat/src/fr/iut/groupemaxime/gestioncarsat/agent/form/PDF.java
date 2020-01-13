@@ -2,8 +2,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.form;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -13,6 +12,8 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.AutreTransport;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Avion;
@@ -206,6 +207,14 @@ public class PDF {
 				this.remplirChamp("autreChamp", ((AutreTransport) om.getTransport()).getAutreTransport());
 			}
 		}
+	}
+
+	public void remplirPdfFM(FraisMission fm) throws IOException {
+		
+		this.remplirChamp("dateDebutMission", fm.getDateDebutMission());
+		this.remplirChamp("dateFinMission", fm.getDateFinMission());
+		this.cheminFichier = fm.getAdresseFichier().replace(".json", ".pdf");
+		this.sauvegarderPDF();
 	}
 
 	public static void signerPDF(int x, int y, int taille, OrdreMission om, String signature) {

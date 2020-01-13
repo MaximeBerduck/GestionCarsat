@@ -37,14 +37,14 @@ public class FraisMissionController {
 	private HashMap<String, Integer> listeDateInverse;
 
 	private FraisMission fraisMission;
-	
-	@FXML 
+
+	@FXML
 	private Label titre;
 
-	public void setTitre(String titre)
-	{
+	public void setTitre(String titre) {
 		this.titre.setText(titre);
 	}
+
 	@FXML
 	private void initialize() {
 		this.listeFrais1 = new HashMap<String, Frais1Controller>();
@@ -153,6 +153,8 @@ public class FraisMissionController {
 				e.printStackTrace();
 			}
 		}
+		this.fraisMission.setDateDebutMission(stringDebut);
+		this.fraisMission.setDateFinMission(stringFin);
 	}
 
 	public void ajouterJour(String jour, String stringFin) {

@@ -278,6 +278,7 @@ public class AgentApp extends Application {
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == buttonTypeAfficher) {
 				// TODO Afficher FM
+				this.genererPdfFM(this.missionActive);
 			} else if (result.get() == buttonTypeModif) {
 				this.afficherFraisMission();
 				this.modifierFrais(this.missionActive);
@@ -290,6 +291,13 @@ public class AgentApp extends Application {
 			// Créer les frais de mission
 			this.creerFraisMission();
 		}
+	}
+
+	private void genererPdfFM(OrdreMission missionActive) {
+		// TODO Auto-generated method stub
+		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(missionActive));
+		fm = fm.chargerJson(fm.getAdresseFichier());
+		fm.genererPDF();
 	}
 
 	private void modifierFrais(OrdreMission missionActive) {
