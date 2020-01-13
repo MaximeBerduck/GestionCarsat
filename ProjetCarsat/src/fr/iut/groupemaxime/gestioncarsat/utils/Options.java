@@ -1,4 +1,4 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.model;
+package fr.iut.groupemaxime.gestioncarsat.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Agent;
 
 public class Options implements DocJson<Options> {
 	private String cheminFichiers;

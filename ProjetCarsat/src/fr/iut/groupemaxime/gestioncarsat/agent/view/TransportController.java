@@ -2,13 +2,13 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import java.io.File;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.model.AutreTransport;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Bibliotheque;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Train;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Transport;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Voiture;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.AutreTransport;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Avion;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Train;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Transport;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Voiture;
+import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

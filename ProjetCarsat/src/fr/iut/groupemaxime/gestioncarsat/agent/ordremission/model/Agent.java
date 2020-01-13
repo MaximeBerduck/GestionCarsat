@@ -1,4 +1,4 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.model;
+package fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model;
 
 public class Agent {
 	private String nom;

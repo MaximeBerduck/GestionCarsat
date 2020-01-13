@@ -1,8 +1,8 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;

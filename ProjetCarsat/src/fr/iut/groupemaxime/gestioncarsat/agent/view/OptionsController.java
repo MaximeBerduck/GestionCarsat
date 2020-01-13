@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.Optional;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Bibliotheque;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
+import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

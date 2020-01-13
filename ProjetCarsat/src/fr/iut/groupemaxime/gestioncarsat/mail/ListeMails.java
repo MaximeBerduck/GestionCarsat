@@ -1,4 +1,4 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.model;
+package fr.iut.groupemaxime.gestioncarsat.mail;
 
 import java.io.File;
 import java.io.FileInputStream;

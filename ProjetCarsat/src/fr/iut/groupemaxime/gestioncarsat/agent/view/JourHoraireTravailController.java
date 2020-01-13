@@ -1,6 +1,6 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.horaireModel.HoraireTravail;
+import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireTravail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

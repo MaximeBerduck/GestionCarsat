@@ -1,4 +1,4 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.horaireModel;
+package fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model;
 
 public class HoraireJournalier {
 	private String date;

@@ -1,4 +1,4 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.model;
+package fr.iut.groupemaxime.gestioncarsat.utils;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;

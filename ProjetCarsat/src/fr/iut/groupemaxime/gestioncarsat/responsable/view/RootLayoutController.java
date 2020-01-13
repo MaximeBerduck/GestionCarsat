@@ -1,7 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.responsable.view;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.responsable.ResponsableApp;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

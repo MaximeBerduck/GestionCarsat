@@ -22,10 +22,10 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Mail;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.mail.Mail;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

@@ -1,4 +1,4 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.horaireModel;
+package fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,19 +17,17 @@ import com.google.gson.GsonBuilder;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
 
-public class HoraireTravail implements DocJson<HoraireTravail>{
-	
+public class FraisMission implements DocJson<FraisMission> {
 	private String adresseFichier;
-	private HashSet<HoraireJournalier> horaireTravail;
-	
-	
-	public HoraireTravail(String adresseFichier, HashSet<HoraireJournalier> horaireTravail) {
+	private HashSet<FraisJournalier> fraisMission;
+
+	public FraisMission(String adresseFichier, HashSet<FraisJournalier> fraisMission) {
 		this.adresseFichier = adresseFichier;
-		this.horaireTravail = horaireTravail;
+		this.fraisMission = fraisMission;
 	}
-	
-	public HoraireTravail(String adresseFichier) {
-		this(adresseFichier, new HashSet<HoraireJournalier>());
+
+	public FraisMission(String adresseFichier) {
+		this(adresseFichier, new HashSet<FraisJournalier>());
 	}
 
 	@Override
@@ -48,9 +46,9 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 	}
 
 	@Override
-	public HoraireTravail chargerJson(String adresseFichier) {
+	public FraisMission chargerJson(String adresseFichier) {
 		Gson g = new Gson();
-		HoraireTravail horaireTravail = new HoraireTravail(adresseFichier);
+		FraisMission fraisMission = new FraisMission(adresseFichier);
 		InputStream is;
 		try {
 			is = new FileInputStream(new File(adresseFichier));
@@ -59,19 +57,24 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 			// Recuperer la structure JsonObject depuis le JsonReader.
 			JsonObject objetJson = reader.readObject();
 			reader.close();
-			horaireTravail = g.fromJson(objetJson.toString(), HoraireTravail.class);
+			fraisMission = g.fromJson(objetJson.toString(), FraisMission.class);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return horaireTravail;
+		return fraisMission;
 	}
-	
-	public HashSet<HoraireJournalier> getHoraireTravail() {
-		return horaireTravail;
+
+	public HashSet<FraisJournalier> getFraisMission() {
+		return fraisMission;
 	}
-	
+
+	public void ajouterJournee(FraisJournalier fraisJournalier) {
+		this.fraisMission.add(fraisJournalier);
+	}
+
 	public String getAdresseFichier() {
 		return this.adresseFichier;
 	}
+
 }

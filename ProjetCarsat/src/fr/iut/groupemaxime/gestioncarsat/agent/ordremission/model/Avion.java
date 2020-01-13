@@ -1,4 +1,4 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.model;
+package fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model;
 
 public class Avion extends Transport {
 	private String prisParCRAMCO; //Ne peut prendre que les valeurs Oui, Non

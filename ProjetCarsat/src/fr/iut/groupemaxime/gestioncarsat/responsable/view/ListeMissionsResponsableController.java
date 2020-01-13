@@ -6,13 +6,13 @@ import java.io.IOException;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.ItemOrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.ResponsableApp;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

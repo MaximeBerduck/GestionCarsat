@@ -1,4 +1,4 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.model;
+package fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 
 public class OrdreMission implements DocJson<OrdreMission> {
 

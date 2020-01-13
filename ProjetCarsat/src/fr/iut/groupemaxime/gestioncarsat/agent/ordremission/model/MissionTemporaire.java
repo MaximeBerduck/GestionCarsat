@@ -1,4 +1,4 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.model;
+package fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model;
 
 public class MissionTemporaire extends TypeMission {
 	private String dateDebut; // Format dd/mm/aaaa

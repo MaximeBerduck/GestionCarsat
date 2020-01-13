@@ -1,7 +1,8 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.model;
+package fr.iut.groupemaxime.gestioncarsat.utils;
 
 import java.io.File;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;

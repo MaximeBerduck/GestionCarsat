@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.util.HashSet;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.ListeOrdreMission;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Options;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

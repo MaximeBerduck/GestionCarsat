@@ -13,17 +13,17 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Agent;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.AutreTransport;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Avion;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionPermanent;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.OrdreMission;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Train;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Transport;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.TypeMission;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Voiture;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Agent;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.AutreTransport;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Avion;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionPermanent;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Train;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Transport;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.TypeMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Voiture;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 
 public class PDF {
 	private PDDocument modele;

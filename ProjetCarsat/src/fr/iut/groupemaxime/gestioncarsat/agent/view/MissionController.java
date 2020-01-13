@@ -3,7 +3,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.model.MissionTemporaire;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;

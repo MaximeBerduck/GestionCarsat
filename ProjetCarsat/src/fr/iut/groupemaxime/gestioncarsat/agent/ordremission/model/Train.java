@@ -1,4 +1,4 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.model;
+package fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model;
 
 public class Train extends Transport {
 	private String classe; //Ne peut prendre que les valeurs premiereClasse et deuxiemeClasse

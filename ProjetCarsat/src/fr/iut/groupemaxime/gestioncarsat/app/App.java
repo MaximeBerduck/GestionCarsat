@@ -3,8 +3,8 @@ package fr.iut.groupemaxime.gestioncarsat.app;
 import java.io.IOException;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
-import fr.iut.groupemaxime.gestioncarsat.agent.model.Constante;
 import fr.iut.groupemaxime.gestioncarsat.responsable.ResponsableApp;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -1,4 +1,4 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.fraisModel;
+package fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model;
 
 public class FraisJournalier {
 	private String date;
