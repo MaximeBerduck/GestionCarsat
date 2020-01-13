@@ -30,6 +30,12 @@ public class Frais1Controller {
 
 	private FraisMissionController fmController;
 
+	// Event Listener on Button.onAction
+	@FXML
+	public void afficherFrais2(ActionEvent event) {
+		this.fmController.afficherFrais2(dateJournée.getText());
+	}
+
 	public void setPageFrais1(AnchorPane pageFrais1) {
 		this.pageFrais1 = pageFrais1;
 	}
@@ -38,18 +44,12 @@ public class Frais1Controller {
 		this.dateJournée.setText(date);
 	}
 
-	// Event Listener on Button.onAction
-	@FXML
-	public void afficherFrais2(ActionEvent event) {
-		this.fmController.afficherFrais2(dateJournée.getText());
+	public void setFmController(FraisMissionController fmController) {
+		this.fmController = fmController;
 	}
 
 	public AnchorPane getPage() {
 		return this.pageFrais1;
-	}
-
-	public void setFmController(FraisMissionController fmController) {
-		this.fmController = fmController;
 	}
 
 	public String getHeureDepart() {

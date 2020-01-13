@@ -159,7 +159,12 @@ public class OrdreMissionController {
 			controllerMail = loader.getController();
 			controllerMail.setMainApp(this);
 			controllerMail.setExpediteur(this.options.getMailAgent());
-			controllerMail.setDestinataires(this.options.getMailsResponsables().toArray()[0].toString());
+			String desti = "";
+			for (String i : this.options.getMailsResponsables())
+				desti += i + ',';
+			if (desti.length() != 0)
+				desti = desti.substring(0, desti.length() - 1);
+			controllerMail.setDestinataires(desti);
 			controllerMail.chargerOptions();
 
 		} catch (IOException e) {
