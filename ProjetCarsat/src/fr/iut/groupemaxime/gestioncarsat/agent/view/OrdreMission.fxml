@@ -5,6 +5,6 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController">
    <children>
-      <SplitPane fx:id="ordreMissionSplit" prefHeight="550.0" prefWidth="800.0" />
+      <SplitPane fx:id="ordreMissionSplit" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" />
    </children>
 </AnchorPane>
