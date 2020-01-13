@@ -3,7 +3,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model;
 import java.io.File;
 import java.util.ArrayList;
 
-import fr.iut.groupemaxime.gestioncarsat.mail.RecevoirMail;
+import fr.iut.groupemaxime.gestioncarsat.mail.Mail;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 
@@ -36,7 +36,7 @@ public class ListeOrdreMission {
 	
 	public void chargerOMMail(Options options) {
 		String host = "groupemaxime.ddns.net";
-		RecevoirMail.recevoirEmail(host, options.getMailAgent(), "root", options.getCheminOM());
+		Mail.recevoirEmail(host, options.getMailAgent(), "root", options.getCheminOM());
 	}
 
 	public void ajouterOM(OrdreMission om) {
