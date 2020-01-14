@@ -157,6 +157,15 @@ public class AgentApp extends Application {
 		this.afficherFraisMission();
 		this.fmCtrl.creerFraisMission();
 	}
+	
+	public void creerHoraireTravail() {
+		this.afficherHorairesTravail();
+		this.htCtrl.creerHoraireMission();
+		
+		this.htCtrl.creerAllJours();
+		this.htCtrl.afficherSemaine();
+		this.htCtrl.afficherPremierJour();
+	}
 
 	public void afficherHorairesTravail() {
 		retirerDocActif();
@@ -169,7 +178,7 @@ public class AgentApp extends Application {
 			this.htCtrl.setMainApp(this);
 			this.rootLayoutCtrl.getGridRoot().add(this.horairesTravail, 2, 0);
 			this.htCtrl.setOptions(this.options);
-			this.htCtrl.afficherHorairesTravail();
+			this.htCtrl.setMissionActive(missionActive);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -235,6 +244,10 @@ public class AgentApp extends Application {
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.ordreMission);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.horairesTravail);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.fraisMission);
+		this.rootLayoutCtrl.retirerStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.retirerStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.retirerStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+
 	}
 
 	public Options getOptions() {
@@ -247,9 +260,12 @@ public class AgentApp extends Application {
 		this.omCtrl.setTitre(Constante.TITRE_MODIF_OM);
 	}
 
-	public void modifierHt(OrdreMission om) {
+	public void modifierHt(OrdreMission missionActive) {
+		HoraireTravail ht = new HoraireTravail(Bibliotheque.recupererCheminEtNomFichierFm(this.missionActive));
+		ht = ht.chargerJson(ht.getAdresseFichier());
+		
 		this.afficherHorairesTravail();
-		// this.htCtrl.modifierHt(om);
+		this.htCtrl.modifierHoraireTravail(ht);
 	}
 
 	public void afficherEnvoiDuMail() {
@@ -346,44 +362,45 @@ public class AgentApp extends Application {
 	}
 
 	public void demanderActionHT() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Choix de l'action");
-		alert.setHeaderText("Choisissez l'action souhaitée");
-		alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre ordre de mission.");
+		if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Choix de l'action");
+			alert.setHeaderText("Choisissez l'action souhaitée");
+			alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre ordre de mission.");
 
-		ButtonType buttonTypeAfficher = new ButtonType("Afficher");
-		ButtonType buttonTypeModif = new ButtonType("Modifier");
-		alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif);
+			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
+			ButtonType buttonTypeModif = new ButtonType("Modifier");
+			alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif);
 
-		ButtonType buttonTypeEnvoyer = null;
-		ButtonType buttonTypeSigner = null;
-		if (this.missionActive.agentSigne()) {
-			buttonTypeEnvoyer = new ButtonType("Envoyer");
-			alert.getButtonTypes().add(buttonTypeEnvoyer);
-		} else {
-			buttonTypeSigner = new ButtonType("Signer");
-			alert.getButtonTypes().add(buttonTypeSigner);
+			ButtonType buttonTypeEnvoyer = null;
+			ButtonType buttonTypeSigner = null;
+			if (this.missionActive.agentSigne()) {
+				buttonTypeEnvoyer = new ButtonType("Envoyer");
+				alert.getButtonTypes().add(buttonTypeEnvoyer);
+			} else {
+				buttonTypeSigner = new ButtonType("Signer");
+				alert.getButtonTypes().add(buttonTypeSigner);
+			}
+
+			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+
+			alert.getButtonTypes().add(buttonTypeCancel);
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == buttonTypeAfficher) {
+				this.afficherOrdreMissionPDF();
+			} else if (result.get() == buttonTypeModif) {
+				this.modifierHt(missionActive);
+			} else if (result.get() == buttonTypeSigner) {
+				// this.signerOM(); DEVRA ETRE signerHT()
+			} else if (result.get() == buttonTypeEnvoyer) {
+				this.afficherEnvoiDuMail();
+			} else {
+				// Ne fait rien == bouton "annuler"
+			}
+		}else
+			this.creerHoraireTravail();
 		}
-
-		ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
-
-		alert.getButtonTypes().add(buttonTypeCancel);
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonTypeAfficher) {
-			this.afficherOrdreMissionPDF();
-		} else if (result.get() == buttonTypeModif) {
-			this.modifierHt(missionActive);
-		} else if (result.get() == buttonTypeSigner) {
-			// this.signerOM(); DEVRA ETRE signerHT()
-		} else if (result.get() == buttonTypeEnvoyer) {
-			this.afficherEnvoiDuMail();
-		} else {
-			// Ne fait rien == bouton "annuler"
-		}
-
-		this.afficherListeMissions();
-	}
 
 	public void afficherOrdreMissionPDF() {
 		PDF pdf;
@@ -468,6 +485,7 @@ public class AgentApp extends Application {
 
 	public void creerOrdreMission() {
 		this.afficherOrdresMission();
+		this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		this.omCtrl.creerNouveauOm();
 	}
 

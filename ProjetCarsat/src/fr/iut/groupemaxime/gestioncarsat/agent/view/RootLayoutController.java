@@ -57,11 +57,42 @@ public class RootLayoutController {
 		this.imageOM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "ordre.png"));
 
 	}
+	
+	// Style Frais de mission
+	public void ajouterStyleFM(String style) {
+		this.boxFM.setStyle(this.boxFM.getStyle() + style);
+	}
+
+	public void retirerStyleFM(String style) {
+		this.boxFM.setStyle(this.boxFM.getStyle().replace(style, ""));
+	}
+	
+	// Style Ordre de mission
+	public void ajouterStyleOM(String style) {
+		this.boxOM.setStyle(this.boxOM.getStyle() + style);
+	}
+
+	public void retirerStyleOM(String style) {
+		this.boxOM.setStyle(this.boxOM.getStyle().replace(style, ""));
+	}
+	
+	//Style Horaire de travail
+	public void ajouterStyleHT(String style) {
+		this.boxHT.setStyle(this.boxHT.getStyle() + style);
+	}
+
+	public void retirerStyleHT(String style) {
+		this.boxHT.setStyle(this.boxHT.getStyle().replace(style, ""));
+	}
+	
 
 	// Event Listener sur Btn Parametres
 	@FXML
 	public void modifierOptions() {
 		agentApp.modifierOptions();
+		this.retirerStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.retirerStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.retirerStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 	}
 
 	@FXML
@@ -70,6 +101,9 @@ public class RootLayoutController {
 			agentApp.alertChoisirMission();
 		} else {
 			agentApp.demanderActionFM();
+			this.retirerStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.retirerStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		}
 	}
 
@@ -79,6 +113,9 @@ public class RootLayoutController {
 			agentApp.alertChoisirMission();
 		} else {
 			agentApp.demanderActionOM();
+			this.retirerStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.retirerStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		}
 	}
 
@@ -88,6 +125,9 @@ public class RootLayoutController {
 			agentApp.alertChoisirMission();
 		} else {
 			agentApp.demanderActionHT();
+			this.retirerStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.retirerStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		}
 	}
 

@@ -71,7 +71,11 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 		return horaireTravail;
 	}
 	
+	public void ajouterJournee(HoraireJournalier horaireJournalier) {
+		this.horaireTravail.add(horaireJournalier);
+	}
 	public String getAdresseFichier() {
 		return this.adresseFichier;
 	}
+	
 }

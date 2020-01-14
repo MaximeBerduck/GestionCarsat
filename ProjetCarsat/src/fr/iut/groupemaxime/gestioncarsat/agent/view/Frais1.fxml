@@ -31,6 +31,6 @@
       <TextField fx:id="nbrForfaitDecouchers" layoutX="372.0" layoutY="367.0" prefHeight="27.0" prefWidth="42.0" />
       <Label layoutX="268.0" layoutY="410.0" text="Justificatif :" />
       <TextField fx:id="nbrJustifDecouchers" layoutX="372.0" layoutY="405.0" prefHeight="27.0" prefWidth="42.0" />
-      <Button layoutX="528.0" layoutY="446.0" mnemonicParsing="false" onAction="#afficherFrais2" text="Suivant &gt;&gt;" />
+      <Button layoutX="528.0" layoutY="446.0" mnemonicParsing="false" onAction="#afficherFrais2" prefHeight="30.0" prefWidth="100.0" text="Suivant &gt;&gt;" />
    </children>
 </AnchorPane>
