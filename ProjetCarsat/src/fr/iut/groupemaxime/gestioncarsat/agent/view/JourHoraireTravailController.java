@@ -48,22 +48,29 @@ public class JourHoraireTravailController {
 	
 	private HashSet<ItemHoraireTravailController> listeHtCtrl;
 	
-	public void initialize(OrdreMission om) {
-		this.listeHtCtrl = new HashSet<ItemHoraireTravailController>();
-		VBox item = null;
-		ItemHoraireTravailController ctrl;
+	@FXML
+	public void initialize()
+	{
+		this.ajoutHoraire();
+	}
+	
+	public void ajoutHoraire()
+	{
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(this.getClass().getResource("ItemHoraireTravail.fxml"));
-			item = loader.load();
-			
-			ctrl = loader.getController();
-//			ctrl.chargerOM(om);
-			ctrl.setMainApp(this);
-			
-			this.listeHtCtrl.add(ctrl);
+			VBox item = loader.load();
+			this.listeHoraireVBox.getChildren().add(item);
 		}catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void supprimerHoraire()
+	{
+		if(this.listeHoraireVBox.getChildren().size()!=1)
+		{
+			this.listeHoraireVBox.getChildren().remove(this.listeHoraireVBox.getChildren().size()-1);
 		}
 		
 	}
