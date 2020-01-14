@@ -141,7 +141,7 @@ public class Mail {
 		return message;
 	}
 
-	public static void envoyerMail(MailController mailCtrl) {
+	public static boolean envoyerMail(MailController mailCtrl) {
 		Properties props = configurationSmtp();
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			@Override
@@ -151,9 +151,10 @@ public class Mail {
 		});
 		try {
 			Transport.send(configurationMessage(session, mailCtrl));
+			return true;
 		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 
 	}
