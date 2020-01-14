@@ -54,9 +54,8 @@ public class FraisMissionController {
 	}
 
 	public void creerFraisMission() {
-		this.fraisMission = new FraisMission(this.missionActive.getCheminDossier() + "FM_"
-				+ ((MissionTemporaire) this.missionActive.getMission()).getLieuDeplacement() + '_'
-				+ ((MissionTemporaire) this.missionActive.getMission()).getDates() + Constante.EXTENSION_JSON);
+		this.fraisMission = new FraisMission(this.missionActive.getCheminDossier()
+				+ this.missionActive.getNomOM().replace("OM_", "FM_") + Constante.EXTENSION_JSON);
 
 		Integer i = 0;
 		String stringDebut = ((MissionTemporaire) missionActive.getMission()).getDateDebut();

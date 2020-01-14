@@ -2,6 +2,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.form;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashSet;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -210,9 +211,207 @@ public class PDF {
 	}
 
 	public void remplirPdfFM(FraisMission fm) throws IOException {
-		
+
 		this.remplirChamp("dateDebutMission", fm.getDateDebutMission());
 		this.remplirChamp("dateFinMission", fm.getDateFinMission());
+		Calendar c = Calendar.getInstance();
+
+		for (FraisJournalier fj : fm.getFraisMission().values()) {
+			try {
+				c.setTime(Constante.FORMAT_DATE_SLASH.parse(fj.getDate()));
+
+				switch (c.getTime().getDay()) {
+				// Dimanche
+				case 0:
+					if (null != fj.getHeureDepart()) {
+						this.remplirChamp("dateDepartDimanche", fj.getDate());
+						this.remplirChamp("heureDepartDimanche", fj.getHeureDepart());
+					}
+					if (null != fj.getHeureRetour()) {
+						this.remplirChamp("dateRetourDimanche", fj.getDate());
+						this.remplirChamp("heureRetourDimanche", fj.getHeureRetour());
+					}
+
+					this.remplirChamp("repasForfaitDimanche", String.valueOf(fj.getNbrRepasForfait()));
+					this.remplirChamp("repasJustifDimanche", String.valueOf(fj.getNbrRepasJustif()));
+					this.remplirChamp("decouchForfaitDimanche", String.valueOf(fj.getNbrDecouchForfait()));
+					this.remplirChamp("decouchJustifDimanche", String.valueOf(fj.getNbrDecouchJustif()));
+
+					// TODO
+					this.remplirChamp("motifDimanche", "");
+					this.remplirChamp("lieuDimanche", "");
+
+					this.remplirChamp("typeDimanche", fj.getTypeFraisTransport());
+					this.remplirChamp("fraisDimanche", String.valueOf(fj.getMontantFraisTransport()));
+
+					this.remplirChamp("serviceDimanche", String.valueOf(fj.getNbrKmVehiService()));
+					this.remplirChamp("persoDimanche", String.valueOf(fj.getNbrKmVehiPerso()));
+					break;
+				// Lundi
+				case 1:
+					if (null != fj.getHeureDepart()) {
+						this.remplirChamp("dateDepartLundi", fj.getDate());
+						this.remplirChamp("heureDepartLundi", fj.getHeureDepart());
+					}
+					if (null != fj.getHeureRetour()) {
+						this.remplirChamp("dateRetourLundi", fj.getDate());
+						this.remplirChamp("heureRetourLundi", fj.getHeureRetour());
+					}
+
+					this.remplirChamp("repasForfaitLundi", String.valueOf(fj.getNbrRepasForfait()));
+					this.remplirChamp("repasJustifLundi", String.valueOf(fj.getNbrRepasJustif()));
+					this.remplirChamp("decouchForfaitLundi", String.valueOf(fj.getNbrDecouchForfait()));
+					this.remplirChamp("decouchJustifLundi", String.valueOf(fj.getNbrDecouchJustif()));
+
+					// TODO
+					this.remplirChamp("motifLundi", "");
+					this.remplirChamp("lieuLundi", "");
+
+					this.remplirChamp("typeLundi", fj.getTypeFraisTransport());
+					this.remplirChamp("fraisLundi", String.valueOf(fj.getMontantFraisTransport()));
+
+					this.remplirChamp("serviceLundi", String.valueOf(fj.getNbrKmVehiService()));
+					this.remplirChamp("persoLundi", String.valueOf(fj.getNbrKmVehiPerso()));
+					break;
+				// Mardi
+				case 2:
+					if (null != fj.getHeureDepart()) {
+						this.remplirChamp("dateDepartMardi", fj.getDate());
+						this.remplirChamp("heureDepartMardi", fj.getHeureDepart());
+					}
+					if (null != fj.getHeureRetour()) {
+						this.remplirChamp("dateRetourMardi", fj.getDate());
+						this.remplirChamp("heureRetourMardi", fj.getHeureRetour());
+					}
+
+					this.remplirChamp("repasForfaitMardi", String.valueOf(fj.getNbrRepasForfait()));
+					this.remplirChamp("repasJustifMardi", String.valueOf(fj.getNbrRepasJustif()));
+					this.remplirChamp("decouchForfaitMardi", String.valueOf(fj.getNbrDecouchForfait()));
+					this.remplirChamp("decouchJustifMardi", String.valueOf(fj.getNbrDecouchJustif()));
+
+					// TODO
+					this.remplirChamp("motifMardi", "");
+					this.remplirChamp("lieuMardi", "");
+
+					this.remplirChamp("typeMardi", fj.getTypeFraisTransport());
+					this.remplirChamp("fraisMardi", String.valueOf(fj.getMontantFraisTransport()));
+
+					this.remplirChamp("serviceMardi", String.valueOf(fj.getNbrKmVehiService()));
+					this.remplirChamp("persoMardi", String.valueOf(fj.getNbrKmVehiPerso()));
+					break;
+				// Mercredi
+				case 3:
+					if (null != fj.getHeureDepart()) {
+						this.remplirChamp("dateDepartMercredi", fj.getDate());
+						this.remplirChamp("heureDepartMercredi", fj.getHeureDepart());
+					}
+					if (null != fj.getHeureRetour()) {
+						this.remplirChamp("dateRetourMercredi", fj.getDate());
+						this.remplirChamp("heureRetourMercredi", fj.getHeureRetour());
+					}
+
+					this.remplirChamp("repasForfaitMercredi", String.valueOf(fj.getNbrRepasForfait()));
+					this.remplirChamp("repasJustifMercredi", String.valueOf(fj.getNbrRepasJustif()));
+					this.remplirChamp("decouchForfaitMercredi", String.valueOf(fj.getNbrDecouchForfait()));
+					this.remplirChamp("decouchJustifMercredi", String.valueOf(fj.getNbrDecouchJustif()));
+
+					// TODO
+					this.remplirChamp("motifMercredi", "");
+					this.remplirChamp("lieuMercredi", "");
+
+					this.remplirChamp("typeMercredi", fj.getTypeFraisTransport());
+					this.remplirChamp("fraisMercredi", String.valueOf(fj.getMontantFraisTransport()));
+
+					this.remplirChamp("serviceMercredi", String.valueOf(fj.getNbrKmVehiService()));
+					this.remplirChamp("persoMercredi", String.valueOf(fj.getNbrKmVehiPerso()));
+					break;
+				// Jeudi
+				case 4:
+					if (null != fj.getHeureDepart()) {
+						this.remplirChamp("dateDepartJeudi", fj.getDate());
+						this.remplirChamp("heureDepartJeudi", fj.getHeureDepart());
+					}
+					if (null != fj.getHeureRetour()) {
+						this.remplirChamp("dateRetourJeudi", fj.getDate());
+						this.remplirChamp("heureRetourJeudi", fj.getHeureRetour());
+					}
+
+					this.remplirChamp("repasForfaitJeudi", String.valueOf(fj.getNbrRepasForfait()));
+					this.remplirChamp("repasJustifJeudi", String.valueOf(fj.getNbrRepasJustif()));
+					this.remplirChamp("decouchForfaitJeudi", String.valueOf(fj.getNbrDecouchForfait()));
+					this.remplirChamp("decouchJustifJeudi", String.valueOf(fj.getNbrDecouchJustif()));
+
+					// TODO
+					this.remplirChamp("motifJeudi", "");
+					this.remplirChamp("lieuJeudi", "");
+
+					this.remplirChamp("typeJeudi", fj.getTypeFraisTransport());
+					this.remplirChamp("fraisJeudi", String.valueOf(fj.getMontantFraisTransport()));
+
+					this.remplirChamp("serviceJeudi", String.valueOf(fj.getNbrKmVehiService()));
+					this.remplirChamp("persoJeudi", String.valueOf(fj.getNbrKmVehiPerso()));
+					break;
+				// Vendredi
+				case 5:
+					if (null != fj.getHeureDepart()) {
+						this.remplirChamp("dateDepartVendredi", fj.getDate());
+						this.remplirChamp("heureDepartVendredi", fj.getHeureDepart());
+					}
+					if (null != fj.getHeureRetour()) {
+						this.remplirChamp("dateRetourVendredi", fj.getDate());
+						this.remplirChamp("heureRetourVendredi", fj.getHeureRetour());
+					}
+
+					this.remplirChamp("repasForfaitVendredi", String.valueOf(fj.getNbrRepasForfait()));
+					this.remplirChamp("repasJustifVendredi", String.valueOf(fj.getNbrRepasJustif()));
+					this.remplirChamp("decouchForfaitVendredi", String.valueOf(fj.getNbrDecouchForfait()));
+					this.remplirChamp("decouchJustifVendredi", String.valueOf(fj.getNbrDecouchJustif()));
+
+					// TODO
+					this.remplirChamp("motifVendredi", "");
+					this.remplirChamp("lieuVendredi", "");
+
+					this.remplirChamp("typeVendredi", fj.getTypeFraisTransport());
+					this.remplirChamp("fraisVendredi", String.valueOf(fj.getMontantFraisTransport()));
+
+					this.remplirChamp("serviceVendredi", String.valueOf(fj.getNbrKmVehiService()));
+					this.remplirChamp("persoVendredi", String.valueOf(fj.getNbrKmVehiPerso()));
+					break;
+				// Samedi
+				case 6:
+					if (null != fj.getHeureDepart()) {
+						this.remplirChamp("dateDepartSamedi", fj.getDate());
+						this.remplirChamp("heureDepartSamedi", fj.getHeureDepart());
+					}
+					if (null != fj.getHeureRetour()) {
+						this.remplirChamp("dateRetourSamedi", fj.getDate());
+						this.remplirChamp("heureRetourSamedi", fj.getHeureRetour());
+					}
+
+					this.remplirChamp("repasForfaitSamedi", String.valueOf(fj.getNbrRepasForfait()));
+					this.remplirChamp("repasJustifSamedi", String.valueOf(fj.getNbrRepasJustif()));
+					this.remplirChamp("decouchForfaitSamedi", String.valueOf(fj.getNbrDecouchForfait()));
+					this.remplirChamp("decouchJustifSamedi", String.valueOf(fj.getNbrDecouchJustif()));
+
+					// TODO
+					this.remplirChamp("motifSamedi", "");
+					this.remplirChamp("lieuSamedi", "");
+
+					this.remplirChamp("typeSamedi", fj.getTypeFraisTransport());
+					this.remplirChamp("fraisSamedi", String.valueOf(fj.getMontantFraisTransport()));
+
+					this.remplirChamp("serviceSamedi", String.valueOf(fj.getNbrKmVehiService()));
+					this.remplirChamp("persoSamedi", String.valueOf(fj.getNbrKmVehiPerso()));
+					break;
+
+				default:
+					break;
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+
 		this.cheminFichier = fm.getAdresseFichier().replace(".json", ".pdf");
 		this.sauvegarderPDF();
 	}

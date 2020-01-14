@@ -157,7 +157,7 @@ public class AgentApp extends Application {
 		this.afficherFraisMission();
 		this.fmCtrl.creerFraisMission();
 	}
-	
+
 	public void creerHoraireTravail() {
 		this.afficherHorairesTravail();
 		this.htCtrl.creerHoraireMission();
@@ -259,7 +259,7 @@ public class AgentApp extends Application {
 	public void modifierHt(OrdreMission missionActive) {
 		HoraireTravail ht = new HoraireTravail(Bibliotheque.recupererCheminEtNomFichierFm(this.missionActive));
 		ht = ht.chargerJson(ht.getAdresseFichier());
-		
+
 		this.afficherHorairesTravail();
 		this.htCtrl.modifierHoraireTravail(ht);
 		this.htCtrl.setHoraireTravail(ht);
@@ -289,6 +289,7 @@ public class AgentApp extends Application {
 			if (result.get() == buttonTypeAfficher) {
 				// TODO Afficher FM
 				this.genererPdfFM(this.missionActive);
+				this.afficherPdfFM(this.missionActive);
 			} else if (result.get() == buttonTypeModif) {
 				this.afficherFraisMission();
 				this.modifierFrais(this.missionActive);
@@ -303,6 +304,17 @@ public class AgentApp extends Application {
 		}
 	}
 
+	private void afficherPdfFM(OrdreMission missionActive) {
+		try {
+			Desktop.getDesktop().browse(new File(
+					this.missionActive.getCheminDossier() + this.missionActive.getNomOM().replace("OM_", "FM_") + Constante.EXTENSION_PDF)
+							.toURI());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private void genererPdfFM(OrdreMission missionActive) {
 		// TODO Auto-generated method stub
 		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(missionActive));
@@ -311,10 +323,10 @@ public class AgentApp extends Application {
 	}
 
 	private void modifierFrais(OrdreMission missionActive) {
-		//TODO
+		// TODO
 		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(this.missionActive));
 		fm = fm.chargerJson(fm.getAdresseFichier());
-		
+
 		this.afficherFraisMission();
 		this.fmCtrl.modifierFraisMission(fm);
 		this.fmCtrl.setFraisMission(fm);
@@ -396,9 +408,9 @@ public class AgentApp extends Application {
 			} else {
 				// Ne fait rien == bouton "annuler"
 			}
-		}else
+		} else
 			this.creerHoraireTravail();
-		}
+	}
 
 	public void afficherOrdreMissionPDF() {
 		PDF pdf;
