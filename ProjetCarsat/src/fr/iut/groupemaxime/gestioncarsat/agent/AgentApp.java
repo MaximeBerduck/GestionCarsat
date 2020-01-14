@@ -84,7 +84,7 @@ public class AgentApp extends Application {
 		}
 		this.creerDossier(this.options.getCheminOM());
 		this.mailsEnAttente = new ListeMails();
-		this.mailsEnAttente.chargerJson(Constante.CHEMIN_MAILS_EN_ATTENTE);
+		this.mailsEnAttente.chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE);
 		initialiseRootLayout();
 		afficherListeMissions();
 	}
@@ -473,6 +473,10 @@ public class AgentApp extends Application {
 
 	public OrdreMission getMissionActive() {
 		return missionActive;
+	}
+
+	public ListeMails getMailsEnAttente() {
+		return mailsEnAttente;
 	}
 
 }

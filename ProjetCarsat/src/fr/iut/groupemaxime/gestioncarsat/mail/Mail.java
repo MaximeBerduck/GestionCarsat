@@ -141,7 +141,7 @@ public class Mail {
 		return message;
 	}
 
-	public static boolean envoyerMail(MailController mailCtrl) {
+	public static Message creerEnvoyerMail(MailController mailCtrl) {
 		Properties props = configurationSmtp();
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			@Override
@@ -149,14 +149,18 @@ public class Mail {
 				return new PasswordAuthentication(mailCtrl.getExpediteur().getText(), Constante.MOT_DE_PASSE);
 			}
 		});
-		try {
-			Transport.send(configurationMessage(session, mailCtrl));
-			return true;
-		} catch (MessagingException e) {
-			e.printStackTrace();
-			return false;
-		}
+		return envoyerMail(configurationMessage(session, mailCtrl));
 
 	}
+	public static Message envoyerMail(Message message) {
+		try {
+			Transport.send(message);
+		} catch (MessagingException e) {
+			System.out.println("yo");
+			return message;
+		}
+		return null;
 
+	}
+	
 }

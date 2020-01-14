@@ -1,82 +1,62 @@
 package fr.iut.groupemaxime.gestioncarsat.mail;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import javax.mail.Message;
+import javax.mail.MessagingException;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+public class ListeMails {
+	List<Message> listeMails;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
-
-public class ListeMails implements DocJson<ListeMails>{
-	ArrayList<Mail> listeMails;
-	
-	public ListeMails(ArrayList<Mail> listeMails) {
+	public ListeMails(List<Message> listeMails) {
 		this.listeMails = listeMails;
 	}
-	
+
 	public ListeMails() {
-		this(new ArrayList<Mail>());
+		this(new ArrayList<Message>());
 	}
 
-	public void ajouterMail(Mail mail) {
+	public void ajouterMail(Message mail) {
 		this.listeMails.add(mail);
 	}
-	
-	public ArrayList<Mail> getListeMails(){
+
+	public List<Message> getListeMails() {
 		return this.listeMails;
 	}
 
-	@Override
-	public void sauvegarderJson(String adresseFichier) {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		String s = gson.toJson(this);
-		FileWriter f;
-		try {
-			f = new FileWriter(new File(adresseFichier));
-			f.write(s);
-			f.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-	}
-
-	@Override
-	public ListeMails chargerJson(String adresseFichier) {
-		Gson g = new Gson();
-		ListeMails listeMails = new ListeMails();
-		InputStream is;
-		if (fichierExiste(adresseFichier)) {
+	public void sauvegarderMails(String adresseDossier) {
+		File dossier = new File(adresseDossier);
+		if (!dossier.exists()) {
+			dossier.mkdir();
+		}
+		for (Message message : listeMails) {
 			try {
-				is = new FileInputStream(new File(adresseFichier));
-				// Creation du JsonReader depuis Json.
-				JsonReader reader = Json.createReader(is);
-				// Recuperer la structure JsonObject depuis le JsonReader.
-				JsonObject objetJson = reader.readObject();
-				reader.close();
-				listeMails = g.fromJson(objetJson.toString(), ListeMails.class);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
+				message.writeTo(new FileOutputStream(new File(adresseDossier + message.toString())));
+			} catch (IOException|MessagingException e) {
+				//TODO
 				e.printStackTrace();
 			}
 		}
-		return listeMails;
+
 	}
-	
-	public static boolean fichierExiste(String adresseFichier) {
+
+	public ListeMails chargerMails(String adresseDossier) {
+		ListeMails liste = new ListeMails();
+		if (dossierExiste(adresseDossier)) {
+			File dossier = new File(adresseDossier);
+			File[] mails = dossier.listFiles();
+		}
+		return liste;
+	}
+
+	private static boolean dossierExiste(String adresseDossier) {
 		boolean existe = false;
-		File f = new File(adresseFichier);
-		if (f.isFile()) {
+		File f = new File(adresseDossier);
+		if (f.isDirectory()) {
 			existe = true;
 		}
 		return existe;

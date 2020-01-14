@@ -6,6 +6,8 @@ import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.mail.Message;
+
 import com.sun.mail.util.MailConnectException;
 
 import fr.iut.groupemaxime.gestioncarsat.mail.Mail;
@@ -50,19 +52,22 @@ public class MailController {
 	@FXML
 	public void envoyerMail(ActionEvent event) {
 		if (adressesMailValides()) {
-			if (Mail.envoyerMail(this)) {
+			Message resteAEnvoyer = Mail.creerEnvoyerMail(this);
+			if (null == resteAEnvoyer) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.initOwner(mainApp.getPrimaryStage());
 				alert.setTitle("Le mail a bien été envoyé");
 				alert.setContentText("Le mail a bien été envoyé");
 				alert.showAndWait();
 			} else {
+				this.mainApp.getMainApp().getMailsEnAttente().ajouterMail(resteAEnvoyer);
+				this.mainApp.getMainApp().getMailsEnAttente().sauvegarderMails(Constante.CHEMIN_MAILS_EN_ATTENTE);
 				Alert alert = new Alert(AlertType.ERROR);
 				alert.initOwner(mainApp.getPrimaryStage());
 				alert.setTitle("Erreur");
 				alert.setHeaderText("Le mail n'a pas pu être envoyé");
 				alert.setContentText("Le mail n'a pu être envoyé.\n"
-						+ "Un nouvel essai d'envoi sera effectué au redémarrage de l'application!");
+						+ "Un nouvel essai d'envoi sera effectué au prochain lancement de l'application!");
 				alert.showAndWait();
 			}
 			this.mainApp.getMainApp().retirerDocActif();
