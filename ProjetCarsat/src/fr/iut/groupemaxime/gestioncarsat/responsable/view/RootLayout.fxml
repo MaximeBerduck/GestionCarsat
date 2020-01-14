@@ -13,14 +13,14 @@
 
 <BorderPane prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.responsable.view.RootLayoutController">
    <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: Gainsboro;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="banniereCarsat" fitHeight="69.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <viewport>
                   <Rectangle2D height="69.0" width="200.0" />
                </viewport>
                <HBox.margin>
-                  <Insets left="20.0" top="15.0" />
+                  <Insets left="50.0" top="15.0" />
                </HBox.margin>
             </ImageView>
             <Label text="Mission sélectionnée : ">
@@ -47,9 +47,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox fx:id="boxMenu" prefHeight="200.0" prefWidth="150.0" stylesheets="@../menu.css" GridPane.columnIndex="1">
+            <VBox fx:id="boxMenu" prefHeight="200.0" prefWidth="150.0" style="-fx-border-color: grey;" stylesheets="@../../agent/menu.css" GridPane.columnIndex="1">
                <children>
-                  <VBox id="hov" fx:id="boxOM" prefHeight="100.0" prefWidth="150.0" stylesheets="@../hover.css">
+                  <VBox id="hov" fx:id="boxOM" prefHeight="100.0" prefWidth="150.0" style="-fx-border-color: grey; -fx-border-width: 0 0 1 0;" stylesheets="@../../agent/hover.css">
                      <children>
                         <ImageView fx:id="imageOM" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <VBox.margin>
@@ -63,7 +63,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <VBox id="hov" fx:id="boxFM" prefHeight="100.0" prefWidth="150.0" stylesheets="@../hover.css">
+                  <VBox id="hov" fx:id="boxFM" prefHeight="100.0" prefWidth="150.0" style="-fx-border-color: grey; -fx-border-width: 0 0 1 0;" stylesheets="@../../agent/hover.css">
                      <children>
                         <ImageView fx:id="imageFM" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <VBox.margin>
@@ -77,7 +77,7 @@
                         </Label>
                      </children>
                   </VBox>
-                  <VBox id="hov" fx:id="boxHT" prefHeight="100.0" prefWidth="150.0" stylesheets="@../hover.css">
+                  <VBox id="hov" fx:id="boxHT" prefHeight="100.0" prefWidth="150.0" style="-fx-border-color: grey; -fx-border-width: 0 0 1 0;" stylesheets="@../../agent/hover.css">
                      <children>
                         <ImageView fx:id="imageHT" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <VBox.margin>
@@ -87,7 +87,7 @@
                         <Label alignment="CENTER" prefHeight="52.0" prefWidth="150.0" text="Horaires de travail" />
                      </children>
                   </VBox>
-                  <VBox id="hov" fx:id="boxParam" onMouseClicked="#modifierOptions" prefHeight="100.0" prefWidth="150.0" stylesheets="@../hover.css">
+                  <VBox id="hov" fx:id="boxParam" onMouseClicked="#modifierOptions" prefHeight="100.0" prefWidth="150.0" style="-fx-border-color: grey; -fx-border-width: 0 0 1 0;" stylesheets="@../../agent/hover.css">
                      <children>
                         <ImageView fx:id="imageParametre" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <VBox.margin>

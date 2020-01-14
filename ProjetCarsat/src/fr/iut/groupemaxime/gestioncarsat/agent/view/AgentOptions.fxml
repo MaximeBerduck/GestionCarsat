@@ -104,7 +104,7 @@
                   <Insets left="155.0" />
                </GridPane.margin>
             </TextField>
-            <Button fx:id="suivantBtn" mnemonicParsing="false" onAction="#sauvegarder" prefHeight="25.0" prefWidth="131.0" text="Sauvegarder" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Button fx:id="suivantBtn" mnemonicParsing="false" onAction="#sauvegarder" prefHeight="25.0" prefWidth="125.0" text="Sauvegarder" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
                   <Insets left="40.0" />
                </GridPane.margin>

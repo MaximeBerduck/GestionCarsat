@@ -23,6 +23,7 @@ public class MenuAgentController {
 
 	private OrdreMissionController mainApp;
 	private Options options;
+	private RootLayoutController layout;
 
 	private AgentApp agentApp;
 

@@ -104,9 +104,9 @@
                   <Insets left="155.0" />
                </GridPane.margin>
             </TextField>
-            <Button fx:id="suivantBtn" mnemonicParsing="false" onAction="#passerATypeOM" prefHeight="25.0" prefWidth="131.0" text="Suivant &gt;&gt;" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <Button fx:id="suivantBtn" mnemonicParsing="false" onAction="#passerATypeOM" prefHeight="30.0" prefWidth="100.0" text="Suivant &gt;&gt;" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <GridPane.margin>
-                  <Insets left="40.0" />
+                  <Insets bottom="8.0" left="160.0" />
                </GridPane.margin>
             </Button>
          </children>

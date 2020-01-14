@@ -468,6 +468,7 @@ public class AgentApp extends Application {
 
 	public void creerOrdreMission() {
 		this.afficherOrdresMission();
+		this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		this.omCtrl.creerNouveauOm();
 	}
 
