@@ -215,9 +215,21 @@ public class PDF {
 		this.remplirChamp("dateDebutMission", fm.getDateDebutMission());
 		this.remplirChamp("dateFinMission", fm.getDateFinMission());
 		Calendar c = Calendar.getInstance();
+		int repasForfaitTotal = 0;
+		int repasJustifTotal = 0;
+		int decouchForfaitTotal = 0;
+		int decouchJustifTotal = 0;
+		float serviceTotal = 0;
+		float persoTotal = 0;
 
 		for (FraisJournalier fj : fm.getFraisMission().values()) {
 			try {
+				repasForfaitTotal += fj.getNbrRepasForfait();
+				repasJustifTotal += fj.getNbrRepasJustif();
+				decouchForfaitTotal += fj.getNbrDecouchForfait();
+				decouchJustifTotal += fj.getNbrDecouchJustif();
+				serviceTotal += fj.getNbrKmVehiService();
+				persoTotal += fj.getNbrKmVehiPerso();
 				c.setTime(Constante.FORMAT_DATE_SLASH.parse(fj.getDate()));
 
 				switch (c.getTime().getDay()) {
@@ -410,6 +422,14 @@ public class PDF {
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
+
+			this.remplirChamp("repasForfaitTotal", String.valueOf(repasForfaitTotal));
+			this.remplirChamp("repasJustifTotal", String.valueOf(repasJustifTotal));
+			this.remplirChamp("decouchForfaitTotal", String.valueOf(decouchForfaitTotal));
+			this.remplirChamp("decouchJustifTotal", String.valueOf(decouchJustifTotal));
+			this.remplirChamp("serviceTotal", String.valueOf(serviceTotal));
+			this.remplirChamp("persoTotal", String.valueOf(persoTotal));
+
 		}
 
 		this.cheminFichier = fm.getAdresseFichier().replace(".json", ".pdf");

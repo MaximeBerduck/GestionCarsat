@@ -48,7 +48,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	public void sauvegarderJson(String cheminDossier) {
 		if (null == this.nomOM) {
 			this.nomOM = "OM" + '_' + this.getAgent().getNom() + '_'
-					+ ((MissionTemporaire) this.getMission()).getLieuDeplacement() + '_'
+					+ ((MissionTemporaire) this.getMission()).getLieuDeplacement().replace(" ", "_") + '_'
 					+ ((MissionTemporaire) this.getMission()).getDates();
 		}
 

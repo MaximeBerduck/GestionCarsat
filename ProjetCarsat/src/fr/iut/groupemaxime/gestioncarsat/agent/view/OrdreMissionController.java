@@ -48,12 +48,11 @@ public class OrdreMissionController {
 	private AgentApp mainApp;
 
 	private Options options;
-	
-	@FXML 
+
+	@FXML
 	private Label titre;
-	
-	public void setTitre(String titre)
-	{
+
+	public void setTitre(String titre) {
 		this.titre.setText(titre);
 	}
 
@@ -288,8 +287,9 @@ public class OrdreMissionController {
 		this.ordreMissionSplit.getItems().remove(0);
 
 		if (om.getCheminDossier() == null) {
-			om.setCheminDossier(this.options.getCheminOM() + ((MissionTemporaire) om.getMission()).getLieuDeplacement()
-					+ '_' + ((MissionTemporaire) om.getMission()).getDates() + '/');
+			om.setCheminDossier(this.options.getCheminOM()
+					+ ((MissionTemporaire) om.getMission()).getLieuDeplacement().replace(" ", "_") + '_'
+					+ ((MissionTemporaire) om.getMission()).getDates() + '/');
 			mainApp.creerDossier(om.getCheminDossier());
 		}
 
