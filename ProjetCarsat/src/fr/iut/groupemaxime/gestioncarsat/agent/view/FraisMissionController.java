@@ -63,10 +63,13 @@ public class FraisMissionController {
 
 		String stringFin = ((MissionTemporaire) missionActive.getMission()).getDateFin();
 
+		this.fraisMission.setDateDebutMission(stringDebut);
+		this.fraisMission.setDateFinMission(stringFin);
+
 		this.ajouterJour(stringDebut, stringFin);
 		this.listeDate.put(i, stringDebut);
 		this.listeDateInverse.put(stringDebut, i);
-		
+
 		this.afficherSemaine();
 
 		this.afficherPremierJour();
@@ -83,7 +86,6 @@ public class FraisMissionController {
 
 	public void afficherJourSuivant(String date) {
 		Integer i = this.listeDateInverse.get(date);
-		this.sauvegarderJournee(date);
 		i++;
 		if (this.jourSuivantExiste(date)) {
 			this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
@@ -102,6 +104,7 @@ public class FraisMissionController {
 			}
 			this.fraisMission.setDateDebutMission(date);
 			this.fraisMission.setDateFinMission(this.fraisMission.getDateFinMission());
+			this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
 		}
 	}
 
@@ -148,8 +151,6 @@ public class FraisMissionController {
 		if (!"".equals(frais2Ctrl.getNbrKmService()))
 			fraisJournalier.setNbrKmVehiService(Float.parseFloat(frais2Ctrl.getNbrKmService()));
 
-		this.fraisMission.retirerJournee(fraisJournalier);
-
 		this.fraisMission.ajouterJournee(fraisJournalier);
 	}
 
@@ -185,7 +186,6 @@ public class FraisMissionController {
 			} else {
 				frais2Ctrl.getNbrKilometreLayout().setVisible(false);
 			}
-
 			if (jour.equals(stringFin)) {
 				frais2Ctrl.setBoutonSuivantToSauvegarder();
 			}
@@ -219,13 +219,12 @@ public class FraisMissionController {
 
 	public void modifierFraisMission(FraisMission fm) {
 		Integer i = 0;
-		for (FraisJournalier fj : fm.getFraisMission()) {
+		for (FraisJournalier fj : fm.getFraisMission().values()) {
 			this.modifierFraisJournalier(fj);
 			this.listeDate.put(i, fj.getDate());
 			this.listeDateInverse.put(fj.getDate(), i);
 			i++;
 		}
-		this.fraisMission = new FraisMission(fm.getAdresseFichier());
 		this.afficherSemaine();
 		this.afficherPremierJour();
 	}

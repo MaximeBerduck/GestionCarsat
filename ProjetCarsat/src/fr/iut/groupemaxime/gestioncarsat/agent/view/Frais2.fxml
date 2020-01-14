@@ -41,7 +41,8 @@
             </AnchorPane>
          </children>
       </VBox>
-      <Button fx:id="boutonValider" layoutX="515.0" layoutY="439.0" mnemonicParsing="false" onAction="#validerJournee" text="Journée suivante" />
-      <Button layoutX="387.0" layoutY="439.0" mnemonicParsing="false" onAction="#retourFrais1" text="&lt;&lt; Retour" />
+      <Button fx:id="boutonValider" layoutX="564.0" layoutY="449.0" mnemonicParsing="false" onAction="#validerJournee" text="Journée suivante" />
+      <Button layoutX="318.0" layoutY="449.0" mnemonicParsing="false" onAction="#retourFrais1" text="&lt;&lt; Retour" />
+      <Button fx:id="boutonQuitter" layoutX="408.0" layoutY="439.0" mnemonicParsing="false" onAction="#sauvegarderFraisMission" prefWidth="150.0" text="Sauvegarder la journée et quitter" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

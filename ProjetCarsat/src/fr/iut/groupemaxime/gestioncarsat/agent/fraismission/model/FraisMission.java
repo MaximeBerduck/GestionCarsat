@@ -6,7 +6,10 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -23,10 +26,10 @@ public class FraisMission implements DocJson<FraisMission> {
 	private String adresseFichier;
 	private String dateDebutMission;
 	private String dateFinMission;
-	private HashSet<FraisJournalier> fraisMission;
+	private HashMap<String, FraisJournalier> fraisMission;
 
 	public FraisMission(String adresseFichier, String dateDebutMission, String dateFinMission,
-			HashSet<FraisJournalier> fraisMission) {
+			HashMap<String, FraisJournalier> fraisMission) {
 		this.adresseFichier = adresseFichier;
 		this.dateDebutMission = dateDebutMission;
 		this.dateFinMission = dateFinMission;
@@ -34,7 +37,7 @@ public class FraisMission implements DocJson<FraisMission> {
 	}
 
 	public FraisMission(String adresseFichier) {
-		this(adresseFichier, null, null, new HashSet<FraisJournalier>());
+		this(adresseFichier, null, null, new HashMap<String, FraisJournalier>());
 	}
 
 	@Override
@@ -83,24 +86,19 @@ public class FraisMission implements DocJson<FraisMission> {
 		}
 	}
 
-	public HashSet<FraisJournalier> getFraisMission() {
-		return fraisMission;
+	public void ajouterJournee(FraisJournalier fraisJournalier) {
+		if (null != this.fraisMission.get(fraisJournalier))
+			this.fraisMission.replace(fraisJournalier.getDate(), fraisJournalier);
+		else
+			this.fraisMission.put(fraisJournalier.getDate(), fraisJournalier);
 	}
 
-	public void ajouterJournee(FraisJournalier fraisJournalier) {
-		this.fraisMission.add(fraisJournalier);
+	public HashMap<String, FraisJournalier> getFraisMission() {
+		return fraisMission;
 	}
 
 	public String getAdresseFichier() {
 		return this.adresseFichier;
-	}
-
-	public void retirerJournee(FraisJournalier fraisJournalier) {
-		for (FraisJournalier fj : this.fraisMission) {
-			if (fj.getDate().equals(fraisJournalier.getDate())) {
-				this.fraisMission.remove(fj);
-			}
-		}
 	}
 
 	public String getDateDebutMission() {

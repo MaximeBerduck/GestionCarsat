@@ -29,6 +29,8 @@ public class Frais2Controller {
 	private TextField nbrKmPerso;
 	@FXML
 	private Button boutonValider;
+	@FXML
+	private Button boutonQuitter;
 
 	private AnchorPane pageFrais2;
 	private FraisMissionController fmController;
@@ -44,12 +46,14 @@ public class Frais2Controller {
 	// Event Listener on Button.onAction
 	@FXML
 	public void validerJournee(ActionEvent event) {
+		this.fmController.sauvegarderJournee(this.dateJournee.getText());
 		this.fmController.afficherJourSuivant(this.dateJournee.getText());
 	}
 
 	// Event Listener on Button.onAction
 	@FXML
 	public void sauvegarderFraisMission(ActionEvent event) {
+		this.fmController.sauvegarderJournee(this.dateJournee.getText());
 		this.fmController.sauvegarderFrais();
 	}
 
@@ -60,7 +64,6 @@ public class Frais2Controller {
 	}
 
 	public void modifierFraisJournalier(FraisJournalier fj) {
-		// TODO Auto-generated method stub
 		this.setTypeFraisTransport(fj.getTypeFraisTransport());
 		this.setMontantFraisTransport(String.valueOf(fj.getMontantFraisTransport()));
 
@@ -69,6 +72,8 @@ public class Frais2Controller {
 	}
 
 	public void setBoutonSuivantToSauvegarder() {
+		this.boutonQuitter.setVisible(false);
+
 		this.boutonValider.setText("Valider");
 		this.boutonValider.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -77,6 +82,8 @@ public class Frais2Controller {
 				fmController.sauvegarderFrais();
 			}
 		});
+		
+		//this.boutonQuitter.setVisible(false);
 	}
 
 	public void setTypeFraisTransport(String typeFraisTransport) {
