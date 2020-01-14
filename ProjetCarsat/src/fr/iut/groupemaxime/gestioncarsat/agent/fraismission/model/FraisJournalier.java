@@ -1,6 +1,6 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model;
 
-public class FraisJournalier {
+public class FraisJournalier implements Comparable<FraisJournalier> {
 	private String date;
 	private String heureDepart;
 	private String heureRetour;
@@ -19,6 +19,44 @@ public class FraisJournalier {
 
 	public FraisJournalier(String date) {
 		this.date = date;
+	}
+
+	@Override
+	public int compareTo(FraisJournalier fj) {
+		int compare = 0;
+		Integer[] date1 = this.getDateTab();
+		Integer[] date2 = fj.getDateTab();
+
+		compare = date1[2].compareTo(date2[2]);
+		System.out.println(compare);
+		if (compare != 0) {
+			return compare;
+		}
+
+		compare = date1[1].compareTo(date2[1]);
+		System.out.println(compare);
+		if (compare != 0) {
+			return compare;
+		}
+
+		compare = date1[0].compareTo(date2[0]);
+		System.out.println(compare);
+		if (compare != 0) {
+			return compare;
+		}
+
+		return compare;
+	}
+
+	public Integer[] getDateTab() {
+		String[] split = this.date.split("/");
+		Integer date[] = new Integer[3];
+
+		date[0] = Integer.parseInt(split[0]);
+		date[1] = Integer.parseInt(split[1]);
+		date[2] = Integer.parseInt(split[2]);
+
+		return date;
 	}
 
 	public String getDate() {
