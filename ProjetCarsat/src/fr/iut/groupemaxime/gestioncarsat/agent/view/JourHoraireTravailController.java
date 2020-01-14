@@ -5,10 +5,12 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
+import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireJournalier;
 import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireTravail;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -18,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -36,6 +39,9 @@ public class JourHoraireTravailController {
 	@FXML
 	private TextField dureeDuTrajetSurPlace;
 	
+	@FXML
+	private Button boutonValider; 
+
 	private AnchorPane pageHoraire;
 	
 	private HorairesTravailController htController;
@@ -61,6 +67,37 @@ public class JourHoraireTravailController {
 		}
 		
 	}
+	
+	// Event Listener on Button.onAction
+		@FXML
+		public void validerJournee(ActionEvent event) {
+			this.htController.afficherJourSuivant(this.dateJournee.getText());
+		}
+
+		// Event Listener on Button.onAction
+		@FXML
+		public void sauvegarderFraisMission(ActionEvent event) {
+			this.htController.sauvegarderHoraires();
+		}
+	
+	public void modifierHoraireJournalier(HoraireJournalier hj) {
+		this.setTransportUtiliseSurPlace(hj.getTransportUtiliseSurPlace());
+		this.setDureeDuTrajetSurPlace(hj.getDureeDuTrajetSurPlace());
+	
+		//TODO le scroll pane a gérer
+	}
+	
+	public void setBoutonSuivantToSauvegarder() {
+		this.boutonValider.setText("Valider");
+		this.boutonValider.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				htController.sauvegarderJournee(dateJournee.getText());
+				htController.sauvegarderHoraires();
+			}
+		});
+	}
+	
 	
 	public void validerHT() {
 		
@@ -88,20 +125,34 @@ public class JourHoraireTravailController {
 		this.dateJournee.setText(date);
 	}
 
-
 	public void setHtController(HorairesTravailController htController) {
 		this.htController = htController;
-	}
-
-	
-	
-	public void setChamps(HoraireTravail horaire) {
-		
 	}
 
 	public AnchorPane getPage() {
 		return this.pageHoraire;
 	}
+	
+	public void setPageHoraire(AnchorPane pageHoraire) {
+		this.pageHoraire = pageHoraire;
+	}
+	
+	public String getTransportUtiliseSurPlace() {
+		return transportUtiliseSurPlace.getText();
+	}
+
+	public void setTransportUtiliseSurPlace(String transportUtiliseSurPlace) {
+		this.transportUtiliseSurPlace.setText(transportUtiliseSurPlace);;
+	}
+
+	public String getDureeDuTrajetSurPlace() {
+		return dureeDuTrajetSurPlace.getText();
+	}
+
+	public void setDureeDuTrajetSurPlace(String dureeDuTrajetSurPlace) {
+		this.dureeDuTrajetSurPlace.setText(dureeDuTrajetSurPlace);
+	}
+	
 	
 	
 	

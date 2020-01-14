@@ -36,15 +36,7 @@ public class ItemHoraireTravailController {
 	private HorairesTravailController mainApp2;
 	private OrdreMissionController mainApp;
 	private JourHoraireTravailController mainApp3;
-	
 
-//	public void chargerOM(OrdreMission om) {
-//		this.om = om;
-//		this.lieuLabel.setText(((MissionTemporaire) om.getMission()).getLieuDeplacement());
-//		this.datesLabel.setText("Du " + ((MissionTemporaire) om.getMission()).getDateDebut() + " au "
-//				+ ((MissionTemporaire) om.getMission()).getDateFin());
-//
-//	}
 	
 	public void setMainApp(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
