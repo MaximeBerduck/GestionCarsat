@@ -161,10 +161,6 @@ public class AgentApp extends Application {
 	public void creerHoraireTravail() {
 		this.afficherHorairesTravail();
 		this.htCtrl.creerHoraireMission();
-		
-		this.htCtrl.creerAllJours();
-		this.htCtrl.afficherSemaine();
-		this.htCtrl.afficherPremierJour();
 	}
 
 	public void afficherHorairesTravail() {

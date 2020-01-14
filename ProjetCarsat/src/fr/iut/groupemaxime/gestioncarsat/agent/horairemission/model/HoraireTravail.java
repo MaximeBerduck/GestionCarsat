@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import javax.json.Json;
@@ -20,16 +21,20 @@ import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
 public class HoraireTravail implements DocJson<HoraireTravail>{
 	
 	private String adresseFichier;
-	private HashSet<HoraireJournalier> horaireTravail;
+	private String dateDebutMission;
+	private String dateFinMission;
+	private HashMap<String, HoraireJournalier> horaireTravail;
 	
 	
-	public HoraireTravail(String adresseFichier, HashSet<HoraireJournalier> horaireTravail) {
+	public HoraireTravail(String adresseFichier, String dateDebutMission, String dateFinMission,HashMap<String, HoraireJournalier> horaireTravail) {
 		this.adresseFichier = adresseFichier;
+		this.dateDebutMission = dateDebutMission;
+		this.dateFinMission = dateFinMission;
 		this.horaireTravail = horaireTravail;
 	}
 	
 	public HoraireTravail(String adresseFichier) {
-		this(adresseFichier, new HashSet<HoraireJournalier>());
+		this(adresseFichier, null, null, new HashMap<String, HoraireJournalier>());
 	}
 
 	@Override
@@ -67,15 +72,34 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 		return horaireTravail;
 	}
 	
-	public HashSet<HoraireJournalier> getHoraireTravail() {
+	public HashMap<String, HoraireJournalier> getHoraireTravail() {
 		return horaireTravail;
 	}
 	
 	public void ajouterJournee(HoraireJournalier horaireJournalier) {
-		this.horaireTravail.add(horaireJournalier);
+		if (null != this.horaireTravail.get(horaireJournalier))
+			this.horaireTravail.replace(horaireJournalier.getDate(), horaireJournalier);
+		else
+			this.horaireTravail.put(horaireJournalier.getDate(), horaireJournalier);
 	}
 	public String getAdresseFichier() {
 		return this.adresseFichier;
+	}
+	
+	public String getDateDebutMission() {
+		return dateDebutMission;
+	}
+
+	public void setDateDebutMission(String dateDebutMission) {
+		this.dateDebutMission = dateDebutMission;
+	}
+
+	public String getDateFinMission() {
+		return dateFinMission;
+	}
+
+	public void setDateFinMission(String dateFinMission) {
+		this.dateFinMission = dateFinMission;
 	}
 	
 }

@@ -7,7 +7,6 @@ public class HoraireJournalier {
 	private String dureeDuTrajetSurPlace;
 
 	
-//	private int heureTravailEffectuees;
 	
 	public HoraireJournalier(String date) {
 		this.date = date;
