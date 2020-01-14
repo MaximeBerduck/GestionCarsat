@@ -6,10 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -72,7 +74,12 @@ public class FraisMission implements DocJson<FraisMission> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		fraisMission.trierFraisJournalier();
 		return fraisMission;
+	}
+
+	public void trierFraisJournalier() {
+		this.fraisMission = this.triAvecValeur(this.fraisMission);
 	}
 
 	public void genererPDF() {
@@ -117,4 +124,18 @@ public class FraisMission implements DocJson<FraisMission> {
 		this.dateFinMission = dateFinMission;
 	}
 
+	public static HashMap<String, FraisJournalier> triAvecValeur(HashMap<String, FraisJournalier> map) {
+		LinkedList<Map.Entry<String, FraisJournalier>> list = new LinkedList<Map.Entry<String, FraisJournalier>>(
+				map.entrySet());
+		Collections.sort(list, new Comparator<Map.Entry<String, FraisJournalier>>() {
+			public int compare(Map.Entry<String, FraisJournalier> o1, Map.Entry<String, FraisJournalier> o2) {
+				return (o1.getValue()).compareTo(o2.getValue());
+			}
+		});
+
+		HashMap<String, FraisJournalier> map_apres = new LinkedHashMap<String, FraisJournalier>();
+		for (Map.Entry<String, FraisJournalier> entry : list)
+			map_apres.put(entry.getKey(), entry.getValue());
+		return map_apres;
+	}
 }

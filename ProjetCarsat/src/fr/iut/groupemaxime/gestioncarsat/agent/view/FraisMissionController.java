@@ -76,6 +76,7 @@ public class FraisMissionController {
 	}
 
 	public void sauvegarderFrais() {
+		this.fraisMission.trierFraisJournalier();
 		this.fraisMission.sauvegarderJson(this.fraisMission.getAdresseFichier());
 		this.agentApp.retirerDocActif();
 	}
@@ -102,8 +103,6 @@ public class FraisMissionController {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			this.fraisMission.setDateDebutMission(date);
-			this.fraisMission.setDateFinMission(this.fraisMission.getDateFinMission());
 			this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
 		}
 	}
