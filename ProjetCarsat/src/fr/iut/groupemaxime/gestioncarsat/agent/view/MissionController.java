@@ -1,7 +1,10 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import javafx.fxml.FXML;
@@ -125,10 +128,9 @@ public class MissionController {
 				return new DateCell() {
 					@Override
 					public void updateItem(LocalDate item, boolean empty) {
-						// Must call super
 						super.updateItem(item, empty);
-
-						if (item.isBefore(dateDebut.getValue())) {
+						LocalDate plus = dateDebut.getValue().plus(6, ChronoUnit.DAYS);
+						if (item.isBefore(dateDebut.getValue()) || item.isAfter(plus)) {
 							this.setDisable(true);
 						}
 					}
@@ -144,10 +146,9 @@ public class MissionController {
 				return new DateCell() {
 					@Override
 					public void updateItem(LocalDate item, boolean empty) {
-						// Must call super
 						super.updateItem(item, empty);
-
-						if (item.isAfter(dateFin.getValue())) {
+						LocalDate plus = dateFin.getValue().minus(6, ChronoUnit.DAYS);
+						if (item.isAfter(dateFin.getValue()) || item.isBefore(plus)) {
 							this.setDisable(true);
 						}
 					}
@@ -192,10 +193,10 @@ public class MissionController {
 	public void setChamps(MissionTemporaire mission) {
 		this.dateDebut.setValue(LocalDate.parse(mission.getDateDebut(), DateTimeFormatter.ofPattern("d/M/yyyy")));
 		this.onDateDebutModifier();
-		
+
 		this.dateFin.setValue(LocalDate.parse(mission.getDateFin(), DateTimeFormatter.ofPattern("d/M/yyyy")));
 		this.onDateFinModifier();
-		
+
 		this.lieuDeplacementTextField.setText(mission.getLieuDeplacement());
 		this.motifDeplacementTextField.setText(mission.getMotifDeplacement());
 		if ("formation".equals(mission.getTitre()))
