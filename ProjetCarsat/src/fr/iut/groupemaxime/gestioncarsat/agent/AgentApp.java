@@ -235,6 +235,10 @@ public class AgentApp extends Application {
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.ordreMission);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.horairesTravail);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.fraisMission);
+		this.rootLayoutCtrl.retirerStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.retirerStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.retirerStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+
 	}
 
 	public Options getOptions() {
