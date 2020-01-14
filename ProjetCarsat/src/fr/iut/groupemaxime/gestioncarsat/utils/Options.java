@@ -87,6 +87,10 @@ public class Options implements DocJson<Options> {
 		return existe;
 	}
 
+	public void supprimerResponsable(String adresseResponsable) {
+		this.mailsResponsables.remove(adresseResponsable);
+	}
+
 	public void ajouterResponsable(String responsable) {
 		this.mailsResponsables.add(responsable);
 	}
@@ -129,11 +133,6 @@ public class Options implements DocJson<Options> {
 
 	public void setMailsResponsables(HashSet<String> mailsResponsables) {
 		this.mailsResponsables = mailsResponsables;
-	}
-
-	public void modifierResponsable(String oldResponsable, String newResponsable) {
-		this.mailsResponsables.remove(oldResponsable);
-		this.mailsResponsables.add(newResponsable);
 	}
 
 	public String getCorpsDuMail() {

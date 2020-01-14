@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.OptionsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.OptionsController">
    <children>
       <TextField fx:id="textFieldCheminDossierOM" layoutX="258.0" layoutY="60.0" maxWidth="200.0" prefHeight="25.0" prefWidth="149.0" />
       <Label layoutX="18.0" layoutY="65.0" prefHeight="19.0" prefWidth="240.0" text="Chemin vers les ordres de mission :" />
       <Button layoutX="419.0" layoutY="60.0" mnemonicParsing="false" onAction="#choisirCheminDossierMission" text="..." />
-      <Button layoutX="225.0" layoutY="332.0" mnemonicParsing="false" onAction="#sauvegarder" text="Sauvegarder les options" />
+      <Button layoutX="225.0" layoutY="349.0" mnemonicParsing="false" onAction="#sauvegarder" text="Sauvegarder les options" />
       <Label layoutX="19.0" layoutY="178.0" prefHeight="19.0" prefWidth="240.0" text="Modifier vos coordonnées :" />
       <Button layoutX="258.0" layoutY="173.0" mnemonicParsing="false" onAction="#modifierAgent" text="Modifier" />
       <TextField fx:id="textFieldCheminSignature" layoutX="258.0" layoutY="119.0" maxWidth="200.0" />
@@ -21,7 +22,11 @@
       <TextField fx:id="textFieldMailAgent" layoutX="258.0" layoutY="224.0" prefHeight="27.0" prefWidth="150.0" />
       <Label fx:id="domaineLabel" layoutX="408.0" layoutY="228.0" text="\@domaine.com" />
       <Label layoutX="18.0" layoutY="278.0" prefHeight="19.0" prefWidth="240.0" text="Mail de votre/vos responsable(s)" />
-      <ChoiceBox fx:id="selectMailResponsable" layoutX="258.0" layoutY="273.0" prefHeight="27.0" prefWidth="203.0" />
-      <Button layoutX="469.0" layoutY="273.0" mnemonicParsing="false" onAction="#ajouterResponsable" text="+" />
+      <Button layoutX="507.0" layoutY="284.0" mnemonicParsing="false" onAction="#ajouterResponsable" text="+" />
+      <ScrollPane layoutX="258.0" layoutY="261.0" prefHeight="74.0" prefWidth="240.0">
+        <content>
+            <VBox fx:id="vboxMailResponsable" prefHeight="1.0" prefWidth="238.0" />
+        </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

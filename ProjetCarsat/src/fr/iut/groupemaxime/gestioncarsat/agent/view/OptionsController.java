@@ -8,16 +8,15 @@ import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class OptionsController {
@@ -30,7 +29,7 @@ public class OptionsController {
 	@FXML
 	private Label domaineLabel;
 	@FXML
-	private ChoiceBox<String> selectMailResponsable;
+	private VBox vboxMailResponsable;
 
 	private AgentApp mainApp;
 	private Options options;
@@ -38,9 +37,6 @@ public class OptionsController {
 
 	@FXML
 	private void initialize() {
-		this.selectMailResponsable.getSelectionModel().selectedItemProperty()
-				.addListener((ObservableValue<? extends String> observable, String oldValue,
-						String newValue) -> modifierResponsable(newValue));
 		this.textFieldCheminDossierOM.setDisable(true);
 		this.textFieldCheminSignature.setDisable(true);
 		this.domaineLabel.setText('@' + Constante.HOSTNAME);
@@ -75,14 +71,32 @@ public class OptionsController {
 		Optional<String> result = dialog.showAndWait();
 		if (result.isPresent()) {
 			this.options.ajouterResponsable(result.get());
-			this.selectMailResponsable.getItems().add(result.get());
+			this.ajouterItemResponsable(result.get());
+		}
+	}
+	
+	public void ajouterItemResponsable(String adresseResponsable) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AgentApp.class.getResource("view/ItemResponsableOptions.fxml"));
+			AnchorPane itemResponsable = loader.load();
+
+			ItemResponsableOptionsController itemResponsableOptionsCtrl = loader.getController();
+			itemResponsableOptionsCtrl.setOptionCtrl(this);
+			itemResponsableOptionsCtrl.setAdresseMailResponsable(adresseResponsable);
+			
+			vboxMailResponsable.getChildren().add(itemResponsable);
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
 	public void chargerMailsResponsable() {
+		this.vboxMailResponsable.getChildren().clear();
 		if (!this.options.getMailsResponsables().isEmpty()) {
 			for (String res : this.options.getMailsResponsables())
-				this.selectMailResponsable.getItems().add(res);
+				this.ajouterItemResponsable(res);
 		}
 	}
 
@@ -124,18 +138,8 @@ public class OptionsController {
 		mainApp.fermerSecondaryStage();
 	}
 
-	public void modifierResponsable(String responsable) {
-		TextInputDialog dialog = new TextInputDialog(responsable);
-		dialog.setHeaderText("Modification de l'adresse d'un responsable");
-		dialog.setTitle("Modifier l'adresse de votre responsable");
-		dialog.setContentText("Veuillez modifier l'adresse mail de votre responsable :");
-
-		// Récupérer la valeur saisie
-		Optional<String> result = dialog.showAndWait();
-		if (result.isPresent()) {
-			this.options.modifierResponsable(responsable, result.get());
-			this.selectMailResponsable.getItems().remove(responsable);
-			this.selectMailResponsable.getItems().add(result.get());
-		}
+	public void supprimerResponsable(String adresseResponsable) {
+		this.options.supprimerResponsable(adresseResponsable);
+		this.chargerMailsResponsable();
 	}
 }
