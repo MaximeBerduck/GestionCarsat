@@ -262,6 +262,8 @@ public class AgentApp extends Application {
 		
 		this.afficherHorairesTravail();
 		this.htCtrl.modifierHoraireTravail(ht);
+		this.htCtrl.setHoraireTravail(ht);
+		this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
 	}
 
 	public void afficherEnvoiDuMail() {

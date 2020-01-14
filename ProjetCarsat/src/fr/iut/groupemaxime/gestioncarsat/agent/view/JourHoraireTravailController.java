@@ -76,13 +76,13 @@ public class JourHoraireTravailController {
 
 		// Event Listener on Button.onAction
 		@FXML
-		public void sauvegarderFraisMission(ActionEvent event) {
+		public void sauvegarderHoraireTravail(ActionEvent event) {
 			this.htController.sauvegarderHoraires();
 		}
 	
 	public void modifierHoraireJournalier(HoraireJournalier hj) {
-		this.setTransportUtiliseSurPlace(hj.getTransportUtiliseSurPlace());
-		this.setDureeDuTrajetSurPlace(hj.getDureeDuTrajetSurPlace());
+		this.setTransportUtiliseSurPlace(String.valueOf(hj.getTransportUtiliseSurPlace()));
+		this.setDureeDuTrajetSurPlace(String.valueOf(hj.getDureeDuTrajetSurPlace()));
 	
 		//TODO le scroll pane a gérer
 	}
