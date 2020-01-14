@@ -44,7 +44,6 @@ public class ItemOrdreMissionController {
 		this.lieuLabel.setText(((MissionTemporaire) om.getMission()).getLieuDeplacement());
 		this.datesLabel.setText("Du " + ((MissionTemporaire) om.getMission()).getDateDebut() + " au "
 				+ ((MissionTemporaire) om.getMission()).getDateFin());
-
 	}
 
 	public void setMenuAgent(MenuAgentController menuAgentCtrl) {
