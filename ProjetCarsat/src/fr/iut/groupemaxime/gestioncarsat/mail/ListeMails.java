@@ -1,6 +1,8 @@
 package fr.iut.groupemaxime.gestioncarsat.mail;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +10,10 @@ import java.util.List;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 
 public class ListeMails {
 	List<Message> listeMails;
@@ -34,12 +40,7 @@ public class ListeMails {
 			dossier.mkdir();
 		}
 		for (Message message : listeMails) {
-			try {
-				message.writeTo(new FileOutputStream(new File(adresseDossier + message.toString())));
-			} catch (IOException|MessagingException e) {
-				//TODO
-				e.printStackTrace();
-			}
+			Mail.sauvegarderMail(message, Constante.CHEMIN_MAILS_EN_ATTENTE);
 		}
 
 	}
@@ -49,6 +50,19 @@ public class ListeMails {
 		if (dossierExiste(adresseDossier)) {
 			File dossier = new File(adresseDossier);
 			File[] mails = dossier.listFiles();
+			Message msg;
+			for (File file : mails) {
+				FileInputStream is;
+				try {
+					is = new FileInputStream(file);
+					msg = new MimeMessage(Session.getDefaultInstance(Mail.configurationSmtp()), is);
+					is.close();
+					Mail.envoyerMail(msg);
+				} catch (MessagingException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		return liste;
 	}

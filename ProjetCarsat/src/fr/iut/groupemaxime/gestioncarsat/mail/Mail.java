@@ -1,6 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.mail;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -54,37 +55,45 @@ public class Mail {
 			emailFolder.open(Folder.READ_ONLY);
 
 			Message[] messages = emailFolder.getMessages();
-			for (int i = 0; i < messages.length; i++) {
-				Message message = messages[i];
-				String contentType = message.getContentType();
-
-				if (contentType.contains("multipart")) {
-					Multipart multiPart = (Multipart) message.getContent();
-
-					for (int j = 0; j < multiPart.getCount(); j++) {
-						MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(j);
-						if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-
-							String nomDossier = part.getFileName().substring(0, part.getFileName().lastIndexOf('.'));
-							nomDossier = nomDossier.substring(nomDossier.indexOf('_') + 1);
-							dossier = new File(folder + "responsable/" + nomDossier);
-							if (!dossier.exists()) {
-								dossier.mkdir();
-							}
-							part.saveFile(dossier.getAbsolutePath() + "/" + part.getFileName());
-						}
-					}
-				}
-				message.setFlag(Flags.Flag.DELETED, true);
+			for (Message message : messages) {
+				enregistrerPieceJointe(message, folder + "responsable/");
+				message.setFlag(Flags.Flag.DELETED, true);	
 			}
 			emailFolder.close(true);
 			emailStore.close();
-		} catch (MessagingException | IOException e) {
+		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static Properties configurationSmtp() {
+	public static void enregistrerPieceJointe(Message message, String cheminDossier) {
+		try {
+			String contentType = message.getContentType();
+
+			if (contentType.contains("multipart")) {
+				Multipart multiPart = (Multipart) message.getContent();
+
+				File dossier;
+				for (int j = 0; j < multiPart.getCount(); j++) {
+					MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(j);
+					if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
+						String nomDossier = part.getFileName().substring(0, part.getFileName().lastIndexOf('.'));
+						nomDossier = nomDossier.substring(nomDossier.indexOf('_') + 1);
+						dossier = new File(cheminDossier + nomDossier);
+						if (!dossier.exists()) {
+							dossier.mkdirs();
+						}
+						part.saveFile(dossier.getAbsolutePath() + "/" + part.getFileName());
+					}
+				}
+			}
+		} catch (MessagingException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static Properties configurationSmtp() {
 		Properties props = new Properties();
 
 		props.put("mail.smtp.starttls.enable", "true");
@@ -143,24 +152,51 @@ public class Mail {
 
 	public static Message creerEnvoyerMail(MailController mailCtrl) {
 		Properties props = configurationSmtp();
-		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-			@Override
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(mailCtrl.getExpediteur().getText(), Constante.MOT_DE_PASSE);
-			}
-		});
+		Session session = Session.getDefaultInstance(props);
 		return envoyerMail(configurationMessage(session, mailCtrl));
 
 	}
+
 	public static Message envoyerMail(Message message) {
 		try {
 			Transport.send(message);
 		} catch (MessagingException e) {
-			System.out.println("yo");
+			System.out.println("envoyed");
 			return message;
 		}
 		return null;
 
 	}
 	
+	public static void sauvegarderMail(Message message,String cheminDossier) {
+		try {
+			if (message.getContentType().contains("multipart")) {
+				Multipart multiPart = (Multipart) message.getContent();
+
+				File dossier;
+				int ite = 0;
+				boolean fini = false;
+				while (ite < multiPart.getCount() && !fini) {
+					MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(ite);
+					if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
+						String nomDossier = part.getFileName().substring(0, part.getFileName().lastIndexOf('.'));
+						nomDossier = nomDossier.substring(nomDossier.indexOf('_') + 1);
+						dossier = new File(cheminDossier + nomDossier);
+						if (!dossier.exists()) {
+							dossier.mkdirs();
+						}
+						FileOutputStream os = new FileOutputStream(new File(dossier.getAbsolutePath() + "/" + part.getFileName().substring(0, part.getFileName().lastIndexOf(".")) + Constante.EXTENSION_MAIL));
+						message.writeTo(os);
+						os.close();
+						fini = true;
+					}
+					ite++;
+				}
+			}
+		} catch (MessagingException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 }
