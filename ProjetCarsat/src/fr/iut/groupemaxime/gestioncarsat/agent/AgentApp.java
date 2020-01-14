@@ -156,10 +156,6 @@ public class AgentApp extends Application {
 	public void creerFraisMission() {
 		this.afficherFraisMission();
 		this.fmCtrl.creerFraisMission();
-
-		this.fmCtrl.creerAllJours();
-		this.fmCtrl.afficherSemaine();
-		this.fmCtrl.afficherPremierJour();
 	}
 
 	public void afficherHorairesTravail() {

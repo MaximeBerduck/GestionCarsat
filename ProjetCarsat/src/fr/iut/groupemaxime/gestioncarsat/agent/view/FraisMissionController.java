@@ -57,6 +57,19 @@ public class FraisMissionController {
 		this.fraisMission = new FraisMission(this.missionActive.getCheminDossier() + "FM_"
 				+ ((MissionTemporaire) this.missionActive.getMission()).getLieuDeplacement() + '_'
 				+ ((MissionTemporaire) this.missionActive.getMission()).getDates() + Constante.EXTENSION_JSON);
+
+		Integer i = 0;
+		String stringDebut = ((MissionTemporaire) missionActive.getMission()).getDateDebut();
+
+		String stringFin = ((MissionTemporaire) missionActive.getMission()).getDateFin();
+
+		this.ajouterJour(stringDebut, stringFin);
+		this.listeDate.put(i, stringDebut);
+		this.listeDateInverse.put(stringDebut, i);
+		
+		this.afficherSemaine();
+
+		this.afficherPremierJour();
 	}
 
 	public void sauvegarderFrais() {
@@ -75,9 +88,20 @@ public class FraisMissionController {
 		if (this.jourSuivantExiste(date)) {
 			this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
 		} else {
-			this.fraisMissionSplit.getItems().remove(1);
-			this.fraisMissionSplit.getItems().remove(0);
-			this.sauvegarderFrais();
+			Calendar c = Calendar.getInstance();
+			try {
+				c.setTime(Constante.FORMAT_DATE_SLASH.parse(date));
+				c.add(Calendar.DATE, 1); // number of days to add
+				date = Constante.FORMAT_DATE_SLASH.format(c.getTime());
+				this.ajouterJour(date, this.fraisMission.getDateFinMission());
+				i++;
+				this.listeDate.put(i, date);
+				this.listeDateInverse.put(date, i);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			this.fraisMission.setDateDebutMission(date);
+			this.fraisMission.setDateFinMission(this.fraisMission.getDateFinMission());
 		}
 	}
 
@@ -127,34 +151,6 @@ public class FraisMissionController {
 		this.fraisMission.retirerJournee(fraisJournalier);
 
 		this.fraisMission.ajouterJournee(fraisJournalier);
-	}
-
-	public void creerAllJours() {
-		Integer i = 0;
-		String stringDebut = ((MissionTemporaire) missionActive.getMission()).getDateDebut();
-
-		String stringFin = ((MissionTemporaire) missionActive.getMission()).getDateFin();
-
-		this.ajouterJour(stringDebut, stringFin);
-		this.listeDate.put(i, stringDebut);
-		this.listeDateInverse.put(stringDebut, i);
-
-		while (!stringDebut.equals(stringFin)) {
-			Calendar c = Calendar.getInstance();
-			try {
-				c.setTime(Constante.FORMAT_DATE_SLASH.parse(stringDebut));
-				c.add(Calendar.DATE, 1); // number of days to add
-				stringDebut = Constante.FORMAT_DATE_SLASH.format(c.getTime());
-				this.ajouterJour(stringDebut, stringFin);
-				i++;
-				this.listeDate.put(i, stringDebut);
-				this.listeDateInverse.put(stringDebut, i);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		this.fraisMission.setDateDebutMission(stringDebut);
-		this.fraisMission.setDateFinMission(stringFin);
 	}
 
 	public void ajouterJour(String jour, String stringFin) {
@@ -222,12 +218,11 @@ public class FraisMissionController {
 	}
 
 	public void modifierFraisMission(FraisMission fm) {
-		// TODO
 		Integer i = 0;
 		for (FraisJournalier fj : fm.getFraisMission()) {
 			this.modifierFraisJournalier(fj);
-			this.listeDate.put(0, fj.getDate());
-			this.listeDateInverse.put(fj.getDate(), 0);
+			this.listeDate.put(i, fj.getDate());
+			this.listeDateInverse.put(fj.getDate(), i);
 			i++;
 		}
 		this.fraisMission = new FraisMission(fm.getAdresseFichier());
@@ -236,7 +231,6 @@ public class FraisMissionController {
 	}
 
 	private void modifierFraisJournalier(FraisJournalier fj) {
-		// TODO
 		this.ajouterJour(fj.getDate(), ((MissionTemporaire) missionActive.getMission()).getDateFin());
 		this.listeFrais1.get(fj.getDate()).modifierFraisJournalier(fj);
 		this.listeFrais2.get(fj.getDate()).modifierFraisJournalier(fj);
