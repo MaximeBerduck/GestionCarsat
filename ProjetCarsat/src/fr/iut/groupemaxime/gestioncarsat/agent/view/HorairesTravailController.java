@@ -29,13 +29,14 @@ public class HorairesTravailController {
 	
 	@FXML
 	private SplitPane horaireTravailSplit;
+	@FXML
+	private Label titre;
 	
 	private AgentApp agentApp;
 	private Options options;
 	private OrdreMission missionActive;
 	
 	private AnchorPane pageHoraires;
-	private JourHoraireTravailController horairesController;
 	private FraisDateSemaineController fraisDateSemaineCtrl;
 	
 	
@@ -58,9 +59,26 @@ public class HorairesTravailController {
 		this.horaireTravail = new HoraireTravail(this.missionActive.getCheminDossier() + "HT_"
 				+ ((MissionTemporaire) this.missionActive.getMission()).getLieuDeplacement() + '_'
 				+ ((MissionTemporaire) this.missionActive.getMission()).getDates() + Constante.EXTENSION_JSON);
+		
+		Integer i = 0;
+		String stringDebut = ((MissionTemporaire) missionActive.getMission()).getDateDebut();
+
+		String stringFin = ((MissionTemporaire) missionActive.getMission()).getDateFin();
+
+		this.horaireTravail.setDateDebutMission(stringDebut);
+		this.horaireTravail.setDateFinMission(stringFin);
+
+		this.ajouterJour(stringDebut, stringFin);
+		this.listeDate.put(i, stringDebut);
+		this.listeDateInverse.put(stringDebut, i);
+
+		this.afficherSemaine();
+
+		this.afficherPremierJour();
 	}
 	
 	public void sauvegarderHoraires() {
+		this.horaireTravail.trierHoraireJournalier();
 		this.horaireTravail.sauvegarderJson(this.horaireTravail.getAdresseFichier());
 		this.agentApp.retirerDocActif();
 	}
@@ -71,14 +89,23 @@ public class HorairesTravailController {
 	
 	public void afficherJourSuivant(String date) {
 		Integer i = this.listeDateInverse.get(date);
-		this.sauvegarderJournee(date);
 		i++;
-		if (null != this.listeDate.get(i)) {
-			this.horaireTravailSplit.getItems().set(1,  this.listeHoraires.get(this.listeDate.get(i)).getPage());
+		if (this.jourSuivantExiste(date)) {
+			this.horaireTravailSplit.getItems().set(1, this.listeHoraires.get(this.listeDate.get(i)).getPage());
 		} else {
-			this.horaireTravailSplit.getItems().remove(1);
-			this.horaireTravailSplit.getItems().remove(0);
-			this.horaireTravail.sauvegarderJson(this.horaireTravail.getAdresseFichier());
+			Calendar c = Calendar.getInstance();
+			try {
+				c.setTime(Constante.FORMAT_DATE_SLASH.parse(date));
+				c.add(Calendar.DATE, 1); // number of days to add
+				date = Constante.FORMAT_DATE_SLASH.format(c.getTime());
+				this.ajouterJour(date, this.horaireTravail.getDateFinMission());
+				i++;
+				this.listeDate.put(i, date);
+				this.listeDateInverse.put(date, i);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			this.horaireTravailSplit.getItems().set(1, this.listeHoraires.get(this.listeDate.get(i)).getPage());
 		}
 	}
 	
@@ -101,34 +128,10 @@ public class HorairesTravailController {
 					String.valueOf(horaireCtrl.getDureeDuTrajetSurPlace()));
 		}
 		
+		this.horaireTravail.ajouterJournee(horaireJournalier);
+		
 		// reste a gerer le if il y a 1 ou plusieurs horaires de saisis, faire un for jusqu'au nb de ligne d'horaire choisi
 
-	}
-	
-	public void creerAllJours() {
-		Integer i = 0;
-		String stringDebut = ((MissionTemporaire) missionActive.getMission()).getDateDebut();
-
-		String stringFin = ((MissionTemporaire) missionActive.getMission()).getDateFin();
-
-		this.ajouterJour(stringDebut, stringFin);
-		this.listeDate.put(i, stringDebut);
-		this.listeDateInverse.put(stringDebut, i);
-
-		while (!stringDebut.equals(stringFin)) {
-			Calendar c = Calendar.getInstance();
-			try {
-				c.setTime(Constante.FORMAT_DATE_SLASH.parse(stringDebut));
-				c.add(Calendar.DATE, 1); // number of days to add
-				stringDebut = Constante.FORMAT_DATE_SLASH.format(c.getTime());
-				this.ajouterJour(stringDebut, stringFin);
-				i++;
-				this.listeDate.put(i, stringDebut);
-				this.listeDateInverse.put(stringDebut, i);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	public void ajouterJour(String jour, String stringFin) {
@@ -143,17 +146,6 @@ public class HorairesTravailController {
 			horairesCtrl.setDateJournee(jour);
 			horairesCtrl.setHtController(this);
 			this.listeHoraires.put(jour, horairesCtrl);
-
-//			if ("voiture".equals(this.missionActive.getTransport().getTypeTransport())) {
-//				frais2Ctrl.getNbrKilometreLayout().setDisable(false);
-//				Voiture voiture = (Voiture) this.missionActive.getTransport();
-//				if ("vehiculeService".equals(voiture.getAppartenanceVehicule())) {
-//					frais2Ctrl.getVehiculeServiceLayout().setVisible(true);
-//					frais2Ctrl.getVehiculePersoLayout().setVisible(false);
-//				}
-//			} else {
-//				frais2Ctrl.getNbrKilometreLayout().setVisible(false);
-//			}
 
 			if (jour.equals(stringFin)) {
 				horairesCtrl.setBoutonSuivantToSauvegarder();
@@ -186,12 +178,11 @@ public class HorairesTravailController {
 	}
 	
 	public void modifierHoraireTravail(HoraireTravail ht) {
-		// TODO
 		Integer i = 0;
-		for (HoraireJournalier hj : ht.getHoraireTravail()) {
+		for (HoraireJournalier hj : ht.getHoraireTravail().values()) {
 			this.modifierHoraireJournalier(hj);
-			this.listeDate.put(0, hj.getDate());
-			this.listeDateInverse.put(hj.getDate(), 0);
+			this.listeDate.put(i, hj.getDate());
+			this.listeDateInverse.put(hj.getDate(), i);
 			i++;
 		}
 		this.afficherSemaine();
@@ -199,73 +190,11 @@ public class HorairesTravailController {
 	}
 	
 	private void modifierHoraireJournalier(HoraireJournalier hj) {
-		// TODO Auto-generated method stub
 		this.ajouterJour(hj.getDate(), ((MissionTemporaire) missionActive.getMission()).getDateFin());
 		this.listeHoraires.get(hj.getDate()).modifierHoraireJournalier(hj);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	public void afficherHorairesTravail() {
-//		if(this.pageHoraires!=null) {
-//			if(0<this.horaireTravailSplit.getItems().size())
-//				this.horaireTravailSplit.getItems().set(0, this.pageHoraires);
-//			else 
-//				this.horaireTravailSplit.getItems().add(0, this.pageHoraires);
-//		} else {
-//			try {
-//				FXMLLoader loader = new FXMLLoader();
-//				loader.setLocation(this.getClass().getResource("JourHoraireTravail.fxml"));
-//				this.pageHoraires = loader.load();
-//				
-//				if (0 < this.horaireTravailSplit.getItems().size())
-//					this.horaireTravailSplit.getItems().set(0, this.pageHoraires);
-//				else
-//					this.horaireTravailSplit.getItems().add(0, this.pageHoraires);
-//				
-//				this.horairesController = loader.getController();
-//				this.horairesController.setHtController(this);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
-//	
-//	public void modifierHt(HoraireTravail ht) {
-//		try {
-//			FXMLLoader loader = new FXMLLoader();
-//			loader.setLocation(this.getClass().getResource("JourHoraireTravail.fxml"));
-//			pageHoraires = loader.load();
-//
-//			if (1 == this.horaireTravailSplit.getItems().size())
-//				this.horaireTravailSplit.getItems().set(0, this.pageHoraires);
-//			else
-//				this.horaireTravailSplit.getItems().add(0, this.pageHoraires);
-//
-//			horairesController = loader.getController();
-//			horairesController.setHtController(this);
-//			//horairesController.setChamps(om.getAgent());
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-		
-	
-	public void validerHoraireTravail() {
-		
-	}
-	
-//	public Stage getPrimaryStage() {
-//		return this.primaryStage;
-//	}
+
 	
 	public void setMainApp(AgentApp agentApp) {
 		this.agentApp = agentApp;
@@ -273,6 +202,18 @@ public class HorairesTravailController {
 
 	public void setOptions(Options options) {
 		this.options = options;
+	}
+	
+	public void setMissionActive(OrdreMission om) {
+		this.missionActive = om;
+	}
+	
+	public void setHoraireTravail(HoraireTravail ht) {
+		this.horaireTravail = ht;
+	}
+
+	public void setTitre(String titre) {
+		this.titre.setText(titre);
 	}
 
 	public Options getOptions() {
@@ -283,7 +224,5 @@ public class HorairesTravailController {
 		return primaryStage;
 	}
 	
-	public void setMissionActive(OrdreMission om) {
-		this.missionActive = om;
-	}
+	
 }

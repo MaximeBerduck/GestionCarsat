@@ -161,10 +161,6 @@ public class AgentApp extends Application {
 	public void creerHoraireTravail() {
 		this.afficherHorairesTravail();
 		this.htCtrl.creerHoraireMission();
-		
-		this.htCtrl.creerAllJours();
-		this.htCtrl.afficherSemaine();
-		this.htCtrl.afficherPremierJour();
 	}
 
 	public void afficherHorairesTravail() {
@@ -266,6 +262,8 @@ public class AgentApp extends Application {
 		
 		this.afficherHorairesTravail();
 		this.htCtrl.modifierHoraireTravail(ht);
+		this.htCtrl.setHoraireTravail(ht);
+		this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
 	}
 
 	public void afficherEnvoiDuMail() {
