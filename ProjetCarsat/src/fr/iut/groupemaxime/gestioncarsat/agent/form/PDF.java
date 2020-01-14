@@ -3,6 +3,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.form;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -454,5 +455,11 @@ public class PDF {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void ajouterDateSignatureOM() {
+		String date = Constante.FORMAT_DATE_SLASH.format(new Date());
+
+		this.remplirChamp("dateSigna", date);
 	}
 }

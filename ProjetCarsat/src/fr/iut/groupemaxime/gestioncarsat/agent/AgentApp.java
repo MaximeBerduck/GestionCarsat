@@ -306,9 +306,8 @@ public class AgentApp extends Application {
 
 	private void afficherPdfFM(OrdreMission missionActive) {
 		try {
-			Desktop.getDesktop().browse(new File(
-					this.missionActive.getCheminDossier() + this.missionActive.getNomOM().replace("OM_", "FM_") + Constante.EXTENSION_PDF)
-							.toURI());
+			Desktop.getDesktop().browse(new File(this.missionActive.getCheminDossier()
+					+ this.missionActive.getNomOM().replace("OM_", "FM_") + Constante.EXTENSION_PDF).toURI());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -419,6 +418,8 @@ public class AgentApp extends Application {
 			pdf.remplirPDF(this.missionActive);
 			pdf.sauvegarderPDF();
 			if (this.missionActive.estSigne()) {
+				pdf.ajouterDateSignatureOM();
+				pdf.sauvegarderPDF();
 				PDF.signerPDF(Constante.SIGNATURE_AGENT_X, Constante.SIGNATURE_AGENT_Y, Constante.TAILLE_SIGNATURE,
 						this.missionActive, this.getOptions().getCheminSignature());
 			}
