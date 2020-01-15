@@ -55,10 +55,9 @@ public class MailController {
 			this.mainApp.getMainApp().getMissionActive().setEnvoye(true);
 			this.mainApp.getMainApp().retirerDocActif();
 			this.mainApp.getMainApp().getMailsEnAttente().ajouterMail(new Mail(MailProcessor
-					.configurationMessage(Session.getDefaultInstance(MailProcessor.configurationSmtp()), this)));
-			MailProcessor.creerEnvoyerMail(this);
-			if (this.mainApp.getMainApp().getServiceEnvoiMail().getState() == State.READY)
-				this.mainApp.getMainApp().getServiceEnvoiMail().start();
+					.creerMail(this)));
+			this.mainApp.getMainApp().getServiceEnvoiMail().restart();
+			System.out.println(this.mainApp.getMainApp().getServiceEnvoiMail().getState());
 		}
 	}
 
