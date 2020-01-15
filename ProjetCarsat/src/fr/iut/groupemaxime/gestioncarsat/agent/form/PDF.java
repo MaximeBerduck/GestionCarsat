@@ -442,7 +442,9 @@ public class PDF {
 			for (String i : typeAutreFrais) {
 				typeFrais += i + ',';
 			}
-			typeFrais = typeFrais.substring(0, typeFrais.length() - 1);
+			if (typeFrais.length() > 1) {
+				typeFrais = typeFrais.substring(0, typeFrais.length() - 1);
+			}
 			this.remplirChamp("typeAutreFrais", typeFrais);
 			this.remplirChamp("montantAutreFrais", String.valueOf(montantAutreFrais));
 
