@@ -22,6 +22,7 @@ public class ListeMails {
 
 	public void ajouterMail(Mail mail) {
 		this.mails.add(mail);
+		MailProcessor.sauvegarderMail(mail, Constante.CHEMIN_MAILS_EN_ATTENTE);
 	}
 
 	public List<Mail> getListeMails() {
