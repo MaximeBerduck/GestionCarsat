@@ -128,4 +128,9 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	public boolean estSigne() {
 		return this.signatureAgent;
 	}
+
+	public boolean fmEstSigne() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
