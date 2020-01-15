@@ -39,15 +39,14 @@
    <left>
       <GridPane fx:id="gridRoot" BorderPane.alignment="CENTER">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="350.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-            <ColumnConstraints hgrow="SOMETIMES" prefWidth="550.0" />
+            <ColumnConstraints hgrow="SOMETIMES" prefWidth="1100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox fx:id="boxMenu" prefHeight="200.0" prefWidth="150.0" style="-fx-border-color: grey;" stylesheets="@../../agent/menu.css" GridPane.columnIndex="1">
+            <VBox fx:id="boxMenu" prefHeight="200.0" prefWidth="150.0" style="-fx-border-color: grey;" stylesheets="@../../agent/menu.css">
                <children>
                   <VBox id="hov" fx:id="boxOM" prefHeight="100.0" prefWidth="150.0" style="-fx-border-color: grey; -fx-border-width: 0 0 1 0;" stylesheets="@../../agent/hover.css">
                      <children>

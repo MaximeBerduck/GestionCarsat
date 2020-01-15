@@ -30,9 +30,9 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <Label text="A :">
+            <Label text="à">
                <HBox.margin>
-                  <Insets left="20.0" right="10.0" />
+                  <Insets right="10.0" />
                </HBox.margin>
             </Label>
             <TextField fx:id="heure1Fin" prefHeight="25.0" prefWidth="28.0" text="12">

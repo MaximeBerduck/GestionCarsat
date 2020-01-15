@@ -91,7 +91,7 @@ public class ResponsableApp extends Application {
 			this.listeMissionsResponsable = loader.load();
 
 			if (!this.rootLayoutCtrl.getGridRoot().getChildren().contains(this.listeMissionsResponsable))
-				this.rootLayoutCtrl.getGridRoot().add(this.listeMissionsResponsable, 0, 0);
+				this.rootLayoutCtrl.getGridRoot().add(this.listeMissionsResponsable, 1, 0);
 			controllerListeMissionsResponsable = loader.getController();
 			controllerListeMissionsResponsable.setResponsableApp(this);
 			controllerListeMissionsResponsable.setOptions(this.options);
