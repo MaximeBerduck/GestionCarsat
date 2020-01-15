@@ -47,13 +47,21 @@ public class ListeMails {
 
 	public void chargerMails(String cheminMailsEnAttente) {
 		File dossierMails = new File(cheminMailsEnAttente);
-		for (File dossier : dossierMails.listFiles()) {
-			for (File mail : dossier.listFiles()) {
-				Mail nouveauMail = new Mail(MailProcessor.chargerMail(mail));
-				if (nouveauMail.getMail() != null) {
-					nouveauMail.setPath(mail.getAbsolutePath());
-					this.mails.add(nouveauMail);
-				}		
+		if (dossierMails.isDirectory()) {
+			File[] contenuDossierMails = dossierMails.listFiles();
+			if (contenuDossierMails.length > 0) {
+				for (File dossier : contenuDossierMails) {
+					File[] contenuDossier = dossier.listFiles();
+					if (contenuDossier.length > 0) {
+						for (File mail : dossier.listFiles()) {
+							Mail nouveauMail = new Mail(MailProcessor.chargerMail(mail));
+							if (nouveauMail.getMail() != null) {
+								nouveauMail.setPath(mail.getAbsolutePath());
+								this.mails.add(nouveauMail);
+							}
+						}
+					}
+				}
 			}
 		}
 	}

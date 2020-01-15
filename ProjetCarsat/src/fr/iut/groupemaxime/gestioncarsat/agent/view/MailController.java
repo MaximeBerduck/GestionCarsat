@@ -54,9 +54,10 @@ public class MailController {
 	@FXML
 	public void envoyerMail(ActionEvent event) {
 		if (adressesMailValides()) {
-			this.mainApp.getMainApp().getMailsEnAttente().ajouterMail(new Mail(MailProcessor.configurationMessage(Session.getDefaultInstance(MailProcessor.configurationSmtp()), this)));
-			this.mainApp.getMainApp().getMailsEnAttente().iterationMails();
 			this.mainApp.getMainApp().retirerDocActif();
+			this.mainApp.getMainApp().getMailsEnAttente().ajouterMail(new Mail(MailProcessor
+					.configurationMessage(Session.getDefaultInstance(MailProcessor.configurationSmtp()), this)));
+			this.mainApp.getMainApp().getMailsEnAttente().iterationMails();
 		}
 	}
 
