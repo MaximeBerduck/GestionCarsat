@@ -56,10 +56,9 @@ public class HorairesTravailController {
 	}
 	
 	public void creerHoraireMission() {
-		this.horaireTravail = new HoraireTravail(this.missionActive.getCheminDossier() + "HT_"
-				+ ((MissionTemporaire) this.missionActive.getMission()).getLieuDeplacement() + '_'
-				+ ((MissionTemporaire) this.missionActive.getMission()).getDates() + Constante.EXTENSION_JSON);
-		
+		this.horaireTravail = new HoraireTravail(this.missionActive.getCheminDossier()
+				+ this.missionActive.getNomOM().replace("OM_", "HT_") + Constante.EXTENSION_JSON);
+
 		Integer i = 0;
 		String stringDebut = ((MissionTemporaire) missionActive.getMission()).getDateDebut();
 
@@ -150,8 +149,6 @@ public class HorairesTravailController {
 			if (jour.equals(stringFin)) {
 				horairesCtrl.setBoutonSuivantToSauvegarder();
 			}
-
-			this.listeHoraires.put(jour, horairesCtrl);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -186,6 +183,7 @@ public class HorairesTravailController {
 			i++;
 		}
 		this.afficherSemaine();
+		
 		this.afficherPremierJour();
 	}
 	

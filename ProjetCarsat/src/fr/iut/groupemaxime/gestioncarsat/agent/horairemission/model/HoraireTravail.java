@@ -80,7 +80,7 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 		return horaireTravail;
 	}
 	
-	public void trierHoraireJournalier() {
+	public void trierHoraireJournalier() { //pb dans la sauvegarde
 		this.horaireTravail = this.triAvecValeur(this.horaireTravail);
 	}
 	
@@ -99,11 +99,11 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 	}
 	
 	public void ajouterJournee(HoraireJournalier horaireJournalier) {
-		if (null != this.horaireTravail.get(horaireJournalier))
+		if (null != this.horaireTravail.get(horaireJournalier)) {
 			this.horaireTravail.replace(horaireJournalier.getDate(), horaireJournalier);
-		else
+		}else {
 			this.horaireTravail.put(horaireJournalier.getDate(), horaireJournalier);
-	}
+	}}
 	
 	public HashMap<String, HoraireJournalier> getHoraireTravail() {
 		return horaireTravail;
