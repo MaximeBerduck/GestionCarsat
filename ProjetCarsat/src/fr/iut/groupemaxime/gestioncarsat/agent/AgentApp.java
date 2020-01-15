@@ -299,9 +299,7 @@ public class AgentApp extends Application {
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.ordreMission);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.horairesTravail);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.fraisMission);
-		this.rootLayoutCtrl.retirerStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		this.rootLayoutCtrl.retirerStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		this.rootLayoutCtrl.retirerStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 
 	}
 
@@ -353,6 +351,7 @@ public class AgentApp extends Application {
 			if (result.get() == buttonTypeAfficher) {
 				this.genererPdfFM(this.missionActive);
 				this.afficherPdfFM(this.missionActive);
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 
 			} else if (result.get() == buttonTypeModif) {
 				this.afficherFraisMission();
@@ -360,9 +359,11 @@ public class AgentApp extends Application {
 
 			} else if (result.get() == buttonTypeSigner) {
 				this.signerFM(this.missionActive);
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			} else if (result.get() == buttonTypeEnvoyer) {
 				// TODO envoyer FM
 			} else {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 				// Ne fait rien == bouton "annuler"
 			}
 		} else {
