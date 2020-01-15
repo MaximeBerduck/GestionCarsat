@@ -22,6 +22,8 @@ import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.application.Application;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -85,6 +87,21 @@ public class AgentApp extends Application {
 		this.creerDossier(this.options.getCheminOM());
 		this.mailsEnAttente = new ListeMails();
 		this.mailsEnAttente.chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE);
+		final Service<Void> serviceEnvoiMail = new Service<Void>() {
+
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+
+					@Override
+					protected Void call() throws Exception {
+						mailsEnAttente.iterationMails();
+						return null;
+					}
+				};
+			}
+		};
+		serviceEnvoiMail.start();
 		initialiseRootLayout();
 		afficherListeMissions();
 	}
@@ -263,7 +280,7 @@ public class AgentApp extends Application {
 		this.afficherHorairesTravail();
 		this.htCtrl.modifierHoraireTravail(ht);
 		this.htCtrl.setHoraireTravail(ht);
-		//this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
+		// this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
 	}
 
 	public void afficherEnvoiDuMail() {
@@ -284,10 +301,9 @@ public class AgentApp extends Application {
 			ButtonType buttonTypeSigner = new ButtonType("Signer");
 			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
-			if(this.missionActive.fmEstSigne()) {
+			if (this.missionActive.fmEstSigne()) {
 				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeEnvoyer, buttonTypeCancel);
-			}
-			else
+			} else
 				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeSigner, buttonTypeCancel);
 
 			Optional<ButtonType> result = alert.showAndWait();
@@ -314,7 +330,7 @@ public class AgentApp extends Application {
 
 	private void signerFM(OrdreMission missionActive2) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void afficherPdfFM(OrdreMission missionActive) {
