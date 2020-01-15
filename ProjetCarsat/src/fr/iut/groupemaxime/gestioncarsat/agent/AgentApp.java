@@ -330,12 +330,8 @@ public class AgentApp extends Application {
 
 	private void signerFM(OrdreMission missionActive) {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
 		this.afficherFraisMission();
 		this.fmCtrl.signerFM(missionActive);
-=======
-
->>>>>>> refs/remotes/origin/master
 	}
 
 	private void afficherPdfFM(OrdreMission missionActive) {
