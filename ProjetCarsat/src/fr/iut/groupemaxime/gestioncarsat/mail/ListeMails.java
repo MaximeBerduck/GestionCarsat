@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class ListeMails {
 	List<Mail> mails;
@@ -37,6 +39,12 @@ public class ListeMails {
 				if (!mail.isSauvegarde()) {
 					MailProcessor.sauvegarderMail(mail, Constante.CHEMIN_MAILS_EN_ATTENTE);
 				}
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Erreur");
+				alert.setHeaderText("Des mails n'ont pas pu être envoyés");
+				alert.setContentText("Vous êtes hors connexion, les mails seront envoyés au prochain lancement de l'application");
+
+				alert.showAndWait();
 			}
 		}
 		this.mails.removeAll(aSuppr);
@@ -49,11 +57,11 @@ public class ListeMails {
 		File dossierMails = new File(cheminMailsEnAttente);
 		if (dossierMails.isDirectory()) {
 			File[] contenuDossierMails = dossierMails.listFiles();
-			if (contenuDossierMails.length > 0) {
+			if (contenuDossierMails != null) {
 				for (File dossier : contenuDossierMails) {
 					File[] contenuDossier = dossier.listFiles();
-					if (contenuDossier.length > 0) {
-						for (File mail : dossier.listFiles()) {
+					if (contenuDossier != null) {
+						for (File mail : contenuDossier) {
 							Mail nouveauMail = new Mail(MailProcessor.chargerMail(mail));
 							if (nouveauMail.getMail() != null) {
 								nouveauMail.setPath(mail.getAbsolutePath());

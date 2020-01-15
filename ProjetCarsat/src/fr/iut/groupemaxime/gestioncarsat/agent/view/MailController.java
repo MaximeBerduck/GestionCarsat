@@ -57,7 +57,7 @@ public class MailController {
 			this.mainApp.getMainApp().retirerDocActif();
 			this.mainApp.getMainApp().getMailsEnAttente().ajouterMail(new Mail(MailProcessor
 					.configurationMessage(Session.getDefaultInstance(MailProcessor.configurationSmtp()), this)));
-			this.mainApp.getMainApp().getMailsEnAttente().iterationMails();
+			this.mainApp.getMainApp().getServiceEnvoiMail().start();
 		}
 	}
 

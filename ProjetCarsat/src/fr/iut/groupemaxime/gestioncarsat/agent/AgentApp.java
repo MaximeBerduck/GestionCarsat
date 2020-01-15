@@ -67,6 +67,8 @@ public class AgentApp extends Application {
 	private ListeOrdreMission listeOM;
 
 	private OrdreMission missionActive;
+	
+	private Service<Void> serviceEnvoiMail;
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -87,7 +89,7 @@ public class AgentApp extends Application {
 		this.creerDossier(this.options.getCheminOM());
 		this.mailsEnAttente = new ListeMails();
 		this.mailsEnAttente.chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE);
-		final Service<Void> serviceEnvoiMail = new Service<Void>() {
+		this.serviceEnvoiMail = new Service<Void>() {
 
 			@Override
 			protected Task<Void> createTask() {
@@ -536,6 +538,10 @@ public class AgentApp extends Application {
 
 	public ListeMails getMailsEnAttente() {
 		return mailsEnAttente;
+	}
+	
+	public Service<Void> getServiceEnvoiMail(){
+		return this.serviceEnvoiMail;
 	}
 
 }
