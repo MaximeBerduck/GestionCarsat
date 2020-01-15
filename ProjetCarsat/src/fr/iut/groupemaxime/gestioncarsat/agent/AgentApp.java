@@ -118,7 +118,6 @@ public class AgentApp extends Application {
 		serviceEnvoiMail.start();
 		initialiseRootLayout();
 		afficherListeMissions();
-		System.out.println(serviceEnvoiMail.getState());
 	}
 
 	public void initialiseRootLayout() {

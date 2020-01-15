@@ -48,6 +48,7 @@ public class MenuAgentController {
 		this.listeOmCtrl = new HashSet<ItemOrdreMissionController>();
 		listeOm = new ListeOrdreMission();
 		listeOm.chargerOM(new File(options.getCheminOM()));
+		this.agentApp.getMailsEnAttente().chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE, options);
 		for (OrdreMission om : listeOm.getListeOM()) {
 			if (om.getEtat() == EtatMission.EN_COURS_ENVOI) {
 				boolean trouve = false;
