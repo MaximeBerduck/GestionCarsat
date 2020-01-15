@@ -14,7 +14,9 @@ import javax.json.JsonReader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
+import fr.iut.groupemaxime.gestioncarsat.agent.view.Frais1Controller;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 
 public class OrdreMission implements DocJson<OrdreMission> {
@@ -130,7 +132,8 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	}
 
 	public boolean fmEstSigne() {
-		// TODO Auto-generated method stub
-		return false;
+		FraisMission fm = new FraisMission(null);
+		fm.chargerJson(cheminDossier + nomOM.replace("OM_", "FM_") + Constante.EXTENSION_JSON);
+		return fm.estSigne();
 	}
 }

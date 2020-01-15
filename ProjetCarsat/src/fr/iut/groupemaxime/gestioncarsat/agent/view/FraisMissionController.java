@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Optional;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
@@ -17,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 
 public class FraisMissionController {
@@ -256,5 +258,17 @@ public class FraisMissionController {
 
 	public void retourFrais1(String date) {
 		this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(date).getPage());
+	}
+
+	public void chargerFM(OrdreMission mission) {
+		this.fraisMission = new FraisMission(null);
+		this.fraisMission.chargerJson(mission.getCheminDossier() + mission.getNomOM().replace("OM_", "FM_") + Constante.EXTENSION_JSON);
+	}
+
+	public void signerFM(OrdreMission mission) {
+		// TODO Auto-generated method stub
+		this.chargerFM(mission);
+		
+		
 	}
 }

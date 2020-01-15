@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -29,11 +30,18 @@ public class FraisMission implements DocJson<FraisMission> {
 	private String dateDebutMission;
 	private String dateFinMission;
 	private HashMap<String, FraisJournalier> fraisMission;
+	private String typeAutreFrais;
+	private float montantAutreFrais;
 	private boolean estSigne;
 	private String dateSignature;
+	private float montantDeductionFrais;
+	private float montantAvance;
+	private int nbrRepasOffert;
 
 	public FraisMission(String adresseFichier, String dateDebutMission, String dateFinMission,
-			HashMap<String, FraisJournalier> fraisMission) {
+			HashMap<String, FraisJournalier> fraisMission, String typeAutreFrais, float montantAutreFrais,
+			boolean estSigne, String dateSignature, float montantDeductionFrais, float montantAvance,
+			int nbrRepasOffert) {
 		this.adresseFichier = adresseFichier;
 		this.dateDebutMission = dateDebutMission;
 		this.dateFinMission = dateFinMission;
@@ -41,7 +49,7 @@ public class FraisMission implements DocJson<FraisMission> {
 	}
 
 	public FraisMission(String adresseFichier) {
-		this(adresseFichier, null, null, new HashMap<String, FraisJournalier>());
+		this(adresseFichier, null, null, new HashMap<String, FraisJournalier>(), null, 0, false, null, 0, 0, 0);
 	}
 
 	@Override
@@ -100,6 +108,70 @@ public class FraisMission implements DocJson<FraisMission> {
 			this.fraisMission.replace(fraisJournalier.getDate(), fraisJournalier);
 		else
 			this.fraisMission.put(fraisJournalier.getDate(), fraisJournalier);
+	}
+
+	public boolean estSigne() {
+		return this.estSigne;
+	}
+
+	public void signerFMAgent(float montantDeductionFrais, float montantAvance, int nbrRepasOffert) {
+		this.estSigne = true;
+		this.dateSignature = Constante.FORMAT_DATE_SLASH.format(new Date());
+		this.montantDeductionFrais = montantDeductionFrais;
+		this.montantAvance = montantAvance;
+		this.nbrRepasOffert = nbrRepasOffert;
+	}
+
+	public String getTypeAutreFrais() {
+		return typeAutreFrais;
+	}
+
+	public void setTypeAutreFrais(String typeAutreFrais) {
+		this.typeAutreFrais = typeAutreFrais;
+	}
+
+	public float getMontantAutreFrais() {
+		return montantAutreFrais;
+	}
+
+	public void setMontantAutreFrais(float montantAutreFrais) {
+		this.montantAutreFrais = montantAutreFrais;
+	}
+
+	public float getMontantDeductionFrais() {
+		return montantDeductionFrais;
+	}
+
+	public void setMontantDeductionFrais(float montantDeductionFrais) {
+		this.montantDeductionFrais = montantDeductionFrais;
+	}
+
+	public float getMontantAvance() {
+		return montantAvance;
+	}
+
+	public void setMontantAvance(float montantAvance) {
+		this.montantAvance = montantAvance;
+	}
+
+	public int getNbrRepasOffert() {
+		return nbrRepasOffert;
+	}
+
+	public void setNbrRepasOffert(int nbrRepasOffert) {
+		this.nbrRepasOffert = nbrRepasOffert;
+	}
+
+	public String getDateSignature() {
+		return dateSignature;
+	}
+
+	public void setAdresseFichier(String adresseFichier) {
+		this.adresseFichier = adresseFichier;
+	}
+
+	public void setFraisMission(HashMap<String, FraisJournalier> fraisMission) {
+		this.fraisMission = fraisMission;
 	}
 
 	public HashMap<String, FraisJournalier> getFraisMission() {

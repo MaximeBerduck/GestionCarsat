@@ -328,9 +328,10 @@ public class AgentApp extends Application {
 		}
 	}
 
-	private void signerFM(OrdreMission missionActive2) {
+	private void signerFM(OrdreMission missionActive) {
 		// TODO Auto-generated method stub
-
+		this.afficherFraisMission();
+		this.fmCtrl.signerFM(missionActive);
 	}
 
 	private void afficherPdfFM(OrdreMission missionActive) {
