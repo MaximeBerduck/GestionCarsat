@@ -10,12 +10,16 @@ import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.ListeMissionsResponsableController;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class ResponsableApp extends Application {
 
@@ -28,6 +32,7 @@ public class ResponsableApp extends Application {
 	private ListeMissionsResponsableController controllerListeMissionsResponsable;
 	private ListeOrdreMission listeOM;
 	private OrdreMission missionActive;
+	private ScheduledService<Void> serviceRecuperationMails;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -38,7 +43,30 @@ public class ResponsableApp extends Application {
 		this.options = new Options();
 		this.options = this.options.chargerJson(Constante.CHEMIN_OPTIONS);
 		initialiseRootLayout();
-		afficherListeMissions();
+		this.serviceRecuperationMails = new ScheduledService<Void>() {
+
+			@Override
+			protected Task<Void> createTask() {
+
+				return new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+
+						Platform.runLater(new Runnable() {
+							@Override
+							public void run() {
+								afficherListeMissions();
+							}
+						});
+
+						return null;
+					}
+					
+				};
+			};
+		};
+		serviceRecuperationMails.setPeriod(Duration.minutes(1));
+		serviceRecuperationMails.start();
 	}
 
 	public void initialiseRootLayout() {
@@ -82,14 +110,12 @@ public class ResponsableApp extends Application {
 		this.options = options;
 		this.options.sauvegarderJson(Constante.CHEMIN_OPTIONS);
 	}
-	
+
 	public void afficherListeMissions() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(this.getClass().getResource("view/listeMissionsResponsable.fxml"));
-
 			this.listeMissionsResponsable = loader.load();
-
 			if (!this.rootLayoutCtrl.getGridRoot().getChildren().contains(this.listeMissionsResponsable))
 				this.rootLayoutCtrl.getGridRoot().add(this.listeMissionsResponsable, 1, 0);
 			controllerListeMissionsResponsable = loader.getController();
@@ -97,7 +123,6 @@ public class ResponsableApp extends Application {
 			controllerListeMissionsResponsable.setOptions(this.options);
 			controllerListeMissionsResponsable.chargerOM();
 			this.listeOM = controllerListeMissionsResponsable.getListeOm();
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

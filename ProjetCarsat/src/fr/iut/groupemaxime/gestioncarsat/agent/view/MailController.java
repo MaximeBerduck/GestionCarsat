@@ -12,6 +12,7 @@ import fr.iut.groupemaxime.gestioncarsat.mail.Mail;
 import fr.iut.groupemaxime.gestioncarsat.mail.MailProcessor;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
+import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -51,10 +52,13 @@ public class MailController {
 	@FXML
 	public void envoyerMail(ActionEvent event) {
 		if (adressesMailValides()) {
+			this.mainApp.getMainApp().getMissionActive().setEnvoye(true);
 			this.mainApp.getMainApp().retirerDocActif();
 			this.mainApp.getMainApp().getMailsEnAttente().ajouterMail(new Mail(MailProcessor
 					.configurationMessage(Session.getDefaultInstance(MailProcessor.configurationSmtp()), this)));
-			this.mainApp.getMainApp().getServiceEnvoiMail().start();
+			MailProcessor.creerEnvoyerMail(this);
+			if (this.mainApp.getMainApp().getServiceEnvoiMail().getState() == State.READY)
+				this.mainApp.getMainApp().getServiceEnvoiMail().start();
 		}
 	}
 

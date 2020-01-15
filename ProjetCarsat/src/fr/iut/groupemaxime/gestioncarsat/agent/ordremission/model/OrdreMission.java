@@ -26,6 +26,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	private String cheminDossier;
 	private String nomOM;
 	private boolean signatureAgent;
+	private boolean envoye;
 
 	public OrdreMission(Agent agent, TypeMission mission, Transport transport, String cheminDossier, String nomOM,
 			boolean signatureAgent) {
@@ -35,6 +36,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		this.cheminDossier = cheminDossier;
 		this.nomOM = nomOM;
 		this.signatureAgent = signatureAgent;
+		this.envoye = false;
 	}
 
 	public OrdreMission(Agent agent, TypeMission mission, Transport transport) {
@@ -134,5 +136,18 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		FraisMission fm = new FraisMission(null);
 		fm = fm.chargerJson(cheminDossier + nomOM.replace("OM_", "FM_") + Constante.EXTENSION_JSON);
 		return fm.estSigne();
+	}
+
+	public String getEtat() {
+		// TODO Auto-generated method stub
+		return "eere";
+	}
+
+	public boolean estEnvoye() {
+		return this.envoye;
+	}
+
+	public void setEnvoye(boolean envoye) {
+		this.envoye = envoye;
 	}
 }

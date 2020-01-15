@@ -127,8 +127,7 @@ public class MissionController {
 					@Override
 					public void updateItem(LocalDate item, boolean empty) {
 						super.updateItem(item, empty);
-						LocalDate plus = dateDebut.getValue().plus(6, ChronoUnit.DAYS);
-						if (item.isBefore(dateDebut.getValue()) || item.isAfter(plus)) {
+						if (item.isBefore(dateDebut.getValue())) {
 							this.setDisable(true);
 						}
 					}
@@ -146,8 +145,7 @@ public class MissionController {
 					@Override
 					public void updateItem(LocalDate item, boolean empty) {
 						super.updateItem(item, empty);
-						LocalDate plus = dateFin.getValue().minus(6, ChronoUnit.DAYS);
-						if (item.isAfter(dateFin.getValue()) || item.isBefore(plus)) {
+						if (item.isAfter(dateFin.getValue())) {
 							this.setDisable(true);
 						}
 					}

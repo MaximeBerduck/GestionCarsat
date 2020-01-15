@@ -26,8 +26,11 @@ public class Constante {
 	public static int TAILLE_CODE_ANALYTIQUE = 10;
 
 	public static final int TAILLE_SIGNATURE = 60;
-	public static final int SIGNATURE_AGENT_Y = 230;
-	public static final int SIGNATURE_AGENT_X = 330;
+	public static final int SIGNATURE_AGENT_OM_Y = 230;
+	public static final int SIGNATURE_AGENT_OM_X = 330;
+	public static final int TAILLE_SIGNATURE_FM = 30;
+	public static final int SIGNATURE_AGENT_FM_X = 430;
+	public static final int SIGNATURE_AGENT_FM_Y = 425;
 
 	public static final FileChooser.ExtensionFilter IMAGE_FILTER = new FileChooser.ExtensionFilter(
 			"Fichier image (.jpg .png .gif)", "*.jpg", "*.png", "*.gif");
@@ -44,4 +47,5 @@ public class Constante {
 	public static final String TITRE_MODIF_FM = "Modification des frais mission";
 	public static final String TITRE_MODIF_HT = "Modification des horaires de travail";
 	public static final String TITRE_SIGNER_FM = "Valider les informations des frais de missions";
+
 }
