@@ -303,8 +303,9 @@ public class AgentApp extends Application {
 
 			if (this.missionActive.fmEstSigne()) {
 				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeEnvoyer, buttonTypeCancel);
-			} else
+			} else {
 				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeSigner, buttonTypeCancel);
+			}
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == buttonTypeAfficher) {
@@ -329,9 +330,9 @@ public class AgentApp extends Application {
 	}
 
 	private void signerFM(OrdreMission missionActive) {
-		// TODO Auto-generated method stub
 		this.afficherFraisMission();
-		this.fmCtrl.signerFM(missionActive);
+		this.fmCtrl.afficherSignatureFM(missionActive);
+		this.fmCtrl.setTitre(Constante.TITRE_SIGNER_FM);
 	}
 
 	private void afficherPdfFM(OrdreMission missionActive) {

@@ -133,7 +133,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 
 	public boolean fmEstSigne() {
 		FraisMission fm = new FraisMission(null);
-		fm.chargerJson(cheminDossier + nomOM.replace("OM_", "FM_") + Constante.EXTENSION_JSON);
+		fm = fm.chargerJson(cheminDossier + nomOM.replace("OM_", "FM_") + Constante.EXTENSION_JSON);
 		return fm.estSigne();
 	}
 }
