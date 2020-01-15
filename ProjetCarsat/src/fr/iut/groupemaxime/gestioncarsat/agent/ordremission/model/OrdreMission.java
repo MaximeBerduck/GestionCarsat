@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 
 public class OrdreMission implements DocJson<OrdreMission> {
 
@@ -26,7 +27,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	private String cheminDossier;
 	private String nomOM;
 	private boolean signatureAgent;
-	private boolean envoye;
+	private EtatMission etat;
 
 	public OrdreMission(Agent agent, TypeMission mission, Transport transport, String cheminDossier, String nomOM,
 			boolean signatureAgent) {
@@ -36,7 +37,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		this.cheminDossier = cheminDossier;
 		this.nomOM = nomOM;
 		this.signatureAgent = signatureAgent;
-		this.envoye = false;
+		this.etat = etat.NON_REMPLI;
 	}
 
 	public OrdreMission(Agent agent, TypeMission mission, Transport transport) {
@@ -138,16 +139,15 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		return fm.estSigne();
 	}
 
-	public String getEtat() {
-		// TODO Auto-generated method stub
-		return "eere";
-	}
-
 	public boolean estEnvoye() {
-		return this.envoye;
+		return EtatMission.ENVOYE == this.etat;
 	}
 
-	public void setEnvoye(boolean envoye) {
-		this.envoye = envoye;
+	public void setEtat(EtatMission etat) {
+		this.etat = etat;
+	}
+	
+	public EtatMission getEtat() {
+		return this.etat;
 	}
 }

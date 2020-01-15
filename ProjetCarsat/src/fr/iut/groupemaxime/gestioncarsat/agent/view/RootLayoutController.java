@@ -57,7 +57,13 @@ public class RootLayoutController {
 		this.imageOM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "ordre.png"));
 
 	}
-	
+
+	public void retirerStyleSurTousLesDocs(String style) {
+		this.boxFM.setStyle(this.boxFM.getStyle().replace(style, ""));
+		this.boxOM.setStyle(this.boxOM.getStyle().replace(style, ""));
+		this.boxHT.setStyle(this.boxHT.getStyle().replace(style, ""));
+	}
+
 	// Style Frais de mission
 	public void ajouterStyleFM(String style) {
 		this.boxFM.setStyle(this.boxFM.getStyle() + style);
@@ -66,7 +72,7 @@ public class RootLayoutController {
 	public void retirerStyleFM(String style) {
 		this.boxFM.setStyle(this.boxFM.getStyle().replace(style, ""));
 	}
-	
+
 	// Style Ordre de mission
 	public void ajouterStyleOM(String style) {
 		this.boxOM.setStyle(this.boxOM.getStyle() + style);
@@ -75,8 +81,8 @@ public class RootLayoutController {
 	public void retirerStyleOM(String style) {
 		this.boxOM.setStyle(this.boxOM.getStyle().replace(style, ""));
 	}
-	
-	//Style Horaire de travail
+
+	// Style Horaire de travail
 	public void ajouterStyleHT(String style) {
 		this.boxHT.setStyle(this.boxHT.getStyle() + style);
 	}
@@ -84,15 +90,21 @@ public class RootLayoutController {
 	public void retirerStyleHT(String style) {
 		this.boxHT.setStyle(this.boxHT.getStyle().replace(style, ""));
 	}
-	
+
+	public void ajouterStyleOptions(String style) {
+		this.boxParam.setStyle(this.boxParam.getStyle() + style);
+	}
+
+	public void retirerStyleOptions(String style) {
+		this.boxParam.setStyle(this.boxParam.getStyle().replace(style, ""));
+	}
 
 	// Event Listener sur Btn Parametres
 	@FXML
 	public void modifierOptions() {
+		this.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.ajouterStyleOptions(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		agentApp.modifierOptions();
-		this.retirerStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		this.retirerStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		this.retirerStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 	}
 
 	@FXML
@@ -100,10 +112,9 @@ public class RootLayoutController {
 		if (agentApp.missionActiveIsNull()) {
 			agentApp.alertChoisirMission();
 		} else {
-			agentApp.demanderActionFM();
-			this.retirerStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			this.retirerStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			this.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			agentApp.demanderActionFM();
 		}
 	}
 
@@ -112,10 +123,9 @@ public class RootLayoutController {
 		if (agentApp.missionActiveIsNull()) {
 			agentApp.alertChoisirMission();
 		} else {
-			agentApp.demanderActionOM();
-			this.retirerStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			this.retirerStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			this.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			agentApp.demanderActionOM();
 		}
 	}
 
@@ -124,10 +134,9 @@ public class RootLayoutController {
 		if (agentApp.missionActiveIsNull()) {
 			agentApp.alertChoisirMission();
 		} else {
-			agentApp.demanderActionHT();
-			this.retirerStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			this.retirerStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			this.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			agentApp.demanderActionHT();
 		}
 	}
 

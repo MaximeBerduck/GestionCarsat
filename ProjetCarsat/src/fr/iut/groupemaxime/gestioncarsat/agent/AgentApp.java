@@ -26,6 +26,7 @@ import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.application.Application;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -69,6 +70,8 @@ public class AgentApp extends Application {
 
 	private OrdreMission missionActive;
 
+	private AnchorPane etatMission;
+
 	private Service<Void> serviceEnvoiMail;
 
 	public static void main(String[] args) {
@@ -89,7 +92,7 @@ public class AgentApp extends Application {
 		}
 		this.creerDossier(this.options.getCheminOM());
 		this.mailsEnAttente = new ListeMails();
-		this.mailsEnAttente.chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE,this.options);
+		this.mailsEnAttente.chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE, this.options);
 		this.serviceEnvoiMail = new Service<Void>() {
 
 			@Override
@@ -104,6 +107,9 @@ public class AgentApp extends Application {
 				};
 			}
 		};
+		serviceEnvoiMail.setOnFailed((WorkerStateEvent event)->{
+			serviceEnvoiMail.reset();
+		});
 		serviceEnvoiMail.start();
 		initialiseRootLayout();
 		afficherListeMissions();
@@ -168,7 +174,6 @@ public class AgentApp extends Application {
 			this.fmCtrl.setOptions(this.options);
 			this.fmCtrl.setMissionActive(missionActive);
 		} catch (IOException e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
@@ -258,29 +263,34 @@ public class AgentApp extends Application {
 	}
 
 	private void afficherInfosMission(OrdreMission missionActive) {
-		// TODO Auto-generated method stub
 		this.retirerDocActif();
 
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(this.getClass().getResource("view/EtatMissionSelectionnee.fxml"));
 
-			AnchorPane pageEtat = loader.load();
+			etatMission = loader.load();
 
 			EtatMissionSelectionneeController etatMissionCtrl = loader.getController();
-			
-			etatMissionCtrl.setEtatOM(missionActive.getEtat());
-			
+
+			etatMissionCtrl.setEtatOM(missionActive.getEtat().getEtat());
+
 			if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
 				FraisMission fm = new FraisMission(null);
 				fm = fm.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "FM_")
 						+ Constante.EXTENSION_JSON);
-				etatMissionCtrl.setEtatFM(fm.getEtat());
+				etatMissionCtrl.setEtatFM(fm.getEtat().getEtat());
 			} else {
 				etatMissionCtrl.setEtatFM(EtatMission.NON_REMPLI.getEtat());
 			}
 
-			this.rootLayoutCtrl.getGridRoot().add(pageEtat, 2, 0);
+			if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
+				// TODO
+			} else {
+				etatMissionCtrl.setEtatHT(EtatMission.NON_REMPLI.getEtat());
+			}
+
+			this.rootLayoutCtrl.getGridRoot().add(etatMission, 2, 0);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -289,12 +299,11 @@ public class AgentApp extends Application {
 	}
 
 	public void retirerDocActif() {
+		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.etatMission);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.ordreMission);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.horairesTravail);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.fraisMission);
-		this.rootLayoutCtrl.retirerStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		this.rootLayoutCtrl.retirerStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		this.rootLayoutCtrl.retirerStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 
 	}
 
@@ -346,6 +355,7 @@ public class AgentApp extends Application {
 			if (result.get() == buttonTypeAfficher) {
 				this.genererPdfFM(this.missionActive);
 				this.afficherPdfFM(this.missionActive);
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 
 			} else if (result.get() == buttonTypeModif) {
 				this.afficherFraisMission();
@@ -353,9 +363,11 @@ public class AgentApp extends Application {
 
 			} else if (result.get() == buttonTypeSigner) {
 				this.signerFM(this.missionActive);
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			} else if (result.get() == buttonTypeEnvoyer) {
 				// TODO envoyer FM
 			} else {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 				// Ne fait rien == bouton "annuler"
 			}
 		} else {
@@ -375,20 +387,17 @@ public class AgentApp extends Application {
 			Desktop.getDesktop().browse(new File(this.missionActive.getCheminDossier()
 					+ this.missionActive.getNomOM().replace("OM_", "FM_") + Constante.EXTENSION_PDF).toURI());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	private void genererPdfFM(OrdreMission missionActive) {
-		// TODO Auto-generated method stub
 		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(missionActive));
 		fm = fm.chargerJson(fm.getAdresseFichier());
 		fm.genererPDF(this.options);
 	}
 
 	private void modifierFrais(OrdreMission missionActive) {
-		// TODO
 		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(this.missionActive));
 		fm = fm.chargerJson(fm.getAdresseFichier());
 
@@ -496,7 +505,6 @@ public class AgentApp extends Application {
 					this.missionActive.getCheminDossier() + this.missionActive.getNomOM() + Constante.EXTENSION_PDF)
 							.toURI());
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 
@@ -505,6 +513,7 @@ public class AgentApp extends Application {
 	public void signerOM() {
 		if (Bibliotheque.fichierExiste(this.getOptions().getCheminSignature())) {
 			this.missionActive.setSignatureAgent(true);
+			this.missionActive.setEtat(EtatMission.SIGNE);
 			this.missionActive.sauvegarderJson(this.missionActive.getCheminDossier());
 		} else {
 			TextInputDialog dialog = new TextInputDialog("");
@@ -544,6 +553,7 @@ public class AgentApp extends Application {
 				this.getOptions().setCheminSignature(tfCheminSignature.getText());
 				this.getOptions().sauvegarderJson(Constante.CHEMIN_OPTIONS);
 				this.missionActive.setSignatureAgent(true);
+				this.missionActive.setEtat(EtatMission.SIGNE);
 				this.missionActive.sauvegarderJson(this.getOptions().getCheminOM());
 			}
 		}

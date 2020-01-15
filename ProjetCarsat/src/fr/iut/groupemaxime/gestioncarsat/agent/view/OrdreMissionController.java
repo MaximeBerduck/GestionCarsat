@@ -18,6 +18,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.TypeMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Voiture;
 import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -146,8 +147,9 @@ public class OrdreMissionController {
 				pdf.remplirPDF(this.mainApp.getMissionActive());
 				pdf.sauvegarderPDF();
 				if (this.getMainApp().getMissionActive().estSigne()) {
-					PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y, Constante.TAILLE_SIGNATURE,
-							this.getMainApp().getMissionActive(), this.getOptions().getCheminSignature());
+					PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
+							Constante.TAILLE_SIGNATURE, this.getMainApp().getMissionActive(),
+							this.getOptions().getCheminSignature());
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -281,6 +283,9 @@ public class OrdreMissionController {
 		OrdreMission om = new OrdreMission(agent, mission, transport);
 		if (this.controllerTransport.agentSigne()) {
 			om.setSignatureAgent(true);
+			om.setEtat(EtatMission.SIGNE);
+		} else {
+			om.setEtat(EtatMission.NON_SIGNE);
 		}
 
 		this.listeOM.ajouterOM(om);
