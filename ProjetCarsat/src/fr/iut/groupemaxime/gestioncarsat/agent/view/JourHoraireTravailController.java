@@ -106,26 +106,15 @@ public class JourHoraireTravailController {
 	}
 	
 	
-	public void validerHT() {
-		
-	}
-	
 	@FXML
-	public void btnSuivantHoraire(ActionEvent event) {
-		
-	}
-	
-	@FXML
-	public void btnAjouterHoraire(ActionEvent event) {
-		//TODO
-		
-		
-	}
-	
-	@FXML
-	public void btnSupprimerHoraire(ActionEvent event) {
-		
-		//TODO
+	public void boutonSuivantSauvegarde(ActionEvent event) {
+		this.boutonValider.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent e) {
+				htController.sauvegarderJournee(dateJournee.getText());
+				htController.sauvegarderHoraires();
+			}
+		});
 	}
 	
 	public void setDateJournee(String date) {

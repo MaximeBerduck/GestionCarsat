@@ -85,8 +85,7 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 	}
 	
 	public static HashMap<String, HoraireJournalier> triAvecValeur(HashMap<String, HoraireJournalier> map) {
-		LinkedList<Map.Entry<String, HoraireJournalier>> list = new LinkedList<Map.Entry<String, HoraireJournalier>>(
-				map.entrySet());
+		LinkedList<Map.Entry<String, HoraireJournalier>> list = new LinkedList<Map.Entry<String, HoraireJournalier>>(map.entrySet());
 		Collections.sort(list, new Comparator<Map.Entry<String, HoraireJournalier>>() {
 			public int compare(Map.Entry<String, HoraireJournalier> o1, Map.Entry<String, HoraireJournalier> o2) {
 				return (o1.getValue()).compareTo(o2.getValue());
