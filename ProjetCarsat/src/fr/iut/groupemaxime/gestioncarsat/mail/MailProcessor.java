@@ -1,22 +1,14 @@
 package fr.iut.groupemaxime.gestioncarsat.mail;
 
-import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-import javax.mail.Authenticator;
 import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -151,14 +143,15 @@ public class MailProcessor {
 		return message;
 	}
 
-	public static Message creerEnvoyerMail(MailController mailCtrl) {
+	public static Message creerMail(MailController mailCtrl) {
 		Properties props = configurationSmtp();
-		Session session = Session.getInstance(configurationSmtp(), new javax.mail.Authenticator() {
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(mailCtrl.getExpediteur().getText(), Constante.MOT_DE_PASSE);
 			}
 		});
-		return envoyerMail(configurationMessage(session, mailCtrl));
+		return configurationMessage(session, mailCtrl);
 
 	}
 
@@ -211,13 +204,15 @@ public class MailProcessor {
 
 	public static Message chargerMail(File mail, Options options) {
 		try {
-			return new MimeMessage(Session.getInstance(configurationSmtp(), new javax.mail.Authenticator() {
+			Properties props = configurationSmtp();
+			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 				@Override
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(options.getMailAgent() + '@' + Constante.HOSTNAME,
 							Constante.MOT_DE_PASSE);
 				}
-			}), new FileInputStream(mail));
+			});
+			return new MimeMessage(session, new FileInputStream(mail));
 		} catch (FileNotFoundException | MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

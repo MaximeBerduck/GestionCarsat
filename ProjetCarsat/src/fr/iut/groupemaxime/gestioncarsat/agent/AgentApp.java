@@ -26,6 +26,7 @@ import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.application.Application;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -106,6 +107,9 @@ public class AgentApp extends Application {
 				};
 			}
 		};
+		serviceEnvoiMail.setOnFailed((WorkerStateEvent event)->{
+			serviceEnvoiMail.reset();
+		});
 		serviceEnvoiMail.start();
 		initialiseRootLayout();
 		afficherListeMissions();
