@@ -27,14 +27,14 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 	private String adresseFichier;
 	private String dateDebutMission;
 	private String dateFinMission;
-	private HashMap<String, HoraireJournalier> horaireTravail;
+	private HashMap<String, HoraireJournalier> horaireJournalier;
 	
 	
 	public HoraireTravail(String adresseFichier, String dateDebutMission, String dateFinMission,HashMap<String, HoraireJournalier> horaireTravail) {
 		this.adresseFichier = adresseFichier;
 		this.dateDebutMission = dateDebutMission;
 		this.dateFinMission = dateFinMission;
-		this.horaireTravail = horaireTravail;
+		this.horaireJournalier = horaireTravail;
 	}
 	
 	public HoraireTravail(String adresseFichier) {
@@ -78,7 +78,7 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 	}
 	
 	public void trierHoraireJournalier() { //pb dans la sauvegarde
-		this.horaireTravail = HoraireTravail.triAvecValeur(this.horaireTravail);
+		this.horaireJournalier = HoraireTravail.triAvecValeur(this.horaireJournalier);
 	}
 	
 	public static HashMap<String, HoraireJournalier> triAvecValeur(HashMap<String, HoraireJournalier> map) {
@@ -97,14 +97,14 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 	}
 	
 	public void ajouterJournee(HoraireJournalier horaireJournalier) {
-		if (null != this.horaireTravail.get(horaireJournalier)) {
-			this.horaireTravail.replace(horaireJournalier.getDate(), horaireJournalier);
+		if (null != this.horaireJournalier.get(horaireJournalier)) {
+			this.horaireJournalier.replace(horaireJournalier.getDate(), horaireJournalier);
 		}else {
-			this.horaireTravail.put(horaireJournalier.getDate(), horaireJournalier);
+			this.horaireJournalier.put(horaireJournalier.getDate(), horaireJournalier);
 	}}
 	
 	public HashMap<String, HoraireJournalier> getHoraireTravail() {
-		return horaireTravail;
+		return horaireJournalier;
 	}
 	public String getAdresseFichier() {
 		return this.adresseFichier;

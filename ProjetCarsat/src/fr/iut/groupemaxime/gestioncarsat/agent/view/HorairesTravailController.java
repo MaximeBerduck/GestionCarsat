@@ -3,11 +3,13 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Deque;
 import java.util.HashMap;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireJournalier;
 import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireTravail;
+import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.PlageHoraire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
@@ -41,7 +43,6 @@ public class HorairesTravailController {
 	private HoraireTravail horaireTravail;
 	private Stage primaryStage;
 	
-	
 	@FXML
 	private void initialize() {
 		this.listeHoraires = new HashMap<String, JourHoraireTravailController>();
@@ -62,6 +63,7 @@ public class HorairesTravailController {
 		this.horaireTravail.setDateFinMission(stringFin);
 
 		this.ajouterJour(stringDebut, stringFin);
+		this.listeHoraires.get(stringDebut).ajoutHoraire();
 		this.listeDate.put(i, stringDebut);
 		this.listeDateInverse.put(stringDebut, i);
 
@@ -95,9 +97,11 @@ public class HorairesTravailController {
 				i++;
 				this.listeDate.put(i, date);
 				this.listeDateInverse.put(date, i);
+				this.listeHoraires.get(date).ajoutHoraire();
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
+			
 			this.horaireTravailSplit.getItems().set(1, this.listeHoraires.get(this.listeDate.get(i)).getPage());
 		}
 	}
@@ -111,7 +115,6 @@ public class HorairesTravailController {
 	public void sauvegarderJournee(String date) {
 		HoraireJournalier horaireJournalier = new HoraireJournalier(date);
 		JourHoraireTravailController horaireCtrl = this.listeHoraires.get(date);
-		
 		if(!"".equals(horaireCtrl.getTransportUtiliseSurPlace())) {
 			horaireJournalier.setTransportUtiliseSurPlace(
 					String.valueOf(horaireCtrl.getTransportUtiliseSurPlace()));
@@ -120,11 +123,18 @@ public class HorairesTravailController {
 			horaireJournalier.setDureeDuTrajetSurPlace(
 					String.valueOf(horaireCtrl.getDureeDuTrajetSurPlace()));
 		}
-		
-		this.horaireTravail.ajouterJournee(horaireJournalier);
-		
+
+		for(ItemHoraireTravailController item : horaireCtrl.getPlageHoraire()){
+			PlageHoraire plage = new PlageHoraire();
+			plage.setHeureDeb(Integer.parseInt(item.getHeure1Deb()));
+			plage.setHeureFin(Integer.parseInt(item.getHeure1Fin()));
+			plage.setMinDeb(Integer.parseInt(item.getMin1Deb()));
+			plage.setMinFin(Integer.parseInt(item.getMin1Fin()));
+			horaireJournalier.ajouterHoraire(plage);
+		}
 		// reste a gerer le if il y a 1 ou plusieurs horaires de saisis, faire un for jusqu'au nb de ligne d'horaire choisi
 
+		this.horaireTravail.ajouterJournee(horaireJournalier);
 	}
 	
 	public void ajouterJour(String jour, String stringFin) {
@@ -138,6 +148,7 @@ public class HorairesTravailController {
 			horairesCtrl.setPageHoraire(pageHoraires);
 			horairesCtrl.setDateJournee(jour);
 			horairesCtrl.setHtController(this);
+//			horairesCtrl.ajoutHoraire();
 			this.listeHoraires.put(jour, horairesCtrl);
 
 			if (jour.equals(stringFin)) {

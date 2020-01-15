@@ -1,16 +1,23 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model;
 
+import java.util.ArrayDeque;
+
 public class HoraireJournalier implements Comparable<HoraireJournalier> {
 	private String date;
 	
 	private String transportUtiliseSurPlace;
 	private String dureeDuTrajetSurPlace;
-	private PlageHoraire[] plageHoraire;
+	private ArrayDeque<PlageHoraire> plageHoraire;
 
+	
 	public HoraireJournalier(String date) {
 		this.date = date;
+		this.plageHoraire = new ArrayDeque<PlageHoraire>();
 	}
-	
+
+	public void ajouterHoraire(PlageHoraire plageHoraire) {
+		this.plageHoraire.addLast(plageHoraire);
+	}
 	
 	@Override
 	public int compareTo(HoraireJournalier fj) {
@@ -70,5 +77,14 @@ public class HoraireJournalier implements Comparable<HoraireJournalier> {
 	public void setDureeDuTrajetSurPlace(String dureeDuTrajetSurPlace) {
 		this.dureeDuTrajetSurPlace = dureeDuTrajetSurPlace;
 	}
+	
+	public ArrayDeque<PlageHoraire> getPlageHoraire() {
+		return plageHoraire;
+	}
+
+	public void setPlageHoraire(ArrayDeque<PlageHoraire> plageHoraire) {
+		this.plageHoraire = plageHoraire;
+	}
+
 	
 }

@@ -6,6 +6,12 @@ public class PlageHoraire {
 	private int heureFin;
 	private int minFin;
 	
+	public PlageHoraire() {
+		this.heureDeb= 0;
+		this.minDeb = 00;
+		this.heureDeb = 0;
+		this.minFin = 00;
+	}
 	public int getHeureDeb() {
 		return heureDeb;
 	}

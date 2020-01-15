@@ -15,6 +15,38 @@ public class ItemHoraireTravailController {
 	private TextField min1Deb;
 	@FXML
 	private TextField heure1Fin;
+	public String getHeure1Deb() {
+		return heure1Deb.getText();
+	}
+
+	public void setHeure1Deb(String heure1Deb) {
+		this.heure1Deb.setText(heure1Deb);
+	}
+
+	public String getMin1Deb() {
+		return min1Deb.getText();
+	}
+
+	public void setMin1Deb(String min1Deb) {
+		this.min1Deb.setText(min1Deb);;
+	}
+
+	public String getHeure1Fin() {
+		return heure1Fin.getText();
+	}
+
+	public void setHeure1Fin(String heure1Fin) {
+		this.heure1Fin.setText(heure1Fin);;
+	}
+
+	public String getMin1Fin() {
+		return min1Fin.getText();
+	}
+
+	public void setMin1Fin(String min1Fin) {
+		this.min1Fin.setText(min1Fin);;
+	}
+
 	@FXML
 	private TextField min1Fin;
 
