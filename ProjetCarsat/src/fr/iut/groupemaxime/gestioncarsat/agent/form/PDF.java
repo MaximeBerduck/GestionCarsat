@@ -430,6 +430,18 @@ public class PDF {
 			this.remplirChamp("decouchJustifTotal", String.valueOf(decouchJustifTotal));
 			this.remplirChamp("serviceTotal", String.valueOf(serviceTotal));
 			this.remplirChamp("persoTotal", String.valueOf(persoTotal));
+			
+			if(fm.estSigne()) {
+//				this.remplirChamp("", );
+//				this.remplirChamp("", );
+//				this.remplirChamp("", );
+//				this.remplirChamp("", );
+//				this.remplirChamp("", );
+//				this.remplirChamp("", );
+//				this.remplirChamp("", );
+//				this.remplirChamp("", );
+//				this.remplirChamp("", );
+			}
 
 		}
 
