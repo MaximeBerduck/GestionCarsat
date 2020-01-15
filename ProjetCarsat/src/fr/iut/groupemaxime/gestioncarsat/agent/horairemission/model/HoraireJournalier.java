@@ -7,10 +7,12 @@ public class HoraireJournalier implements Comparable<HoraireJournalier> {
 	
 	private String transportUtiliseSurPlace;
 	private String dureeDuTrajetSurPlace;
+	private PlageHoraire[] plageHoraire;
 
 	public HoraireJournalier(String date) {
 		this.date = date;
 	}
+	
 	
 	@Override
 	public int compareTo(HoraireJournalier fj) {
