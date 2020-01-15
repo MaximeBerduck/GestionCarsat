@@ -5,26 +5,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
 import javax.mail.Flags;
-import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
-import javax.mail.NoSuchProviderException;
 import javax.mail.Part;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -36,8 +26,6 @@ import com.sun.mail.pop3.POP3Store;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.view.MailController;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class MailProcessor {
 	public static void recevoirEmail(String host, String user, String password, String folder) {

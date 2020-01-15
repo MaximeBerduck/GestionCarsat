@@ -6,10 +6,7 @@ import java.util.ListIterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.mail.Message;
 import javax.mail.Session;
-
-import com.sun.mail.util.MailConnectException;
 
 import fr.iut.groupemaxime.gestioncarsat.mail.Mail;
 import fr.iut.groupemaxime.gestioncarsat.mail.MailProcessor;
