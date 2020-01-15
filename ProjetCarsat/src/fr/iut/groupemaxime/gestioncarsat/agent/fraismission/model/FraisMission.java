@@ -24,6 +24,7 @@ import com.google.gson.GsonBuilder;
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 
 public class FraisMission implements DocJson<FraisMission> {
@@ -38,6 +39,7 @@ public class FraisMission implements DocJson<FraisMission> {
 	private float montantDeductionFrais;
 	private float montantAvance;
 	private int nbrRepasOffert;
+	private EtatMission etat;
 
 	public FraisMission(String adresseFichier, String dateDebutMission, String dateFinMission,
 			HashMap<String, FraisJournalier> fraisMission, String typeAutreFrais, float montantAutreFrais,
@@ -47,6 +49,7 @@ public class FraisMission implements DocJson<FraisMission> {
 		this.dateDebutMission = dateDebutMission;
 		this.dateFinMission = dateFinMission;
 		this.fraisMission = fraisMission;
+		this.etat = EtatMission.NON_REMPLI;
 	}
 
 	public FraisMission(String adresseFichier) {
@@ -218,8 +221,11 @@ public class FraisMission implements DocJson<FraisMission> {
 		return map_apres;
 	}
 
-	public String getEtat() {
-		// TODO Auto-generated method stub
-		return null;
+	public EtatMission getEtat() {
+		return this.etat;
+	}
+
+	public void setEtat(EtatMission etat) {
+		this.etat = etat;
 	}
 }
