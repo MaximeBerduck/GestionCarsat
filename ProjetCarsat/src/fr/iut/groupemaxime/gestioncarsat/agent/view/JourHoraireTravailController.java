@@ -46,7 +46,6 @@ public class JourHoraireTravailController {
 	
 	private HorairesTravailController htController;
 	
-	private HashSet<ItemHoraireTravailController> listeHtCtrl;
 	
 	@FXML
 	public void initialize()
