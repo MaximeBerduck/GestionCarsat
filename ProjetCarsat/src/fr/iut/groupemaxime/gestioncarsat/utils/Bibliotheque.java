@@ -55,7 +55,22 @@ public class Bibliotheque {
 		}
 		return false;
 	}
-
+	
+	public static boolean fichierHtMissionExiste(OrdreMission om) {
+		File chemin = new File(om.getCheminDossier());
+		String listeFichiers[] = {};
+		listeFichiers = chemin.list();
+		if (listeFichiers == null) {
+			return false;
+		} else {
+			for (String fichier : listeFichiers) {
+				if (fichier.endsWith(".json") && fichier.startsWith("HT_")) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	public static String recupererCheminEtNomFichierFm(OrdreMission om) {
 		File chemin = new File(om.getCheminDossier());
 		String listeFichiers[] = {};
@@ -69,4 +84,19 @@ public class Bibliotheque {
 		}
 		return null;
 	}
+	
+	public static String recupererCheminEtNomFichierHt(OrdreMission om) {
+		File chemin = new File(om.getCheminDossier());
+		String listeFichiers[] = {};
+		listeFichiers = chemin.list();
+		if (listeFichiers != null) {
+			for (String fichier : listeFichiers) {
+				if (fichier.endsWith(".json") && fichier.startsWith("HT_")) {
+					return om.getCheminDossier() + fichier;
+				}
+			}
+		}
+		return null;
+	}
+	
 }

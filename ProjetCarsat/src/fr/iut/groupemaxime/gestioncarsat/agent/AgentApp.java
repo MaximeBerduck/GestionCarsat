@@ -257,13 +257,13 @@ public class AgentApp extends Application {
 	}
 
 	public void modifierHt(OrdreMission missionActive) {
-		HoraireTravail ht = new HoraireTravail(Bibliotheque.recupererCheminEtNomFichierFm(this.missionActive));
+		HoraireTravail ht = new HoraireTravail(Bibliotheque.recupererCheminEtNomFichierHt(this.missionActive));
 		ht = ht.chargerJson(ht.getAdresseFichier());
 
 		this.afficherHorairesTravail();
 		this.htCtrl.modifierHoraireTravail(ht);
 		this.htCtrl.setHoraireTravail(ht);
-		this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
+		//this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
 	}
 
 	public void afficherEnvoiDuMail() {
@@ -384,7 +384,7 @@ public class AgentApp extends Application {
 	}
 
 	public void demanderActionHT() {
-		if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
+		if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Choix de l'action");
 			alert.setHeaderText("Choisissez l'action souhaitée");
