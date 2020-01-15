@@ -54,8 +54,8 @@ public class MailController {
 	public void envoyerMail(ActionEvent event) {
 		if (adressesMailValides()) {
 			this.mainApp.getMainApp().getMissionActive().setEtat(EtatMission.EN_COURS_ENVOI);
-			this.mainApp.getMainApp().retirerDocActif();
 			this.mainApp.getMainApp().getMailsEnAttente().ajouterMail(new Mail(MailProcessor.creerMail(this)));
+			this.mainApp.getMainApp().retirerDocActif();
 			this.mainApp.getMainApp().getServiceEnvoiMail().restart();
 		}
 	}

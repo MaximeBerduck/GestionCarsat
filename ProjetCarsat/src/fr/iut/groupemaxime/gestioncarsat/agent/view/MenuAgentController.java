@@ -7,7 +7,9 @@ import java.util.HashSet;
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.mail.Mail;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -47,6 +49,18 @@ public class MenuAgentController {
 		listeOm = new ListeOrdreMission();
 		listeOm.chargerOM(new File(options.getCheminOM()));
 		for (OrdreMission om : listeOm.getListeOM()) {
+			if (om.getEtat() == EtatMission.EN_COURS_ENVOI) {
+				boolean trouve = false;
+				for (Mail mail : this.agentApp.getMailsEnAttente().getListeMails()) {
+					if (mail.getPath().length() > 0
+							&& om.getNomOM().equals(mail.getPath().substring(mail.getPath().lastIndexOf(File.separatorChar) + 1,mail.getPath().lastIndexOf(".")))) {
+						trouve = true;
+					}
+				}
+				if (!trouve) {
+					om.setEtat(EtatMission.ENVOYE);
+				}
+			}
 			listeOmVBox.getChildren().add(this.creerItemOM(om));
 		}
 	}

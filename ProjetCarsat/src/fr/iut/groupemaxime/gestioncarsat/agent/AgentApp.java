@@ -109,10 +109,16 @@ public class AgentApp extends Application {
 		};
 		serviceEnvoiMail.setOnFailed((WorkerStateEvent event)->{
 			serviceEnvoiMail.reset();
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Hors Connexion");
+			alert.setHeaderText("Vous n'êtes pas connecté à Internet");
+			alert.setContentText("Tant que vous n'êtes pas connecter à Internet vous ne pouvez pas envoyer et recevoir des documents");
+			alert.show();
 		});
 		serviceEnvoiMail.start();
 		initialiseRootLayout();
 		afficherListeMissions();
+		System.out.println(serviceEnvoiMail.getState());
 	}
 
 	public void initialiseRootLayout() {
@@ -304,7 +310,7 @@ public class AgentApp extends Application {
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.horairesTravail);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.fraisMission);
 		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-
+		this.afficherListeMissions();
 	}
 
 	public Options getOptions() {

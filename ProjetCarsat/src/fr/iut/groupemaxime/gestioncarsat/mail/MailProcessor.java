@@ -159,7 +159,6 @@ public class MailProcessor {
 		try {
 			Transport.send(message);
 		} catch (MessagingException e) {
-			e.printStackTrace();
 			return message;
 		}
 		return null;

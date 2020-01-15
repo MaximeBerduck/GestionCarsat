@@ -145,6 +145,7 @@ public class OrdreMission implements DocJson<OrdreMission> {
 
 	public void setEtat(EtatMission etat) {
 		this.etat = etat;
+		this.sauvegarderJson(cheminDossier);
 	}
 	
 	public EtatMission getEtat() {
