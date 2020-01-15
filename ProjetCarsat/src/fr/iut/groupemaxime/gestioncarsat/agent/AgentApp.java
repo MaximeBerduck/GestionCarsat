@@ -350,7 +350,7 @@ public class AgentApp extends Application {
 		// TODO Auto-generated method stub
 		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(missionActive));
 		fm = fm.chargerJson(fm.getAdresseFichier());
-		fm.genererPDF();
+		fm.genererPDF(this.options);
 	}
 
 	private void modifierFrais(OrdreMission missionActive) {
@@ -454,7 +454,7 @@ public class AgentApp extends Application {
 			if (this.missionActive.estSigne()) {
 				pdf.ajouterDateSignatureOM();
 				pdf.sauvegarderPDF();
-				PDF.signerPDF(Constante.SIGNATURE_AGENT_X, Constante.SIGNATURE_AGENT_Y, Constante.TAILLE_SIGNATURE,
+				PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y, Constante.TAILLE_SIGNATURE,
 						this.missionActive, this.getOptions().getCheminSignature());
 			}
 			pdf.fermerPDF();

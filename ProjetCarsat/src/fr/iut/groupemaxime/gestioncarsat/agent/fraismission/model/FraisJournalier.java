@@ -17,6 +17,9 @@ public class FraisJournalier implements Comparable<FraisJournalier> {
 	private float nbrKmVehiPerso;
 	private float nbrKmVehiService;
 
+	private String typeAutreFrais;
+	private float montantAutreFrais;
+
 	public FraisJournalier(String date) {
 		this.date = date;
 	}
@@ -142,5 +145,21 @@ public class FraisJournalier implements Comparable<FraisJournalier> {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public String getTypeAutreFrais() {
+		return typeAutreFrais;
+	}
+
+	public void setTypeAutreFrais(String typeAutreFrais) {
+		this.typeAutreFrais = typeAutreFrais;
+	}
+
+	public float getMontantAutreFrais() {
+		return montantAutreFrais;
+	}
+
+	public void setMontantAutreFrais(float montantAutreFrais) {
+		this.montantAutreFrais = montantAutreFrais;
 	}
 }

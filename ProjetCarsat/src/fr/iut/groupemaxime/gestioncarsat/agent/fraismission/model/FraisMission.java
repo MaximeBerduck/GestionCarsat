@@ -24,6 +24,7 @@ import com.google.gson.GsonBuilder;
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 
 public class FraisMission implements DocJson<FraisMission> {
 	private String adresseFichier;
@@ -92,11 +93,14 @@ public class FraisMission implements DocJson<FraisMission> {
 		this.fraisMission = FraisMission.triAvecValeur(this.fraisMission);
 	}
 
-	public void genererPDF() {
+	public void genererPDF(Options options) {
 		try {
 			PDF pdf = new PDF(new File(Constante.CHEMIN_PDF_VIDE));
-			pdf.remplirPdfFM(this);
+			pdf.remplirPdfFM(this, options);
 			pdf.sauvegarderPDF();
+			if (this.estSigne) {
+				pdf.signerPdfFM(this, options);
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
