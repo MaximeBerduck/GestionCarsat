@@ -36,11 +36,12 @@ public class Constante {
 
 	public static final String CORPS_DU_MAIL_DEFAUT = "Bonjour, \nVeuillez trouver ci-joint mon ordre de mission. \n\nRespectueusement.";
 	public static final String OBJET_DU_MAIL_DEFAUT = "Ordre de mission";
-	
+
 	public static final String HOSTNAME = "groupemaxime.ddns.net";
 	public static final String MOT_DE_PASSE = "root";
-	
+
 	public static final String TITRE_MODIF_OM = "Modification d'un ordre de mission";
 	public static final String TITRE_MODIF_FM = "Modification des frais mission";
 	public static final String TITRE_MODIF_HT = "Modification des horaires de travail";
+	public static final String TITRE_SIGNER_FM = "Valider les informations des frais de missions";
 }

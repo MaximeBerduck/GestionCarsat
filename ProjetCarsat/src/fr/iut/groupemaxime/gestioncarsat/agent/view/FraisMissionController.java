@@ -262,13 +262,31 @@ public class FraisMissionController {
 
 	public void chargerFM(OrdreMission mission) {
 		this.fraisMission = new FraisMission(null);
-		this.fraisMission.chargerJson(mission.getCheminDossier() + mission.getNomOM().replace("OM_", "FM_") + Constante.EXTENSION_JSON);
+		this.fraisMission = this.fraisMission.chargerJson(
+				mission.getCheminDossier() + mission.getNomOM().replace("OM_", "FM_") + Constante.EXTENSION_JSON);
 	}
 
-	public void signerFM(OrdreMission mission) {
-		// TODO Auto-generated method stub
+	public void afficherSignatureFM(OrdreMission mission) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(this.getClass().getResource("FraisSigner.fxml"));
+			AnchorPane fraisSigner = loader.load();
+			FraisSignerController fraisSignerCtrl = loader.getController();
+			fraisSignerCtrl.setFmCtrl(this);
+			fraisSignerCtrl.setMission(mission);
+			this.fraisMissionSplit.getItems().add(fraisSigner);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void signerFM(OrdreMission mission, float montantDeductionFrais, float montantAvance, int nbrRepasOffert) {
 		this.chargerFM(mission);
-		
-		
+
+		this.fraisMission.signerFMAgent(montantDeductionFrais, montantAvance, nbrRepasOffert);
+		this.fraisMission.sauvegarderJson(this.fraisMission.getAdresseFichier());
+		this.agentApp.retirerDocActif();
 	}
 }
