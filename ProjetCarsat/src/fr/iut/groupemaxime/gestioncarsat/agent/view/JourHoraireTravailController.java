@@ -78,6 +78,7 @@ public class JourHoraireTravailController {
 	// Event Listener on Button.onAction
 		@FXML
 		public void validerJournee(ActionEvent event) {
+			this.htController.sauvegarderJournee(this.dateJournee.getText());
 			this.htController.afficherJourSuivant(this.dateJournee.getText());
 		}
 
