@@ -11,6 +11,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireTrava
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.view.EtatMissionSelectionneeController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.FraisMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.HorairesTravailController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.MenuAgentController;
@@ -20,6 +21,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.view.RootLayoutController;
 import fr.iut.groupemaxime.gestioncarsat.mail.ListeMails;
 import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.application.Application;
 import javafx.concurrent.Service;
@@ -29,8 +31,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -66,7 +68,7 @@ public class AgentApp extends Application {
 	private ListeOrdreMission listeOM;
 
 	private OrdreMission missionActive;
-	
+
 	private Service<Void> serviceEnvoiMail;
 
 	public static void main(String[] args) {
@@ -252,6 +254,38 @@ public class AgentApp extends Application {
 		MissionTemporaire mission = (MissionTemporaire) missionActive.getMission();
 		String om = mission.getLieuDeplacement() + " du " + mission.getDateDebut() + " au " + mission.getDateFin();
 		this.rootLayoutCtrl.setLabelMissionSelectionnee(om);
+		this.afficherInfosMission(missionActive);
+	}
+
+	private void afficherInfosMission(OrdreMission missionActive) {
+		// TODO Auto-generated method stub
+		this.retirerDocActif();
+
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(this.getClass().getResource("view/EtatMissionSelectionnee.fxml"));
+
+			AnchorPane pageEtat = loader.load();
+
+			EtatMissionSelectionneeController etatMissionCtrl = loader.getController();
+			
+			etatMissionCtrl.setEtatOM(missionActive.getEtat());
+			
+			if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
+				FraisMission fm = new FraisMission(null);
+				fm = fm.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "FM_")
+						+ Constante.EXTENSION_JSON);
+				etatMissionCtrl.setEtatFM(fm.getEtat());
+			} else {
+				etatMissionCtrl.setEtatFM(EtatMission.NON_REMPLI.getEtat());
+			}
+
+			this.rootLayoutCtrl.getGridRoot().add(pageEtat, 2, 0);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void retirerDocActif() {
@@ -452,8 +486,8 @@ public class AgentApp extends Application {
 			if (this.missionActive.estSigne()) {
 				pdf.ajouterDateSignatureOM();
 				pdf.sauvegarderPDF();
-				PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y, Constante.TAILLE_SIGNATURE,
-						this.missionActive, this.getOptions().getCheminSignature());
+				PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
+						Constante.TAILLE_SIGNATURE, this.missionActive, this.getOptions().getCheminSignature());
 			}
 			pdf.fermerPDF();
 			Desktop.getDesktop().browse(new File(
@@ -539,8 +573,8 @@ public class AgentApp extends Application {
 	public ListeMails getMailsEnAttente() {
 		return mailsEnAttente;
 	}
-	
-	public Service<Void> getServiceEnvoiMail(){
+
+	public Service<Void> getServiceEnvoiMail() {
 		return this.serviceEnvoiMail;
 	}
 

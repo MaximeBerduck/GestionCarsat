@@ -135,4 +135,9 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		fm = fm.chargerJson(cheminDossier + nomOM.replace("OM_", "FM_") + Constante.EXTENSION_JSON);
 		return fm.estSigne();
 	}
+
+	public String getEtat() {
+		// TODO Auto-generated method stub
+		return "eere";
+	}
 }

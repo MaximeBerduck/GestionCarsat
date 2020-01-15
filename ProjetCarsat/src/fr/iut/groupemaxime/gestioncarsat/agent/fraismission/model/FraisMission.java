@@ -217,4 +217,9 @@ public class FraisMission implements DocJson<FraisMission> {
 			map_apres.put(entry.getKey(), entry.getValue());
 		return map_apres;
 	}
+
+	public String getEtat() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
