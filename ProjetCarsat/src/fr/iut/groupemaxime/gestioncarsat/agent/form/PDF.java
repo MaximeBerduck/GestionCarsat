@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -25,6 +27,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Transport;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.TypeMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Voiture;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 
 public class PDF {
 	private PDDocument modele;
@@ -209,7 +212,7 @@ public class PDF {
 		}
 	}
 
-	public void remplirPdfFM(FraisMission fm) throws IOException {
+	public void remplirPdfFM(FraisMission fm, Options options) throws IOException {
 
 		this.remplirChamp("dateDebutMission", fm.getDateDebutMission());
 		this.remplirChamp("dateFinMission", fm.getDateFinMission());
@@ -221,6 +224,9 @@ public class PDF {
 		float serviceTotal = 0;
 		float persoTotal = 0;
 
+		HashSet<String> typeAutreFrais = new HashSet<String>();
+		float montantAutreFrais = 0;
+
 		for (FraisJournalier fj : fm.getFraisMission().values()) {
 			try {
 				repasForfaitTotal += fj.getNbrRepasForfait();
@@ -229,6 +235,10 @@ public class PDF {
 				decouchJustifTotal += fj.getNbrDecouchJustif();
 				serviceTotal += fj.getNbrKmVehiService();
 				persoTotal += fj.getNbrKmVehiPerso();
+				montantAutreFrais += fj.getMontantAutreFrais();
+				if (null != fj.getTypeAutreFrais())
+					typeAutreFrais.add(fj.getTypeAutreFrais());
+
 				c.setTime(Constante.FORMAT_DATE_SLASH.parse(fj.getDate()));
 
 				switch (c.getTime().getDay()) {
@@ -428,23 +438,52 @@ public class PDF {
 			this.remplirChamp("decouchJustifTotal", String.valueOf(decouchJustifTotal));
 			this.remplirChamp("serviceTotal", String.valueOf(serviceTotal));
 			this.remplirChamp("persoTotal", String.valueOf(persoTotal));
-			
-			if(fm.estSigne()) {
-//				this.remplirChamp("", );
-//				this.remplirChamp("", );
-//				this.remplirChamp("", );
-//				this.remplirChamp("", );
-//				this.remplirChamp("", );
-//				this.remplirChamp("", );
-//				this.remplirChamp("", );
-//				this.remplirChamp("", );
-//				this.remplirChamp("", );
+			String typeFrais = "";
+			for (String i : typeAutreFrais) {
+				typeFrais += i + ',';
 			}
+			typeFrais = typeFrais.substring(0, typeFrais.length() - 1);
+			this.remplirChamp("typeAutreFrais", typeFrais);
+			this.remplirChamp("montantAutreFrais", String.valueOf(montantAutreFrais));
 
 		}
 
 		this.cheminFichier = fm.getAdresseFichier().replace(".json", ".pdf");
 		this.sauvegarderPDF();
+	}
+
+	public void signerPdfFM(FraisMission fm, Options options) throws IOException {
+		this.remplirChamp("informationsOK", "Yes");
+		this.remplirChamp("deduireFraisCheck", "Yes");
+		this.remplirChamp("montantDeductionFrais", String.valueOf(fm.getMontantDeductionFrais()));
+		this.remplirChamp("avanceCheck", "Yes");
+		this.remplirChamp("montantAvance", String.valueOf(fm.getMontantAvance()));
+		this.remplirChamp("repasCheck", "Yes");
+		this.remplirChamp("nbrRepasMidiOfferts", String.valueOf(fm.getNbrRepasOffert()));
+		this.remplirChamp("dateSignatureAgent", fm.getDateSignature());
+		this.sauvegarderPDF();
+		this.signerPdfFM(Constante.SIGNATURE_AGENT_FM_X, Constante.SIGNATURE_AGENT_FM_Y, Constante.TAILLE_SIGNATURE_FM,
+				fm, options.getCheminSignature());
+	}
+
+	public void signerPdfFM(int x, int y, int taille, FraisMission fm, String signature) {
+		String cheminFichier = fm.getAdresseFichier().replace(".json", ".pdf");
+		try {
+			PDDocument pdf = PDDocument.load(new File(cheminFichier));
+			PDPage page = pdf.getPage(1);
+
+			PDImageXObject pdImage = PDImageXObject.createFromFile(signature, pdf);
+			PDPageContentStream contentStream = new PDPageContentStream(pdf, page, AppendMode.APPEND, true);
+
+			contentStream.drawImage(pdImage, x, y, taille, taille);
+			contentStream.close();
+			pdf.save(cheminFichier);
+			pdf.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static void signerPDF(int x, int y, int taille, OrdreMission om, String signature) {

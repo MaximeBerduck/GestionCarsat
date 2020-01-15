@@ -31,6 +31,10 @@ public class Frais2Controller {
 	private Button boutonValider;
 	@FXML
 	private Button boutonQuitter;
+	@FXML
+	private TextField typeAutreFrais;
+	@FXML
+	private TextField montantAutreFrais;
 
 	private AnchorPane pageFrais2;
 	private FraisMissionController fmController;
@@ -41,6 +45,22 @@ public class Frais2Controller {
 
 	public void setFmController(FraisMissionController fmController) {
 		this.fmController = fmController;
+	}
+
+	public void setTypeAutreFrais(String typeAutreFrais) {
+		this.typeAutreFrais.setText(typeAutreFrais);
+	}
+
+	public void setMontantAutreFrais(String montantAutreFrais) {
+		this.montantAutreFrais.setText(montantAutreFrais);
+	}
+
+	public String getTypeAutreFrais() {
+		return this.typeAutreFrais.getText();
+	}
+
+	public String getMontantAutreFrais() {
+		return this.montantAutreFrais.getText();
 	}
 
 	// Event Listener on Button.onAction
@@ -82,8 +102,8 @@ public class Frais2Controller {
 				fmController.sauvegarderFrais();
 			}
 		});
-		
-		//this.boutonQuitter.setVisible(false);
+
+		// this.boutonQuitter.setVisible(false);
 	}
 
 	public void setTypeFraisTransport(String typeFraisTransport) {

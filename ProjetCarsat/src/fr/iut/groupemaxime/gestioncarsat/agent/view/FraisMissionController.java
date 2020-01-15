@@ -148,6 +148,14 @@ public class FraisMissionController {
 		if (!"".equals(frais2Ctrl.getNbrKmService()))
 			fraisJournalier.setNbrKmVehiService(Float.parseFloat(frais2Ctrl.getNbrKmService()));
 
+		if (!"".equals(frais2Ctrl.getMontantAutreFrais())) {
+			fraisJournalier.setMontantAutreFrais(Float.parseFloat(frais2Ctrl.getMontantAutreFrais()));
+		}
+
+		if (!"".equals(frais2Ctrl.getTypeAutreFrais())) {
+			fraisJournalier.setTypeAutreFrais(frais2Ctrl.getTypeAutreFrais());
+		}
+
 		this.fraisMission.ajouterJournee(fraisJournalier);
 	}
 
