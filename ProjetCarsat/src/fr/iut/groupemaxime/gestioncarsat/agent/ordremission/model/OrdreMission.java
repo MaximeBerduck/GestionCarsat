@@ -16,7 +16,6 @@ import com.google.gson.GsonBuilder;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
-import fr.iut.groupemaxime.gestioncarsat.agent.view.Frais1Controller;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 
 public class OrdreMission implements DocJson<OrdreMission> {

@@ -6,23 +6,17 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
-import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
-import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireJournalier;
 import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireTravail;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
-import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Voiture;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class HorairesTravailController {

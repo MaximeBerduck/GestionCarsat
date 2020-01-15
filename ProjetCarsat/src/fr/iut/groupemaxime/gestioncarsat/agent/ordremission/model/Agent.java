@@ -58,6 +58,7 @@ public class Agent {
 		return codeAnalytique;
 	}
 
+	@Override
 	public String toString() {
 		return this.nom + "," + this.prenom + "," + this.numCAPSSA + "," + this.fonction + "," + this.residenceAdmin
 				+ "," + this.uniteTravail + "," + this.codeAnalytique + "," + this.coefficient;

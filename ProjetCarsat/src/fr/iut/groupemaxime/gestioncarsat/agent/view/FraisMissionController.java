@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Optional;
-
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
@@ -18,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.AnchorPane;
 
 public class FraisMissionController {

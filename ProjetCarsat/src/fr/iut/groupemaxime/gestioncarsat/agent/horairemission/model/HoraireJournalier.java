@@ -1,7 +1,5 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
-
 public class HoraireJournalier implements Comparable<HoraireJournalier> {
 	private String date;
 	

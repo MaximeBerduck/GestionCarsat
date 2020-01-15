@@ -7,8 +7,6 @@ import java.io.IOException;
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
-import fr.iut.groupemaxime.gestioncarsat.agent.view.MenuAgentController;
-import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;

@@ -89,7 +89,7 @@ public class FraisMission implements DocJson<FraisMission> {
 	}
 
 	public void trierFraisJournalier() {
-		this.fraisMission = this.triAvecValeur(this.fraisMission);
+		this.fraisMission = FraisMission.triAvecValeur(this.fraisMission);
 	}
 
 	public void genererPDF() {
@@ -202,6 +202,7 @@ public class FraisMission implements DocJson<FraisMission> {
 		LinkedList<Map.Entry<String, FraisJournalier>> list = new LinkedList<Map.Entry<String, FraisJournalier>>(
 				map.entrySet());
 		Collections.sort(list, new Comparator<Map.Entry<String, FraisJournalier>>() {
+			@Override
 			public int compare(Map.Entry<String, FraisJournalier> o1, Map.Entry<String, FraisJournalier> o2) {
 				return (o1.getValue()).compareTo(o2.getValue());
 			}

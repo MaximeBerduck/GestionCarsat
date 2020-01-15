@@ -1,20 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-
-import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
-import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
-import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
-import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
