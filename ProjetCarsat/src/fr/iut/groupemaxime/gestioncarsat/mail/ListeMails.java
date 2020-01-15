@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -53,7 +54,7 @@ public class ListeMails {
 		}
 	}
 
-	public void chargerMails(String cheminMailsEnAttente) {
+	public void chargerMails(String cheminMailsEnAttente, Options options) {
 		File dossierMails = new File(cheminMailsEnAttente);
 		if (dossierMails.isDirectory()) {
 			File[] contenuDossierMails = dossierMails.listFiles();
@@ -62,7 +63,7 @@ public class ListeMails {
 					File[] contenuDossier = dossier.listFiles();
 					if (contenuDossier != null) {
 						for (File mail : contenuDossier) {
-							Mail nouveauMail = new Mail(MailProcessor.chargerMail(mail));
+							Mail nouveauMail = new Mail(MailProcessor.chargerMail(mail, options));
 							if (nouveauMail.getMail() != null) {
 								nouveauMail.setPath(mail.getAbsolutePath());
 								this.mails.add(nouveauMail);

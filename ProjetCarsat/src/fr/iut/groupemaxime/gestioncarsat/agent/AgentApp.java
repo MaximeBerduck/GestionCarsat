@@ -89,7 +89,7 @@ public class AgentApp extends Application {
 		}
 		this.creerDossier(this.options.getCheminOM());
 		this.mailsEnAttente = new ListeMails();
-		this.mailsEnAttente.chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE);
+		this.mailsEnAttente.chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE,this.options);
 		this.serviceEnvoiMail = new Service<Void>() {
 
 			@Override
@@ -410,12 +410,14 @@ public class AgentApp extends Application {
 
 		ButtonType buttonTypeEnvoyer = null;
 		ButtonType buttonTypeSigner = null;
-		if (this.missionActive.agentSigne()) {
-			buttonTypeEnvoyer = new ButtonType("Envoyer");
-			alert.getButtonTypes().add(buttonTypeEnvoyer);
-		} else {
-			buttonTypeSigner = new ButtonType("Signer");
-			alert.getButtonTypes().add(buttonTypeSigner);
+		if (!this.missionActive.estEnvoye()) {
+			if (this.missionActive.agentSigne()) {
+				buttonTypeEnvoyer = new ButtonType("Envoyer");
+				alert.getButtonTypes().add(buttonTypeEnvoyer);
+			} else {
+				buttonTypeSigner = new ButtonType("Signer");
+				alert.getButtonTypes().add(buttonTypeSigner);
+			}
 		}
 
 		ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
