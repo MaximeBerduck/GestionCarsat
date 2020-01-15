@@ -14,6 +14,7 @@ import javax.json.JsonReader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 
@@ -127,5 +128,11 @@ public class OrdreMission implements DocJson<OrdreMission> {
 
 	public boolean estSigne() {
 		return this.signatureAgent;
+	}
+
+	public boolean fmEstSigne() {
+		FraisMission fm = new FraisMission(null);
+		fm = fm.chargerJson(cheminDossier + nomOM.replace("OM_", "FM_") + Constante.EXTENSION_JSON);
+		return fm.estSigne();
 	}
 }

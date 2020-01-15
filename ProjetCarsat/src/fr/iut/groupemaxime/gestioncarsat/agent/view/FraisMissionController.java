@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashMap;
-
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
@@ -256,5 +255,35 @@ public class FraisMissionController {
 
 	public void retourFrais1(String date) {
 		this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(date).getPage());
+	}
+
+	public void chargerFM(OrdreMission mission) {
+		this.fraisMission = new FraisMission(null);
+		this.fraisMission = this.fraisMission.chargerJson(
+				mission.getCheminDossier() + mission.getNomOM().replace("OM_", "FM_") + Constante.EXTENSION_JSON);
+	}
+
+	public void afficherSignatureFM(OrdreMission mission) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(this.getClass().getResource("FraisSigner.fxml"));
+			AnchorPane fraisSigner = loader.load();
+			FraisSignerController fraisSignerCtrl = loader.getController();
+			fraisSignerCtrl.setFmCtrl(this);
+			fraisSignerCtrl.setMission(mission);
+			this.fraisMissionSplit.getItems().add(fraisSigner);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public void signerFM(OrdreMission mission, float montantDeductionFrais, float montantAvance, int nbrRepasOffert) {
+		this.chargerFM(mission);
+
+		this.fraisMission.signerFMAgent(montantDeductionFrais, montantAvance, nbrRepasOffert);
+		this.fraisMission.sauvegarderJson(this.fraisMission.getAdresseFichier());
+		this.agentApp.retirerDocActif();
 	}
 }

@@ -1,78 +1,76 @@
 package fr.iut.groupemaxime.gestioncarsat.mail;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
-
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class ListeMails {
-	List<Message> listeMails;
+	List<Mail> mails;
 
-	public ListeMails(List<Message> listeMails) {
-		this.listeMails = listeMails;
+	public ListeMails(List<Mail> listeMails) {
+		this.mails = listeMails;
 	}
 
 	public ListeMails() {
-		this(new ArrayList<Message>());
+		this(new ArrayList<>());
 	}
 
-	public void ajouterMail(Message mail) {
-		this.listeMails.add(mail);
+	public void ajouterMail(Mail mail) {
+		this.mails.add(mail);
 	}
 
-	public List<Message> getListeMails() {
-		return this.listeMails;
+	public List<Mail> getListeMails() {
+		return this.mails;
 	}
 
-	public void sauvegarderMails(String adresseDossier) {
-		File dossier = new File(adresseDossier);
-		if (!dossier.exists()) {
-			dossier.mkdir();
+	public void iterationMails() {
+		List<Mail> aSuppr = new ArrayList<>();
+		for (Mail mail : mails) {
+			if (null == MailProcessor.envoyerMail(mail.getMail())) {
+				if (mail.isSauvegarde()) {
+					mail.supprimer();
+				}
+				aSuppr.add(mail);
+			} else {
+				if (!mail.isSauvegarde()) {
+					MailProcessor.sauvegarderMail(mail, Constante.CHEMIN_MAILS_EN_ATTENTE);
+				}
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setTitle("Erreur");
+				alert.setHeaderText("Des mails n'ont pas pu être envoyés");
+				alert.setContentText("Vous êtes hors connexion, les mails seront envoyés au prochain lancement de l'application");
+
+				alert.showAndWait();
+			}
 		}
-		for (Message message : listeMails) {
-			Mail.sauvegarderMail(message, Constante.CHEMIN_MAILS_EN_ATTENTE);
+		this.mails.removeAll(aSuppr);
+		for (Mail mail : mails) {
+			System.out.println(mail);
 		}
-
 	}
 
-	public ListeMails chargerMails(String adresseDossier) {
-		ListeMails liste = new ListeMails();
-		if (dossierExiste(adresseDossier)) {
-			File dossier = new File(adresseDossier);
-			File[] mails = dossier.listFiles();
-			Message msg;
-			for (File file : mails) {
-				FileInputStream is;
-				try {
-					is = new FileInputStream(file);
-					msg = new MimeMessage(Session.getDefaultInstance(Mail.configurationSmtp()), is);
-					is.close();
-					Mail.envoyerMail(msg);
-				} catch (MessagingException | IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+	public void chargerMails(String cheminMailsEnAttente) {
+		File dossierMails = new File(cheminMailsEnAttente);
+		if (dossierMails.isDirectory()) {
+			File[] contenuDossierMails = dossierMails.listFiles();
+			if (contenuDossierMails != null) {
+				for (File dossier : contenuDossierMails) {
+					File[] contenuDossier = dossier.listFiles();
+					if (contenuDossier != null) {
+						for (File mail : contenuDossier) {
+							Mail nouveauMail = new Mail(MailProcessor.chargerMail(mail));
+							if (nouveauMail.getMail() != null) {
+								nouveauMail.setPath(mail.getAbsolutePath());
+								this.mails.add(nouveauMail);
+							}
+						}
+					}
 				}
 			}
 		}
-		return liste;
-	}
-
-	private static boolean dossierExiste(String adresseDossier) {
-		boolean existe = false;
-		File f = new File(adresseDossier);
-		if (f.isDirectory()) {
-			existe = true;
-		}
-		return existe;
 	}
 }

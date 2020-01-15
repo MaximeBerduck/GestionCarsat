@@ -1,16 +1,16 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
-
 public class HoraireJournalier implements Comparable<HoraireJournalier> {
 	private String date;
 	
 	private String transportUtiliseSurPlace;
 	private String dureeDuTrajetSurPlace;
+	private PlageHoraire[] plageHoraire;
 
 	public HoraireJournalier(String date) {
 		this.date = date;
 	}
+	
 	
 	@Override
 	public int compareTo(HoraireJournalier fj) {

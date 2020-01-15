@@ -22,9 +22,10 @@ import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.application.Application;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -65,6 +66,8 @@ public class AgentApp extends Application {
 	private ListeOrdreMission listeOM;
 
 	private OrdreMission missionActive;
+	
+	private Service<Void> serviceEnvoiMail;
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -85,6 +88,21 @@ public class AgentApp extends Application {
 		this.creerDossier(this.options.getCheminOM());
 		this.mailsEnAttente = new ListeMails();
 		this.mailsEnAttente.chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE);
+		this.serviceEnvoiMail = new Service<Void>() {
+
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+
+					@Override
+					protected Void call() throws Exception {
+						mailsEnAttente.iterationMails();
+						return null;
+					}
+				};
+			}
+		};
+		serviceEnvoiMail.start();
 		initialiseRootLayout();
 		afficherListeMissions();
 	}
@@ -263,7 +281,7 @@ public class AgentApp extends Application {
 		this.afficherHorairesTravail();
 		this.htCtrl.modifierHoraireTravail(ht);
 		this.htCtrl.setHoraireTravail(ht);
-		//this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
+		// this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
 	}
 
 	public void afficherEnvoiDuMail() {
@@ -281,18 +299,26 @@ public class AgentApp extends Application {
 			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
 			ButtonType buttonTypeModif = new ButtonType("Modifier");
 			ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
+			ButtonType buttonTypeSigner = new ButtonType("Signer");
 			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
-			alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeEnvoyer, buttonTypeCancel);
+			if (this.missionActive.fmEstSigne()) {
+				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeEnvoyer, buttonTypeCancel);
+			} else {
+				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeSigner, buttonTypeCancel);
+			}
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == buttonTypeAfficher) {
-				// TODO Afficher FM
 				this.genererPdfFM(this.missionActive);
 				this.afficherPdfFM(this.missionActive);
+
 			} else if (result.get() == buttonTypeModif) {
 				this.afficherFraisMission();
 				this.modifierFrais(this.missionActive);
+
+			} else if (result.get() == buttonTypeSigner) {
+				this.signerFM(this.missionActive);
 			} else if (result.get() == buttonTypeEnvoyer) {
 				// TODO envoyer FM
 			} else {
@@ -302,6 +328,12 @@ public class AgentApp extends Application {
 			// Créer les frais de mission
 			this.creerFraisMission();
 		}
+	}
+
+	private void signerFM(OrdreMission missionActive) {
+		this.afficherFraisMission();
+		this.fmCtrl.afficherSignatureFM(missionActive);
+		this.fmCtrl.setTitre(Constante.TITRE_SIGNER_FM);
 	}
 
 	private void afficherPdfFM(OrdreMission missionActive) {
@@ -506,6 +538,10 @@ public class AgentApp extends Application {
 
 	public ListeMails getMailsEnAttente() {
 		return mailsEnAttente;
+	}
+	
+	public Service<Void> getServiceEnvoiMail(){
+		return this.serviceEnvoiMail;
 	}
 
 }

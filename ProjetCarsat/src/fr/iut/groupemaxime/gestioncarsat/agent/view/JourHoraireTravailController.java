@@ -1,28 +1,17 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireJournalier;
-import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireTravail;
-import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
-import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class JourHoraireTravailController {
@@ -78,6 +67,7 @@ public class JourHoraireTravailController {
 	// Event Listener on Button.onAction
 		@FXML
 		public void validerJournee(ActionEvent event) {
+			this.htController.sauvegarderJournee(this.dateJournee.getText());
 			this.htController.afficherJourSuivant(this.dateJournee.getText());
 		}
 
