@@ -281,18 +281,26 @@ public class AgentApp extends Application {
 			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
 			ButtonType buttonTypeModif = new ButtonType("Modifier");
 			ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
+			ButtonType buttonTypeSigner = new ButtonType("Signer");
 			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
-			alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeEnvoyer, buttonTypeCancel);
+			if(this.missionActive.fmEstSigne()) {
+				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeEnvoyer, buttonTypeCancel);
+			}
+			else
+				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeSigner, buttonTypeCancel);
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == buttonTypeAfficher) {
-				// TODO Afficher FM
 				this.genererPdfFM(this.missionActive);
 				this.afficherPdfFM(this.missionActive);
+
 			} else if (result.get() == buttonTypeModif) {
 				this.afficherFraisMission();
 				this.modifierFrais(this.missionActive);
+
+			} else if (result.get() == buttonTypeSigner) {
+				this.signerFM(this.missionActive);
 			} else if (result.get() == buttonTypeEnvoyer) {
 				// TODO envoyer FM
 			} else {
@@ -302,6 +310,11 @@ public class AgentApp extends Application {
 			// Créer les frais de mission
 			this.creerFraisMission();
 		}
+	}
+
+	private void signerFM(OrdreMission missionActive2) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void afficherPdfFM(OrdreMission missionActive) {

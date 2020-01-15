@@ -29,6 +29,8 @@ public class FraisMission implements DocJson<FraisMission> {
 	private String dateDebutMission;
 	private String dateFinMission;
 	private HashMap<String, FraisJournalier> fraisMission;
+	private boolean estSigne;
+	private String dateSignature;
 
 	public FraisMission(String adresseFichier, String dateDebutMission, String dateFinMission,
 			HashMap<String, FraisJournalier> fraisMission) {
