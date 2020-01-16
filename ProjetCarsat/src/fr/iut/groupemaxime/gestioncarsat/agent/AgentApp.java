@@ -300,6 +300,10 @@ public class AgentApp extends Application {
 
 			if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
 				// TODO
+				HoraireTravail ht = new HoraireTravail(null);
+				ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+						+ Constante.EXTENSION_JSON);
+				etatMissionCtrl.setEtatHT(ht.getEtat().getEtat());
 			} else {
 				etatMissionCtrl.setEtatHT(EtatMission.NON_REMPLI.getEtat());
 			}

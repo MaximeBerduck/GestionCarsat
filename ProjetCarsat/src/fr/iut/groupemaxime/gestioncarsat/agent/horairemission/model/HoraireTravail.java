@@ -20,29 +20,34 @@ import javax.json.JsonReader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
+import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 
-public class HoraireTravail implements DocJson<HoraireTravail>{
-	
+public class HoraireTravail implements DocJson<HoraireTravail> {
+
 	private String adresseFichier;
 	private String dateDebutMission;
 	private String dateFinMission;
 	private HashMap<String, HoraireJournalier> horaireJournalier;
-	
-	
-	public HoraireTravail(String adresseFichier, String dateDebutMission, String dateFinMission,HashMap<String, HoraireJournalier> horaireTravail) {
+	private EtatMission etat;
+
+	public HoraireTravail(String adresseFichier, String dateDebutMission, String dateFinMission,
+			HashMap<String, HoraireJournalier> horaireTravail) {
 		this.adresseFichier = adresseFichier;
 		this.dateDebutMission = dateDebutMission;
 		this.dateFinMission = dateFinMission;
 		this.horaireJournalier = horaireTravail;
+		this.etat = EtatMission.NON_REMPLI;
 	}
-	
+
 	public HoraireTravail(String adresseFichier) {
 		this(adresseFichier, null, null, new HashMap<String, HoraireJournalier>());
 	}
 
 	@Override
 	public void sauvegarderJson(String adresseFichier) {
+		this.setEtat(EtatMission.NON_SIGNE);
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String s = gson.toJson(this);
 		FileWriter f;
@@ -54,6 +59,10 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void setEtat(EtatMission etat) {
+		this.etat = etat;
 	}
 
 	@Override
@@ -76,13 +85,14 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 		horaireTravail.trierHoraireJournalier();
 		return horaireTravail;
 	}
-	
-	public void trierHoraireJournalier() { //pb dans la sauvegarde
+
+	public void trierHoraireJournalier() { // pb dans la sauvegarde
 		this.horaireJournalier = HoraireTravail.triAvecValeur(this.horaireJournalier);
 	}
-	
+
 	public static HashMap<String, HoraireJournalier> triAvecValeur(HashMap<String, HoraireJournalier> map) {
-		LinkedList<Map.Entry<String, HoraireJournalier>> list = new LinkedList<Map.Entry<String, HoraireJournalier>>(map.entrySet());
+		LinkedList<Map.Entry<String, HoraireJournalier>> list = new LinkedList<Map.Entry<String, HoraireJournalier>>(
+				map.entrySet());
 		Collections.sort(list, new Comparator<Map.Entry<String, HoraireJournalier>>() {
 			@Override
 			public int compare(Map.Entry<String, HoraireJournalier> o1, Map.Entry<String, HoraireJournalier> o2) {
@@ -95,21 +105,23 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 			map_apres.put(entry.getKey(), entry.getValue());
 		return map_apres;
 	}
-	
+
 	public void ajouterJournee(HoraireJournalier horaireJournalier) {
 		if (null != this.horaireJournalier.get(horaireJournalier)) {
 			this.horaireJournalier.replace(horaireJournalier.getDate(), horaireJournalier);
-		}else {
+		} else {
 			this.horaireJournalier.put(horaireJournalier.getDate(), horaireJournalier);
-	}}
-	
+		}
+	}
+
 	public HashMap<String, HoraireJournalier> getHoraireTravail() {
 		return horaireJournalier;
 	}
+
 	public String getAdresseFichier() {
 		return this.adresseFichier;
 	}
-	
+
 	public String getDateDebutMission() {
 		return dateDebutMission;
 	}
@@ -125,5 +137,9 @@ public class HoraireTravail implements DocJson<HoraireTravail>{
 	public void setDateFinMission(String dateFinMission) {
 		this.dateFinMission = dateFinMission;
 	}
-	
+
+	public EtatMission getEtat() {
+		return this.etat;
+	}
+
 }
