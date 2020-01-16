@@ -19,14 +19,17 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
@@ -135,6 +138,25 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 				for (PlageHoraire ph : hj.getPlageHoraire()) {
 					if (ligne > Constante.FIN_LIGNE_EXCEL) {
 						dataSheet.shiftRows(ligne, ligne + 20, 1);
+						Row row = dataSheet.createRow(ligne);
+						CellStyle style = workbook.createCellStyle();
+
+						//Ajout bordure
+						style.setBorderBottom((short) 1.0);
+						style.setBorderLeft((short) 1.0);
+						style.setBorderRight((short) 1.0);
+						style.setBorderTop((short) 1.0);
+
+						for (int i = 1; i < 9; i++) {
+							row.createCell(i).setCellStyle(style);
+						}
+						//Ajout format heure
+						CreationHelper createHelper = workbook.getCreationHelper();
+						style.setDataFormat(createHelper.createDataFormat().getFormat("HH:mm"));
+						row.getCell(3).setCellStyle(style);
+						row.getCell(4).setCellStyle(style);
+						row.getCell(7).setCellStyle(style);
+
 					}
 					dataSheet.getRow(ligne).getCell(2).setCellValue(hj.getDate());
 					dataSheet.getRow(ligne).getCell(3).setCellValue(ph.getHeureDeb());
