@@ -44,4 +44,8 @@ public class ItemOrdreMissionController {
 	public void setMenuAgent(MenuAgentController menuAgentCtrl) {
 		this.menuAgentCtrl = menuAgentCtrl;
 	}
+
+	public OrdreMission getOM() {
+		return this.om;
+	}
 }

@@ -53,8 +53,8 @@ public class MenuAgentController {
 			if (om.getEtat() == EtatMission.EN_COURS_ENVOI) {
 				boolean trouve = false;
 				for (Mail mail : this.agentApp.getMailsEnAttente().getListeMails()) {
-					if (mail.getPath().length() > 0
-							&& om.getNomOM().equals(mail.getPath().substring(mail.getPath().lastIndexOf(File.separatorChar) + 1,mail.getPath().lastIndexOf(".")))) {
+					if (mail.getPath().length() > 0 && om.getNomOM().equals(mail.getPath().substring(
+							mail.getPath().lastIndexOf(File.separatorChar) + 1, mail.getPath().lastIndexOf(".")))) {
 						trouve = true;
 					}
 				}
@@ -83,6 +83,15 @@ public class MenuAgentController {
 			e.printStackTrace();
 		}
 		return item;
+	}
+
+	public ItemOrdreMissionController getItemOM(OrdreMission om) {
+		for (ItemOrdreMissionController item : this.listeOmCtrl) {
+			if (item.getOM().getNomOM().equals(om.getNomOM())) {
+				return item;
+			}
+		}
+		return null;
 	}
 
 	@FXML
