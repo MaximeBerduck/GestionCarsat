@@ -132,7 +132,6 @@ public class HorairesTravailController {
 			plage.setMinFin(Integer.parseInt(item.getMin1Fin()));
 			horaireJournalier.ajouterHoraire(plage);
 		}
-		// reste a gerer le if il y a 1 ou plusieurs horaires de saisis, faire un for jusqu'au nb de ligne d'horaire choisi
 
 		this.horaireTravail.ajouterJournee(horaireJournalier);
 	}
