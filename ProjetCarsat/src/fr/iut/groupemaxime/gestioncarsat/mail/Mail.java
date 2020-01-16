@@ -1,6 +1,8 @@
 package fr.iut.groupemaxime.gestioncarsat.mail;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import javax.mail.Message;
 
@@ -32,9 +34,12 @@ public class Mail {
 	public void supprimer() {
 		File fichier = new File(path);
 		File dossier = fichier.getParentFile();
-		fichier.delete();
-		if (dossier.listFiles().length == 0) {
-			dossier.delete();
+		try {
+			Files.delete(fichier.toPath());
+			Files.delete(dossier.toPath());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

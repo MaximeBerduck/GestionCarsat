@@ -45,13 +45,14 @@ public class MenuAgentController {
 	}
 
 	public void chargerOM() {
-		this.listeOmCtrl = new HashSet<ItemOrdreMissionController>();
+		this.listeOmCtrl = new HashSet<>();
 		listeOm = new ListeOrdreMission();
 		listeOm.chargerOM(new File(options.getCheminOM()));
 		this.agentApp.getMailsEnAttente().chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE, options);
 		for (OrdreMission om : listeOm.getListeOM()) {
 			if (om.getEtat() == EtatMission.EN_COURS_ENVOI) {
 				boolean trouve = false;
+				
 				for (Mail mail : this.agentApp.getMailsEnAttente().getListeMails()) {
 					if (mail.getPath().length() > 0
 							&& om.getNomOM().equals(mail.getPath().substring(mail.getPath().lastIndexOf(File.separatorChar) + 1,mail.getPath().lastIndexOf(".")))) {
