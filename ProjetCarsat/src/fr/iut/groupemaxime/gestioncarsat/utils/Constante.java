@@ -13,6 +13,8 @@ public class Constante {
 	public static String CHEMIN_PDF_VIDE = "target/PDF/OM_vide.pdf";
 	public static String CHEMIN_FICHIERS_DEFAUT = "target/OM/";
 	public static String EXTENSION_JSON = ".json";
+	public static String CHEMIN_XLS_VIDE = "target/PDF/HT_vide.xls";
+	public static String EXTENSION_XLS = ".xls";
 
 	public static String CHEMIN_OPTIONS = "target/options.json";
 	public static String CHEMIN_IMAGES = "ressources/images/";
