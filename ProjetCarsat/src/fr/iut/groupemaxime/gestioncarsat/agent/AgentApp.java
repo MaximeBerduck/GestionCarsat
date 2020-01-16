@@ -14,6 +14,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.EtatMissionSelectionneeController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.FraisMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.HorairesTravailController;
+import fr.iut.groupemaxime.gestioncarsat.agent.view.ItemOrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.MenuAgentController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OptionsController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController;
@@ -107,12 +108,13 @@ public class AgentApp extends Application {
 				};
 			}
 		};
-		serviceEnvoiMail.setOnFailed((WorkerStateEvent event)->{
+		serviceEnvoiMail.setOnFailed((WorkerStateEvent event) -> {
 			serviceEnvoiMail.reset();
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Hors Connexion");
 			alert.setHeaderText("Vous n'êtes pas connecté à Internet");
-			alert.setContentText("Tant que vous n'êtes pas connecter à Internet vous ne pouvez pas envoyer et recevoir des documents");
+			alert.setContentText(
+					"Tant que vous n'êtes pas connecter à Internet vous ne pouvez pas envoyer et recevoir des documents");
 			alert.show();
 		});
 		serviceEnvoiMail.start();
@@ -246,6 +248,13 @@ public class AgentApp extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		if (!this.missionActiveIsNull()) {
+			ItemOrdreMissionController itemOmCtrl = controllerMenuAgent.getItemOM(missionActive);
+			if (itemOmCtrl != null) {
+				this.missionActive = itemOmCtrl.getOM();
+				itemOmCtrl.ajouterStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			}
+		}
 	}
 
 	public void creerDossier(String chemin) {
@@ -291,6 +300,10 @@ public class AgentApp extends Application {
 
 			if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
 				// TODO
+				HoraireTravail ht = new HoraireTravail(null);
+				ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+						+ Constante.EXTENSION_JSON);
+				etatMissionCtrl.setEtatHT(ht.getEtat().getEtat());
 			} else {
 				etatMissionCtrl.setEtatHT(EtatMission.NON_REMPLI.getEtat());
 			}

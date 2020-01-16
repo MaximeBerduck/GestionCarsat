@@ -41,7 +41,7 @@ public class JourHoraireTravailController {
 	@FXML
 	public void initialize() {
 		this.dequeItemHtCtrl = new ArrayDeque<ItemHoraireTravailController>();
-		
+
 	}
 
 	public void ajoutHoraire(PlageHoraire plage) {
@@ -88,9 +88,15 @@ public class JourHoraireTravailController {
 	}
 
 	public void modifierHoraireJournalier(HoraireJournalier hj) {
-		this.setTransportUtiliseSurPlace(String.valueOf(hj.getTransportUtiliseSurPlace()));
-		this.setDureeDuTrajetSurPlace(String.valueOf(hj.getDureeDuTrajetSurPlace()));
+		if(null != hj.getTransportUtiliseSurPlace()) {
+			this.setTransportUtiliseSurPlace(hj.getTransportUtiliseSurPlace().split(":")[0]);
+		}
+		
+		if(null!=hj.getDureeDuTrajetSurPlace()) {
+			this.setDureeDuTrajetSurPlace(hj.getDureeDuTrajetSurPlace().split(":")[0]);
 
+		}
+		
 		for (PlageHoraire plage : hj.getPlageHoraire()) {
 			this.ajoutHoraire(plage);
 		}

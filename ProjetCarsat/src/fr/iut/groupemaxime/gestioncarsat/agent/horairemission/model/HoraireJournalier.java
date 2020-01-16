@@ -77,14 +77,11 @@ public class HoraireJournalier implements Comparable<HoraireJournalier> {
 	public void setDureeDuTrajetSurPlace(String dureeDuTrajetSurPlace) {
 		this.dureeDuTrajetSurPlace = dureeDuTrajetSurPlace;
 	}
-	
+
 	public ArrayDeque<PlageHoraire> getPlageHoraire() {
 		return plageHoraire;
 	}
-
-	public void setPlageHoraire(ArrayDeque<PlageHoraire> plageHoraire) {
-		this.plageHoraire = plageHoraire;
-	}
-
+	
+	
 	
 }
