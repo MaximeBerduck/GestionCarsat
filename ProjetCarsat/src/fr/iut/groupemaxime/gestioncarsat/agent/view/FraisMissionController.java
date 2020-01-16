@@ -10,7 +10,9 @@ import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Voiture;
+import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -75,8 +77,13 @@ public class FraisMissionController {
 
 	public void sauvegarderFrais() {
 		this.fraisMission.trierFraisJournalier();
+
+		if (Bibliotheque.fichierFmEstEntier(this.fraisMission))
+			this.fraisMission.setEtat(EtatMission.NON_SIGNE);
+		else
+			this.fraisMission.setEtat(EtatMission.EN_COURS_SAISIE);
+
 		this.fraisMission.sauvegarderJson(this.fraisMission.getAdresseFichier());
-		this.agentApp.retirerDocActif();
 	}
 
 	public void afficherPremierJour() {
@@ -157,6 +164,7 @@ public class FraisMissionController {
 		}
 
 		this.fraisMission.ajouterJournee(fraisJournalier);
+		this.sauvegarderFrais();
 	}
 
 	public void ajouterJour(String jour, String stringFin) {
@@ -293,5 +301,9 @@ public class FraisMissionController {
 		this.fraisMission.signerFMAgent(montantDeductionFrais, montantAvance, nbrRepasOffert);
 		this.fraisMission.sauvegarderJson(this.fraisMission.getAdresseFichier());
 		this.agentApp.retirerDocActif();
+	}
+
+	public AgentApp getAgentApp() {
+		return this.agentApp;
 	}
 }

@@ -41,6 +41,8 @@ public class EtatMissionSelectionneeController {
 
 		case "Non rempli":
 			return Couleur.Rouge.getCouleur();
+		case "En cours de saisie":
+			return Couleur.Saumon.getCouleur();
 
 		default:
 			return null;

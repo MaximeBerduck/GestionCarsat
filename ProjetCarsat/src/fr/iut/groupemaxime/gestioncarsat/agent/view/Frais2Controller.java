@@ -72,14 +72,15 @@ public class Frais2Controller {
 
 	// Event Listener on Button.onAction
 	@FXML
-	public void sauvegarderFraisMission(ActionEvent event) {
+	public void sauvegarderFraisMission() {
 		this.fmController.sauvegarderJournee(this.dateJournee.getText());
 		this.fmController.sauvegarderFrais();
+		this.fmController.getAgentApp().retirerDocActif();
 	}
 
 	// Event Listener on Button.onAction
 	@FXML
-	public void retourFrais1(ActionEvent event) {
+	public void retourFrais1() {
 		this.fmController.retourFrais1(this.dateJournee.getText());
 	}
 
@@ -98,8 +99,7 @@ public class Frais2Controller {
 		this.boutonValider.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				fmController.sauvegarderJournee(dateJournee.getText());
-				fmController.sauvegarderFrais();
+				sauvegarderFraisMission();
 			}
 		});
 

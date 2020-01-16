@@ -208,7 +208,8 @@ public class AgentApp extends Application {
 			this.htCtrl.setOptions(this.options);
 			this.htCtrl.setMissionActive(missionActive);
 			HoraireTravail ht = new HoraireTravail(null);
-			ht = ht.chargerJson(missionActive.getCheminDossier()+missionActive.getNomOM().replace("OM_", "HT_")+Constante.EXTENSION_JSON);
+			ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+					+ Constante.EXTENSION_JSON);
 			this.htCtrl.afficherExcel(ht);
 
 		} catch (IOException e) {
@@ -296,7 +297,9 @@ public class AgentApp extends Application {
 				FraisMission fm = new FraisMission(null);
 				fm = fm.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "FM_")
 						+ Constante.EXTENSION_JSON);
+
 				etatMissionCtrl.setEtatFM(fm.getEtat().getEtat());
+
 			} else {
 				etatMissionCtrl.setEtatFM(EtatMission.NON_REMPLI.getEtat());
 			}
@@ -359,42 +362,50 @@ public class AgentApp extends Application {
 
 	public void demanderActionFM() {
 		if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Choix de l'action");
-			alert.setHeaderText("Choisissez l'action souhaitée");
-			alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre mission.");
+			// Vérifie que le fichier fm est complet ou non
+			if (Bibliotheque.fichierFmEstEntier(Bibliotheque.recupererFmAvecOm(missionActive))) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Choix de l'action");
+				alert.setHeaderText("Choisissez l'action souhaitée");
+				alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre mission.");
 
-			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
-			ButtonType buttonTypeModif = new ButtonType("Modifier");
-			ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
-			ButtonType buttonTypeSigner = new ButtonType("Signer");
-			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+				ButtonType buttonTypeAfficher = new ButtonType("Afficher");
+				ButtonType buttonTypeModif = new ButtonType("Modifier");
+				ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
+				ButtonType buttonTypeSigner = new ButtonType("Signer");
+				ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
-			if (this.missionActive.fmEstSigne()) {
-				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeEnvoyer, buttonTypeCancel);
+				if (this.missionActive.fmEstSigne()) {
+					alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeEnvoyer,
+							buttonTypeCancel);
+				} else {
+					alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeSigner,
+							buttonTypeCancel);
+				}
+
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == buttonTypeAfficher) {
+					this.genererPdfFM(this.missionActive);
+					this.afficherPdfFM(this.missionActive);
+					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+
+				} else if (result.get() == buttonTypeModif) {
+					this.afficherFraisMission();
+					this.modifierFrais(this.missionActive);
+
+				} else if (result.get() == buttonTypeSigner) {
+					this.signerFM(this.missionActive);
+					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+				} else if (result.get() == buttonTypeEnvoyer) {
+					// TODO envoyer FM
+				} else {
+					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+					// Ne fait rien == bouton "annuler"
+				}
 			} else {
-				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeSigner, buttonTypeCancel);
+				this.modifierFrais(missionActive);
 			}
 
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == buttonTypeAfficher) {
-				this.genererPdfFM(this.missionActive);
-				this.afficherPdfFM(this.missionActive);
-				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-
-			} else if (result.get() == buttonTypeModif) {
-				this.afficherFraisMission();
-				this.modifierFrais(this.missionActive);
-
-			} else if (result.get() == buttonTypeSigner) {
-				this.signerFM(this.missionActive);
-				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			} else if (result.get() == buttonTypeEnvoyer) {
-				// TODO envoyer FM
-			} else {
-				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-				// Ne fait rien == bouton "annuler"
-			}
 		} else {
 			// Créer les frais de mission
 			this.creerFraisMission();

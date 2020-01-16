@@ -2,6 +2,7 @@ package fr.iut.groupemaxime.gestioncarsat.utils;
 
 import java.io.File;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -55,7 +56,22 @@ public class Bibliotheque {
 		}
 		return false;
 	}
-	
+
+	public static boolean fichierFmEstEntier(FraisMission fm) {
+		String dateFinMission = fm.getDateFinMission();
+		for (String date : fm.getFraisMission().keySet()) {
+			if (dateFinMission.equals(date))
+				return true;
+		}
+		return false;
+	}
+
+	public static FraisMission recupererFmAvecOm(OrdreMission om) {
+		FraisMission fm = new FraisMission(null);
+		fm = fm.chargerJson(Bibliotheque.recupererCheminEtNomFichierFm(om));
+		return fm;
+	}
+
 	public static boolean fichierHtMissionExiste(OrdreMission om) {
 		File chemin = new File(om.getCheminDossier());
 		String listeFichiers[] = {};
@@ -71,6 +87,7 @@ public class Bibliotheque {
 		}
 		return false;
 	}
+
 	public static String recupererCheminEtNomFichierFm(OrdreMission om) {
 		File chemin = new File(om.getCheminDossier());
 		String listeFichiers[] = {};
@@ -84,7 +101,7 @@ public class Bibliotheque {
 		}
 		return null;
 	}
-	
+
 	public static String recupererCheminEtNomFichierHt(OrdreMission om) {
 		File chemin = new File(om.getCheminDossier());
 		String listeFichiers[] = {};
@@ -98,5 +115,5 @@ public class Bibliotheque {
 		}
 		return null;
 	}
-	
+
 }
