@@ -3,9 +3,11 @@ package fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -20,6 +22,7 @@ import javax.json.JsonReader;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.util.IOUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -126,6 +129,7 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 				FileInputStream excelFile = new FileInputStream(new File(Constante.CHEMIN_EXCEL_VIDE));
 				Workbook workbook = new HSSFWorkbook(excelFile);
 				Sheet dataSheet = workbook.getSheetAt(0);
+				this.chargerJson(this.adresseFichier);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
