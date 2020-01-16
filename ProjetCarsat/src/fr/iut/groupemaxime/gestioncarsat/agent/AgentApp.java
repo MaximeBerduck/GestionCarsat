@@ -299,7 +299,6 @@ public class AgentApp extends Application {
 			}
 
 			if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
-				// TODO
 				HoraireTravail ht = new HoraireTravail(null);
 				ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
 						+ Constante.EXTENSION_JSON);
@@ -307,6 +306,11 @@ public class AgentApp extends Application {
 			} else {
 				etatMissionCtrl.setEtatHT(EtatMission.NON_REMPLI.getEtat());
 			}
+
+			etatMissionCtrl.setCouleurOM(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatOM()));
+			etatMissionCtrl.setCouleurFM(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatFM()));
+			etatMissionCtrl.setCouleurHT(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatHT()));
+			etatMissionCtrl.modifierInfosMission(missionActive);
 
 			this.rootLayoutCtrl.getGridRoot().add(etatMission, 2, 0);
 

@@ -232,7 +232,7 @@ public class OrdreMissionController {
 			} else {
 				titre = "formation";
 			}
-			mission = new MissionTemporaire(dateDebut, "12:00", dateFin, "12:00",
+			mission = new MissionTemporaire(dateDebut, null, dateFin, null,
 					controllerMission.getMotifDeplacementTextField().getText(),
 					controllerMission.getLieuDeplacementTextField().getText(), titre);
 		}
