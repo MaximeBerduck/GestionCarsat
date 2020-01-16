@@ -211,6 +211,9 @@ public class AgentApp extends Application {
 			ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
 					+ Constante.EXTENSION_JSON);
 			this.htCtrl.afficherExcel(ht);
+			File excelFile = new File(ht.getAdresseFichier().replace(".json", ".xls"));
+			getHostServices().showDocument(excelFile.toURI().toURL().toExternalForm());
+			this.retirerDocActif();
 
 		} catch (IOException e) {
 			e.printStackTrace();
