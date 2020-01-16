@@ -17,11 +17,16 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 
 public class HoraireTravail implements DocJson<HoraireTravail> {
@@ -113,6 +118,19 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 			this.horaireJournalier.put(horaireJournalier.getDate(), horaireJournalier);
 		}
 	}
+	
+	// Remplir le fichier excel 
+		public void RemplirExcelHT()
+		{
+			try {
+				FileInputStream excelFile = new FileInputStream(new File(Constante.CHEMIN_EXCEL_VIDE));
+				Workbook workbook = new HSSFWorkbook(excelFile);
+				Sheet dataSheet = workbook.getSheetAt(0);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	public HashMap<String, HoraireJournalier> getHoraireTravail() {
 		return horaireJournalier;
