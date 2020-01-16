@@ -33,12 +33,16 @@ public class ListeMails {
 		List<Mail> aSuppr = new ArrayList<>();
 		for (Mail mail : mails) {
 			if (null == MailProcessor.envoyerMail(mail.getMail())) {
+				System.out.println("envoyed");
 				if (mail.isSauvegarde()) {
+					System.out.println("supprimed");
 					mail.supprimer();
 				}
 				aSuppr.add(mail);
 			} else {
+				
 				if (!mail.isSauvegarde()) {
+					System.out.println("sauvegarded");
 					MailProcessor.sauvegarderMail(mail, Constante.CHEMIN_MAILS_EN_ATTENTE);
 				}
 				Alert alert = new Alert(AlertType.ERROR);
@@ -56,6 +60,7 @@ public class ListeMails {
 	}
 
 	public void chargerMails(String cheminMailsEnAttente, Options options) {
+		List<Mail> mailsCharges = new ArrayList<>();
 		File dossierMails = new File(cheminMailsEnAttente);
 		if (dossierMails.isDirectory()) {
 			File[] contenuDossierMails = dossierMails.listFiles();
@@ -67,12 +72,13 @@ public class ListeMails {
 							Mail nouveauMail = new Mail(MailProcessor.chargerMail(mail, options));
 							if (nouveauMail.getMail() != null) {
 								nouveauMail.setPath(mail.getAbsolutePath());
-								this.mails.add(nouveauMail);
+								mailsCharges.add(nouveauMail);
 							}
 						}
 					}
 				}
 			}
 		}
+		this.mails = mailsCharges;
 	}
 }

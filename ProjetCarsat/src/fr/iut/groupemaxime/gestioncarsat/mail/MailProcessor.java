@@ -167,34 +167,26 @@ public class MailProcessor {
 
 	public static void sauvegarderMail(Mail mail, String cheminDossier) {
 		Message message = mail.getMail();
-		try {
-			if (message.getContentType().contains("multipart")) {
-				Multipart multiPart = (Multipart) message.getContent();
 
-				File dossier;
-				int ite = 0;
-				boolean fini = false;
-				while (ite < multiPart.getCount() && !fini) {
-					MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(ite);
-					if (Part.ATTACHMENT.equalsIgnoreCase(part.getDisposition())) {
-						String nomDossier = part.getFileName().substring(0, part.getFileName().lastIndexOf('.'));
-						nomDossier = nomDossier.substring(nomDossier.indexOf('_') + 1);
-						dossier = new File(cheminDossier + nomDossier);
-						if (!dossier.exists()) {
-							dossier.mkdirs();
-						}
-						File fichierMail = new File(dossier.getAbsolutePath() + "/"
-								+ part.getFileName().substring(0, part.getFileName().lastIndexOf("."))
-								+ Constante.EXTENSION_MAIL);
-						FileOutputStream os = new FileOutputStream(fichierMail);
-						message.writeTo(os);
-						mail.setPath(fichierMail.getAbsolutePath());
-						os.close();
-						fini = true;
-					}
-					ite++;
-				}
+		try {
+			Multipart multiPart = (Multipart) message.getContent();
+
+			File dossier;
+
+			MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(Constante.PIECE_JOINTE_NUMERO_PART);
+			String nomDossier = part.getFileName().substring(0, part.getFileName().lastIndexOf('.'));
+			nomDossier = nomDossier.substring(nomDossier.indexOf('_') + 1);
+			dossier = new File(cheminDossier + nomDossier);
+			if (!dossier.exists()) {
+				dossier.mkdirs();
 			}
+			File fichierMail = new File(dossier.getAbsolutePath() + "/"
+					+ part.getFileName().substring(0, part.getFileName().lastIndexOf(".")) + Constante.EXTENSION_MAIL);
+			FileOutputStream os = new FileOutputStream(fichierMail);
+			message.writeTo(os);
+			mail.setPath(fichierMail.getAbsolutePath());
+			os.close();
+
 		} catch (MessagingException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -202,21 +194,21 @@ public class MailProcessor {
 	}
 
 	public static Message chargerMail(File mail, Options options) {
-		try {
-			Properties props = configurationSmtp();
-			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-				@Override
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(options.getMailAgent() + '@' + Constante.HOSTNAME,
-							Constante.MOT_DE_PASSE);
-				}
-			});
-			return new MimeMessage(session, new FileInputStream(mail));
-		} catch (FileNotFoundException | MessagingException e) {
+		Properties props = configurationSmtp();
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(options.getMailAgent() + '@' + Constante.HOSTNAME,
+						Constante.MOT_DE_PASSE);
+			}
+		});
+		try (FileInputStream is = new FileInputStream(mail)) {
+			return new MimeMessage(session, is);
+		} catch (IOException | MessagingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return null;
 		}
+
 	}
 
 }
