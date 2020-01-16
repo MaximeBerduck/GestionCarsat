@@ -52,7 +52,7 @@ public class MenuAgentController {
 		for (OrdreMission om : listeOm.getListeOM()) {
 			if (om.getEtat() == EtatMission.EN_COURS_ENVOI) {
 				boolean trouve = false;
-				
+
 				for (Mail mail : this.agentApp.getMailsEnAttente().getListeMails()) {
 					if (mail.getPath().length() > 0 && om.getNomOM().equals(mail.getPath().substring(
 							mail.getPath().lastIndexOf(File.separatorChar) + 1, mail.getPath().lastIndexOf(".")))) {
@@ -113,6 +113,7 @@ public class MenuAgentController {
 	}
 
 	public void setMissionActive(OrdreMission om) {
+		this.agentApp.retirerDocActif();
 		this.agentApp.setMissionActive(om);
 		for (ItemOrdreMissionController item : listeOmCtrl) {
 			item.retirerStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);

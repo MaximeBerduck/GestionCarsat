@@ -255,7 +255,7 @@ public class AgentApp extends Application {
 		if (!this.missionActiveIsNull()) {
 			ItemOrdreMissionController itemOmCtrl = controllerMenuAgent.getItemOM(missionActive);
 			if (itemOmCtrl != null) {
-				this.missionActive = itemOmCtrl.getOM();
+				this.setMissionActive(itemOmCtrl.getOM());
 				itemOmCtrl.ajouterStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			}
 		}
@@ -281,8 +281,6 @@ public class AgentApp extends Application {
 	}
 
 	private void afficherInfosMission(OrdreMission missionActive) {
-		this.retirerDocActif();
-
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(this.getClass().getResource("view/EtatMissionSelectionnee.fxml"));
