@@ -1,6 +1,12 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Deque;
@@ -105,7 +111,7 @@ public class HorairesTravailController {
 			this.horaireTravailSplit.getItems().set(1, this.listeHoraires.get(this.listeDate.get(i)).getPage());
 		}
 	}
-	
+		
 	public boolean jourSuivantExiste(String jour) {
 		Integer i = this.listeDateInverse.get(jour);
 		i++;
@@ -147,7 +153,6 @@ public class HorairesTravailController {
 			horairesCtrl.setPageHoraire(pageHoraires);
 			horairesCtrl.setDateJournee(jour);
 			horairesCtrl.setHtController(this);
-//			horairesCtrl.ajoutHoraire();
 			this.listeHoraires.put(jour, horairesCtrl);
 
 			if (jour.equals(stringFin)) {
@@ -189,11 +194,18 @@ public class HorairesTravailController {
 		this.afficherSemaine();
 		
 		this.afficherPremierJour();
+		
 	}
 	
 	private void modifierHoraireJournalier(HoraireJournalier hj) {
 		this.ajouterJour(hj.getDate(), ((MissionTemporaire) missionActive.getMission()).getDateFin());
 		this.listeHoraires.get(hj.getDate()).modifierHoraireJournalier(hj);
+	}
+	
+	public void afficherExcel(HoraireTravail ht)
+	{
+		this.horaireTravail = ht;
+		ht.remplirExcelHT();
 	}
 	
 

@@ -1,6 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.form;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,9 +14,14 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireTravail;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.AutreTransport;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Avion;
@@ -512,5 +518,18 @@ public class PDF {
 		String date = Constante.FORMAT_DATE_SLASH.format(new Date());
 
 		this.remplirChamp("dateSigna", date);
+	}
+	
+	public void completerExcel(HoraireTravail ht) {
+		try {
+			FileInputStream excelFile = new FileInputStream(new File(Constante.CHEMIN_EXCEL_VIDE));
+			Workbook workbook = new HSSFWorkbook(excelFile);
+			Sheet dataSheet = workbook.getSheetAt(0);
+			Cell cell = dataSheet.getRow(17).getCell(3);
+			System.out.println(cell);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

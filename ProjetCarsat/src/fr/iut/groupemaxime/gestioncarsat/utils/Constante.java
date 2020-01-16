@@ -20,7 +20,9 @@ public class Constante {
 	public static String CHEMIN_IMAGES = "ressources/images/";
 	public static final String CHEMIN_MAILS_EN_ATTENTE = "target/mailsEnAttente/";
 	
-	public static String CHEMIN_EXCEL_VIDE = "target/Excel/HT_vide.xls";
+	public static String CHEMIN_EXCEL_VIDE = "target/PDF/HT_vide.xls";
+	public static int FIN_LIGNE_EXCEL = 21;
+	public static int DEBUT_LIGNE_EXCEL = 14;
 
 	public static SimpleDateFormat FORMAT_DATE_TIRET = new SimpleDateFormat("dd-MM-yyyy");
 	public static SimpleDateFormat FORMAT_DATE_SLASH = new SimpleDateFormat("dd/MM/yyyy");

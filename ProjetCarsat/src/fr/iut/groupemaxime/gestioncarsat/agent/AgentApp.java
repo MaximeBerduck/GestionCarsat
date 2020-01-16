@@ -207,6 +207,9 @@ public class AgentApp extends Application {
 			this.rootLayoutCtrl.getGridRoot().add(this.horairesTravail, 2, 0);
 			this.htCtrl.setOptions(this.options);
 			this.htCtrl.setMissionActive(missionActive);
+			HoraireTravail ht = new HoraireTravail(null);
+			ht = ht.chargerJson(missionActive.getCheminDossier()+missionActive.getNomOM().replace("OM_", "HT_")+Constante.EXTENSION_JSON);
+			this.htCtrl.afficherExcel(ht);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -496,7 +499,7 @@ public class AgentApp extends Application {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == buttonTypeAfficher) {
-				this.afficherOrdreMissionPDF();
+				this.afficherHorairesTravail();
 			} else if (result.get() == buttonTypeModif) {
 				this.modifierHt(missionActive);
 			} else if (result.get() == buttonTypeSigner) {
