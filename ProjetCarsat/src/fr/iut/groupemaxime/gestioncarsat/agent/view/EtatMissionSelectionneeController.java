@@ -3,8 +3,11 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Couleur;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class EtatMissionSelectionneeController {
 	@FXML

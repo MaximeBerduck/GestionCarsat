@@ -7,10 +7,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="550.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.EtatMissionSelectionneeController">
+<AnchorPane prefHeight="550.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.EtatMissionSelectionneeController">
    <children>
       <Label alignment="CENTER" layoutX="1.0" layoutY="40.0" maxWidth="-Infinity" prefWidth="700.0" style="-fx-font-size: 18;" text="Informations concernant la mission sélectionnée" underline="true" />
-      <GridPane layoutY="74.0" prefHeight="84.0" prefWidth="700.0">
+      <GridPane layoutY="74.0" prefHeight="120.0" prefWidth="700.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -19,14 +19,14 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="0.0" prefHeight="8.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label style="-fx-font-size: 18;" text="Lieu" />
             <Label fx:id="lieuMission" text="Label" GridPane.rowIndex="1" />
             <Label style="-fx-font-size: 18;" text="Motif" GridPane.columnIndex="1" />
-            <Label fx:id="motifMission" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="motifMission" alignment="CENTER" text="Label" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label style="-fx-font-size: 18;" text="Date de début" GridPane.columnIndex="2" />
             <Label fx:id="dateDebutMission" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label style="-fx-font-size: 18;" text="Date de fin" GridPane.columnIndex="3" />
@@ -35,10 +35,10 @@
             <Label fx:id="heureFin" text="heureFin" GridPane.columnIndex="3" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <GridPane layoutX="46.0" layoutY="165.0" prefHeight="313.0" prefWidth="544.0">
+      <GridPane layoutX="51.0" layoutY="182.0" prefHeight="313.0" prefWidth="544.0">
         <columnConstraints>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="299.5575256347656" minWidth="10.0" prefWidth="231.91146850585938" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="357.1858825683594" minWidth="10.0" prefWidth="312.0885314941406" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="299.5575256347656" minWidth="10.0" prefWidth="201.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="365.0" minWidth="10.0" prefWidth="343.0" />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -47,7 +47,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="État d'envoi" GridPane.columnIndex="1" />
+            <Label text="État d'envoi" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets top="20.0" />
+               </GridPane.margin></Label>
             <Label style="-fx-font-size: 18;" text="Ordre de mision" GridPane.rowIndex="1" />
             <Label fx:id="etatOM" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@../style%20etat.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label style="-fx-font-size: 18;" text="Frais de mission" GridPane.rowIndex="2" />
