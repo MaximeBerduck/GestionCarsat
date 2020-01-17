@@ -77,6 +77,8 @@ public class FraisMissionController {
 
 	public void sauvegarderFrais() {
 		this.fraisMission.trierFraisJournalier();
+		this.fraisMission.setEstSigne(false);
+		this.fraisMission.setDateSignature(null);
 
 		if (Bibliotheque.fichierFmEstEntier(this.fraisMission))
 			this.fraisMission.setEtat(EtatMission.NON_SIGNE);
