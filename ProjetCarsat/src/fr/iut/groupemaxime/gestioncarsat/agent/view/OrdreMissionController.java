@@ -224,6 +224,8 @@ public class OrdreMissionController {
 		} else {
 			String dateDebut = Constante.FORMATTER_DATEPICKER.format(controllerMission.getDateDebut().getValue());
 			String dateFin = Constante.FORMATTER_DATEPICKER.format(controllerMission.getDateFin().getValue());
+			String heureDebut = controllerMission.getHeureDepart().getText()+":"+controllerMission.getMinuteDepart().getText();
+			String heureFin = controllerMission.getHeureRetour().getText()+":"+controllerMission.getMinuteRetour().getText();
 
 			String titre;
 
@@ -232,7 +234,7 @@ public class OrdreMissionController {
 			} else {
 				titre = "formation";
 			}
-			mission = new MissionTemporaire(dateDebut, null, dateFin, null,
+			mission = new MissionTemporaire(dateDebut, heureDebut, dateFin, heureFin,
 					controllerMission.getMotifDeplacementTextField().getText(),
 					controllerMission.getLieuDeplacementTextField().getText(), titre);
 		}

@@ -1,8 +1,14 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+
+import com.sun.javafx.scene.traversal.Hueristic2D;
+
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -55,13 +61,19 @@ public class MissionController {
 	@FXML
 	private DatePicker dateFin;
 
+	@FXML
+	private TextField heureDepart;
+
+	@FXML
+	private TextField minuteDepart;
+
+	@FXML
+	private TextField heureRetour;
+
+	@FXML
+	private TextField minuteRetour;
+
 	private OrdreMissionController mainApp;
-
-	@FXML
-	private Label labelDu;
-
-	@FXML
-	private Label labelAu;
 
 	public void setMainApp(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
@@ -76,7 +88,7 @@ public class MissionController {
 		if (ordrePermanentRadioBtn.isSelected()) {
 			erreur = getErreurMotifEtLieu();
 		} else {
-			erreur = getErreurDates() + getErreurMotifEtLieu();
+			erreur = getErreurDatesHeures() + getErreurMotifEtLieu();
 		}
 		if (erreur.length() > 0) {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -91,12 +103,70 @@ public class MissionController {
 		}
 	}
 
-	private String getErreurDates() {
+	private String getErreurDatesHeures() {
 		String erreur = "";
+
 		if (null == dateDebut.getValue())
 			erreur += "Le champ date de debut est vide !\n";
+
+		if ("".equals(heureDepart.getText())) {
+			erreur += "Le champs heure de départ est vide !\n";
+		} else {
+			try {
+				if (Integer.valueOf(heureDepart.getText()) < 0 || Integer.valueOf(heureDepart.getText()) > 23) {
+					erreur += "Le champs heure de départ est invalide !\n";
+				}
+			} catch (NumberFormatException e) {
+				erreur += "Le champs heure de départ est invalide !\n";
+			}
+
+		}
+		if ("".equals(minuteDepart.getText())) {
+			erreur += "Le champs minute de départ est vide !\n";
+		} else {
+			try {
+				if (Integer.valueOf(minuteDepart.getText()) < 0 || Integer.valueOf(minuteDepart.getText()) > 59) {
+					erreur += "Le champs minute de départ est invalide !\n";
+				}
+			} catch (NumberFormatException e) {
+				erreur += "Le champs heure de départ est invalide !\n";
+			}
+
+		}
+
 		if (null == dateFin.getValue())
 			erreur += "Le champ date de fin est vide !\n";
+		if ("".equals(heureRetour.getText())) {
+			erreur += "Le champs heure de retour est vide !\n";
+		} else {
+			try {
+				if (Integer.valueOf(heureRetour.getText()) < 0 || Integer.valueOf(heureRetour.getText()) > 23) {
+					erreur += "Le champs heure de retour est invalide !\n";
+				}
+			} catch (NumberFormatException e) {
+				erreur += "Le champs heure de retour est invalide !\n";
+			}
+
+		}
+		if ("".equals(minuteRetour.getText())) {
+			erreur += "Le champs minute de retour est vide !\n";
+		} else {
+			try {
+				if (Integer.valueOf(minuteRetour.getText()) < 0 || Integer.valueOf(minuteRetour.getText()) > 59) {
+					erreur += "Le champs minute de retour est invalide !\n";
+				}
+			} catch (NumberFormatException e) {
+				erreur += "Le champs minute de retour est invalide !\n";
+			}
+
+		}
+		if (erreur.equals("")) {
+			LocalDateTime depart = LocalDateTime.of(dateDebut.getValue().getYear(), dateDebut.getValue().getMonth(), dateDebut.getValue().getDayOfMonth(),Integer.valueOf(heureDepart.getText()), Integer.valueOf(minuteDepart.getText()));
+			LocalDateTime retour = LocalDateTime.of(dateFin.getValue().getYear(), dateFin.getValue().getMonth(), dateFin.getValue().getDayOfMonth(),Integer.valueOf(heureRetour.getText()), Integer.valueOf(minuteRetour.getText()));
+			if (depart.isAfter(retour)) {
+				erreur = "L'heure de retour est avant l'heure de départ !\n";
+			}
+		}
 		return erreur;
 	}
 
@@ -187,13 +257,35 @@ public class MissionController {
 		return dateFin;
 	}
 
+	public TextField getHeureDepart() {
+		return heureDepart;
+	}
+
+	public TextField getMinuteDepart() {
+		return minuteDepart;
+	}
+
+	public TextField getHeureRetour() {
+		return heureRetour;
+	}
+
+	public TextField getMinuteRetour() {
+		return minuteRetour;
+	}
+
 	public void setChamps(MissionTemporaire mission) {
 		this.dateDebut.setValue(LocalDate.parse(mission.getDateDebut(), DateTimeFormatter.ofPattern("d/M/yyyy")));
 		this.onDateDebutModifier();
+		
+		this.heureDepart.setText(mission.getHeureDebut().substring(0,mission.getHeureDebut().lastIndexOf(":")));
+		this.minuteDepart.setText(mission.getHeureDebut().substring(mission.getHeureDebut().lastIndexOf(":")+1));
 
 		this.dateFin.setValue(LocalDate.parse(mission.getDateFin(), DateTimeFormatter.ofPattern("d/M/yyyy")));
 		this.onDateFinModifier();
 
+		this.heureRetour.setText(mission.getHeureFin().substring(0,mission.getHeureFin().lastIndexOf(":")));
+		this.minuteRetour.setText(mission.getHeureFin().substring(mission.getHeureFin().lastIndexOf(":")+1));
+		
 		this.lieuDeplacementTextField.setText(mission.getLieuDeplacement());
 		this.motifDeplacementTextField.setText(mission.getMotifDeplacement());
 		if ("formation".equals(mission.getTitre()))

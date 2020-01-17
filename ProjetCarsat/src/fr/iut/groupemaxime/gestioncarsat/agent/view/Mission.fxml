@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.MissionController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.MissionController">
    <children>
       <VBox fx:id="pageVBox" alignment="CENTER" layoutY="38.0" prefHeight="512.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
          <children>
-            <RadioButton fx:id="ordrePermanentRadioBtn" mnemonicParsing="false" onAction="#ordrePermanentRadioBtnSelectionne" prefHeight="50.0" prefWidth="700.0" text="Ordre de mission permanent (dans la fonction indiqué avant)">
+            <RadioButton fx:id="ordrePermanentRadioBtn" disable="true" mnemonicParsing="false" onAction="#ordrePermanentRadioBtnSelectionne" prefHeight="50.0" prefWidth="700.0" text="Ordre de mission permanent (dans la fonction indiqué avant)">
                <toggleGroup>
                   <ToggleGroup fx:id="typeOmToggleG" />
                </toggleGroup>
@@ -27,20 +27,51 @@
                <VBox.margin>
                   <Insets left="110.0" />
                </VBox.margin></RadioButton>
-            <HBox fx:id="missionPonctuelHBox" prefWidth="600.0">
+            <HBox fx:id="missionPonctuelHBox1" prefWidth="600.0">
                <children>
-                  <Label fx:id="labelDu" alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="du" />
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="du" />
                   <DatePicker fx:id="dateDebut" editable="false" onAction="#onDateDebutModifier" prefWidth="174.0">
                      <HBox.margin>
                         <Insets top="13.0" />
                      </HBox.margin>
                   </DatePicker>
-                  <Label fx:id="labelAu" alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="au" />
-                  <DatePicker fx:id="dateFin" editable="false" onAction="#onDateFinModifier">
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="à" />
+                  <TextField fx:id="heureDepart" prefWidth="35.0">
+                     <HBox.margin>
+                        <Insets top="13.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label fx:id="labelAu11" alignment="CENTER" prefHeight="50.0" prefWidth="10.0" text=":" />
+                  <TextField fx:id="minuteDepart" prefWidth="35.0">
+                     <HBox.margin>
+                        <Insets top="13.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets left="110.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox fx:id="missionPonctuelHBox" prefWidth="600.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="au" />
+                  <DatePicker fx:id="dateFin" editable="false" onAction="#onDateFinModifier" prefWidth="174.0">
                      <HBox.margin>
                         <Insets top="13.0" />
                      </HBox.margin>
                   </DatePicker>
+                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="à" />
+                  <TextField fx:id="heureRetour" prefWidth="35.0">
+                     <HBox.margin>
+                        <Insets top="13.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label fx:id="labelAu111" alignment="CENTER" prefHeight="50.0" prefWidth="10.0" text=":" />
+                  <TextField fx:id="minuteRetour" prefWidth="35.0">
+                     <HBox.margin>
+                        <Insets top="13.0" />
+                     </HBox.margin>
+                  </TextField>
                </children>
                <VBox.margin>
                   <Insets left="110.0" top="10.0" />
