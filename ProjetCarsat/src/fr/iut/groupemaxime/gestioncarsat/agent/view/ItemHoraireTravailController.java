@@ -1,20 +1,62 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import java.io.IOException;
+
+import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.PlageHoraire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 public class ItemHoraireTravailController {
 	@FXML
+	private Button btnSupprimer;
+	@FXML
 	private VBox itemHoraire;
-	
+
 	@FXML
 	private TextField heure1Deb;
-	@FXML 
+	@FXML
 	private TextField min1Deb;
 	@FXML
 	private TextField heure1Fin;
+
+	JourHoraireTravailController jht;
+	
+	@FXML
+	private TextField min1Fin;
+
+
+	private VBox page;
+
+	public void ajoutHoraire() {
+		this.jht.ajoutHoraireApresPlage(this);
+		
+	}
+	
+	public void supprimerHoraire() {
+		this.jht.supprimerHoraire(this);
+	}
+
+	public JourHoraireTravailController getJht() {
+		return jht;
+	}
+
+	public void setJht(JourHoraireTravailController jht) {
+		this.jht = jht;
+	}
+
+	public VBox getPage() {
+		return page;
+	}
+
+	public void setPage(VBox item) {
+		this.page = item;
+	}
+	
 	public String getHeure1Deb() {
 		return heure1Deb.getText();
 	}
@@ -28,7 +70,8 @@ public class ItemHoraireTravailController {
 	}
 
 	public void setMin1Deb(String min1Deb) {
-		this.min1Deb.setText(min1Deb);;
+		this.min1Deb.setText(min1Deb);
+		;
 	}
 
 	public String getHeure1Fin() {
@@ -36,7 +79,8 @@ public class ItemHoraireTravailController {
 	}
 
 	public void setHeure1Fin(String heure1Fin) {
-		this.heure1Fin.setText(heure1Fin);;
+		this.heure1Fin.setText(heure1Fin);
+		;
 	}
 
 	public String getMin1Fin() {
@@ -44,30 +88,14 @@ public class ItemHoraireTravailController {
 	}
 
 	public void setMin1Fin(String min1Fin) {
-		this.min1Fin.setText(min1Fin);;
+		this.min1Fin.setText(min1Fin);
+		;
 	}
 
-	@FXML
-	private TextField min1Fin;
-
-	private OrdreMission om;
-
-	private HorairesTravailController mainApp2;
-	private OrdreMissionController mainApp;
-	private JourHoraireTravailController mainApp3;
-
-	
-	public void setMainApp(OrdreMissionController mainApp) {
-		this.mainApp = mainApp;
-	}
-	
-	public void setMainApp(HorairesTravailController mainApp2) {
-		this.mainApp2 = mainApp2;
-	}
-	
-	public void setMainApp(JourHoraireTravailController mainApp3) {
-		this.mainApp3 = mainApp3;
+	public void changerDisableBtn(boolean b) {
+		this.btnSupprimer.setDisable(b);
 	}
 	
 	
+
 }

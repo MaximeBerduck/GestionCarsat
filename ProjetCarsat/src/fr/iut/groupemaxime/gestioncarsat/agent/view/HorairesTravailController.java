@@ -31,8 +31,6 @@ public class HorairesTravailController {
 	
 	@FXML
 	private SplitPane horaireTravailSplit;
-	@FXML
-	private Label titre;
 	
 	private AgentApp agentApp;
 	private Options options;
@@ -48,6 +46,13 @@ public class HorairesTravailController {
 	
 	private HoraireTravail horaireTravail;
 	private Stage primaryStage;
+	
+	@FXML
+	private Label titre;
+
+	public void setTitre(String titre) {
+		this.titre.setText(titre);
+	}
 	
 	@FXML
 	private void initialize() {
@@ -67,7 +72,9 @@ public class HorairesTravailController {
 
 		this.horaireTravail.setDateDebutMission(stringDebut);
 		this.horaireTravail.setDateFinMission(stringFin);
-
+		
+		System.out.println(stringDebut);
+		
 		this.ajouterJour(stringDebut, stringFin);
 		this.listeHoraires.get(stringDebut).ajoutHoraire();
 		this.listeDate.put(i, stringDebut);
@@ -121,25 +128,27 @@ public class HorairesTravailController {
 	public void sauvegarderJournee(String date) {
 		HoraireJournalier horaireJournalier = new HoraireJournalier(date);
 		JourHoraireTravailController horaireCtrl = this.listeHoraires.get(date);
-		if(!"".equals(horaireCtrl.getTransportUtiliseSurPlace())) {
-			horaireJournalier.setTransportUtiliseSurPlace(
-					String.valueOf(horaireCtrl.getTransportUtiliseSurPlace()));
-		}
-		if(!"".equals(horaireCtrl.getDureeDuTrajetSurPlace())){
-			horaireJournalier.setDureeDuTrajetSurPlace(
-					String.valueOf(horaireCtrl.getDureeDuTrajetSurPlace()));
-		}
+		if(horaireCtrl.tousLesChampsValides()) {
+			if(!"".equals(horaireCtrl.getTransportUtiliseSurPlace())) {
+				horaireJournalier.setTransportUtiliseSurPlace(
+						String.valueOf(horaireCtrl.getTransportUtiliseSurPlace()));
+			}
+			if(!"".equals(horaireCtrl.getDureeDuTrajetSurPlace())){
+				horaireJournalier.setDureeDuTrajetSurPlace(
+						String.valueOf(horaireCtrl.getDureeDuTrajetSurPlace()));
+			}
 
-		for(ItemHoraireTravailController item : horaireCtrl.getPlageHoraire()){
-			PlageHoraire plage = new PlageHoraire();
-			plage.setHeureDeb(Integer.parseInt(item.getHeure1Deb()));
-			plage.setHeureFin(Integer.parseInt(item.getHeure1Fin()));
-			plage.setMinDeb(Integer.parseInt(item.getMin1Deb()));
-			plage.setMinFin(Integer.parseInt(item.getMin1Fin()));
-			horaireJournalier.ajouterHoraire(plage);
-		}
+			for(ItemHoraireTravailController item : horaireCtrl.getListItemHtCtrl()){
+				PlageHoraire plage = new PlageHoraire();
+				plage.setHeureDeb(Integer.parseInt(item.getHeure1Deb()));
+				plage.setHeureFin(Integer.parseInt(item.getHeure1Fin()));
+				plage.setMinDeb(Integer.parseInt(item.getMin1Deb()));
+				plage.setMinFin(Integer.parseInt(item.getMin1Fin()));
+				horaireJournalier.ajouterHoraire(plage);
+			}
 
-		this.horaireTravail.ajouterJournee(horaireJournalier);
+			this.horaireTravail.ajouterJournee(horaireJournalier);
+		}
 	}
 	
 	public void ajouterJour(String jour, String stringFin) {
@@ -224,10 +233,6 @@ public class HorairesTravailController {
 	
 	public void setHoraireTravail(HoraireTravail ht) {
 		this.horaireTravail = ht;
-	}
-
-	public void setTitre(String titre) {
-		this.titre.setText(titre);
 	}
 
 	public Options getOptions() {

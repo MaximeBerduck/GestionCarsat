@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="itemHoraire" prefHeight="32.0" prefWidth="788.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.ItemHoraireTravailController">
+<VBox fx:id="itemHoraire" prefHeight="38.0" prefWidth="788.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.ItemHoraireTravailController">
    <children>
-      <HBox alignment="CENTER" prefHeight="32.0" prefWidth="786.0">
+      <HBox alignment="CENTER" prefHeight="43.0" prefWidth="788.0">
          <children>
             <Label text="De :">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="heure1Deb" prefHeight="25.0" prefWidth="28.0" text="8">
+            <TextField fx:id="heure1Deb" prefHeight="25.0" prefWidth="28.0" text="0">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -35,7 +36,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="heure1Fin" prefHeight="25.0" prefWidth="28.0" text="12">
+            <TextField fx:id="heure1Fin" prefHeight="25.0" prefWidth="28.0" text="0">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -47,9 +48,15 @@
             </Label>
             <TextField fx:id="min1Fin" prefHeight="25.0" prefWidth="28.0" text="00">
                <HBox.margin>
-                  <Insets right="10.0" />
+                  <Insets right="50.0" />
                </HBox.margin>
             </TextField>
+            <Button fx:id="btnSupprimer" mnemonicParsing="false" onAction="#supprimerHoraire" prefHeight="29.0" prefWidth="37.0" style="-fx-font-weight: bold;" text="-" />
+            <Button mnemonicParsing="false" onAction="#ajoutHoraire" prefHeight="29.0" prefWidth="37.0" style="-fx-font-weight: bold;" text="+">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
    </children>

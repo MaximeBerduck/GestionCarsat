@@ -2,6 +2,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
@@ -22,10 +23,17 @@ import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 public class OrdreMissionController {
 
@@ -170,8 +178,37 @@ public class OrdreMissionController {
 			controllerMail.setMainApp(this);
 			controllerMail.setExpediteur(this.options.getMailAgent() + '@' + Constante.HOSTNAME);
 			String desti = "";
-			for (String i : this.options.getMailsResponsables())
-				desti += i + ',';
+
+			Dialog<VBox> dialog = new Dialog<>();
+			dialog.setTitle("Choisir les destinataires");
+			dialog.setHeaderText("Selectionnez le ou les destinaire(s) pour cet envoi");
+			VBox vbox = new VBox();
+			ButtonType buttonTypeValider = new ButtonType("Valider", ButtonData.OK_DONE);
+
+			for (String responsable : this.options.getMailsResponsables()) {
+				CheckBox check = new CheckBox(responsable);
+				vbox.getChildren().add(check);
+			}
+			dialog.getDialogPane().setContent(vbox);
+			dialog.getDialogPane().getButtonTypes().add(buttonTypeValider);
+
+			dialog.setResultConverter(new Callback<ButtonType, VBox>() {
+				@Override
+				public VBox call(ButtonType b) {
+
+					return vbox;
+				}
+			});
+
+			Optional<VBox> result = dialog.showAndWait();
+
+			for (Node node : result.get().getChildren()) {
+				CheckBox check = (CheckBox) node;
+				if (check.isSelected()) {
+					desti += check.getText() + ',';
+				}
+			}
+
 			if (desti.length() != 0)
 				desti = desti.substring(0, desti.length() - 1);
 			controllerMail.setDestinataires(desti);
