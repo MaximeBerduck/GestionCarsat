@@ -67,7 +67,9 @@ public class HorairesTravailController {
 
 		this.horaireTravail.setDateDebutMission(stringDebut);
 		this.horaireTravail.setDateFinMission(stringFin);
-
+		
+		System.out.println(stringDebut);
+		
 		this.ajouterJour(stringDebut, stringFin);
 		this.listeHoraires.get(stringDebut).ajoutHoraire();
 		this.listeDate.put(i, stringDebut);
@@ -130,7 +132,7 @@ public class HorairesTravailController {
 					String.valueOf(horaireCtrl.getDureeDuTrajetSurPlace()));
 		}
 
-		for(ItemHoraireTravailController item : horaireCtrl.getPlageHoraire()){
+		for(ItemHoraireTravailController item : horaireCtrl.getListItemHtCtrl()){
 			PlageHoraire plage = new PlageHoraire();
 			plage.setHeureDeb(Integer.parseInt(item.getHeure1Deb()));
 			plage.setHeureFin(Integer.parseInt(item.getHeure1Fin()));

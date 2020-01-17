@@ -41,16 +41,6 @@
             <HBox prefHeight="29.0" prefWidth="800.0">
                <children>
                   <HBox prefHeight="29.0" prefWidth="400.0" />
-                  <Button mnemonicParsing="false" onAction="#supprimerHoraire" text="Supprimer">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#ajoutHoraire" text="Ajouter">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Button>
                </children>
                <VBox.margin>
                   <Insets top="20.0" />

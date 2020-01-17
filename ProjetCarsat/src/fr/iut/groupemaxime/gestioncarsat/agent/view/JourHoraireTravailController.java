@@ -2,6 +2,8 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import java.io.IOException;
 import java.util.ArrayDeque;
+import java.util.LinkedList;
+import java.util.ListIterator;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireJournalier;
 import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.PlageHoraire;
@@ -29,7 +31,8 @@ public class JourHoraireTravailController {
 	@FXML
 	private TextField dureeDuTrajetSurPlace;
 
-	private ArrayDeque<ItemHoraireTravailController> dequeItemHtCtrl;
+	private LinkedList<ItemHoraireTravailController> listItemHtCtrl;
+	private ListIterator<ItemHoraireTravailController> iteratorItemHt;
 
 	@FXML
 	private Button boutonValider;
@@ -40,8 +43,8 @@ public class JourHoraireTravailController {
 
 	@FXML
 	public void initialize() {
-		this.dequeItemHtCtrl = new ArrayDeque<ItemHoraireTravailController>();
-
+		this.listItemHtCtrl = new LinkedList<ItemHoraireTravailController>();
+		this.iteratorItemHt = listItemHtCtrl.listIterator();
 	}
 
 	public void ajoutHoraire(PlageHoraire plage) {
@@ -55,10 +58,47 @@ public class JourHoraireTravailController {
 			itemHtCtrl.setHeure1Fin(String.valueOf(plage.getHeureFin()));
 			itemHtCtrl.setMin1Deb(String.valueOf(plage.getMinDeb()));
 			itemHtCtrl.setMin1Fin(String.valueOf(plage.getMinFin()));
+			itemHtCtrl.setPage(item);
+			itemHtCtrl.setJht(this);
 			this.listeHoraireVBox.getChildren().add(item);
-			dequeItemHtCtrl.addLast(itemHtCtrl);
+			this.listItemHtCtrl.add(itemHtCtrl);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	
+
+	public void ajouterItemFin(ItemHoraireTravailController item) {
+		this.listeHoraireVBox.getChildren().add(item.getPage());
+	}
+
+	public void placerIterateur(ItemHoraireTravailController plage) {
+		this.iteratorItemHt = listItemHtCtrl.listIterator();
+		while (this.iteratorItemHt.hasNext() && !this.iteratorItemHt.next().equals(plage));
+	}
+
+	public void ajoutHoraireApresPlage(ItemHoraireTravailController itemPlage) {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(this.getClass().getResource("ItemHoraireTravail.fxml"));
+			VBox item = loader.load();
+			ItemHoraireTravailController itemHtCtrl = loader.getController();
+			itemHtCtrl.setPage(item);
+			itemHtCtrl.setJht(this);
+			placerIterateur(itemPlage);
+			this.iteratorItemHt.add(itemHtCtrl);
+			rafraichirListHoraire();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void rafraichirListHoraire() {
+		listeHoraireVBox.getChildren().clear();
+		for (ItemHoraireTravailController element : listItemHtCtrl) {
+			this.ajouterItemFin(element);
 		}
 	}
 
@@ -66,12 +106,12 @@ public class JourHoraireTravailController {
 		ajoutHoraire(new PlageHoraire());
 	}
 
-	public void supprimerHoraire() {
+	public void supprimerHoraire(ItemHoraireTravailController item) {
+		placerIterateur(item);
 		if (this.listeHoraireVBox.getChildren().size() != 1) {
-			this.listeHoraireVBox.getChildren().remove(this.listeHoraireVBox.getChildren().size() - 1);
-			this.dequeItemHtCtrl.removeLast();
+			this.iteratorItemHt.remove();
 		}
-
+		rafraichirListHoraire();
 	}
 
 	// Event Listener on Button.onAction
@@ -88,19 +128,19 @@ public class JourHoraireTravailController {
 	}
 
 	public void modifierHoraireJournalier(HoraireJournalier hj) {
-		if(null != hj.getTransportUtiliseSurPlace()) {
+		if (null != hj.getTransportUtiliseSurPlace()) {
 			this.setTransportUtiliseSurPlace(hj.getTransportUtiliseSurPlace().split(":")[0]);
 		}
-		
-		if(null!=hj.getDureeDuTrajetSurPlace()) {
+
+		if (null != hj.getDureeDuTrajetSurPlace()) {
 			this.setDureeDuTrajetSurPlace(hj.getDureeDuTrajetSurPlace().split(":")[0]);
 
 		}
-		
+
 		for (PlageHoraire plage : hj.getPlageHoraire()) {
 			this.ajoutHoraire(plage);
 		}
-	
+
 	}
 
 	public void setBoutonSuivantToSauvegarder() {
@@ -158,8 +198,19 @@ public class JourHoraireTravailController {
 		this.dureeDuTrajetSurPlace.setText(dureeDuTrajetSurPlace);
 	}
 
-	public ArrayDeque<ItemHoraireTravailController> getPlageHoraire() {
-		return dequeItemHtCtrl;
+	public VBox getListeHoraireVBox() {
+		return listeHoraireVBox;
 	}
 
+	public void setListeHoraireVBox(VBox listeHoraireVBox) {
+		this.listeHoraireVBox = listeHoraireVBox;
+	}
+	
+	public LinkedList<ItemHoraireTravailController> getListItemHtCtrl() {
+		return listItemHtCtrl;
+	}
+
+	public void setListItemHtCtrl(LinkedList<ItemHoraireTravailController> listItemHtCtrl) {
+		this.listItemHtCtrl = listItemHtCtrl;
+	}
 }
