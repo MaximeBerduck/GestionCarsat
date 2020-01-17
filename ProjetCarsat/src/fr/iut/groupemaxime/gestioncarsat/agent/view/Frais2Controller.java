@@ -75,7 +75,7 @@ public class Frais2Controller {
 	public void sauvegarderFraisMission() {
 		this.fmController.sauvegarderJournee(this.dateJournee.getText());
 		this.fmController.sauvegarderFrais();
-		this.fmController.getAgentApp().retirerDocActif();
+		this.fmController.getAgentApp().retourMenu();
 	}
 
 	// Event Listener on Button.onAction

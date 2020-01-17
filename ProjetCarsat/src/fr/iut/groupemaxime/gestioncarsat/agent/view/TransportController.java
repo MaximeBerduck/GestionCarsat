@@ -9,6 +9,9 @@ import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Transport;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Voiture;
 import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,9 +22,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 public class TransportController {
 	private OrdreMissionController mainApp;
@@ -92,6 +97,44 @@ public class TransportController {
 
 	public void initialize() {
 		this.page.getChildren().removeAll(trainClasseHBox, cramcoVBox, detailsAutreTransport);
+		this.boutonSigner.setDisable(true);
+
+		ScheduledService<Void> fileSaveService = new ScheduledService<Void>() {
+
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+
+					@Override
+					protected Void call() {
+						verifierBoutonSigner();
+						return null;
+					}
+
+				};
+			}
+		};
+		fileSaveService.setPeriod(Duration.ZERO);;
+		fileSaveService.start();
+	}
+
+	private void verifierBoutonSigner() {
+		String erreur = "";
+		if (avionRadioBtn.isSelected()) {
+			erreur = getErreurAvion();
+		} else if (voitureRadioBtn.isSelected()) {
+			erreur = getErreurVoiture();
+		} else if (trainRadioBtn.isSelected()) {
+			erreur = getErreurTrain();
+		} else {
+			erreur = getErreurAutre();
+		}
+		if (erreur.length() == 0) {
+			this.boutonSigner.setDisable(false);
+		}
+		else {
+			this.boutonSigner.setDisable(true);
+		}
 	}
 
 	public void setMainApp(OrdreMissionController mainApp) {
@@ -108,10 +151,9 @@ public class TransportController {
 			erreur = getErreurAvion();
 		} else if (voitureRadioBtn.isSelected()) {
 			erreur = getErreurVoiture();
-		} else if (trainRadioBtn.isSelected()){
+		} else if (trainRadioBtn.isSelected()) {
 			erreur = getErreurTrain();
-		}
-		else {
+		} else {
 			erreur = getErreurAutre();
 		}
 		if (erreur.length() > 0) {
@@ -199,10 +241,10 @@ public class TransportController {
 		erreur += getErreurCRAMCO();
 		return erreur;
 	}
-	
+
 	public String getErreurAutre() {
 		String erreur = "";
-		if(null == autreTransportTextField.getText() || 0 == autreTransportTextField.getText().length()) {
+		if (null == autreTransportTextField.getText() || 0 == autreTransportTextField.getText().length()) {
 			erreur += "Vous n'avez pas indiqué le moyen de transport utilisé! \n";
 		}
 		return erreur;
@@ -259,7 +301,7 @@ public class TransportController {
 	public TextField getNbrCVTextField() {
 		return nbrCVTextField;
 	}
-	
+
 	public TextField getAutreTransport() {
 		return autreTransportTextField;
 	}

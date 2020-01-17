@@ -118,6 +118,7 @@ public class MenuAgentController {
 		for (ItemOrdreMissionController item : listeOmCtrl) {
 			item.retirerStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		}
+		this.agentApp.retourMenu();
 	}
 
 	public AgentApp getAgentApp() {
