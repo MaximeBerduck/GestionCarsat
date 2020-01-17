@@ -31,8 +31,6 @@ public class HorairesTravailController {
 	
 	@FXML
 	private SplitPane horaireTravailSplit;
-	@FXML
-	private Label titre;
 	
 	private AgentApp agentApp;
 	private Options options;
@@ -48,6 +46,13 @@ public class HorairesTravailController {
 	
 	private HoraireTravail horaireTravail;
 	private Stage primaryStage;
+	
+	@FXML
+	private Label titre;
+
+	public void setTitre(String titre) {
+		this.titre.setText(titre);
+	}
 	
 	@FXML
 	private void initialize() {
@@ -226,10 +231,6 @@ public class HorairesTravailController {
 	
 	public void setHoraireTravail(HoraireTravail ht) {
 		this.horaireTravail = ht;
-	}
-
-	public void setTitre(String titre) {
-		this.titre.setText(titre);
 	}
 
 	public Options getOptions() {

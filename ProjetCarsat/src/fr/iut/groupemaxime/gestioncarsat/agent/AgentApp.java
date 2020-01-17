@@ -359,6 +359,8 @@ public class AgentApp extends Application {
 		this.afficherOrdresMission();
 		this.omCtrl.modifierOm(om);
 		this.omCtrl.setTitre(Constante.TITRE_MODIF_OM);
+		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 	}
 
 	public void modifierHt(OrdreMission missionActive) {
@@ -369,6 +371,8 @@ public class AgentApp extends Application {
 		this.htCtrl.modifierHoraireTravail(ht);
 		this.htCtrl.setHoraireTravail(ht);
 		this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
+		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 	}
 
 	public void afficherEnvoiDuMail() {
@@ -457,6 +461,8 @@ public class AgentApp extends Application {
 		this.fmCtrl.modifierFraisMission(fm);
 		this.fmCtrl.setFraisMission(fm);
 		this.fmCtrl.setTitre(Constante.TITRE_MODIF_FM);
+		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 
 	}
 
