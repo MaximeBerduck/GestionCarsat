@@ -51,7 +51,7 @@
                   <Insets right="50.0" />
                </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" onAction="#supprimerHoraire" prefHeight="29.0" prefWidth="37.0" style="-fx-font-weight: bold;" text="-" />
+            <Button fx:id="btnSupprimer" mnemonicParsing="false" onAction="#supprimerHoraire" prefHeight="29.0" prefWidth="37.0" style="-fx-font-weight: bold;" text="-" />
             <Button mnemonicParsing="false" onAction="#ajoutHoraire" prefHeight="29.0" prefWidth="37.0" style="-fx-font-weight: bold;" text="+">
                <HBox.margin>
                   <Insets left="10.0" />

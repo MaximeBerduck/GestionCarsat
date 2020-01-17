@@ -7,6 +7,8 @@ import java.util.ListIterator;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireJournalier;
 import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.PlageHoraire;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 public class JourHoraireTravailController {
 
@@ -45,7 +48,30 @@ public class JourHoraireTravailController {
 	public void initialize() {
 		this.listItemHtCtrl = new LinkedList<ItemHoraireTravailController>();
 		this.iteratorItemHt = listItemHtCtrl.listIterator();
+		ScheduledService<Void> serviceBtnSuppression = new ScheduledService<Void>() {
+
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+
+					@Override
+					protected Void call() {
+						if(listItemHtCtrl.size()==1) {
+							listItemHtCtrl.get(0).changerDisableBtn(true);
+						}
+						if(listItemHtCtrl.size()==2) {
+							listItemHtCtrl.get(0).changerDisableBtn(false);
+						}
+						return null;
+					}
+
+				};
+			}
+		};
+		serviceBtnSuppression.setPeriod(Duration.ZERO);;
+		serviceBtnSuppression.start();
 	}
+	
 
 	public void ajoutHoraire(PlageHoraire plage) {
 		try {

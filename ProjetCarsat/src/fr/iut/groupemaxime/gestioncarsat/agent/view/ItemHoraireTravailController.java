@@ -7,10 +7,13 @@ import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 public class ItemHoraireTravailController {
+	@FXML
+	private Button btnSupprimer;
 	@FXML
 	private VBox itemHoraire;
 
@@ -87,6 +90,10 @@ public class ItemHoraireTravailController {
 	public void setMin1Fin(String min1Fin) {
 		this.min1Fin.setText(min1Fin);
 		;
+	}
+
+	public void changerDisableBtn(boolean b) {
+		this.btnSupprimer.setDisable(b);
 	}
 
 }
