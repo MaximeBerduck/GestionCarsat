@@ -16,7 +16,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="heure1Deb" prefHeight="25.0" prefWidth="28.0" text="8">
+            <TextField fx:id="heure1Deb" prefHeight="25.0" prefWidth="28.0" text="0">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
@@ -36,7 +36,7 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="heure1Fin" prefHeight="25.0" prefWidth="28.0" text="12">
+            <TextField fx:id="heure1Fin" prefHeight="25.0" prefWidth="28.0" text="0">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>

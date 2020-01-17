@@ -103,7 +103,6 @@ public class RootLayoutController {
 	@FXML
 	public void modifierOptions() {
 		this.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		this.ajouterStyleOptions(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		agentApp.modifierOptions();
 	}
 
