@@ -57,6 +57,7 @@ public class AgentApp extends Application {
 
 	private OrdreMissionController omCtrl;
 	private AnchorPane ordreMission;
+	private ItemOrdreMissionController itemOmCtrl;
 
 	private AnchorPane fraisMission;
 	private FraisMissionController fmCtrl;
@@ -289,6 +290,13 @@ public class AgentApp extends Application {
 	public OrdreMissionController getOMCtrl() {
 		return this.omCtrl;
 	}
+	
+	public void retirerMissionActive()
+	{
+		this.missionActive = null;
+		this.rootLayoutCtrl.setLabelMissionSelectionnee("Aucune");
+		this.retourMenu();
+	}
 
 	public void setMissionActive(OrdreMission missionActive) {
 		this.missionActive = missionActive;
@@ -378,6 +386,7 @@ public class AgentApp extends Application {
 	public void afficherEnvoiDuMail() {
 		this.afficherOrdresMission();
 		this.omCtrl.afficherEnvoiDuMail();
+		this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 	}
 
 	public void demanderActionFM() {
@@ -503,16 +512,19 @@ public class AgentApp extends Application {
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == buttonTypeAfficher) {
 			this.afficherOrdreMissionPDF();
+			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		} else if (result.get() == buttonTypeModif) {
 			this.modifierOm(missionActive);
 		} else if (result.get() == buttonTypeSigner) {
+			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			this.signerOM();
 		} else if (result.get() == buttonTypeEnvoyer) {
+			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			this.afficherEnvoiDuMail();
 		} else {
+			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			// Ne fait rien == bouton "annuler"
 		}
-		this.afficherListeMissions();
 	}
 
 	public void demanderActionHT() {
@@ -542,14 +554,17 @@ public class AgentApp extends Application {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == buttonTypeAfficher) {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 				this.afficherHtXLS();
 			} else if (result.get() == buttonTypeModif) {
 				this.modifierHt(missionActive);
 			} else if (result.get() == buttonTypeSigner) {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 				// this.signerOM(); DEVRA ETRE signerHT()
 			} else if (result.get() == buttonTypeEnvoyer) {
 				// TODO
 			} else {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 				// Ne fait rien == bouton "annuler"
 			}
 		} else
@@ -575,7 +590,6 @@ public class AgentApp extends Application {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-
 	}
 
 	public void signerOM() {
@@ -642,6 +656,7 @@ public class AgentApp extends Application {
 	}
 
 	public void creerOrdreMission() {
+		this.retirerMissionActive();
 		this.afficherOrdresMission();
 		this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		this.omCtrl.creerNouveauOm();
