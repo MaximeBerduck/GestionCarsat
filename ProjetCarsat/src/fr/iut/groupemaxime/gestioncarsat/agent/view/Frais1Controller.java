@@ -3,6 +3,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -26,6 +27,8 @@ public class Frais1Controller {
 	private TextField nbrForfaitDecouchers;
 	@FXML
 	private TextField nbrJustifDecouchers;
+	@FXML
+	private Button btnRetour;
 
 	private AnchorPane pageFrais1;
 
@@ -55,6 +58,16 @@ public class Frais1Controller {
 		this.setNbrForfaitDecouchers(String.valueOf(fj.getNbrDecouchForfait()));
 		this.setNbrJustifDecouchers(String.valueOf(fj.getNbrDecouchJustif()));
 
+	}
+
+	public void afficherJourSuivant() {
+		this.fmController.sauvegarderJournee(this.dateJournee.getText());
+		this.fmController.afficherJourSuivant(this.dateJournee.getText());
+	}
+
+	public void afficherJourAvant() {
+		this.fmController.sauvegarderJournee(this.dateJournee.getText());
+		this.fmController.afficherJourAvant(this.dateJournee.getText());
 	}
 
 	public void setHeureDepart(String heureDepart) {
@@ -139,6 +152,10 @@ public class Frais1Controller {
 
 	public FraisMissionController getFmController() {
 		return fmController;
+	}
+
+	public void retirerBtnRetour() {
+		this.btnRetour.setVisible(false);
 	}
 
 }
