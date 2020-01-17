@@ -419,13 +419,23 @@ public class AgentApp extends Application {
 					// Ne fait rien == bouton "annuler"
 				}
 			} else {
-				this.modifierFrais(missionActive);
+				this.reprendreCreationFm(missionActive);
 			}
 
 		} else {
 			// Créer les frais de mission
 			this.creerFraisMission();
 		}
+	}
+
+	private void reprendreCreationFm(OrdreMission missionActive2) {
+		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(this.missionActive));
+		fm = fm.chargerJson(fm.getAdresseFichier());
+
+		this.afficherFraisMission();
+		this.fmCtrl.setFraisMission(fm);
+		this.fmCtrl.afficherSemaine();
+		this.fmCtrl.reprendreDernierJour(fm);
 	}
 
 	private void signerFM(OrdreMission missionActive) {
