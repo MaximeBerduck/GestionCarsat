@@ -174,6 +174,14 @@ public class FraisMission implements DocJson<FraisMission> {
 		return dateSignature;
 	}
 
+	public void setDateSignature(String dateSignature) {
+		this.dateSignature = dateSignature;
+	}
+
+	public void setEstSigne(boolean estSigne) {
+		this.estSigne = estSigne;
+	}
+
 	public void setAdresseFichier(String adresseFichier) {
 		this.adresseFichier = adresseFichier;
 	}

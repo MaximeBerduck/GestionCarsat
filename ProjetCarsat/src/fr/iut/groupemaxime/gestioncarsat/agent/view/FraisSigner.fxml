@@ -9,16 +9,16 @@
 <AnchorPane prefHeight="520.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.FraisSignerController">
    <children>
       <Label layoutX="108.0" layoutY="109.0" text="Je soussigné(e) certifie :" />
-      <CheckBox fx:id="informationsCheck" layoutX="106.0" layoutY="147.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="452.0" text="L'exactitude des informations renseignées sur le présent document" />
+      <CheckBox fx:id="informationsCheck" layoutX="106.0" layoutY="147.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="510.0" text="L'exactitude des informations renseignées sur le présent document" />
       <CheckBox fx:id="deduireFraisCheck" layoutX="107.0" layoutY="189.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="541.0" text="Avoir déduit  des frais engagés les avantages ou réductions dont j'ai bénificié à l'occasion de ce déplacement à savoir :" wrapText="true" />
       <TextField fx:id="montantDeductionFrais" layoutX="182.0" layoutY="232.0" prefHeight="27.0" prefWidth="91.0" text="0" />
       <Label layoutX="274.0" layoutY="237.0" text="€" />
-      <CheckBox fx:id="avanceCheck" layoutX="107.0" layoutY="268.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="226.0" text="Avoir bénéficié d'une avance de" />
-      <TextField fx:id="montantAvance" layoutX="335.0" layoutY="266.0" prefHeight="27.0" prefWidth="64.0" text="0" />
-      <Label layoutX="405.0" layoutY="270.0" text="€" />
-      <CheckBox fx:id="repasCheck" layoutX="107.0" layoutY="315.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="139.0" text="Avoir bénéficié de" />
-      <TextField fx:id="nbrRepasMidiOfferts" layoutX="250.0" layoutY="312.0" prefHeight="27.0" prefWidth="50.0" text="0" />
-      <Label layoutX="307.0" layoutY="317.0" text="repas de midi offerts par l'organisme d'accueil" />
+      <CheckBox fx:id="avanceCheck" layoutX="107.0" layoutY="268.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="267.0" text="Avoir bénéficié(e) d'une avance de" />
+      <TextField fx:id="montantAvance" layoutX="353.0" layoutY="266.0" prefHeight="27.0" prefWidth="64.0" text="0" />
+      <Label layoutX="417.0" layoutY="270.0" text="€" />
+      <CheckBox fx:id="repasCheck" layoutX="107.0" layoutY="315.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="169.0" text="Avoir bénéficié(e) de" />
+      <TextField fx:id="nbrRepasMidiOfferts" layoutX="264.0" layoutY="312.0" prefHeight="27.0" prefWidth="50.0" text="0" />
+      <Label layoutX="321.0" layoutY="317.0" prefHeight="19.0" prefWidth="324.0" text="repas de midi offert(s) par l'organisme d'accueil" />
       <Button layoutX="305.0" layoutY="382.0" mnemonicParsing="false" onAction="#validerInformations" text="Valider" />
    </children>
 </AnchorPane>
