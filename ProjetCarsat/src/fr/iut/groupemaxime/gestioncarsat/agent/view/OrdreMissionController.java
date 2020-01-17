@@ -300,7 +300,7 @@ public class OrdreMissionController {
 
 		om.sauvegarderJson(om.getCheminDossier());
 
-		this.mainApp.afficherListeMissions();
+		this.mainApp.retourMenu();
 	}
 
 	public void creerNouveauOm() {

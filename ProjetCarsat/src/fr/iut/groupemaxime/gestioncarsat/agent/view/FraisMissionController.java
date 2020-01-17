@@ -300,7 +300,7 @@ public class FraisMissionController {
 
 		this.fraisMission.signerFMAgent(montantDeductionFrais, montantAvance, nbrRepasOffert);
 		this.fraisMission.sauvegarderJson(this.fraisMission.getAdresseFichier());
-		this.agentApp.retirerDocActif();
+		this.agentApp.retourMenu();
 	}
 
 	public AgentApp getAgentApp() {

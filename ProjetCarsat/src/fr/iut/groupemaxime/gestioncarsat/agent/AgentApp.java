@@ -3,6 +3,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Optional;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
@@ -185,6 +186,18 @@ public class AgentApp extends Application {
 		}
 	}
 
+	public void retourMenu() {
+		this.retirerDocActif();
+		this.afficherListeMissions();
+		if (!this.missionActiveIsNull()) {
+			ItemOrdreMissionController itemOmCtrl = controllerMenuAgent.getItemOM(missionActive);
+			if (itemOmCtrl != null) {
+				this.setMissionActive(itemOmCtrl.getOM());
+				itemOmCtrl.ajouterStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			}
+		}
+	}
+
 	public void creerFraisMission() {
 		this.afficherFraisMission();
 		this.fmCtrl.creerFraisMission();
@@ -207,17 +220,26 @@ public class AgentApp extends Application {
 			this.rootLayoutCtrl.getGridRoot().add(this.horairesTravail, 2, 0);
 			this.htCtrl.setOptions(this.options);
 			this.htCtrl.setMissionActive(missionActive);
-//			HoraireTravail ht = new HoraireTravail(null);
-//			ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
-//					+ Constante.EXTENSION_JSON);
-//			this.htCtrl.afficherExcel(ht);
-//			File excelFile = new File(ht.getAdresseFichier().replace(".json", ".xls"));
-//			getHostServices().showDocument(excelFile.toURI().toURL().toExternalForm());
-//			this.retirerDocActif();
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void afficherHtXLS() {
+		this.afficherHorairesTravail();
+		try {
+			HoraireTravail ht = new HoraireTravail(null);
+			ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+					+ Constante.EXTENSION_JSON);
+			this.htCtrl.afficherExcel(ht);
+			File excelFile = new File(ht.getAdresseFichier().replace(".json", ".xls"));
+			getHostServices().showDocument(excelFile.toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.retirerDocActif();
 	}
 
 	public void afficherOrdresMission() {
@@ -255,13 +277,6 @@ public class AgentApp extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (!this.missionActiveIsNull()) {
-			ItemOrdreMissionController itemOmCtrl = controllerMenuAgent.getItemOM(missionActive);
-			if (itemOmCtrl != null) {
-				this.setMissionActive(itemOmCtrl.getOM());
-				itemOmCtrl.ajouterStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			}
-		}
 	}
 
 	public void creerDossier(String chemin) {
@@ -284,6 +299,7 @@ public class AgentApp extends Application {
 	}
 
 	private void afficherInfosMission(OrdreMission missionActive) {
+		this.retirerDocActif();
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(this.getClass().getResource("view/EtatMissionSelectionnee.fxml"));
@@ -333,7 +349,6 @@ public class AgentApp extends Application {
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.horairesTravail);
 		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.fraisMission);
 		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		this.afficherListeMissions();
 	}
 
 	public Options getOptions() {
@@ -511,13 +526,13 @@ public class AgentApp extends Application {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == buttonTypeAfficher) {
-				this.afficherHorairesTravail();
+				this.afficherHtXLS();
 			} else if (result.get() == buttonTypeModif) {
 				this.modifierHt(missionActive);
 			} else if (result.get() == buttonTypeSigner) {
 				// this.signerOM(); DEVRA ETRE signerHT()
 			} else if (result.get() == buttonTypeEnvoyer) {
-				this.afficherEnvoiDuMail();
+				// TODO
 			} else {
 				// Ne fait rien == bouton "annuler"
 			}
@@ -594,6 +609,7 @@ public class AgentApp extends Application {
 				this.missionActive.sauvegarderJson(this.getOptions().getCheminOM());
 			}
 		}
+		this.retourMenu();
 	}
 
 	public boolean missionActiveIsNull() {

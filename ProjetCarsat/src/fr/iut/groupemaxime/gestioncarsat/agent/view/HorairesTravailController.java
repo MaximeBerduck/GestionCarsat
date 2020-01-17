@@ -81,7 +81,7 @@ public class HorairesTravailController {
 	public void sauvegarderHoraires() {
 		this.horaireTravail.trierHoraireJournalier();
 		this.horaireTravail.sauvegarderJson(this.horaireTravail.getAdresseFichier());
-		this.agentApp.retirerDocActif();
+		this.agentApp.retourMenu();
 	}
 	
 	public void afficherPremierJour() {

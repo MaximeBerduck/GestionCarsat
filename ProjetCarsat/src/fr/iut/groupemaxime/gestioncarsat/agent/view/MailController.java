@@ -55,8 +55,9 @@ public class MailController {
 		if (adressesMailValides()) {
 			this.mainApp.getMainApp().getMissionActive().setEtat(EtatMission.EN_COURS_ENVOI);
 			this.mainApp.getMainApp().getMailsEnAttente().ajouterMail(new Mail(MailProcessor.creerMail(this)));
-			this.mainApp.getMainApp().getMailsEnAttente().chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE, this.mainApp.getMainApp().getOptions());
-			this.mainApp.getMainApp().retirerDocActif();
+			this.mainApp.getMainApp().getMailsEnAttente().chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE,
+					this.mainApp.getMainApp().getOptions());
+			this.mainApp.getMainApp().retourMenu();
 			this.mainApp.getMainApp().getServiceEnvoiMail().restart();
 		}
 	}
