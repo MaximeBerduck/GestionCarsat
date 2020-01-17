@@ -127,6 +127,7 @@ public class FraisMission implements DocJson<FraisMission> {
 		this.montantDeductionFrais = montantDeductionFrais;
 		this.montantAvance = montantAvance;
 		this.nbrRepasOffert = nbrRepasOffert;
+		this.etat = EtatMission.SIGNE;
 	}
 
 	public String getTypeAutreFrais() {
