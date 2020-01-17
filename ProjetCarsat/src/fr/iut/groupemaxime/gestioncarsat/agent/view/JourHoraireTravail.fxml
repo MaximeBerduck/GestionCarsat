@@ -65,16 +65,16 @@
                   <Label alignment="CENTER_RIGHT" prefHeight="19.0" prefWidth="291.0" text="Observations complémentaires :" textAlignment="RIGHT" GridPane.rowIndex="2" />
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <TextField fx:id="dureeDuTrajetSurPlace" alignment="CENTER" prefHeight="25.0" prefWidth="30.0" />
+                        <TextField fx:id="dureeDuTrajetSurPlaceHeure" alignment="CENTER" prefHeight="25.0" prefWidth="30.0" />
                         <Label text=":">
                            <HBox.margin>
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </Label>
-                        <TextField prefWidth="30.0" />
+                        <TextField fx:id="dureeTrajetSurPlaceMin" prefWidth="30.0" />
                      </children>
                   </HBox>
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <TextField fx:id="observation" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets right="50.0" />
                      </GridPane.margin>
