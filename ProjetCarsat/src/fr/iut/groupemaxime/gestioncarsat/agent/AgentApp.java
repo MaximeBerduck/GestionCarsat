@@ -207,13 +207,13 @@ public class AgentApp extends Application {
 			this.rootLayoutCtrl.getGridRoot().add(this.horairesTravail, 2, 0);
 			this.htCtrl.setOptions(this.options);
 			this.htCtrl.setMissionActive(missionActive);
-			HoraireTravail ht = new HoraireTravail(null);
-			ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
-					+ Constante.EXTENSION_JSON);
-			this.htCtrl.afficherExcel(ht);
-			File excelFile = new File(ht.getAdresseFichier().replace(".json", ".xls"));
-			getHostServices().showDocument(excelFile.toURI().toURL().toExternalForm());
-			this.retirerDocActif();
+//			HoraireTravail ht = new HoraireTravail(null);
+//			ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+//					+ Constante.EXTENSION_JSON);
+//			this.htCtrl.afficherExcel(ht);
+//			File excelFile = new File(ht.getAdresseFichier().replace(".json", ".xls"));
+//			getHostServices().showDocument(excelFile.toURI().toURL().toExternalForm());
+//			this.retirerDocActif();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -353,7 +353,7 @@ public class AgentApp extends Application {
 		this.afficherHorairesTravail();
 		this.htCtrl.modifierHoraireTravail(ht);
 		this.htCtrl.setHoraireTravail(ht);
-		// this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
+		this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
 	}
 
 	public void afficherEnvoiDuMail() {
