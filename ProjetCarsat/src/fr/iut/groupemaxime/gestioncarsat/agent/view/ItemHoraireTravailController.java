@@ -95,5 +95,7 @@ public class ItemHoraireTravailController {
 	public void changerDisableBtn(boolean b) {
 		this.btnSupprimer.setDisable(b);
 	}
+	
+	
 
 }

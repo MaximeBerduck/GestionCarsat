@@ -123,25 +123,27 @@ public class HorairesTravailController {
 	public void sauvegarderJournee(String date) {
 		HoraireJournalier horaireJournalier = new HoraireJournalier(date);
 		JourHoraireTravailController horaireCtrl = this.listeHoraires.get(date);
-		if(!"".equals(horaireCtrl.getTransportUtiliseSurPlace())) {
-			horaireJournalier.setTransportUtiliseSurPlace(
-					String.valueOf(horaireCtrl.getTransportUtiliseSurPlace()));
-		}
-		if(!"".equals(horaireCtrl.getDureeDuTrajetSurPlace())){
-			horaireJournalier.setDureeDuTrajetSurPlace(
-					String.valueOf(horaireCtrl.getDureeDuTrajetSurPlace()));
-		}
+		if(horaireCtrl.tousLesChampsValides()) {
+			if(!"".equals(horaireCtrl.getTransportUtiliseSurPlace())) {
+				horaireJournalier.setTransportUtiliseSurPlace(
+						String.valueOf(horaireCtrl.getTransportUtiliseSurPlace()));
+			}
+			if(!"".equals(horaireCtrl.getDureeDuTrajetSurPlace())){
+				horaireJournalier.setDureeDuTrajetSurPlace(
+						String.valueOf(horaireCtrl.getDureeDuTrajetSurPlace()));
+			}
 
-		for(ItemHoraireTravailController item : horaireCtrl.getListItemHtCtrl()){
-			PlageHoraire plage = new PlageHoraire();
-			plage.setHeureDeb(Integer.parseInt(item.getHeure1Deb()));
-			plage.setHeureFin(Integer.parseInt(item.getHeure1Fin()));
-			plage.setMinDeb(Integer.parseInt(item.getMin1Deb()));
-			plage.setMinFin(Integer.parseInt(item.getMin1Fin()));
-			horaireJournalier.ajouterHoraire(plage);
-		}
+			for(ItemHoraireTravailController item : horaireCtrl.getListItemHtCtrl()){
+				PlageHoraire plage = new PlageHoraire();
+				plage.setHeureDeb(Integer.parseInt(item.getHeure1Deb()));
+				plage.setHeureFin(Integer.parseInt(item.getHeure1Fin()));
+				plage.setMinDeb(Integer.parseInt(item.getMin1Deb()));
+				plage.setMinFin(Integer.parseInt(item.getMin1Fin()));
+				horaireJournalier.ajouterHoraire(plage);
+			}
 
-		this.horaireTravail.ajouterJournee(horaireJournalier);
+			this.horaireTravail.ajouterJournee(horaireJournalier);
+		}
 	}
 	
 	public void ajouterJour(String jour, String stringFin) {

@@ -13,9 +13,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -143,8 +145,11 @@ public class JourHoraireTravailController {
 	// Event Listener on Button.onAction
 	@FXML
 	public void validerJournee(ActionEvent event) {
-		this.htController.sauvegarderJournee(this.dateJournee.getText());
-		this.htController.afficherJourSuivant(this.dateJournee.getText());
+		if(tousLesChampsValides()) {
+			this.htController.sauvegarderJournee(this.dateJournee.getText());
+			this.htController.afficherJourSuivant(this.dateJournee.getText());
+		}
+
 	}
 
 	// Event Listener on Button.onAction
@@ -171,25 +176,30 @@ public class JourHoraireTravailController {
 
 	public void setBoutonSuivantToSauvegarder() {
 		this.boutonValider.setText("Valider");
-		this.boutonValider.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				htController.sauvegarderJournee(dateJournee.getText());
-				htController.sauvegarderHoraires();
-			}
-		});
+		if(tousLesChampsValides()) {
+			this.boutonValider.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent e) {
+					htController.sauvegarderJournee(dateJournee.getText());
+					htController.sauvegarderHoraires();
+				}
+			});
+		}
 	}
 
 	@FXML
 	public void boutonSuivantSauvegarde(ActionEvent event) {
+		if(tousLesChampsValides()) {
 		this.boutonValider.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				htController.sauvegarderJournee(dateJournee.getText());
-				htController.sauvegarderHoraires();
+					htController.sauvegarderJournee(dateJournee.getText());
+					htController.sauvegarderHoraires();
 			}
 		});
+		}
 	}
+	
 
 	public void setDateJournee(String date) {
 		this.dateJournee.setText(date);
@@ -238,5 +248,49 @@ public class JourHoraireTravailController {
 
 	public void setListItemHtCtrl(LinkedList<ItemHoraireTravailController> listItemHtCtrl) {
 		this.listItemHtCtrl = listItemHtCtrl;
+	}
+	
+	public boolean tousLesChampsValides() {
+		String erreur = "";
+		int compteur = 0;
+//		if(dureeDuTrajetSurPlace.getText()!=null || dureeDuTrajetSurPlace.getText().length()!=0) {
+//			try {
+//				Integer.parseInt(dureeDuTrajetSurPlace.getText());
+//			} catch (NumberFormatException e) {
+//				erreur += "Le champ duree de trajet est invalide (entrez un nombre entier)!\n";
+//			}
+//		}
+		
+	
+		for(ItemHoraireTravailController item : this.listItemHtCtrl){
+			if(item.getHeure1Deb()!=null || item.getHeure1Deb().length()!=0
+					|| item.getHeure1Fin() != null || item.getHeure1Fin().length()!=0
+					|| item.getMin1Deb() != null || item.getMin1Deb().length()!=0
+					|| item.getMin1Fin() != null || item.getMin1Fin().length()!=0) {
+				try {
+					Integer.parseInt(item.getHeure1Deb());
+					Integer.parseInt(item.getHeure1Fin());
+					Integer.parseInt(item.getMin1Deb());
+					Integer.parseInt(item.getMin1Fin());
+				} catch (NumberFormatException e) {
+					if (compteur ==0) {
+						erreur += "L'un des horaires de travail est invalide (entrez des nombres entiers)!\n";
+						compteur++;
+					}
+				}
+			}
+		}
+		if (erreur.length() > 0) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.initOwner(htController.getPrimaryStage());
+			alert.setTitle("Champs non Valides");
+			alert.setHeaderText("Des champs ne sont pas valides");
+			alert.setContentText(erreur);
+
+			alert.showAndWait();
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
