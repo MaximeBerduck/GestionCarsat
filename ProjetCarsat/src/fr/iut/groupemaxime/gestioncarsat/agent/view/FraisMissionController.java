@@ -89,6 +89,7 @@ public class FraisMissionController {
 	}
 
 	public void afficherPremierJour() {
+		this.listeFrais1.get(this.listeDate.get(0)).retirerBtnRetour();
 		this.fraisMissionSplit.getItems().add(1, this.listeFrais1.get(this.listeDate.get(0)).getPage());
 	}
 
@@ -104,13 +105,15 @@ public class FraisMissionController {
 				c.add(Calendar.DATE, 1); // number of days to add
 				date = Constante.FORMAT_DATE_SLASH.format(c.getTime());
 				this.ajouterJour(date, this.fraisMission.getDateFinMission());
-				i++;
 				this.listeDate.put(i, date);
 				this.listeDateInverse.put(date, i);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
+			if (this.fraisMissionSplit.getItems().size() < 2)
+				this.fraisMissionSplit.getItems().add(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
+			else
+				this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
 		}
 	}
 
@@ -307,5 +310,30 @@ public class FraisMissionController {
 
 	public AgentApp getAgentApp() {
 		return this.agentApp;
+	}
+
+	public void afficherJourAvant(String date) {
+		Integer i = this.listeDateInverse.get(date);
+		i--;
+		if (this.jourAvantExiste(date)) {
+			this.fraisMissionSplit.getItems().set(1, this.listeFrais1.get(this.listeDate.get(i)).getPage());
+		}
+	}
+
+	public boolean jourAvantExiste(String jour) {
+		Integer i = this.listeDateInverse.get(jour);
+		i--;
+		return null != this.listeDate.get(i);
+	}
+
+	public void reprendreDernierJour(FraisMission fm) {
+		Integer i = 0;
+		for (FraisJournalier fj : fm.getFraisMission().values()) {
+			this.modifierFraisJournalier(fj);
+			this.listeDate.put(i, fj.getDate());
+			this.listeDateInverse.put(fj.getDate(), i);
+			i++;
+		}
+		this.afficherJourSuivant(this.listeDate.get(this.listeDate.size() - 1));
 	}
 }

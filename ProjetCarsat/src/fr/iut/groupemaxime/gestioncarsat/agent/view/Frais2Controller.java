@@ -103,7 +103,7 @@ public class Frais2Controller {
 			}
 		});
 
-		// this.boutonQuitter.setVisible(false);
+		this.boutonQuitter.setVisible(false);
 	}
 
 	public void setTypeFraisTransport(String typeFraisTransport) {
