@@ -313,35 +313,37 @@ public class AgentApp extends Application {
 			loader.setLocation(this.getClass().getResource("view/EtatMissionSelectionnee.fxml"));
 
 			etatMission = loader.load();
-
+			
 			EtatMissionSelectionneeController etatMissionCtrl = loader.getController();
-
-			etatMissionCtrl.setEtatOM(missionActive.getEtat().getEtat());
+			
+			System.out.println(missionActive.getEtat().getEtat());
+			etatMissionCtrl.choisirCouleurOM(missionActive.getEtat().getEtat());
+			etatMissionCtrl.modifierInfosMission(missionActive);
 
 			if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
 				FraisMission fm = new FraisMission(null);
 				fm = fm.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "FM_")
 						+ Constante.EXTENSION_JSON);
 
-				etatMissionCtrl.setEtatFM(fm.getEtat().getEtat());
+				etatMissionCtrl.choisirCouleurFM(fm.getEtat().getEtat());
 
 			} else {
-				etatMissionCtrl.setEtatFM(EtatMission.NON_REMPLI.getEtat());
+				//etatMissionCtrl.setEtatFM(EtatMission.NON_REMPLI.getEtat());
 			}
 
 			if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
 				HoraireTravail ht = new HoraireTravail(null);
 				ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
 						+ Constante.EXTENSION_JSON);
-				etatMissionCtrl.setEtatHT(ht.getEtat().getEtat());
+				//etatMissionCtrl.setEtatHT(ht.getEtat().getEtat());
 			} else {
-				etatMissionCtrl.setEtatHT(EtatMission.NON_REMPLI.getEtat());
+				//etatMissionCtrl.setEtatHT(EtatMission.NON_REMPLI.getEtat());
 			}
 
-			etatMissionCtrl.setCouleurOM(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatOM()));
-			etatMissionCtrl.setCouleurFM(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatFM()));
-			etatMissionCtrl.setCouleurHT(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatHT()));
-			etatMissionCtrl.modifierInfosMission(missionActive);
+			//etatMissionCtrl.setCouleurOM(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatOM()));
+			//etatMissionCtrl.setCouleurFM(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatFM()));
+			//etatMissionCtrl.setCouleurHT(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatHT()));
+			//etatMissionCtrl.modifierInfosMission(missionActive);
 
 			this.rootLayoutCtrl.getGridRoot().add(etatMission, 2, 0);
 
