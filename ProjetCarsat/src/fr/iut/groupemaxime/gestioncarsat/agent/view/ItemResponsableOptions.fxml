@@ -6,20 +6,28 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="238.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.ItemResponsableOptionsController">
-   <children>
-      <ScrollPane maxHeight="47.0" minHeight="30.0" prefHeight="47.0" prefWidth="206.0">
-         <content>
-            <AnchorPane prefHeight="25.0" prefWidth="204.0">
-               <children>
-                  <Label fx:id="adresseMailResponsable" layoutX="1.0" layoutY="3.0" prefHeight="19.0" text="pifwej@ejrer" />
-               </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
-      <Button layoutX="209.0" mnemonicParsing="false" onAction="#supprimerResponsable" prefHeight="29.0" prefWidth="29.0" text="-" />
-   </children>
-   <opaqueInsets>
-      <Insets bottom="1.0" />
-   </opaqueInsets>
+<AnchorPane maxHeight="30.0" minHeight="30.0"
+	prefHeight="30.0" prefWidth="238.0" stylesheets="@../style.css"
+	xmlns="http://javafx.com/javafx/11.0.1"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.ItemResponsableOptionsController">
+	<children>
+		<ScrollPane maxHeight="47.0" minHeight="30.0"
+			prefHeight="47.0" prefWidth="206.0">
+			<content>
+				<AnchorPane prefHeight="25.0" prefWidth="204.0">
+					<children>
+						<Label fx:id="adresseMailResponsable" layoutX="1.0"
+							layoutY="3.0" prefHeight="19.0" text="pifwej@ejrer" />
+					</children>
+				</AnchorPane>
+			</content>
+		</ScrollPane>
+		<Button layoutX="209.0" mnemonicParsing="false"
+			onAction="#supprimerResponsable" prefHeight="29.0" prefWidth="29.0"
+			text="-" />
+	</children>
+	<opaqueInsets>
+		<Insets bottom="1.0" />
+	</opaqueInsets>
 </AnchorPane>

@@ -11,140 +11,183 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.MissionController">
-   <children>
-      <VBox fx:id="pageVBox" alignment="CENTER" layoutY="38.0" prefHeight="512.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
-         <children>
-            <RadioButton fx:id="ordrePermanentRadioBtn" disable="true" mnemonicParsing="false" onAction="#ordrePermanentRadioBtnSelectionne" prefHeight="50.0" prefWidth="700.0" text="Ordre de mission permanent (dans la fonction indiqué avant)">
-               <toggleGroup>
-                  <ToggleGroup fx:id="typeOmToggleG" />
-               </toggleGroup>
-               <VBox.margin>
-                  <Insets left="110.0" />
-               </VBox.margin>
-            </RadioButton>
-            <RadioButton fx:id="ordrePonctuelRadioBtn" mnemonicParsing="false" onAction="#ordrePonctuelRadioBtnSelectionne" prefHeight="50.0" prefWidth="700.0" selected="true" text="Ordre de mission ponctuel pour la période (dates de début et de fin) :" toggleGroup="$typeOmToggleG">
-               <VBox.margin>
-                  <Insets left="110.0" />
-               </VBox.margin></RadioButton>
-            <HBox fx:id="missionPonctuelHBox1" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="du" />
-                  <DatePicker fx:id="dateDebut" editable="false" onAction="#onDateDebutModifier" prefWidth="174.0">
-                     <HBox.margin>
-                        <Insets top="13.0" />
-                     </HBox.margin>
-                  </DatePicker>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="à" />
-                  <TextField fx:id="heureDepart" prefWidth="35.0">
-                     <HBox.margin>
-                        <Insets top="13.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Label fx:id="labelAu11" alignment="CENTER" prefHeight="50.0" prefWidth="10.0" text=":" />
-                  <TextField fx:id="minuteDepart" prefWidth="35.0">
-                     <HBox.margin>
-                        <Insets top="13.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets left="110.0" top="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox fx:id="missionPonctuelHBox" prefWidth="600.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="au" />
-                  <DatePicker fx:id="dateFin" editable="false" onAction="#onDateFinModifier" prefWidth="174.0">
-                     <HBox.margin>
-                        <Insets top="13.0" />
-                     </HBox.margin>
-                  </DatePicker>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0" text="à" />
-                  <TextField fx:id="heureRetour" prefWidth="35.0">
-                     <HBox.margin>
-                        <Insets top="13.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Label fx:id="labelAu111" alignment="CENTER" prefHeight="50.0" prefWidth="10.0" text=":" />
-                  <TextField fx:id="minuteRetour" prefWidth="35.0">
-                     <HBox.margin>
-                        <Insets top="13.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets left="110.0" top="10.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefWidth="600.0">
-               <children>
-                  <Label prefHeight="50.0" prefWidth="173.0" text="Motif du déplacement :">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin></Label>
-                  <TextField fx:id="motifDeplacementTextField" prefWidth="150.0">
-                     <HBox.margin>
-                        <Insets top="13.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets left="110.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefWidth="600.0">
-               <children>
-                  <Label prefHeight="50.0" prefWidth="161.0" text="Lieu du déplacement :" />
-                  <TextField fx:id="lieuDeplacementTextField" prefWidth="150.0">
-                     <HBox.margin>
-                        <Insets left="12.0" top="13.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-               <VBox.margin>
-                  <Insets left="110.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefWidth="600.0">
-               <children>
-                  <Label prefHeight="50.0" prefWidth="81.0" text="Au titre de :" />
-                  <RadioButton fx:id="fonctionHabituelleRadioBtn" mnemonicParsing="false" prefHeight="50.0" prefWidth="177.0" selected="true" text="La fonction habituelle">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="titreToggleG" />
-                     </toggleGroup>
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </RadioButton>
-                  <RadioButton fx:id="formationRadioBtn" mnemonicParsing="false" prefHeight="50.0" text="La formation" toggleGroup="$titreToggleG">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin></RadioButton>
-               </children>
-               <VBox.margin>
-                  <Insets left="110.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefWidth="600.0" spacing="35.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#retournerAInfoPerso" prefHeight="30.0" prefWidth="100.0" text="&lt;&lt; Retour">
-                     <HBox.margin>
-                        <Insets top="20.0" />
-                     </HBox.margin></Button>
-                  <Button mnemonicParsing="false" onAction="#passerAMoyenTransport" prefHeight="30.0" prefWidth="100.0" text="Suivant &gt;&gt;">
-                     <HBox.margin>
-                        <Insets top="20.0" />
-                     </HBox.margin></Button>
-               </children>
-               <padding>
-                  <Insets left="275.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets left="100.0" top="50.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-      </VBox>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0"
+	prefWidth="700.0" stylesheets="@../style.css"
+	xmlns="http://javafx.com/javafx/8.0.171"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.MissionController">
+	<children>
+		<VBox fx:id="pageVBox" alignment="CENTER" layoutY="38.0"
+			prefHeight="512.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+			AnchorPane.topAnchor="38.0">
+			<children>
+				<RadioButton fx:id="ordrePermanentRadioBtn"
+					disable="true" mnemonicParsing="false"
+					onAction="#ordrePermanentRadioBtnSelectionne" prefHeight="50.0"
+					prefWidth="700.0"
+					text="Ordre de mission permanent (dans la fonction indiqué avant)">
+					<toggleGroup>
+						<ToggleGroup fx:id="typeOmToggleG" />
+					</toggleGroup>
+					<VBox.margin>
+						<Insets left="110.0" />
+					</VBox.margin>
+				</RadioButton>
+				<RadioButton fx:id="ordrePonctuelRadioBtn"
+					mnemonicParsing="false"
+					onAction="#ordrePonctuelRadioBtnSelectionne" prefHeight="50.0"
+					prefWidth="700.0" selected="true"
+					text="Ordre de mission ponctuel pour la période (dates de début et de fin) :"
+					toggleGroup="$typeOmToggleG">
+					<VBox.margin>
+						<Insets left="110.0" />
+					</VBox.margin>
+				</RadioButton>
+				<HBox fx:id="missionPonctuelHBox1" prefWidth="600.0">
+					<children>
+						<Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0"
+							text="du" />
+						<DatePicker fx:id="dateDebut" editable="false"
+							onAction="#onDateDebutModifier" prefWidth="174.0">
+							<HBox.margin>
+								<Insets top="13.0" />
+							</HBox.margin>
+						</DatePicker>
+						<Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0"
+							text="à" />
+						<TextField fx:id="heureDepart" prefWidth="35.0">
+							<HBox.margin>
+								<Insets top="13.0" />
+							</HBox.margin>
+						</TextField>
+						<Label fx:id="labelAu11" alignment="CENTER"
+							prefHeight="50.0" prefWidth="10.0" text=":" />
+						<TextField fx:id="minuteDepart" prefWidth="35.0">
+							<HBox.margin>
+								<Insets top="13.0" />
+							</HBox.margin>
+						</TextField>
+					</children>
+					<VBox.margin>
+						<Insets left="110.0" top="10.0" />
+					</VBox.margin>
+				</HBox>
+				<HBox fx:id="missionPonctuelHBox" prefWidth="600.0">
+					<children>
+						<Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0"
+							text="au" />
+						<DatePicker fx:id="dateFin" editable="false"
+							onAction="#onDateFinModifier" prefWidth="174.0">
+							<HBox.margin>
+								<Insets top="13.0" />
+							</HBox.margin>
+						</DatePicker>
+						<Label alignment="CENTER" prefHeight="50.0" prefWidth="50.0"
+							text="à" />
+						<TextField fx:id="heureRetour" prefWidth="35.0">
+							<HBox.margin>
+								<Insets top="13.0" />
+							</HBox.margin>
+						</TextField>
+						<Label fx:id="labelAu111" alignment="CENTER"
+							prefHeight="50.0" prefWidth="10.0" text=":" />
+						<TextField fx:id="minuteRetour" prefWidth="35.0">
+							<HBox.margin>
+								<Insets top="13.0" />
+							</HBox.margin>
+						</TextField>
+					</children>
+					<VBox.margin>
+						<Insets left="110.0" top="10.0" />
+					</VBox.margin>
+				</HBox>
+				<HBox prefWidth="600.0">
+					<children>
+						<Label prefHeight="50.0" prefWidth="173.0"
+							text="Motif du déplacement :">
+							<HBox.margin>
+								<Insets />
+							</HBox.margin>
+						</Label>
+						<TextField fx:id="motifDeplacementTextField"
+							prefWidth="150.0">
+							<HBox.margin>
+								<Insets top="13.0" />
+							</HBox.margin>
+						</TextField>
+					</children>
+					<VBox.margin>
+						<Insets left="110.0" />
+					</VBox.margin>
+				</HBox>
+				<HBox prefWidth="600.0">
+					<children>
+						<Label prefHeight="50.0" prefWidth="161.0"
+							text="Lieu du déplacement :" />
+						<TextField fx:id="lieuDeplacementTextField"
+							prefWidth="150.0">
+							<HBox.margin>
+								<Insets left="12.0" top="13.0" />
+							</HBox.margin>
+						</TextField>
+					</children>
+					<VBox.margin>
+						<Insets left="110.0" />
+					</VBox.margin>
+				</HBox>
+				<HBox prefWidth="600.0">
+					<children>
+						<Label prefHeight="50.0" prefWidth="81.0"
+							text="Au titre de :" />
+						<RadioButton fx:id="fonctionHabituelleRadioBtn"
+							mnemonicParsing="false" prefHeight="50.0" prefWidth="177.0"
+							selected="true" text="La fonction habituelle">
+							<toggleGroup>
+								<ToggleGroup fx:id="titreToggleG" />
+							</toggleGroup>
+							<HBox.margin>
+								<Insets left="20.0" />
+							</HBox.margin>
+						</RadioButton>
+						<RadioButton fx:id="formationRadioBtn"
+							mnemonicParsing="false" prefHeight="50.0" text="La formation"
+							toggleGroup="$titreToggleG">
+							<HBox.margin>
+								<Insets left="10.0" />
+							</HBox.margin>
+						</RadioButton>
+					</children>
+					<VBox.margin>
+						<Insets left="110.0" />
+					</VBox.margin>
+				</HBox>
+				<HBox prefWidth="600.0" spacing="35.0">
+					<children>
+						<Button mnemonicParsing="false"
+							onAction="#retournerAInfoPerso" prefHeight="30.0"
+							prefWidth="100.0" text="&lt;&lt; Retour">
+							<HBox.margin>
+								<Insets top="20.0" />
+							</HBox.margin>
+						</Button>
+						<Button mnemonicParsing="false"
+							onAction="#passerAMoyenTransport" prefHeight="30.0"
+							prefWidth="100.0" text="Suivant &gt;&gt;">
+							<HBox.margin>
+								<Insets top="20.0" />
+							</HBox.margin>
+						</Button>
+					</children>
+					<padding>
+						<Insets left="275.0" />
+					</padding>
+					<VBox.margin>
+						<Insets left="100.0" top="50.0" />
+					</VBox.margin>
+				</HBox>
+			</children>
+		</VBox>
+	</children>
 </AnchorPane>

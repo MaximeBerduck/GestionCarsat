@@ -5,13 +5,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.FraisMissionController">
-   <children>
-      <SplitPane fx:id="fraisMissionSplit" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="550.0" prefWidth="700.0" />
-      <Label fx:id="titre" alignment="CENTER" prefHeight="120.0" prefWidth="700.0" text="Création des frais de mission">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0"
+	prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.FraisMissionController">
+	<children>
+		<SplitPane fx:id="fraisMissionSplit" maxHeight="-Infinity"
+			maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+			orientation="VERTICAL" prefHeight="550.0" prefWidth="700.0" />
+		<Label fx:id="titre" alignment="CENTER" prefHeight="120.0"
+			prefWidth="700.0" text="Création des frais de mission">
+			<font>
+				<Font name="System Bold" size="18.0" />
+			</font>
+		</Label>
+	</children>
 </AnchorPane>

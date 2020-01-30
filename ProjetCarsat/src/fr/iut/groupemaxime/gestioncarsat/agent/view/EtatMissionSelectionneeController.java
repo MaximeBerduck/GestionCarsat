@@ -22,29 +22,29 @@ public class EtatMissionSelectionneeController {
 	private Label saisieEnCoursOM;
 	@FXML
 	private Label signeOM;
-	@FXML 
+	@FXML
 	private Label envoiEnCoursOM;
-	@FXML 
+	@FXML
 	private Label envoiOM;
-	
+
 	@FXML
 	private Label saisieEnCoursFM;
 	@FXML
 	private Label signeFM;
-	@FXML 
+	@FXML
 	private Label envoiEnCoursFM;
-	@FXML 
+	@FXML
 	private Label envoiFM;
-	
+
 	@FXML
 	private Label saisieEnCoursHT;
 	@FXML
 	private Label signeHT;
-	@FXML 
+	@FXML
 	private Label envoiEnCoursHT;
-	@FXML 
+	@FXML
 	private Label envoiHT;
-	
+
 	@FXML
 	private Label lieuMission;
 	@FXML
@@ -57,7 +57,7 @@ public class EtatMissionSelectionneeController {
 	private Label heureDebut;
 	@FXML
 	private Label heureFin;
-	
+
 	@FXML
 	private ImageView saisieOM;
 	@FXML
@@ -66,7 +66,7 @@ public class EtatMissionSelectionneeController {
 	private ImageView coursEnvoiOM;
 	@FXML
 	private ImageView envoyeOM;
-	
+
 	@FXML
 	private ImageView saisieFM;
 	@FXML
@@ -75,7 +75,7 @@ public class EtatMissionSelectionneeController {
 	private ImageView coursEnvoiFM;
 	@FXML
 	private ImageView envoyeFM;
-	
+
 	@FXML
 	private ImageView saisieHT;
 	@FXML
@@ -84,30 +84,27 @@ public class EtatMissionSelectionneeController {
 	private ImageView coursEnvoiHT;
 	@FXML
 	private ImageView envoyeHT;
-	
-	
-	
+
 	@FXML
-	public void initialize()
-	{
+	public void initialize() {
 		this.saisieOM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "saisie.png"));
 		this.signatureOM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "signature.png"));
 		this.coursEnvoiOM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "envoiEnCours.png"));
 		this.envoyeOM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "envoi.png"));
-		
+
 		this.saisieFM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "saisie.png"));
 		this.signatureFM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "signature.png"));
 		this.coursEnvoiFM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "envoiEnCours.png"));
 		this.envoyeFM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "envoi.png"));
-		
+
 		this.saisieHT.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "saisie.png"));
 		this.signatureHT.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "signature.png"));
 		this.coursEnvoiHT.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "envoiEnCours.png"));
 		this.envoyeHT.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "envoi.png"));
-		
+
 	}
-	
-	//Style Etat OM
+
+	// Style Etat OM
 	public void ajouterStyleSaisieEnCoursOM(String style) {
 		this.saisieEnCoursOM.setStyle(this.saisieEnCoursOM.getStyle() + style);
 	}
@@ -116,98 +113,118 @@ public class EtatMissionSelectionneeController {
 		this.saisieEnCoursOM.setStyle(this.saisieEnCoursHT.getStyle() + style);
 		this.signeOM.setStyle(this.signeOM.getStyle() + style);
 	}
+
 	public void ajouterStyleEnvoiEnCoursOM(String style) {
 		this.ajouterStyleSigneOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		this.envoiEnCoursOM.setStyle(this.envoiEnCoursOM.getStyle() + style);
 	}
+
 	public void ajouterStyleEnvoyeOM(String style) {
-		this.ajouterStyleEnvoyeOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.ajouterStyleEnvoiEnCoursOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		this.envoiOM.setStyle(this.saisieEnCoursOM.getStyle() + style);
 	}
-	//Style Etat FM
-		public void ajouterStyleSaisieEnCoursFM(String style) {
-			this.saisieEnCoursFM.setStyle(this.saisieEnCoursFM.getStyle() + style);
-		}
-		public void ajouterStyleSigneFM(String style) {
-			this.saisieEnCoursFM.setStyle(this.saisieEnCoursHT.getStyle() + style);
-			this.signeFM.setStyle(this.signeFM.getStyle() + style);
-		}
-		public void ajouterStyleEnvoiEnCoursFM(String style) {
-			this.ajouterStyleSigneFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			this.envoiEnCoursFM.setStyle(this.envoiEnCoursFM.getStyle() + style);
-		}
-		public void ajouterStyleEnvoyeFM(String style) {
-			this.ajouterStyleEnvoiEnCoursFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			this.envoiFM.setStyle(this.envoiFM.getStyle() + style);
-		}
-		
-		
-		//Style Etat HT
-		public void ajouterStyleSaisieEnCoursHT(String style) {
-			this.saisieEnCoursHT.setStyle(this.saisieEnCoursHT.getStyle() + style);
-		}
-		
-		public void ajouterStyleSigneHT(String style) {
-			this.saisieEnCoursHT.setStyle(this.saisieEnCoursHT.getStyle() + style);
-			this.signeHT.setStyle(this.signeHT.getStyle() + style);
-		}
-		public void ajouterStyleEnvoiEnCoursHT(String style) {
-			this.ajouterStyleSigneHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			this.ajouterStyleEnvoiEnCoursHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		}
-		public void ajouterStyleEnvoyeHT(String style) {
-			this.ajouterStyleEnvoiEnCoursHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			this.envoiHT.setStyle(this.saisieEnCoursHT.getStyle() + style);
-		}
 
+	// Style Etat FM
+	public void ajouterStyleSaisieEnCoursFM(String style) {
+		this.saisieEnCoursFM.setStyle(this.saisieEnCoursFM.getStyle() + style);
+	}
 
+	public void ajouterStyleSigneFM(String style) {
+		this.saisieEnCoursFM.setStyle(this.saisieEnCoursHT.getStyle() + style);
+		this.signeFM.setStyle(this.signeFM.getStyle() + style);
+	}
+
+	public void ajouterStyleEnvoiEnCoursFM(String style) {
+		this.ajouterStyleSigneFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.envoiEnCoursFM.setStyle(this.envoiEnCoursFM.getStyle() + style);
+	}
+
+	public void ajouterStyleEnvoyeFM(String style) {
+		this.ajouterStyleEnvoiEnCoursFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.envoiFM.setStyle(this.envoiFM.getStyle() + style);
+	}
+
+	// Style Etat HT
+	public void ajouterStyleSaisieEnCoursHT(String style) {
+		this.saisieEnCoursHT.setStyle(this.saisieEnCoursHT.getStyle() + style);
+	}
+
+	public void ajouterStyleSigneHT(String style) {
+		this.saisieEnCoursHT.setStyle(this.saisieEnCoursHT.getStyle() + style);
+		this.signeHT.setStyle(this.signeHT.getStyle() + style);
+	}
+
+	public void ajouterStyleEnvoiEnCoursHT(String style) {
+		this.ajouterStyleSigneHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.ajouterStyleEnvoiEnCoursHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+	}
+
+	public void ajouterStyleEnvoyeHT(String style) {
+		this.ajouterStyleEnvoiEnCoursHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.envoiHT.setStyle(this.saisieEnCoursHT.getStyle() + style);
+	}
 
 	public void choisirCouleurOM(String etat) {
 		switch (etat) {
 		case "Envoyé":
-			this.ajouterStyleEnvoyeOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleEnvoyeOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "Signé":
-			this.ajouterStyleSigneOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleSigneOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "En cours d'envoi":
-			this.ajouterStyleEnvoiEnCoursOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleEnvoiEnCoursOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "En cours de saisie":
-			this.ajouterStyleSaisieEnCoursOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleSaisieEnCoursOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "Non signé":
-			this.ajouterStyleSaisieEnCoursOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleSaisieEnCoursOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 
 		default:
-		
+
 		}
 	}
-	
+
 	public void choisirCouleurFM(String etat) {
 		switch (etat) {
 		case "Envoyé":
-			this.ajouterStyleEnvoyeFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleEnvoyeFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "Signé":
-			this.ajouterStyleSigneFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleSigneFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "En cours d'envoi":
-			this.ajouterStyleEnvoiEnCoursFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleEnvoiEnCoursFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "En cours de saisie":
-			this.ajouterStyleSaisieEnCoursFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleSaisieEnCoursFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "Non signé":
-			this.ajouterStyleSaisieEnCoursFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleSaisieEnCoursFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		default:
 		}
 	}
-	
+
 	public void choisirCouleurHT(String etat) {
 		switch (etat) {
 		case "Envoyé":
-			this.ajouterStyleEnvoyeHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleEnvoyeHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "Signé":
-			this.ajouterStyleSigneHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleSigneHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "En cours d'envoi":
-			this.ajouterStyleEnvoiEnCoursHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleEnvoiEnCoursHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "En cours de saisie":
-			this.ajouterStyleSaisieEnCoursHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleSaisieEnCoursHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		case "Non signé":
-			this.ajouterStyleSaisieEnCoursHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);break;
+			this.ajouterStyleSaisieEnCoursHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			break;
 		default:
 		}
 	}
@@ -227,7 +244,6 @@ public class EtatMissionSelectionneeController {
 		this.setHeureDebutMission(mission.getHeureDebut());
 		this.setHeureFinMission(mission.getHeureFin());
 	}
-	
 
 	public Label getSaisieEnCoursOM() {
 		return saisieEnCoursOM;

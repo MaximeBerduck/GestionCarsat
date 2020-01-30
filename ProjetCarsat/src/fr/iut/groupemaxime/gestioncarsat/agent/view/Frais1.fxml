@@ -6,33 +6,58 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.Frais1Controller">
-   <children>
-      <Label layoutX="20.0" layoutY="61.0" style="-fx-font-weight: bold;" text="Journée du " />
-      <Label fx:id="dateJournee" layoutX="101.0" layoutY="61.0" style="-fx-font-weight: bold;" text="12/34/5678">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Label>
-      <Label layoutX="214.0" layoutY="86.0" prefHeight="19.0" prefWidth="134.0" text="Heure de départ :" />
-      <TextField fx:id="heureDepart" layoutX="346.0" layoutY="81.0" prefHeight="27.0" prefWidth="42.0" />
-      <Label layoutX="410.0" layoutY="86.0" text=":" />
-      <TextField fx:id="minDepart" layoutX="441.0" layoutY="81.0" prefHeight="27.0" prefWidth="42.0" />
-      <Label layoutX="212.0" layoutY="133.0" prefHeight="19.0" prefWidth="134.0" text="Heure de retour :" />
-      <TextField fx:id="heureRetour" layoutX="345.0" layoutY="128.0" prefHeight="27.0" prefWidth="42.0" />
-      <Label layoutX="409.0" layoutY="133.0" text=":" />
-      <TextField fx:id="minRetour" layoutX="440.0" layoutY="128.0" prefHeight="27.0" prefWidth="42.0" />
-      <Label layoutX="290.0" layoutY="193.0" text="Nombre de repas" underline="true" />
-      <Label layoutX="276.0" layoutY="229.0" text="Forfait :" />
-      <TextField fx:id="nbrForfaitRepas" layoutX="369.0" layoutY="224.0" prefHeight="27.0" prefWidth="42.0" />
-      <Label layoutX="265.0" layoutY="267.0" text="Justificatif :" />
-      <TextField fx:id="nbrJustificatifRepas" layoutX="369.0" layoutY="262.0" prefHeight="27.0" prefWidth="42.0" />
-      <Label layoutX="273.0" layoutY="335.0" text="Nombre de découchers" underline="true" />
-      <Label layoutX="279.0" layoutY="372.0" text="Forfait :" />
-      <TextField fx:id="nbrForfaitDecouchers" layoutX="372.0" layoutY="367.0" prefHeight="27.0" prefWidth="42.0" />
-      <Label layoutX="268.0" layoutY="410.0" text="Justificatif :" />
-      <TextField fx:id="nbrJustifDecouchers" layoutX="372.0" layoutY="405.0" prefHeight="27.0" prefWidth="42.0" />
-      <Button layoutX="528.0" layoutY="446.0" mnemonicParsing="false" onAction="#afficherFrais2" prefHeight="30.0" prefWidth="100.0" text="Suivant &gt;&gt;" />
-      <Button layoutX="285.0" layoutY="447.0" mnemonicParsing="false" onAction="#afficherJourSuivant" text="Aucun frais pour ce jour" />
-      <Button fx:id="btnRetour" layoutX="57.0" layoutY="447.0" mnemonicParsing="false" onAction="#afficherJourAvant" text="Journée précédente" />
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0"
+	prefWidth="700.0" stylesheets="@../style.css"
+	xmlns="http://javafx.com/javafx/11.0.1"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.Frais1Controller">
+	<children>
+		<Label layoutX="20.0" layoutY="61.0"
+			style="-fx-font-weight: bold;" text="Journée du " />
+		<Label fx:id="dateJournee" layoutX="101.0" layoutY="61.0"
+			style="-fx-font-weight: bold;" text="12/34/5678">
+			<font>
+				<Font name="System Bold" size="12.0" />
+			</font>
+		</Label>
+		<Label layoutX="214.0" layoutY="86.0" prefHeight="19.0"
+			prefWidth="134.0" text="Heure de départ :" />
+		<TextField fx:id="heureDepart" layoutX="346.0"
+			layoutY="81.0" prefHeight="27.0" prefWidth="42.0" />
+		<Label layoutX="410.0" layoutY="86.0" text=":" />
+		<TextField fx:id="minDepart" layoutX="441.0" layoutY="81.0"
+			prefHeight="27.0" prefWidth="42.0" />
+		<Label layoutX="212.0" layoutY="133.0" prefHeight="19.0"
+			prefWidth="134.0" text="Heure de retour :" />
+		<TextField fx:id="heureRetour" layoutX="345.0"
+			layoutY="128.0" prefHeight="27.0" prefWidth="42.0" />
+		<Label layoutX="409.0" layoutY="133.0" text=":" />
+		<TextField fx:id="minRetour" layoutX="440.0" layoutY="128.0"
+			prefHeight="27.0" prefWidth="42.0" />
+		<Label layoutX="290.0" layoutY="193.0" text="Nombre de repas"
+			underline="true" />
+		<Label layoutX="276.0" layoutY="229.0" text="Forfait :" />
+		<TextField fx:id="nbrForfaitRepas" layoutX="369.0"
+			layoutY="224.0" prefHeight="27.0" prefWidth="42.0" />
+		<Label layoutX="265.0" layoutY="267.0" text="Justificatif :" />
+		<TextField fx:id="nbrJustificatifRepas" layoutX="369.0"
+			layoutY="262.0" prefHeight="27.0" prefWidth="42.0" />
+		<Label layoutX="273.0" layoutY="335.0"
+			text="Nombre de découchers" underline="true" />
+		<Label layoutX="279.0" layoutY="372.0" text="Forfait :" />
+		<TextField fx:id="nbrForfaitDecouchers" layoutX="372.0"
+			layoutY="367.0" prefHeight="27.0" prefWidth="42.0" />
+		<Label layoutX="268.0" layoutY="410.0" text="Justificatif :" />
+		<TextField fx:id="nbrJustifDecouchers" layoutX="372.0"
+			layoutY="405.0" prefHeight="27.0" prefWidth="42.0" />
+		<Button layoutX="528.0" layoutY="446.0" mnemonicParsing="false"
+			onAction="#afficherFrais2" prefHeight="30.0" prefWidth="100.0"
+			text="Suivant &gt;&gt;" />
+		<Button layoutX="285.0" layoutY="447.0" mnemonicParsing="false"
+			onAction="#afficherJourSuivant" text="Aucun frais pour ce jour" />
+		<Button fx:id="btnRetour" layoutX="57.0" layoutY="447.0"
+			mnemonicParsing="false" onAction="#afficherJourAvant"
+			text="Journée précédente" />
+	</children>
 </AnchorPane>

@@ -5,13 +5,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="550.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController">
-   <children>
-      <SplitPane fx:id="ordreMissionSplit" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" />
-      <Label fx:id="titre" alignment="CENTER" layoutX="-1.0" prefHeight="45.0" prefWidth="699.0" style="-fx-font-weight: bold;" text="Création d'un ordre de mission" textAlignment="CENTER">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-   </children>
+<AnchorPane prefHeight="550.0" prefWidth="700.0"
+	xmlns="http://javafx.com/javafx/11.0.1"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController">
+	<children>
+		<SplitPane fx:id="ordreMissionSplit" maxHeight="-Infinity"
+			maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+			prefHeight="550.0" prefWidth="800.0" />
+		<Label fx:id="titre" alignment="CENTER" layoutX="-1.0"
+			prefHeight="45.0" prefWidth="699.0" style="-fx-font-weight: bold;"
+			text="Création d'un ordre de mission" textAlignment="CENTER">
+			<font>
+				<Font size="18.0" />
+			</font>
+		</Label>
+	</children>
 </AnchorPane>
