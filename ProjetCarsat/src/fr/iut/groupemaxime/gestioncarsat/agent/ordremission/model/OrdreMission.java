@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireTravail;
 import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
@@ -154,5 +155,11 @@ public class OrdreMission implements DocJson<OrdreMission> {
 
 	public EtatMission getEtat() {
 		return this.etat;
+	}
+
+	public boolean htEstSigne() {
+		HoraireTravail ht = new HoraireTravail(null);
+		ht = ht.chargerJson(cheminDossier + nomOM.replace("OM_", "HT_") + Constante.EXTENSION_JSON);
+		return ht.estSigne();
 	}
 }

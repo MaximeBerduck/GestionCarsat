@@ -290,9 +290,8 @@ public class AgentApp extends Application {
 	public OrdreMissionController getOMCtrl() {
 		return this.omCtrl;
 	}
-	
-	public void retirerMissionActive()
-	{
+
+	public void retirerMissionActive() {
 		this.missionActive = null;
 		this.rootLayoutCtrl.setLabelMissionSelectionnee("Aucune");
 		this.retourMenu();
@@ -313,9 +312,9 @@ public class AgentApp extends Application {
 			loader.setLocation(this.getClass().getResource("view/EtatMissionSelectionnee.fxml"));
 
 			etatMission = loader.load();
-			
+
 			EtatMissionSelectionneeController etatMissionCtrl = loader.getController();
-			
+
 			System.out.println(missionActive.getEtat().getEtat());
 			etatMissionCtrl.choisirCouleurOM(missionActive.getEtat().getEtat());
 			etatMissionCtrl.modifierInfosMission(missionActive);
@@ -327,23 +326,14 @@ public class AgentApp extends Application {
 
 				etatMissionCtrl.choisirCouleurFM(fm.getEtat().getEtat());
 
-			} else {
-				//etatMissionCtrl.setEtatFM(EtatMission.NON_REMPLI.getEtat());
 			}
 
 			if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
 				HoraireTravail ht = new HoraireTravail(null);
 				ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
 						+ Constante.EXTENSION_JSON);
-				//etatMissionCtrl.setEtatHT(ht.getEtat().getEtat());
-			} else {
-				//etatMissionCtrl.setEtatHT(EtatMission.NON_REMPLI.getEtat());
+				etatMissionCtrl.choisirCouleurHT(ht.getEtat().getEtat());
 			}
-
-			//etatMissionCtrl.setCouleurOM(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatOM()));
-			//etatMissionCtrl.setCouleurFM(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatFM()));
-			//etatMissionCtrl.setCouleurHT(etatMissionCtrl.choisirCouleur(etatMissionCtrl.getEtatHT()));
-			//etatMissionCtrl.modifierInfosMission(missionActive);
 
 			this.rootLayoutCtrl.getGridRoot().add(etatMission, 2, 0);
 
@@ -486,8 +476,7 @@ public class AgentApp extends Application {
 		this.rootLayoutCtrl.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 
 	}
-	
-	
+
 	public void demanderActionOM() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Choix de l'action");
@@ -543,7 +532,7 @@ public class AgentApp extends Application {
 
 			ButtonType buttonTypeEnvoyer = null;
 			ButtonType buttonTypeSigner = null;
-			if (this.missionActive.agentSigne()) {
+			if (this.missionActive.htEstSigne()) {
 				buttonTypeEnvoyer = new ButtonType("Envoyer");
 				alert.getButtonTypes().add(buttonTypeEnvoyer);
 			} else {

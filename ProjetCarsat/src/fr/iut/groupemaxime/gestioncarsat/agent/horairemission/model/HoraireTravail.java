@@ -42,6 +42,7 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 	private String dateFinMission;
 	private HashMap<String, HoraireJournalier> horaireJournalier;
 	private EtatMission etat;
+	private boolean signe;
 
 	public HoraireTravail(String adresseFichier, String dateDebutMission, String dateFinMission,
 			HashMap<String, HoraireJournalier> horaireTravail) {
@@ -50,6 +51,7 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 		this.dateFinMission = dateFinMission;
 		this.horaireJournalier = horaireTravail;
 		this.etat = EtatMission.NON_REMPLI;
+		this.signe = false;
 	}
 
 	public HoraireTravail(String adresseFichier) {
@@ -141,7 +143,7 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 						Row row = dataSheet.createRow(ligne);
 						CellStyle style = workbook.createCellStyle();
 
-						//Ajout bordure
+						// Ajout bordure
 						style.setBorderBottom((short) 1.0);
 						style.setBorderLeft((short) 1.0);
 						style.setBorderRight((short) 1.0);
@@ -150,7 +152,7 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 						for (int i = 1; i < 9; i++) {
 							row.createCell(i).setCellStyle(style);
 						}
-						//Ajout format heure
+						// Ajout format heure
 						CreationHelper createHelper = workbook.getCreationHelper();
 						style.setDataFormat(createHelper.createDataFormat().getFormat("HH:mm"));
 						row.getCell(3).setCellStyle(style);
@@ -164,7 +166,8 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 					// TODO
 					dataSheet.getRow(ligne).getCell(5).setCellValue("duree");
 					dataSheet.getRow(ligne).getCell(6).setCellValue(hj.getTransportUtiliseSurPlace());
-					dataSheet.getRow(ligne).getCell(7).setCellValue(hj.getDureeDuTrajetSurPlaceHeure()+ ':' + hj.getDureeDuTrajetSurPlaceMin());
+					dataSheet.getRow(ligne).getCell(7)
+							.setCellValue(hj.getDureeDuTrajetSurPlaceHeure() + ':' + hj.getDureeDuTrajetSurPlaceMin());
 					// TODO
 					dataSheet.getRow(ligne).getCell(8).setCellValue(hj.getObservation());
 					ligne++;
@@ -219,6 +222,10 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 
 	public EtatMission getEtat() {
 		return this.etat;
+	}
+
+	public boolean estSigne() {
+		return this.signe;
 	}
 
 }
