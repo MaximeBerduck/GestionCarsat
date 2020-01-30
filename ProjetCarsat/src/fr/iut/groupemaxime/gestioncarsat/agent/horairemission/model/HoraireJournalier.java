@@ -6,7 +6,9 @@ public class HoraireJournalier implements Comparable<HoraireJournalier> {
 	private String date;
 	
 	private String transportUtiliseSurPlace;
-	private String dureeDuTrajetSurPlace;
+	private String dureeDuTrajetSurPlaceHeure;
+	private String dureeDuTrajetSurPlaceMin;
+	private String observation;
 	private ArrayDeque<PlageHoraire> plageHoraire;
 
 	
@@ -70,12 +72,28 @@ public class HoraireJournalier implements Comparable<HoraireJournalier> {
 		this.transportUtiliseSurPlace = transportUtiliseSurPlace;
 	}
 
-	public String getDureeDuTrajetSurPlace() {
-		return dureeDuTrajetSurPlace;
+	public String getDureeDuTrajetSurPlaceHeure() {
+		return dureeDuTrajetSurPlaceHeure;
 	}
 
-	public void setDureeDuTrajetSurPlace(String dureeDuTrajetSurPlace) {
-		this.dureeDuTrajetSurPlace = dureeDuTrajetSurPlace;
+	public void setDureeDuTrajetSurPlaceHeure(String dureeDuTrajetSurPlace) {
+		this.dureeDuTrajetSurPlaceHeure = dureeDuTrajetSurPlace;
+	}
+	
+	public String getDureeDuTrajetSurPlaceMin() {
+		return dureeDuTrajetSurPlaceMin;
+	}
+
+	public void setDureeDuTrajetSurPlaceMin(String dureeDuTrajetSurPlaceMin) {
+		this.dureeDuTrajetSurPlaceMin = dureeDuTrajetSurPlaceMin;
+	}
+
+	public String getObservation() {
+		return observation;
+	}
+
+	public void setObservation(String observation) {
+		this.observation = observation;
 	}
 
 	public ArrayDeque<PlageHoraire> getPlageHoraire() {

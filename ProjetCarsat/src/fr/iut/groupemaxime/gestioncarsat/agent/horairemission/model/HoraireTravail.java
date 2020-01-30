@@ -164,9 +164,9 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 					// TODO
 					dataSheet.getRow(ligne).getCell(5).setCellValue("duree");
 					dataSheet.getRow(ligne).getCell(6).setCellValue(hj.getTransportUtiliseSurPlace());
-					dataSheet.getRow(ligne).getCell(7).setCellValue(hj.getDureeDuTrajetSurPlace());
+					dataSheet.getRow(ligne).getCell(7).setCellValue(hj.getDureeDuTrajetSurPlaceHeure()+hj.getDureeDuTrajetSurPlaceMin());
 					// TODO
-					dataSheet.getRow(ligne).getCell(8).setCellValue("Observation");
+					dataSheet.getRow(ligne).getCell(8).setCellValue(hj.getObservation());
 					ligne++;
 				}
 			}

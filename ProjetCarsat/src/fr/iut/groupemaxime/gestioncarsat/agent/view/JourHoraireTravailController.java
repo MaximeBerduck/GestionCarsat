@@ -34,7 +34,11 @@ public class JourHoraireTravailController {
 	private TextField transportUtiliseSurPlace;
 
 	@FXML
-	private TextField dureeDuTrajetSurPlace;
+	private TextField dureeDuTrajetSurPlaceHeure;
+	@FXML
+	private TextField dureeTrajetSurPlaceMin;
+	@FXML
+	private TextField observation;
 
 	private LinkedList<ItemHoraireTravailController> listItemHtCtrl;
 	private ListIterator<ItemHoraireTravailController> iteratorItemHt;
@@ -94,8 +98,6 @@ public class JourHoraireTravailController {
 			e.printStackTrace();
 		}
 	}
-
-	
 
 	public void ajouterItemFin(ItemHoraireTravailController item) {
 		this.listeHoraireVBox.getChildren().add(item.getPage());
@@ -163,9 +165,17 @@ public class JourHoraireTravailController {
 			this.setTransportUtiliseSurPlace(hj.getTransportUtiliseSurPlace().split(":")[0]);
 		}
 
-		if (null != hj.getDureeDuTrajetSurPlace()) {
-			this.setDureeDuTrajetSurPlace(hj.getDureeDuTrajetSurPlace().split(":")[0]);
+		if (null != hj.getDureeDuTrajetSurPlaceHeure()) {
+			this.setDureeDuTrajetSurPlaceHeure(hj.getDureeDuTrajetSurPlaceHeure().split(":")[0]);
 
+		}
+		
+		if (null!=hj.getDureeDuTrajetSurPlaceMin()) {
+			this.setDureeDuTrajetSurPlaceMin(hj.getDureeDuTrajetSurPlaceMin().split(":")[0]);
+		}
+		
+		if (null !=hj.getObservation()) {
+			this.setObservation(hj.getObservation().split(":")[0]);
 		}
 
 		for (PlageHoraire plage : hj.getPlageHoraire()) {
@@ -199,57 +209,7 @@ public class JourHoraireTravailController {
 		});
 		}
 	}
-	
 
-	public void setDateJournee(String date) {
-		this.dateJournee.setText(date);
-	}
-
-	public void setHtController(HorairesTravailController htController) {
-		this.htController = htController;
-	}
-
-	public AnchorPane getPage() {
-		return this.pageHoraire;
-	}
-
-	public void setPageHoraire(AnchorPane pageHoraire) {
-		this.pageHoraire = pageHoraire;
-	}
-
-	public String getTransportUtiliseSurPlace() {
-		return transportUtiliseSurPlace.getText();
-	}
-
-	public void setTransportUtiliseSurPlace(String transportUtiliseSurPlace) {
-		this.transportUtiliseSurPlace.setText(transportUtiliseSurPlace);
-		;
-	}
-
-	public String getDureeDuTrajetSurPlace() {
-		return dureeDuTrajetSurPlace.getText();
-	}
-
-	public void setDureeDuTrajetSurPlace(String dureeDuTrajetSurPlace) {
-		this.dureeDuTrajetSurPlace.setText(dureeDuTrajetSurPlace);
-	}
-
-	public VBox getListeHoraireVBox() {
-		return listeHoraireVBox;
-	}
-
-	public void setListeHoraireVBox(VBox listeHoraireVBox) {
-		this.listeHoraireVBox = listeHoraireVBox;
-	}
-	
-	public LinkedList<ItemHoraireTravailController> getListItemHtCtrl() {
-		return listItemHtCtrl;
-	}
-
-	public void setListItemHtCtrl(LinkedList<ItemHoraireTravailController> listItemHtCtrl) {
-		this.listItemHtCtrl = listItemHtCtrl;
-	}
-	
 	public boolean tousLesChampsValides() {
 		String erreur = "";
 		int compteur = 0;
@@ -293,4 +253,73 @@ public class JourHoraireTravailController {
 			return true;
 		}
 	}
+
+
+	public String getObservation() {
+		return observation.getText();
+	}
+
+
+	public void setObservation(String observation) {
+		this.observation.setText(observation);
+	}
+	
+
+	public void setDateJournee(String date) {
+		this.dateJournee.setText(date);
+	}
+
+	public void setHtController(HorairesTravailController htController) {
+		this.htController = htController;
+	}
+
+	public AnchorPane getPage() {
+		return this.pageHoraire;
+	}
+
+	public void setPageHoraire(AnchorPane pageHoraire) {
+		this.pageHoraire = pageHoraire;
+	}
+
+	public String getTransportUtiliseSurPlace() {
+		return transportUtiliseSurPlace.getText();
+	}
+
+	public void setTransportUtiliseSurPlace(String transportUtiliseSurPlace) {
+		this.transportUtiliseSurPlace.setText(transportUtiliseSurPlace);
+		;
+	}
+
+	public String getDureeDuTrajetSurPlaceHeure() {
+		return dureeDuTrajetSurPlaceHeure.getText();
+	}
+
+	public void setDureeDuTrajetSurPlaceHeure(String dureeDuTrajetSurPlace) {
+		this.dureeDuTrajetSurPlaceHeure.setText(dureeDuTrajetSurPlace);
+	}
+	
+	public String getDureeDuTrajetSurPlaceMin() {
+		return this.dureeTrajetSurPlaceMin.getText();
+	}
+	
+	public void setDureeDuTrajetSurPlaceMin(String dureeDuTrajetSurPlaceMin) {
+		this.dureeTrajetSurPlaceMin.setText(dureeDuTrajetSurPlaceMin);
+	}
+
+	public VBox getListeHoraireVBox() {
+		return listeHoraireVBox;
+	}
+
+	public void setListeHoraireVBox(VBox listeHoraireVBox) {
+		this.listeHoraireVBox = listeHoraireVBox;
+	}
+	
+	public LinkedList<ItemHoraireTravailController> getListItemHtCtrl() {
+		return listItemHtCtrl;
+	}
+
+	public void setListItemHtCtrl(LinkedList<ItemHoraireTravailController> listItemHtCtrl) {
+		this.listItemHtCtrl = listItemHtCtrl;
+	}
+	
 }

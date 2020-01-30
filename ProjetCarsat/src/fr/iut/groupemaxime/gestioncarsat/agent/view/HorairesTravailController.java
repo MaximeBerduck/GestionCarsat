@@ -133,9 +133,18 @@ public class HorairesTravailController {
 				horaireJournalier.setTransportUtiliseSurPlace(
 						String.valueOf(horaireCtrl.getTransportUtiliseSurPlace()));
 			}
-			if(!"".equals(horaireCtrl.getDureeDuTrajetSurPlace())){
-				horaireJournalier.setDureeDuTrajetSurPlace(
-						String.valueOf(horaireCtrl.getDureeDuTrajetSurPlace()));
+			if(!"".equals(horaireCtrl.getDureeDuTrajetSurPlaceHeure())){
+				horaireJournalier.setDureeDuTrajetSurPlaceHeure(
+						String.valueOf(horaireCtrl.getDureeDuTrajetSurPlaceHeure()));
+			}
+			if(!"".equals(horaireCtrl.getDureeDuTrajetSurPlaceMin())){
+				horaireJournalier.setDureeDuTrajetSurPlaceMin(
+						String.valueOf(horaireCtrl.getDureeDuTrajetSurPlaceMin()));
+			}
+			
+			if(!"".equals(horaireCtrl.getObservation())) {
+				horaireJournalier.setObservation(
+						String.valueOf(horaireCtrl.getObservation()));
 			}
 
 			for(ItemHoraireTravailController item : horaireCtrl.getListItemHtCtrl()){

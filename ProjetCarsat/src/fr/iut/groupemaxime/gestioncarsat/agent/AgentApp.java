@@ -486,7 +486,20 @@ public class AgentApp extends Application {
 		this.rootLayoutCtrl.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 
 	}
-
+	
+	private void genererXlsHT(OrdreMission missionActive) {
+		try {
+			HoraireTravail ht = new HoraireTravail(null);
+			ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+					+ Constante.EXTENSION_JSON);
+			this.htCtrl.afficherExcel(ht);
+			File excelFile = new File(ht.getAdresseFichier().replace(".json", ".xls"));
+			getHostServices().showDocument(excelFile.toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void demanderActionOM() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Choix de l'action");
