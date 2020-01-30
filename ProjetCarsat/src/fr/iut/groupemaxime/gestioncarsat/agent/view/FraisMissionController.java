@@ -336,4 +336,8 @@ public class FraisMissionController {
 		}
 		this.afficherJourSuivant(this.listeDate.get(this.listeDate.size() - 1));
 	}
+
+	public boolean jourEstLeDernier(String date) {
+		return this.fraisMission.getDateFinMission().equals(date);
+	}
 }

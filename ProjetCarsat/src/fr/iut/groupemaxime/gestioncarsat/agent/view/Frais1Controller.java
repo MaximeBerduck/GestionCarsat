@@ -62,7 +62,10 @@ public class Frais1Controller {
 
 	public void afficherJourSuivant() {
 		this.fmController.sauvegarderJournee(this.dateJournee.getText());
-		this.fmController.afficherJourSuivant(this.dateJournee.getText());
+		if (!this.fmController.jourEstLeDernier(this.getDateJournee()))
+			this.fmController.afficherJourSuivant(this.dateJournee.getText());
+		else
+			this.fmController.getAgentApp().retourMenu();
 	}
 
 	public void afficherJourAvant() {
@@ -156,6 +159,10 @@ public class Frais1Controller {
 
 	public void retirerBtnRetour() {
 		this.btnRetour.setVisible(false);
+	}
+
+	public String getDateJournee() {
+		return this.dateJournee.getText();
 	}
 
 }
