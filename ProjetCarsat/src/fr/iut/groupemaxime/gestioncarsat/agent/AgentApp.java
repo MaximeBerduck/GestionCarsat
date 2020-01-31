@@ -1,6 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.agent;
 
 import java.awt.Desktop;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -46,6 +47,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import org.controlsfx.control.Notifications;
 
 public class AgentApp extends Application {
 
@@ -112,12 +114,16 @@ public class AgentApp extends Application {
 		};
 		serviceEnvoiMail.setOnFailed((WorkerStateEvent event) -> {
 			serviceEnvoiMail.reset();
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("Hors Connexion");
-			alert.setHeaderText("Vous n'êtes pas connecté à Internet");
-			alert.setContentText(
-					"Tant que vous n'êtes pas connecter à Internet vous ne pouvez pas envoyer et recevoir des documents");
-			alert.show();
+//			Alert alert = new Alert(AlertType.ERROR);
+//			alert.setTitle("Hors Connexion");
+//			alert.setHeaderText("Vous n'êtes pas connecté à Internet");
+//			alert.setContentText(
+//					"Tant que vous n'êtes pas connecter à Internet vous ne pouvez pas envoyer et recevoir des documents");
+//			alert.show();
+			Notifications.create().title("Erreur")
+					.text("Vous n'êtes pas connecté à Internet.\n Les mails en attente seront "
+							+ "envoyés dès que vous serez connecté à Internet.")
+					.showError();
 		});
 		serviceEnvoiMail.start();
 		initialiseRootLayout();
@@ -137,6 +143,47 @@ public class AgentApp extends Application {
 			primaryStage.show();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void demanderActionOM() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Choix de l'action");
+		alert.setHeaderText("Choisissez l'action souhaitee");
+		alert.setContentText("Choisissez l'action que vous voulez realiser sur votre ordre de mission.");
+		ButtonType buttonTypeAfficher = new ButtonType("Afficher");
+		ButtonType buttonTypeModif = new ButtonType("Modifier");
+		alert.getButtonTypes().setAll(buttonTypeAfficher);
+
+		ButtonType buttonTypeEnvoyer = null;
+		ButtonType buttonTypeSigner = null;
+		if (!this.missionActive.estEnvoye()) {
+			if (this.missionActive.agentSigne()) {
+				buttonTypeEnvoyer = new ButtonType("Envoyer");
+				alert.getButtonTypes().addAll(buttonTypeModif, buttonTypeEnvoyer);
+			} else {
+				buttonTypeSigner = new ButtonType("Signer");
+				alert.getButtonTypes().addAll(buttonTypeModif, buttonTypeSigner);
+			}
+		}
+		ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().add(buttonTypeCancel);
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeAfficher) {
+			this.afficherOrdreMissionPDF();
+			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		} else if (result.get() == buttonTypeModif) {
+			this.modifierOm(missionActive);
+		} else if (result.get() == buttonTypeSigner) {
+			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.signerOM();
+		} else if (result.get() == buttonTypeEnvoyer) {
+			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.afficherEnvoiDuMail();
+		} else {
+			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			// Ne fait rien == bouton "annuler"
 		}
 	}
 
@@ -317,8 +364,6 @@ public class AgentApp extends Application {
 
 			etatMissionCtrl.choisirCouleurOM(missionActive.getEtat().getEtat());
 			etatMissionCtrl.modifierInfosMission(missionActive);
-			
-			String etatFM = "";
 
 			if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
 				FraisMission fm = new FraisMission(null);
@@ -392,13 +437,11 @@ public class AgentApp extends Application {
 
 				ButtonType buttonTypeAfficher = new ButtonType("Afficher");
 				ButtonType buttonTypeModif = new ButtonType("Modifier");
-				ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
 				ButtonType buttonTypeSigner = new ButtonType("Signer");
 				ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
 				if (this.missionActive.fmEstSigne()) {
-					alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeEnvoyer,
-							buttonTypeCancel);
+					alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeCancel);
 				} else {
 					alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeSigner,
 							buttonTypeCancel);
@@ -417,8 +460,6 @@ public class AgentApp extends Application {
 				} else if (result.get() == buttonTypeSigner) {
 					this.signerFM(this.missionActive);
 					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-				} else if (result.get() == buttonTypeEnvoyer) {
-					// TODO envoyer FM
 				} else {
 					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 					// Ne fait rien == bouton "annuler"
@@ -477,48 +518,6 @@ public class AgentApp extends Application {
 
 	}
 
-	public void demanderActionOM() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Choix de l'action");
-		alert.setHeaderText("Choisissez l'action souhaitee");
-		alert.setContentText("Choisissez l'action que vous voulez realiser sur votre ordre de mission.");
-		ButtonType buttonTypeAfficher = new ButtonType("Afficher");
-		ButtonType buttonTypeModif = new ButtonType("Modifier");
-		alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif);
-
-		ButtonType buttonTypeEnvoyer = null;
-		ButtonType buttonTypeSigner = null;
-		if (!this.missionActive.estEnvoye()) {
-			if (this.missionActive.agentSigne()) {
-				buttonTypeEnvoyer = new ButtonType("Envoyer");
-				alert.getButtonTypes().add(buttonTypeEnvoyer);
-			} else {
-				buttonTypeSigner = new ButtonType("Signer");
-				alert.getButtonTypes().add(buttonTypeSigner);
-			}
-		}
-
-		ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
-
-		alert.getButtonTypes().add(buttonTypeCancel);
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == buttonTypeAfficher) {
-			this.afficherOrdreMissionPDF();
-			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		} else if (result.get() == buttonTypeModif) {
-			this.modifierOm(missionActive);
-		} else if (result.get() == buttonTypeSigner) {
-			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			this.signerOM();
-		} else if (result.get() == buttonTypeEnvoyer) {
-			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			this.afficherEnvoiDuMail();
-		} else {
-			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			// Ne fait rien == bouton "annuler"
-		}
-	}
-
 	public void demanderActionHT() {
 		if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -528,16 +527,14 @@ public class AgentApp extends Application {
 
 			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
 			ButtonType buttonTypeModif = new ButtonType("Modifier");
-			alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif);
+			alert.getButtonTypes().setAll(buttonTypeAfficher);
 
-			ButtonType buttonTypeEnvoyer = null;
 			ButtonType buttonTypeSigner = null;
 			if (this.missionActive.htEstSigne()) {
-				buttonTypeEnvoyer = new ButtonType("Envoyer");
-				alert.getButtonTypes().add(buttonTypeEnvoyer);
+				alert.getButtonTypes().addAll(buttonTypeModif);
 			} else {
 				buttonTypeSigner = new ButtonType("Signer");
-				alert.getButtonTypes().add(buttonTypeSigner);
+				alert.getButtonTypes().addAll(buttonTypeModif);
 			}
 
 			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
@@ -553,8 +550,6 @@ public class AgentApp extends Application {
 			} else if (result.get() == buttonTypeSigner) {
 				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 				// this.signerOM(); DEVRA ETRE signerHT()
-			} else if (result.get() == buttonTypeEnvoyer) {
-				// TODO
 			} else {
 				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 				// Ne fait rien == bouton "annuler"
