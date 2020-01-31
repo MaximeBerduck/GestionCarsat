@@ -153,17 +153,17 @@ public class AgentApp extends Application {
 		alert.setContentText("Choisissez l'action que vous voulez realiser sur votre ordre de mission.");
 		ButtonType buttonTypeAfficher = new ButtonType("Afficher");
 		ButtonType buttonTypeModif = new ButtonType("Modifier");
-		alert.getButtonTypes().setAll(buttonTypeAfficher);
+		alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif);
 
 		ButtonType buttonTypeEnvoyer = null;
 		ButtonType buttonTypeSigner = null;
 		if (!this.missionActive.estEnvoye()) {
 			if (this.missionActive.agentSigne()) {
 				buttonTypeEnvoyer = new ButtonType("Envoyer");
-				alert.getButtonTypes().addAll(buttonTypeModif, buttonTypeEnvoyer);
+				alert.getButtonTypes().addAll(buttonTypeEnvoyer);
 			} else {
 				buttonTypeSigner = new ButtonType("Signer");
-				alert.getButtonTypes().addAll(buttonTypeModif, buttonTypeSigner);
+				alert.getButtonTypes().addAll(buttonTypeSigner);
 			}
 		}
 		ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
