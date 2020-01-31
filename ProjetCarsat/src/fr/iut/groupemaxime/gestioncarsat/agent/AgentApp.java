@@ -86,7 +86,7 @@ public class AgentApp extends Application {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Carsat - Gestion des déplacement");
 		this.primaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
-		this.primaryStage.setResizable(true);
+		this.primaryStage.setResizable(false);
 		this.options = new Options();
 		if (Bibliotheque.fichierExiste(Constante.CHEMIN_OPTIONS))
 			this.options = this.options.chargerJson(Constante.CHEMIN_OPTIONS);
@@ -315,9 +315,10 @@ public class AgentApp extends Application {
 
 			EtatMissionSelectionneeController etatMissionCtrl = loader.getController();
 
-			System.out.println(missionActive.getEtat().getEtat());
 			etatMissionCtrl.choisirCouleurOM(missionActive.getEtat().getEtat());
 			etatMissionCtrl.modifierInfosMission(missionActive);
+			
+			String etatFM = "";
 
 			if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
 				FraisMission fm = new FraisMission(null);
@@ -325,7 +326,6 @@ public class AgentApp extends Application {
 						+ Constante.EXTENSION_JSON);
 
 				etatMissionCtrl.choisirCouleurFM(fm.getEtat().getEtat());
-
 			}
 
 			if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
