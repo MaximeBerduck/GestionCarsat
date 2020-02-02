@@ -551,7 +551,7 @@ public class AgentApp extends Application {
 				this.modifierHt(missionActive);
 			} else if (result.get() == buttonTypeSigner) {
 				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-				this.signerHT(this.missionActive);
+				this.signerHT();
 			} else {
 				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 				// Ne fait rien == bouton "annuler"
@@ -560,9 +560,27 @@ public class AgentApp extends Application {
 			this.creerHoraireTravail();
 	}
 
-	private void signerHT(OrdreMission missionActive2) {
+	private void signerHT() {
 		// TODO Auto-generated method stub
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Certifier l'exactitude des horaires");
+		alert.setHeaderText(
+				"Certifiez-vous l'exactitude des informations saisies \ndans les horaires de travail de cette mission ?");
+		alert.setContentText("Signer vos horaires de travail ?");
 
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			HoraireTravail ht = new HoraireTravail(null);
+			ht = ht.chargerJson(
+					missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_").concat(".json"));
+			ht.setDateSignature(Bibliotheque.getDateAujourdhui());
+			ht.setSignature(true);
+			ht.setEtat(EtatMission.SIGNE);
+			ht.sauvegarderJson(ht.getAdresseFichier());
+		} else {
+			// ne fait rien : bouton annuler ou fermer la fenetre
+		}
+		this.retourMenu();
 	}
 
 	public void afficherOrdreMissionPDF() {

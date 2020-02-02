@@ -19,6 +19,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.PlageHoraire
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,8 +73,6 @@ public class HorairesTravailController {
 		this.horaireTravail.setDateDebutMission(stringDebut);
 		this.horaireTravail.setDateFinMission(stringFin);
 
-		System.out.println(stringDebut);
-
 		this.ajouterJour(stringDebut, stringFin);
 		this.listeHoraires.get(stringDebut).ajoutHoraire();
 		this.listeDate.put(i, stringDebut);
@@ -86,6 +85,8 @@ public class HorairesTravailController {
 
 	public void sauvegarderHoraires() {
 		this.horaireTravail.trierHoraireJournalier();
+		this.horaireTravail.setEtat(EtatMission.NON_SIGNE);
+		this.horaireTravail.setSignature(false);
 		this.horaireTravail.sauvegarderJson(this.horaireTravail.getAdresseFichier());
 		this.agentApp.retourMenu();
 	}
@@ -213,7 +214,7 @@ public class HorairesTravailController {
 
 	public void afficherExcel(HoraireTravail ht) {
 		this.horaireTravail = ht;
-		ht.remplirExcelHT();
+		ht.remplirExcelHT(this.options);
 	}
 
 	public void setMainApp(AgentApp agentApp) {

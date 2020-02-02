@@ -20,10 +20,14 @@ import javax.json.JsonReader;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.util.IOUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,6 +36,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.DocJson;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
+import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 
 public class HoraireTravail implements DocJson<HoraireTravail> {
 
@@ -41,6 +46,7 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 	private HashMap<String, HoraireJournalier> horaireJournalier;
 	private EtatMission etat;
 	private boolean signe;
+	private String dateSignature;
 
 	public HoraireTravail(String adresseFichier, String dateDebutMission, String dateFinMission,
 			HashMap<String, HoraireJournalier> horaireTravail) {
@@ -50,6 +56,7 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 		this.horaireJournalier = horaireTravail;
 		this.etat = EtatMission.NON_REMPLI;
 		this.signe = false;
+		this.dateSignature = null;
 	}
 
 	public HoraireTravail(String adresseFichier) {
@@ -58,7 +65,6 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 
 	@Override
 	public void sauvegarderJson(String adresseFichier) {
-		this.setEtat(EtatMission.NON_SIGNE);
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String s = gson.toJson(this);
 		FileWriter f;
@@ -72,7 +78,7 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 		}
 	}
 
-	private void setEtat(EtatMission etat) {
+	public void setEtat(EtatMission etat) {
 		this.etat = etat;
 	}
 
@@ -126,7 +132,7 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 	}
 
 	// Remplir le fichier excel
-	public void remplirExcelHT() {
+	public void remplirExcelHT(Options options) {
 		try {
 			FileInputStream excelFile = new FileInputStream(new File(Constante.CHEMIN_EXCEL_VIDE));
 			Workbook workbook = new HSSFWorkbook(excelFile);
@@ -170,7 +176,6 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 							.setCellValue(String.valueOf(ph.getHeureDeb()) + ':' + String.valueOf(ph.getMinDeb()));
 					row.getCell(4)
 							.setCellValue(String.valueOf(ph.getHeureFin()) + ':' + String.valueOf(ph.getMinFin()));
-					// TODO
 					row.getCell(5)
 							.setCellFormula("IF(IF(EXACT(G" + (ligne + 1) + ",\"\"),E" + (ligne + 1) + "-D"
 									+ (ligne + 1) + ",\"\")=0,\"\",IF(EXACT(G" + (ligne + 1) + ",\"\"),E" + (ligne + 1)
@@ -182,13 +187,12 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 					row.getCell(7).setCellFormula(
 							"IF(NOT(EXACT(G" + (ligne + 1) + ",\"\")),E" + (ligne + 1) + "-D" + (ligne + 1) + ",\"\")");
 
-					// TODO
 					row.getCell(8).setCellValue(hj.getObservation());
 					ligne++;
 				}
 			}
 			dataSheet.getRow(8).getCell(2).setCellValue(om.getAgent().getNumCAPSSA());
-			// TODO
+			// TODO Code double ?
 			dataSheet.getRow(8).getCell(4).setCellValue(2);
 			dataSheet.getRow(8).getCell(7).setCellValue(om.getAgent().getUniteTravail());
 			dataSheet.getRow(10).getCell(2).setCellValue(om.getAgent().getNom());
@@ -203,6 +207,26 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 //			dataSheet.getRow(ligne).getCell(4).setCellFormula("");
 
 			workbook.setForceFormulaRecalculation(true);
+
+			if (this.estSigne()) {
+				// TODO Ajout signature XLS
+				// read the image to the stream
+				final FileInputStream stream = new FileInputStream(options.getCheminSignature());
+				final CreationHelper helper = workbook.getCreationHelper();
+				final Drawing drawing = dataSheet.createDrawingPatriarch();
+
+				final ClientAnchor anchor = helper.createClientAnchor();
+				anchor.setAnchorType(ClientAnchor.MOVE_AND_RESIZE);
+
+				final int pictureIndex = workbook.addPicture(IOUtils.toByteArray(stream), Workbook.PICTURE_TYPE_PNG);
+
+				anchor.setCol1(2);
+				anchor.setRow1(20); // same row is okay
+				anchor.setRow2(24);
+				anchor.setCol2(4);
+				final Picture pict = drawing.createPicture(anchor, pictureIndex);
+				dataSheet.getRow(ligne+5).getCell(1).setCellValue(this.dateSignature);
+			}
 
 			// Sauvegarder le fichier
 			FileOutputStream out = new FileOutputStream(
@@ -247,4 +271,15 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 		return this.signe;
 	}
 
+	public void setDateSignature(String dateSignature) {
+		this.dateSignature = dateSignature;
+	}
+
+	public String getDateSignature() {
+		return this.dateSignature;
+	}
+
+	public void setSignature(boolean signature) {
+		this.signe = signature;
+	}
 }
