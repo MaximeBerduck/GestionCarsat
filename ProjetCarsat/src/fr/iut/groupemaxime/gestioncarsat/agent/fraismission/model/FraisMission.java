@@ -98,7 +98,7 @@ public class FraisMission implements DocJson<FraisMission> {
 
 	public void genererPDF(Options options) {
 		try {
-			PDF pdf = new PDF(new File(Constante.CHEMIN_PDF_VIDE));
+			PDF pdf = new PDF(new File(this.adresseFichier.replace(".json", ".pdf").replace("FM_", "OM_")));
 			pdf.remplirPdfFM(this, options);
 			pdf.sauvegarderPDF();
 			if (this.estSigne) {

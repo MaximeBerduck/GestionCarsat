@@ -1,6 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.utils;
 
 import java.io.File;
+import java.util.Date;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
@@ -114,6 +115,10 @@ public class Bibliotheque {
 			}
 		}
 		return null;
+	}
+
+	public static String getDateAujourdhui() {
+		return Constante.FORMAT_DATE_SLASH.format(new Date());
 	}
 
 }

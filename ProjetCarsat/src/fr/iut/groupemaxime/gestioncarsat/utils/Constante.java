@@ -19,6 +19,7 @@ public class Constante {
 	public static String CHEMIN_OPTIONS = "target/options.json";
 	public static String CHEMIN_IMAGES = "ressources/images/";
 	public static final String CHEMIN_MAILS_EN_ATTENTE = "target/mailsEnAttente/";
+	public static final String CHEMIN_CARRE_BLANC = "target/blanc.jpg";
 	
 	public static String CHEMIN_EXCEL_VIDE = "target/PDF/HT_vide.xls";
 	public static int FIN_LIGNE_EXCEL = 21;

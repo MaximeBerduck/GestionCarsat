@@ -456,7 +456,7 @@ public class PDF {
 
 		}
 
-		this.cheminFichier = fm.getAdresseFichier().replace(".json", ".pdf");
+		this.cheminFichier = fm.getAdresseFichier().replace(".json", ".pdf").replace("FM_", "OM_");
 		this.sauvegarderPDF();
 	}
 
@@ -475,7 +475,7 @@ public class PDF {
 	}
 
 	public void signerPdfFM(int x, int y, int taille, FraisMission fm, String signature) {
-		String cheminFichier = fm.getAdresseFichier().replace(".json", ".pdf");
+		String cheminFichier = fm.getAdresseFichier().replace(".json", ".pdf").replace("FM_", "OM_");
 		try {
 			PDDocument pdf = PDDocument.load(new File(cheminFichier));
 			PDPage page = pdf.getPage(1);
@@ -514,12 +514,11 @@ public class PDF {
 		}
 	}
 
-	public void ajouterDateSignatureOM() {
-		String date = Constante.FORMAT_DATE_SLASH.format(new Date());
+	public void ajouterDateSignatureOM(String date) {
 
 		this.remplirChamp("dateSigna", date);
 	}
-	
+
 	public void completerExcel(HoraireTravail ht) {
 		try {
 			FileInputStream excelFile = new FileInputStream(new File(Constante.CHEMIN_EXCEL_VIDE));

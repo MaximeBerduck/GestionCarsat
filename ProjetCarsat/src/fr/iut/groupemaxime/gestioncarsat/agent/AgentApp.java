@@ -1,11 +1,12 @@
 package fr.iut.groupemaxime.gestioncarsat.agent;
 
 import java.awt.Desktop;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Optional;
+
+import org.controlsfx.control.Notifications;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
@@ -47,7 +48,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.controlsfx.control.Notifications;
 
 public class AgentApp extends Application {
 
@@ -492,14 +492,16 @@ public class AgentApp extends Application {
 
 	private void afficherPdfFM(OrdreMission missionActive) {
 		try {
-			Desktop.getDesktop().browse(new File(this.missionActive.getCheminDossier()
-					+ this.missionActive.getNomOM().replace("OM_", "FM_") + Constante.EXTENSION_PDF).toURI());
+			Desktop.getDesktop().browse(new File(
+					this.missionActive.getCheminDossier() + this.missionActive.getNomOM() + Constante.EXTENSION_PDF)
+							.toURI());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	private void genererPdfFM(OrdreMission missionActive) {
+		this.genererPDFOM();
 		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(missionActive));
 		fm = fm.chargerJson(fm.getAdresseFichier());
 		fm.genererPDF(this.options);
@@ -559,29 +561,76 @@ public class AgentApp extends Application {
 	}
 
 	public void afficherOrdreMissionPDF() {
-		PDF pdf;
+		this.genererPDFOM();
 		try {
-			pdf = new PDF(new File(Constante.CHEMIN_PDF_VIDE));
-			pdf.remplirPDF(this.missionActive);
-			pdf.sauvegarderPDF();
-			if (this.missionActive.estSigne()) {
-				pdf.ajouterDateSignatureOM();
-				pdf.sauvegarderPDF();
-				PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
-						Constante.TAILLE_SIGNATURE, this.missionActive, this.getOptions().getCheminSignature());
-			}
-			pdf.fermerPDF();
 			Desktop.getDesktop().browse(new File(
 					this.missionActive.getCheminDossier() + this.missionActive.getNomOM() + Constante.EXTENSION_PDF)
 							.toURI());
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void genererPDFOM() {
+		// TODO
+		String chemin = this.missionActive.getCheminDossier()
+				+ this.missionActive.getNomOM().concat(Constante.EXTENSION_PDF);
+		PDF pdf;
+		if (Bibliotheque.fichierExiste(chemin)) {
+			try {
+				pdf = new PDF(new File(chemin));
+				pdf.remplirPDF(this.missionActive);
+				pdf.sauvegarderPDF();
+
+
+				if (this.missionActive.estSigne()) {
+					pdf.ajouterDateSignatureOM(this.missionActive.getDateSignature());
+					pdf.sauvegarderPDF();
+					// Ajout carré blanc pour éviter doubles signatures
+					PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
+							Constante.TAILLE_SIGNATURE, this.missionActive, Constante.CHEMIN_CARRE_BLANC);
+					// Ajout signature
+					PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
+							Constante.TAILLE_SIGNATURE, this.missionActive, this.getOptions().getCheminSignature());
+				} else {
+					// Retirer date signature si modif
+					pdf.ajouterDateSignatureOM("");
+					pdf.sauvegarderPDF();
+					// Ajout carré blanc pour éviter doubles signatures
+					PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
+							Constante.TAILLE_SIGNATURE, this.missionActive, Constante.CHEMIN_CARRE_BLANC);
+				}
+				pdf.fermerPDF();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				pdf = new PDF(new File(Constante.CHEMIN_PDF_VIDE));
+				pdf.remplirPDF(this.missionActive);
+				pdf.sauvegarderPDF();
+
+				if (this.missionActive.estSigne()) {
+					pdf.ajouterDateSignatureOM(this.missionActive.getDateSignature());
+					pdf.sauvegarderPDF();
+					// Ajout signature
+					PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
+							Constante.TAILLE_SIGNATURE, this.missionActive, this.getOptions().getCheminSignature());
+				}
+				pdf.fermerPDF();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public void signerOM() {
 		if (Bibliotheque.fichierExiste(this.getOptions().getCheminSignature())) {
 			this.missionActive.setSignatureAgent(true);
+			this.missionActive.setDateSignature(Bibliotheque.getDateAujourdhui());
 			this.missionActive.setEtat(EtatMission.SIGNE);
 			this.missionActive.sauvegarderJson(this.missionActive.getCheminDossier());
 		} else {

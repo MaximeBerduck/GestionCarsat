@@ -29,20 +29,22 @@ public class OrdreMission implements DocJson<OrdreMission> {
 	private String nomOM;
 	private boolean signatureAgent;
 	private EtatMission etat;
+	private String dateSignature;
 
 	public OrdreMission(Agent agent, TypeMission mission, Transport transport, String cheminDossier, String nomOM,
-			boolean signatureAgent) {
+			boolean signatureAgent, String dateSignature) {
 		this.agent = agent;
 		this.mission = mission;
 		this.transport = transport;
 		this.cheminDossier = cheminDossier;
 		this.nomOM = nomOM;
 		this.signatureAgent = signatureAgent;
-		this.etat = etat.NON_REMPLI;
+		this.etat = EtatMission.NON_REMPLI;
+		this.dateSignature = dateSignature;
 	}
 
 	public OrdreMission(Agent agent, TypeMission mission, Transport transport) {
-		this(agent, mission, transport, null, null, false);
+		this(agent, mission, transport, null, null, false, null);
 	}
 
 	public OrdreMission() {
@@ -75,7 +77,6 @@ public class OrdreMission implements DocJson<OrdreMission> {
 
 	@Override
 	public OrdreMission chargerJson(String adresseFichier) {
-		Gson g = new Gson();
 		Gson gson = new GsonBuilder().registerTypeAdapter(TypeMission.class, new InterfaceAdapter())
 				.registerTypeAdapter(Transport.class, new InterfaceAdapter()).setPrettyPrinting().create();
 		OrdreMission om = new OrdreMission();
@@ -161,5 +162,13 @@ public class OrdreMission implements DocJson<OrdreMission> {
 		HoraireTravail ht = new HoraireTravail(null);
 		ht = ht.chargerJson(cheminDossier + nomOM.replace("OM_", "HT_") + Constante.EXTENSION_JSON);
 		return ht.estSigne();
+	}
+
+	public String getDateSignature() {
+		return this.dateSignature;
+	}
+
+	public void setDateSignature(String dateSignature) {
+		this.dateSignature = dateSignature;
 	}
 }

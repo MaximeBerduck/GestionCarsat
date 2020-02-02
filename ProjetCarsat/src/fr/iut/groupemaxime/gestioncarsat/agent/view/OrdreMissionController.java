@@ -2,6 +2,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Optional;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
@@ -322,6 +323,7 @@ public class OrdreMissionController {
 		OrdreMission om = new OrdreMission(agent, mission, transport);
 		if (this.controllerTransport.agentSigne()) {
 			om.setSignatureAgent(true);
+			om.setDateSignature(Bibliotheque.getDateAujourdhui());
 			om.setEtat(EtatMission.SIGNE);
 		} else {
 			om.setEtat(EtatMission.NON_SIGNE);
