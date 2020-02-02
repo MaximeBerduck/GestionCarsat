@@ -1,13 +1,8 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
-import java.io.IOException;
-
-import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.PlageHoraire;
-import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
@@ -23,20 +18,21 @@ public class ItemHoraireTravailController {
 	private TextField min1Deb;
 	@FXML
 	private TextField heure1Fin;
+	@FXML
+	private CheckBox checkTransport;
 
-	JourHoraireTravailController jht;
-	
+	private JourHoraireTravailController jht;
+
 	@FXML
 	private TextField min1Fin;
-
 
 	private VBox page;
 
 	public void ajoutHoraire() {
 		this.jht.ajoutHoraireApresPlage(this);
-		
+
 	}
-	
+
 	public void supprimerHoraire() {
 		this.jht.supprimerHoraire(this);
 	}
@@ -56,7 +52,7 @@ public class ItemHoraireTravailController {
 	public void setPage(VBox item) {
 		this.page = item;
 	}
-	
+
 	public String getHeure1Deb() {
 		return heure1Deb.getText();
 	}
@@ -71,7 +67,6 @@ public class ItemHoraireTravailController {
 
 	public void setMin1Deb(String min1Deb) {
 		this.min1Deb.setText(min1Deb);
-		;
 	}
 
 	public String getHeure1Fin() {
@@ -80,7 +75,6 @@ public class ItemHoraireTravailController {
 
 	public void setHeure1Fin(String heure1Fin) {
 		this.heure1Fin.setText(heure1Fin);
-		;
 	}
 
 	public String getMin1Fin() {
@@ -89,13 +83,18 @@ public class ItemHoraireTravailController {
 
 	public void setMin1Fin(String min1Fin) {
 		this.min1Fin.setText(min1Fin);
-		;
 	}
 
 	public void changerDisableBtn(boolean b) {
 		this.btnSupprimer.setDisable(b);
 	}
-	
-	
+
+	public void setCheckBox(boolean check) {
+		this.checkTransport.setSelected(check);
+	}
+
+	public boolean transportIsSelected() {
+		return this.checkTransport.isSelected();
+	}
 
 }

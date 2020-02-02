@@ -1,7 +1,6 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import java.io.IOException;
-import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -14,11 +13,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
@@ -34,10 +34,6 @@ public class JourHoraireTravailController {
 	private TextField transportUtiliseSurPlace;
 
 	@FXML
-	private TextField dureeDuTrajetSurPlaceHeure;
-	@FXML
-	private TextField dureeTrajetSurPlaceMin;
-	@FXML
 	private TextField observation;
 
 	private LinkedList<ItemHoraireTravailController> listItemHtCtrl;
@@ -49,6 +45,8 @@ public class JourHoraireTravailController {
 	private AnchorPane pageHoraire;
 
 	private HorairesTravailController htController;
+	@FXML
+	private HBox hboxTransport;
 
 	@FXML
 	public void initialize() {
@@ -62,10 +60,10 @@ public class JourHoraireTravailController {
 
 					@Override
 					protected Void call() {
-						if(listItemHtCtrl.size()==1) {
+						if (listItemHtCtrl.size() == 1) {
 							listItemHtCtrl.get(0).changerDisableBtn(true);
 						}
-						if(listItemHtCtrl.size()==2) {
+						if (listItemHtCtrl.size() == 2) {
 							listItemHtCtrl.get(0).changerDisableBtn(false);
 						}
 						return null;
@@ -74,10 +72,32 @@ public class JourHoraireTravailController {
 				};
 			}
 		};
-		serviceBtnSuppression.setPeriod(Duration.ZERO);;
+		ScheduledService<Void> serviceAffichageTransport = new ScheduledService<Void>() {
+
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+
+					@Override
+					protected Void call() {
+						boolean actif = false;
+						for(ItemHoraireTravailController item : listItemHtCtrl) {
+							if(item.transportIsSelected()) {
+								actif = true;
+							}
+						}
+						hboxTransport.setVisible(actif);
+						return null;
+					}
+
+				};
+			}
+		};
+		serviceBtnSuppression.setPeriod(Duration.ZERO);
 		serviceBtnSuppression.start();
+		serviceAffichageTransport.setPeriod(Duration.ZERO);
+		serviceAffichageTransport.start();
 	}
-	
 
 	public void ajoutHoraire(PlageHoraire plage) {
 		try {
@@ -105,7 +125,8 @@ public class JourHoraireTravailController {
 
 	public void placerIterateur(ItemHoraireTravailController plage) {
 		this.iteratorItemHt = listItemHtCtrl.listIterator();
-		while (this.iteratorItemHt.hasNext() && !this.iteratorItemHt.next().equals(plage));
+		while (this.iteratorItemHt.hasNext() && !this.iteratorItemHt.next().equals(plage))
+			;
 	}
 
 	public void ajoutHoraireApresPlage(ItemHoraireTravailController itemPlage) {
@@ -147,7 +168,7 @@ public class JourHoraireTravailController {
 	// Event Listener on Button.onAction
 	@FXML
 	public void validerJournee(ActionEvent event) {
-		if(tousLesChampsValides()) {
+		if (tousLesChampsValides()) {
 			this.htController.sauvegarderJournee(this.dateJournee.getText());
 			this.htController.afficherJourSuivant(this.dateJournee.getText());
 		}
@@ -165,16 +186,7 @@ public class JourHoraireTravailController {
 			this.setTransportUtiliseSurPlace(hj.getTransportUtiliseSurPlace().split(":")[0]);
 		}
 
-		if (null != hj.getDureeDuTrajetSurPlaceHeure()) {
-			this.setDureeDuTrajetSurPlaceHeure(hj.getDureeDuTrajetSurPlaceHeure().split(":")[0]);
-
-		}
-		
-		if (null!=hj.getDureeDuTrajetSurPlaceMin()) {
-			this.setDureeDuTrajetSurPlaceMin(hj.getDureeDuTrajetSurPlaceMin().split(":")[0]);
-		}
-		
-		if (null !=hj.getObservation()) {
+		if (null != hj.getObservation()) {
 			this.setObservation(hj.getObservation().split(":")[0]);
 		}
 
@@ -186,7 +198,7 @@ public class JourHoraireTravailController {
 
 	public void setBoutonSuivantToSauvegarder() {
 		this.boutonValider.setText("Valider");
-		if(tousLesChampsValides()) {
+		if (tousLesChampsValides()) {
 			this.boutonValider.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent e) {
@@ -199,14 +211,14 @@ public class JourHoraireTravailController {
 
 	@FXML
 	public void boutonSuivantSauvegarde(ActionEvent event) {
-		if(tousLesChampsValides()) {
-		this.boutonValider.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
+		if (tousLesChampsValides()) {
+			this.boutonValider.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent e) {
 					htController.sauvegarderJournee(dateJournee.getText());
 					htController.sauvegarderHoraires();
-			}
-		});
+				}
+			});
 		}
 	}
 
@@ -220,20 +232,18 @@ public class JourHoraireTravailController {
 //				erreur += "Le champ duree de trajet est invalide (entrez un nombre entier)!\n";
 //			}
 //		}
-		
-	
-		for(ItemHoraireTravailController item : this.listItemHtCtrl){
-			if(item.getHeure1Deb()!=null || item.getHeure1Deb().length()!=0
-					|| item.getHeure1Fin() != null || item.getHeure1Fin().length()!=0
-					|| item.getMin1Deb() != null || item.getMin1Deb().length()!=0
-					|| item.getMin1Fin() != null || item.getMin1Fin().length()!=0) {
+
+		for (ItemHoraireTravailController item : this.listItemHtCtrl) {
+			if (item.getHeure1Deb() != null || item.getHeure1Deb().length() != 0 || item.getHeure1Fin() != null
+					|| item.getHeure1Fin().length() != 0 || item.getMin1Deb() != null || item.getMin1Deb().length() != 0
+					|| item.getMin1Fin() != null || item.getMin1Fin().length() != 0) {
 				try {
 					Integer.parseInt(item.getHeure1Deb());
 					Integer.parseInt(item.getHeure1Fin());
 					Integer.parseInt(item.getMin1Deb());
 					Integer.parseInt(item.getMin1Fin());
 				} catch (NumberFormatException e) {
-					if (compteur ==0) {
+					if (compteur == 0) {
 						erreur += "L'un des horaires de travail est invalide (entrez des nombres entiers)!\n";
 						compteur++;
 					}
@@ -254,16 +264,13 @@ public class JourHoraireTravailController {
 		}
 	}
 
-
 	public String getObservation() {
 		return observation.getText();
 	}
 
-
 	public void setObservation(String observation) {
 		this.observation.setText(observation);
 	}
-	
 
 	public void setDateJournee(String date) {
 		this.dateJournee.setText(date);
@@ -287,23 +294,6 @@ public class JourHoraireTravailController {
 
 	public void setTransportUtiliseSurPlace(String transportUtiliseSurPlace) {
 		this.transportUtiliseSurPlace.setText(transportUtiliseSurPlace);
-		;
-	}
-
-	public String getDureeDuTrajetSurPlaceHeure() {
-		return dureeDuTrajetSurPlaceHeure.getText();
-	}
-
-	public void setDureeDuTrajetSurPlaceHeure(String dureeDuTrajetSurPlace) {
-		this.dureeDuTrajetSurPlaceHeure.setText(dureeDuTrajetSurPlace);
-	}
-	
-	public String getDureeDuTrajetSurPlaceMin() {
-		return this.dureeTrajetSurPlaceMin.getText();
-	}
-	
-	public void setDureeDuTrajetSurPlaceMin(String dureeDuTrajetSurPlaceMin) {
-		this.dureeTrajetSurPlaceMin.setText(dureeDuTrajetSurPlaceMin);
 	}
 
 	public VBox getListeHoraireVBox() {
@@ -313,7 +303,7 @@ public class JourHoraireTravailController {
 	public void setListeHoraireVBox(VBox listeHoraireVBox) {
 		this.listeHoraireVBox = listeHoraireVBox;
 	}
-	
+
 	public LinkedList<ItemHoraireTravailController> getListItemHtCtrl() {
 		return listItemHtCtrl;
 	}
@@ -321,5 +311,5 @@ public class JourHoraireTravailController {
 	public void setListItemHtCtrl(LinkedList<ItemHoraireTravailController> listItemHtCtrl) {
 		this.listItemHtCtrl = listItemHtCtrl;
 	}
-	
+
 }

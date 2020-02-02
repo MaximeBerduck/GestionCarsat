@@ -536,7 +536,7 @@ public class AgentApp extends Application {
 				alert.getButtonTypes().addAll(buttonTypeModif);
 			} else {
 				buttonTypeSigner = new ButtonType("Signer");
-				alert.getButtonTypes().addAll(buttonTypeModif);
+				alert.getButtonTypes().addAll(buttonTypeModif, buttonTypeSigner);
 			}
 
 			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
@@ -551,13 +551,18 @@ public class AgentApp extends Application {
 				this.modifierHt(missionActive);
 			} else if (result.get() == buttonTypeSigner) {
 				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-				// this.signerOM(); DEVRA ETRE signerHT()
+				this.signerHT(this.missionActive);
 			} else {
 				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 				// Ne fait rien == bouton "annuler"
 			}
 		} else
 			this.creerHoraireTravail();
+	}
+
+	private void signerHT(OrdreMission missionActive2) {
+		// TODO Auto-generated method stub
+
 	}
 
 	public void afficherOrdreMissionPDF() {
@@ -582,7 +587,6 @@ public class AgentApp extends Application {
 				pdf = new PDF(new File(chemin));
 				pdf.remplirPDF(this.missionActive);
 				pdf.sauvegarderPDF();
-
 
 				if (this.missionActive.estSigne()) {
 					pdf.ajouterDateSignatureOM(this.missionActive.getDateSignature());

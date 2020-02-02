@@ -19,13 +19,11 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -136,47 +134,57 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 			int ligne = Constante.DEBUT_LIGNE_EXCEL;
 			OrdreMission om = new OrdreMission(null, null, null);
 			om = om.chargerJson(this.adresseFichier.replace("HT_", "OM_"));
+
+			CellStyle style = workbook.createCellStyle();
+			// Ajout bordure
+			style.setBorderBottom((short) 1.0);
+			style.setBorderLeft((short) 1.0);
+			style.setBorderRight((short) 1.0);
+			style.setBorderTop((short) 1.0);
 			for (HoraireJournalier hj : this.getHoraireTravail().values()) {
 				for (PlageHoraire ph : hj.getPlageHoraire()) {
-					if (ligne > Constante.FIN_LIGNE_EXCEL) {
-						dataSheet.shiftRows(ligne, ligne + 20, 1);
-						Row row = dataSheet.createRow(ligne);
-						CellStyle style = workbook.createCellStyle();
+					Row row;
+					style = workbook.createCellStyle();
+					// Ajout bordure
+					style.setBorderBottom((short) 1.0);
+					style.setBorderLeft((short) 1.0);
+					style.setBorderRight((short) 1.0);
+					style.setBorderTop((short) 1.0);
+					dataSheet.shiftRows(ligne, ligne + 20, 1);
+					row = dataSheet.createRow(ligne);
 
-						// Ajout bordure
-						style.setBorderBottom((short) 1.0);
-						style.setBorderLeft((short) 1.0);
-						style.setBorderRight((short) 1.0);
-						style.setBorderTop((short) 1.0);
-
-						for (int i = 1; i < 9; i++) {
-							row.createCell(i).setCellStyle(style);
-						}
-						// Ajout format heure
-						CreationHelper createHelper = workbook.getCreationHelper();
-						style.setDataFormat(createHelper.createDataFormat().getFormat("HH:mm"));
-						row.getCell(3).setCellStyle(style);
-						row.getCell(4).setCellStyle(style);
-						row.getCell(7).setCellStyle(style);
-
+					for (int i = 1; i < 9; i++) {
+						row.createCell(i).setCellStyle(style);
 					}
-					dataSheet.getRow(ligne).getCell(2).setCellValue(hj.getDate());
-					dataSheet.getRow(ligne).getCell(3).setCellValue(ph.getHeureDeb());
-					dataSheet.getRow(ligne).getCell(4).setCellValue(ph.getHeureFin());
+
+					row = dataSheet.getRow(ligne);
+					// Ajout format heure
+					CreationHelper createHelper = workbook.getCreationHelper();
+					style.setDataFormat(createHelper.createDataFormat().getFormat("HH:mm"));
+					row.getCell(3).setCellStyle(style);
+					row.getCell(4).setCellStyle(style);
+					row.getCell(7).setCellStyle(style);
+
+					row.getCell(2).setCellValue(hj.getDate());
+					row.getCell(3)
+							.setCellValue(String.valueOf(ph.getHeureDeb()) + ':' + String.valueOf(ph.getMinDeb()));
+					row.getCell(4)
+							.setCellValue(String.valueOf(ph.getHeureFin()) + ':' + String.valueOf(ph.getMinFin()));
 					// TODO
-					dataSheet.getRow(ligne).getCell(5).setCellValue("duree");
-					dataSheet.getRow(ligne).getCell(6).setCellValue(hj.getTransportUtiliseSurPlace());
-					dataSheet.getRow(ligne).getCell(7)
-							.setCellValue(hj.getDureeDuTrajetSurPlaceHeure() + ':' + hj.getDureeDuTrajetSurPlaceMin());
+					row.getCell(5)
+							.setCellFormula("IF(IF(EXACT(G" + (ligne + 1) + ",\"\"),E" + (ligne + 1) + "-D"
+									+ (ligne + 1) + ",\"\")=0,\"\",IF(EXACT(G" + (ligne + 1) + ",\"\"),E" + (ligne + 1)
+									+ "-D" + (ligne + 1) + ",\"\"))");
+
+					row.getCell(6).setCellValue(hj.getTransportUtiliseSurPlace());
+
+					row.getCell(7).setCellFormula(
+							"IF(NOT(EXACT(G" + (ligne + 1) + ",\"\")),E" + (ligne + 1) + "-D" + (ligne + 1) + ",\"\")");
+
 					// TODO
-					dataSheet.getRow(ligne).getCell(8).setCellValue(hj.getObservation());
+					row.getCell(8).setCellValue(hj.getObservation());
 					ligne++;
 				}
-			}
-			if (ligne > Constante.FIN_LIGNE_EXCEL) {
-				// TODO temps mission
-				// dataSheet.getRow(ligne).getCell(2).setCellValue(tempsMission);
-
 			}
 			dataSheet.getRow(8).getCell(2).setCellValue(om.getAgent().getNumCAPSSA());
 			// TODO
@@ -184,6 +192,16 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 			dataSheet.getRow(8).getCell(7).setCellValue(om.getAgent().getUniteTravail());
 			dataSheet.getRow(10).getCell(2).setCellValue(om.getAgent().getNom());
 			dataSheet.getRow(10).getCell(7).setCellValue(om.getAgent().getPrenom());
+
+			dataSheet.getRow(ligne).getCell(2).setCellStyle(style);
+			dataSheet.getRow(ligne).getCell(2).setCellFormula("SUM(F" + (Constante.DEBUT_LIGNE_EXCEL + 1) + ":F" + ligne
+					+ ")+SUM(H" + (Constante.DEBUT_LIGNE_EXCEL + 1) + ":H" + ligne + ")*0.75");
+
+			// TODO Avoir la formule horaire journalier
+//			dataSheet.getRow(ligne).getCell(4).setCellStyle(style);
+//			dataSheet.getRow(ligne).getCell(4).setCellFormula("");
+
+			workbook.setForceFormulaRecalculation(true);
 
 			// Sauvegarder le fichier
 			FileOutputStream out = new FileOutputStream(
