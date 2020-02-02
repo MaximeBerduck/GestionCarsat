@@ -110,6 +110,7 @@ public class JourHoraireTravailController {
 			itemHtCtrl.setHeure1Fin(String.valueOf(plage.getHeureFin()));
 			itemHtCtrl.setMin1Deb(String.valueOf(plage.getMinDeb()));
 			itemHtCtrl.setMin1Fin(String.valueOf(plage.getMinFin()));
+			itemHtCtrl.setCheckBox(plage.getIsTransport());
 			itemHtCtrl.setPage(item);
 			itemHtCtrl.setJht(this);
 			this.listeHoraireVBox.getChildren().add(item);

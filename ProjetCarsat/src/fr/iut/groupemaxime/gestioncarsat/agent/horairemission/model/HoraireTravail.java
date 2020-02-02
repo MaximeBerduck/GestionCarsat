@@ -176,7 +176,8 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 									+ (ligne + 1) + ",\"\")=0,\"\",IF(EXACT(G" + (ligne + 1) + ",\"\"),E" + (ligne + 1)
 									+ "-D" + (ligne + 1) + ",\"\"))");
 
-					row.getCell(6).setCellValue(hj.getTransportUtiliseSurPlace());
+					if (ph.getIsTransport())
+						row.getCell(6).setCellValue(hj.getTransportUtiliseSurPlace());
 
 					row.getCell(7).setCellFormula(
 							"IF(NOT(EXACT(G" + (ligne + 1) + ",\"\")),E" + (ligne + 1) + "-D" + (ligne + 1) + ",\"\")");
