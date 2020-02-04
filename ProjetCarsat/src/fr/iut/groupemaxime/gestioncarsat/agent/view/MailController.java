@@ -9,8 +9,11 @@ import java.util.regex.Pattern;
 
 import javax.mail.Session;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.mail.Mail;
 import fr.iut.groupemaxime.gestioncarsat.mail.MailProcessor;
+import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
@@ -55,17 +58,20 @@ public class MailController {
 
 	@FXML
 	public void envoyerMail(ActionEvent event) {
+		AgentApp app = this.mainApp.getMainApp();
 		if (adressesMailValides()) {
 			if (piecesJointes.length == 2) {
-				this.mainApp.getMainApp().getFmCtrl().setFraisMissionEtat(EtatMission.EN_COURS_ENVOI);
+				FraisMission fm = Bibliotheque.recupererFmAvecOm(app.getMissionActive());
+				fm.setEtat(EtatMission.EN_COURS_ENVOI);
+				fm.sauvegarderJson(Bibliotheque.recupererCheminEtNomFichierFm(app.getMissionActive()));
 			}else {
-				this.mainApp.getMainApp().getMissionActive().setEtat(EtatMission.EN_COURS_ENVOI);
+				app.getMissionActive().setEtat(EtatMission.EN_COURS_ENVOI);
 			}
-			this.mainApp.getMainApp().getMailsEnAttente().ajouterMail(new Mail(MailProcessor.creerMail(this)));
-			this.mainApp.getMainApp().getMailsEnAttente().chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE,
-					this.mainApp.getMainApp().getOptions());
-			this.mainApp.getMainApp().retourMenu();
-			this.mainApp.getMainApp().getServiceEnvoiMail().restart();
+			app.getMailsEnAttente().ajouterMail(new Mail(MailProcessor.creerMail(this)));
+			app.getMailsEnAttente().chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE,
+					app.getOptions());
+			app.retourMenu();
+			app.getServiceEnvoiMail().restart();
 		}
 	}
 

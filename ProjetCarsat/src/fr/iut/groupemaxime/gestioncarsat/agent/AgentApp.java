@@ -459,11 +459,11 @@ public class AgentApp extends Application {
 				ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
 				ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
-				alert.getButtonTypes().addAll(buttonTypeAfficher, buttonTypeModif);
+				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif);
 				if (!this.missionActive.fmEstSigne()) {
 					alert.getButtonTypes().add(buttonTypeSigner);
 				}
-				if (this.missionActive.fmEstSigne() && this.missionActive.htEstSigne()) {
+				if (this.missionActive.htEstSigne() && Bibliotheque.recupererFmAvecOm(missionActive).getEtat() == EtatMission.SIGNE) {
 					alert.getButtonTypes().add(buttonTypeEnvoyer);
 				}
 				alert.getButtonTypes().add(buttonTypeCancel);
@@ -759,9 +759,4 @@ public class AgentApp extends Application {
 	public Service<Void> getServiceEnvoiMail() {
 		return this.serviceEnvoiMail;
 	}
-
-	public FraisMissionController getFmCtrl() {
-		return fmCtrl;
-	}
-
 }
