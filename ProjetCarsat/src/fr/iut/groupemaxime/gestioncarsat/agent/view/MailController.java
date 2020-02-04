@@ -1,5 +1,6 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -37,6 +38,8 @@ public class MailController {
 
 	@FXML
 	private TextArea corpsDuMail;
+	
+	private File[] piecesJointes;
 
 	private OrdreMissionController mainApp;
 
@@ -53,7 +56,11 @@ public class MailController {
 	@FXML
 	public void envoyerMail(ActionEvent event) {
 		if (adressesMailValides()) {
-			this.mainApp.getMainApp().getMissionActive().setEtat(EtatMission.EN_COURS_ENVOI);
+			if (piecesJointes.length == 2) {
+				this.mainApp.getMainApp().getFmCtrl().setFraisMissionEtat(EtatMission.EN_COURS_ENVOI);
+			}else {
+				this.mainApp.getMainApp().getMissionActive().setEtat(EtatMission.EN_COURS_ENVOI);
+			}
 			this.mainApp.getMainApp().getMailsEnAttente().ajouterMail(new Mail(MailProcessor.creerMail(this)));
 			this.mainApp.getMainApp().getMailsEnAttente().chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE,
 					this.mainApp.getMainApp().getOptions());
@@ -181,5 +188,14 @@ public class MailController {
 
 	public OrdreMissionController getMainApp() {
 		return mainApp;
+	}
+	
+	public void setPiecesJointes(File[] fichiers) {
+		this.piecesJointes = fichiers;
+		
+	}
+
+	public File[] getPiecesJointes() {
+		return this.piecesJointes;
 	}
 }

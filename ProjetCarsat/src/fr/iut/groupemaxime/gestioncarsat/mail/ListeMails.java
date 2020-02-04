@@ -33,30 +33,18 @@ public class ListeMails {
 		List<Mail> aSuppr = new ArrayList<>();
 		for (Mail mail : mails) {
 			if (null == MailProcessor.envoyerMail(mail.getMail())) {
-				System.out.println("envoyed");
 				if (mail.isSauvegarde()) {
-					System.out.println("supprimed");
 					mail.supprimer();
 				}
 				aSuppr.add(mail);
 			} else {
 				
 				if (!mail.isSauvegarde()) {
-					System.out.println("sauvegarded");
 					MailProcessor.sauvegarderMail(mail, Constante.CHEMIN_MAILS_EN_ATTENTE);
 				}
-				Alert alert = new Alert(AlertType.ERROR);
-				alert.setTitle("Erreur");
-				alert.setHeaderText("Des mails n'ont pas pu être envoyés");
-				alert.setContentText("Vous êtes hors connexion, les mails seront envoyés au prochain lancement de l'application");
-
-				alert.showAndWait();
 			}
 		}
 		this.mails.removeAll(aSuppr);
-		for (Mail mail : mails) {
-			System.out.println(mail);
-		}
 	}
 
 	public void chargerMails(String cheminMailsEnAttente, Options options) {

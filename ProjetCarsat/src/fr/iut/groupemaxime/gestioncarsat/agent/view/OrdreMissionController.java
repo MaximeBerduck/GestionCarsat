@@ -22,6 +22,7 @@ import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
+import fr.iut.groupemaxime.gestioncarsat.utils.TypeDocument;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -147,24 +148,7 @@ public class OrdreMissionController {
 
 	}
 
-	public void afficherEnvoiDuMail() {
-		if (!Bibliotheque.fichierExiste(this.getMainApp().getMissionActive().getCheminDossier() + "/"
-				+ this.getMainApp().getMissionActive().getNomOM() + Constante.EXTENSION_PDF)) {
-			PDF pdf;
-			try {
-				pdf = new PDF(new File(Constante.CHEMIN_PDF_VIDE));
-				pdf.remplirPDF(this.mainApp.getMissionActive());
-				pdf.sauvegarderPDF();
-				if (this.getMainApp().getMissionActive().estSigne()) {
-					PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
-							Constante.TAILLE_SIGNATURE, this.getMainApp().getMissionActive(),
-							this.getOptions().getCheminSignature());
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	public void afficherEnvoiDuMail(TypeDocument typeDocument) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(this.getClass().getResource("Mail.fxml"));
@@ -177,6 +161,16 @@ public class OrdreMissionController {
 
 			controllerMail = loader.getController();
 			controllerMail.setMainApp(this);
+			File pdfOM = new File((this.mainApp.getMissionActive().getCheminDossier()
+					+ this.mainApp.getMissionActive().getNomOM() + Constante.EXTENSION_PDF));
+			if (TypeDocument.ORDREMISSION == typeDocument) {
+				controllerMail.setPiecesJointes(new File[] { pdfOM });
+			} else {
+				File pdfHT = new File((this.mainApp.getMissionActive().getCheminDossier()
+						+ this.mainApp.getMissionActive().getNomOM() + Constante.EXTENSION_XLS).replace("OM_", "HT_"));
+				controllerMail.setPiecesJointes(new File[] { pdfOM, pdfHT });
+			}
+
 			controllerMail.setExpediteur(this.options.getMailAgent() + '@' + Constante.HOSTNAME);
 			String desti = "";
 
@@ -262,8 +256,10 @@ public class OrdreMissionController {
 		} else {
 			String dateDebut = Constante.FORMATTER_DATEPICKER.format(controllerMission.getDateDebut().getValue());
 			String dateFin = Constante.FORMATTER_DATEPICKER.format(controllerMission.getDateFin().getValue());
-			String heureDebut = controllerMission.getHeureDepart().getText()+":"+controllerMission.getMinuteDepart().getText();
-			String heureFin = controllerMission.getHeureRetour().getText()+":"+controllerMission.getMinuteRetour().getText();
+			String heureDebut = controllerMission.getHeureDepart().getText() + ":"
+					+ controllerMission.getMinuteDepart().getText();
+			String heureFin = controllerMission.getHeureRetour().getText() + ":"
+					+ controllerMission.getMinuteRetour().getText();
 
 			String titre;
 

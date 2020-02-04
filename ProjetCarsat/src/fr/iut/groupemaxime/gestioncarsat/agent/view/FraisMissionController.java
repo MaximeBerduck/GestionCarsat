@@ -269,6 +269,10 @@ public class FraisMissionController {
 	public void setFraisMission(FraisMission fm) {
 		this.fraisMission = fm;
 	}
+	
+	public void setFraisMissionEtat(EtatMission e) {
+		this.fraisMission.setEtat(e);
+	}
 
 	public void afficherFrais2(String date) {
 		this.fraisMissionSplit.getItems().set(1, this.listeFrais2.get(date).getPage());

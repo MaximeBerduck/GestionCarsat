@@ -2,7 +2,6 @@ package fr.iut.groupemaxime.gestioncarsat.mail;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -103,23 +102,21 @@ public class MailProcessor {
 	public static Message configurationMessage(Session session, MailController mailCtrl) {
 		Message message = new MimeMessage(session);
 		try {
-			// Piéces jointes
-			File file = new File(mailCtrl.getMainApp().getMainApp().getMissionActive().getCheminDossier() + "/"
-					+ mailCtrl.getMainApp().getMainApp().getMissionActive().getNomOM() + Constante.EXTENSION_PDF);
-			FileDataSource source = new FileDataSource(file);
-			DataHandler handler = new DataHandler(source);
-			MimeBodyPart pieceJointe = new MimeBodyPart();
-			pieceJointe.setDataHandler(handler);
-			pieceJointe.setFileName(source.getName());
-
 			MimeBodyPart texteMessage = new MimeBodyPart();
 
 			texteMessage.setText(mailCtrl.getCorpsDuMail().getText());
 
 			MimeMultipart contenuMessage = new MimeMultipart();
-
+			// Piéces jointes
+			for (File file : mailCtrl.getPiecesJointes()) {
+				FileDataSource source = new FileDataSource(file);
+				DataHandler handler = new DataHandler(source);
+				MimeBodyPart pieceJointe = new MimeBodyPart();
+				pieceJointe.setDataHandler(handler);
+				pieceJointe.setFileName(source.getName());
+				contenuMessage.addBodyPart(pieceJointe);
+			}
 			contenuMessage.addBodyPart(texteMessage);
-			contenuMessage.addBodyPart(pieceJointe);
 
 			message.setContent(contenuMessage);
 			message.setSubject(mailCtrl.getObjetDuMail().getText());

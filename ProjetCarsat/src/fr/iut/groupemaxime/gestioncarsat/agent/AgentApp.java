@@ -27,6 +27,7 @@ import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
+import fr.iut.groupemaxime.gestioncarsat.utils.TypeDocument;
 import javafx.application.Application;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
@@ -180,7 +181,7 @@ public class AgentApp extends Application {
 			this.signerOM();
 		} else if (result.get() == buttonTypeEnvoyer) {
 			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			this.afficherEnvoiDuMail();
+			this.afficherEnvoiDuMail(TypeDocument.ORDREMISSION);
 		} else {
 			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			// Ne fait rien == bouton "annuler"
@@ -275,19 +276,24 @@ public class AgentApp extends Application {
 	}
 
 	public void afficherHtXLS() {
-		this.afficherHorairesTravail();
 		try {
-			HoraireTravail ht = new HoraireTravail(null);
-			ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
-					+ Constante.EXTENSION_JSON);
-			this.htCtrl.afficherExcel(ht);
-			File excelFile = new File(ht.getAdresseFichier().replace(".json", ".xls"));
+			this.genererXlsHT();
+			File excelFile = new File(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+					+ Constante.EXTENSION_XLS);
 			getHostServices().showDocument(excelFile.toURI().toURL().toExternalForm());
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.retirerDocActif();
+	}
+	
+	public void genererXlsHT() {
+		this.afficherHorairesTravail();
+		HoraireTravail ht = new HoraireTravail(null);
+		ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+				+ Constante.EXTENSION_JSON);
+		this.htCtrl.afficherExcel(ht);
 	}
 
 	public void afficherOrdresMission() {
@@ -420,10 +426,22 @@ public class AgentApp extends Application {
 		this.rootLayoutCtrl.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 	}
 
-	public void afficherEnvoiDuMail() {
+	public void afficherEnvoiDuMail(TypeDocument typeDocument) {
+		if (TypeDocument.ORDREMISSION == typeDocument) {
+			this.genererPDFOM();
+		} else {
+			System.out.println("yo");
+			this.genererPdfFM();
+			this.genererXlsHT();
+		}
 		this.afficherOrdresMission();
-		this.omCtrl.afficherEnvoiDuMail();
-		this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.omCtrl.afficherEnvoiDuMail(typeDocument);
+		if (TypeDocument.ORDREMISSION == typeDocument) {
+			this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		} else {
+			this.rootLayoutCtrl.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.rootLayoutCtrl.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		}
 	}
 
 	public void demanderActionFM() {
@@ -438,18 +456,21 @@ public class AgentApp extends Application {
 				ButtonType buttonTypeAfficher = new ButtonType("Afficher");
 				ButtonType buttonTypeModif = new ButtonType("Modifier");
 				ButtonType buttonTypeSigner = new ButtonType("Signer");
+				ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
 				ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
-				if (this.missionActive.fmEstSigne()) {
-					alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeCancel);
-				} else {
-					alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif, buttonTypeSigner,
-							buttonTypeCancel);
+				alert.getButtonTypes().addAll(buttonTypeAfficher, buttonTypeModif);
+				if (!this.missionActive.fmEstSigne()) {
+					alert.getButtonTypes().add(buttonTypeSigner);
 				}
+				if (this.missionActive.fmEstSigne() && this.missionActive.htEstSigne()) {
+					alert.getButtonTypes().add(buttonTypeEnvoyer);
+				}
+				alert.getButtonTypes().add(buttonTypeCancel);
 
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.get() == buttonTypeAfficher) {
-					this.genererPdfFM(this.missionActive);
+					this.genererPdfFM();
 					this.afficherPdfFM(this.missionActive);
 					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 
@@ -460,6 +481,11 @@ public class AgentApp extends Application {
 				} else if (result.get() == buttonTypeSigner) {
 					this.signerFM(this.missionActive);
 					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+
+				} else if (result.get() == buttonTypeEnvoyer) {
+					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+					this.afficherEnvoiDuMail(TypeDocument.FRAISOUHORAIRES);
+
 				} else {
 					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 					// Ne fait rien == bouton "annuler"
@@ -500,11 +526,13 @@ public class AgentApp extends Application {
 		}
 	}
 
-	private void genererPdfFM(OrdreMission missionActive) {
+	public void genererPdfFM() {
 		this.genererPDFOM();
 		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(missionActive));
 		fm = fm.chargerJson(fm.getAdresseFichier());
 		fm.genererPDF(this.options);
+		this.afficherFraisMission();
+		this.fmCtrl.setFraisMission(fm);
 	}
 
 	private void modifierFrais(OrdreMission missionActive) {
@@ -730,6 +758,10 @@ public class AgentApp extends Application {
 
 	public Service<Void> getServiceEnvoiMail() {
 		return this.serviceEnvoiMail;
+	}
+
+	public FraisMissionController getFmCtrl() {
+		return fmCtrl;
 	}
 
 }
