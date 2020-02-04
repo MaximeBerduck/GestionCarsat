@@ -18,7 +18,6 @@ public class ListeOrdreMission {
 		File listeDossiers[] = {};
 		listeDossiers = file.listFiles();
 		if (listeDossiers == null) {
-			System.out.println("pas de fichier à charger");
 		} else {
 			for (File dossier : listeDossiers) {
 				if (dossier.isDirectory()) {

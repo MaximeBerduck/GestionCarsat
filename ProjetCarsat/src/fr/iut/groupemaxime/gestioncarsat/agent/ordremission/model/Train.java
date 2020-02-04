@@ -10,7 +10,7 @@ public class Train extends Transport {
 			this.classe = classe;
 		}
 		else {
-			System.out.println("erreur de saisie de la classe du train"); // erreur à générer
+			//TODO erreur a generer
 		}
 		this.prisParCRAMCO = prisParCRAMCO;
 	}

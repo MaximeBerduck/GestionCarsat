@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Properties;
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
 import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -170,7 +171,7 @@ public class MailProcessor {
 
 			File dossier;
 
-			MimeBodyPart part = (MimeBodyPart) multiPart.getBodyPart(Constante.PIECE_JOINTE_NUMERO_PART);
+			BodyPart part =  multiPart.getBodyPart(Constante.PIECE_JOINTE_NUMERO_PART);
 			String nomDossier = part.getFileName().substring(0, part.getFileName().lastIndexOf('.'));
 			nomDossier = nomDossier.substring(nomDossier.indexOf('_') + 1);
 			dossier = new File(cheminDossier + nomDossier);

@@ -53,9 +53,6 @@ public class OrdreMission implements DocJson<OrdreMission> {
 
 	@Override
 	public void sauvegarderJson(String cheminDossier) {
-		if (null == cheminDossier) {
-			System.out.println("null");
-		}
 		if (null == this.nomOM) {
 			this.nomOM = "OM" + '_' + this.getAgent().getNom() + '_'
 					+ ((MissionTemporaire) this.getMission()).getLieuDeplacement().replace(" ", "_") + '_'

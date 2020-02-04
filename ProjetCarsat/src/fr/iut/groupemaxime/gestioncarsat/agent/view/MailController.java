@@ -11,6 +11,7 @@ import javax.mail.Session;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.mail.Mail;
 import fr.iut.groupemaxime.gestioncarsat.mail.MailProcessor;
 import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
@@ -61,9 +62,7 @@ public class MailController {
 		AgentApp app = this.mainApp.getMainApp();
 		if (adressesMailValides()) {
 			if (piecesJointes.length == 2) {
-				FraisMission fm = Bibliotheque.recupererFmAvecOm(app.getMissionActive());
-				fm.setEtat(EtatMission.EN_COURS_ENVOI);
-				fm.sauvegarderJson(Bibliotheque.recupererCheminEtNomFichierFm(app.getMissionActive()));
+				Bibliotheque.setEtatFm(app.getMissionActive(),EtatMission.EN_COURS_ENVOI);
 			}else {
 				app.getMissionActive().setEtat(EtatMission.EN_COURS_ENVOI);
 			}

@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.util.HashSet;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.mail.Mail;
+import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
@@ -51,6 +53,7 @@ public class MenuAgentController {
 		this.agentApp.getMailsEnAttente().chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE, options);
 		for (OrdreMission om : listeOm.getListeOM()) {
 			if (om.getEtat() == EtatMission.EN_COURS_ENVOI) {
+				
 				boolean trouve = false;
 
 				for (Mail mail : this.agentApp.getMailsEnAttente().getListeMails()) {
@@ -63,6 +66,24 @@ public class MenuAgentController {
 					om.setEtat(EtatMission.ENVOYE);
 				}
 			}
+			boolean fmTrouve = false;
+			if(Bibliotheque.fichierFmMissionExiste(om)){
+				FraisMission fm = Bibliotheque.recupererFmAvecOm(om);
+				if(fm.getEtat() == EtatMission.EN_COURS_ENVOI) {
+					boolean trouve = false;
+
+					for (Mail mail : this.agentApp.getMailsEnAttente().getListeMails()) {
+						if (mail.getPath().length() > 0 && om.getNomOM().replace("OM_", "HT_").equals(mail.getPath().substring(
+								mail.getPath().lastIndexOf(File.separatorChar) + 1, mail.getPath().lastIndexOf(".")))) {
+							trouve = true;
+						}
+					}
+					if (!trouve) {
+						Bibliotheque.setEtatFm(om, EtatMission.ENVOYE);
+					}
+				}
+			}
+			
 			listeOmVBox.getChildren().add(this.creerItemOM(om));
 		}
 	}
@@ -123,5 +144,6 @@ public class MenuAgentController {
 
 	public AgentApp getAgentApp() {
 		return this.agentApp;
+		
 	}
 }

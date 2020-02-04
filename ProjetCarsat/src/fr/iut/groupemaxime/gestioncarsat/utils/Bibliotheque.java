@@ -121,4 +121,11 @@ public class Bibliotheque {
 		return Constante.FORMAT_DATE_SLASH.format(new Date());
 	}
 
+	public static void setEtatFm(OrdreMission mission, EtatMission etat) {
+		FraisMission fm = Bibliotheque.recupererFmAvecOm(mission);
+		fm.setEtat(etat);
+		fm.sauvegarderJson(Bibliotheque.recupererCheminEtNomFichierFm(mission));
+		
+	}
+
 }

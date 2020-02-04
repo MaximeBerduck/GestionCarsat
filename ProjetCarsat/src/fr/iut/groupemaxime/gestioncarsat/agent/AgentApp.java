@@ -430,11 +430,11 @@ public class AgentApp extends Application {
 		if (TypeDocument.ORDREMISSION == typeDocument) {
 			this.genererPDFOM();
 		} else {
-			System.out.println("yo");
 			this.genererPdfFM();
 			this.genererXlsHT();
 		}
 		this.afficherOrdresMission();
+		this.omCtrl.setTitre("Envoyer un document");
 		this.omCtrl.afficherEnvoiDuMail(typeDocument);
 		if (TypeDocument.ORDREMISSION == typeDocument) {
 			this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
