@@ -6,6 +6,7 @@ import java.util.List;
 
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -30,6 +31,7 @@ public class ListeMails {
 	}
 
 	public void iterationMails() {
+		StringBuilder erreur = new StringBuilder();
 		List<Mail> aSuppr = new ArrayList<>();
 		for (Mail mail : mails) {
 			if (null == MailProcessor.envoyerMail(mail.getMail())) {
@@ -38,7 +40,6 @@ public class ListeMails {
 				}
 				aSuppr.add(mail);
 			} else {
-				
 				if (!mail.isSauvegarde()) {
 					MailProcessor.sauvegarderMail(mail, Constante.CHEMIN_MAILS_EN_ATTENTE);
 				}

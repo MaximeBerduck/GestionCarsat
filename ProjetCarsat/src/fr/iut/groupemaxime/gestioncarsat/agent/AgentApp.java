@@ -115,12 +115,6 @@ public class AgentApp extends Application {
 		};
 		serviceEnvoiMail.setOnFailed((WorkerStateEvent event) -> {
 			serviceEnvoiMail.reset();
-//			Alert alert = new Alert(AlertType.ERROR);
-//			alert.setTitle("Hors Connexion");
-//			alert.setHeaderText("Vous n'êtes pas connecté à Internet");
-//			alert.setContentText(
-//					"Tant que vous n'êtes pas connecter à Internet vous ne pouvez pas envoyer et recevoir des documents");
-//			alert.show();
 			Notifications.create().title("Erreur")
 					.text("Vous n'êtes pas connecté à Internet.\n Les mails en attente seront "
 							+ "envoyés dès que vous serez connecté à Internet.")

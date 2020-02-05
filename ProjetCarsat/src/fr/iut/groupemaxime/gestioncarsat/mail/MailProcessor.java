@@ -170,8 +170,12 @@ public class MailProcessor {
 			Multipart multiPart = (Multipart) message.getContent();
 
 			File dossier;
+			BodyPart part;
+			if(multiPart.getCount() == 3)
+				part = multiPart.getBodyPart(1);
+			else
+				part = multiPart.getBodyPart(0);
 
-			BodyPart part =  multiPart.getBodyPart(Constante.PIECE_JOINTE_NUMERO_PART);
 			String nomDossier = part.getFileName().substring(0, part.getFileName().lastIndexOf('.'));
 			nomDossier = nomDossier.substring(nomDossier.indexOf('_') + 1);
 			dossier = new File(cheminDossier + nomDossier);
@@ -182,6 +186,7 @@ public class MailProcessor {
 					+ part.getFileName().substring(0, part.getFileName().lastIndexOf(".")) + Constante.EXTENSION_MAIL);
 			FileOutputStream os = new FileOutputStream(fichierMail);
 			message.writeTo(os);
+			System.out.println(fichierMail.getAbsolutePath());
 			mail.setPath(fichierMail.getAbsolutePath());
 			os.close();
 
