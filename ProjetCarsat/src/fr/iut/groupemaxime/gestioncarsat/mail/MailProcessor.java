@@ -93,7 +93,7 @@ public class MailProcessor {
 
 		props.put("mail.smtp.host", Constante.HOSTNAME);
 
-		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.port", "25");
 
 		props.put("mail.smtp.auth", "true");
 
