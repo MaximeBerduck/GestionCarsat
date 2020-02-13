@@ -457,7 +457,7 @@ public class AgentApp extends Application {
 				if (!this.missionActive.fmEstSigne()) {
 					alert.getButtonTypes().add(buttonTypeSigner);
 				}
-				if (this.missionActive.htEstSigne() && Bibliotheque.recupererFmAvecOm(missionActive).getEtat() == EtatMission.SIGNE) {
+				if (Bibliotheque.fichierHtMissionExiste(missionActive) && this.missionActive.htEstSigne() && Bibliotheque.recupererFmAvecOm(missionActive).getEtat() == EtatMission.SIGNE) {
 					alert.getButtonTypes().add(buttonTypeEnvoyer);
 				}
 				alert.getButtonTypes().add(buttonTypeCancel);
