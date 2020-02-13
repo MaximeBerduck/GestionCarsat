@@ -17,7 +17,7 @@
 						<Insets right="10.0" />
 					</HBox.margin>
 				</Label>
-				<TextField fx:id="heure1Deb" prefHeight="25.0" prefWidth="28.0" text="0">
+				<TextField fx:id="heure1Deb" alignment="CENTER" prefHeight="25.0" prefWidth="35.0" text="00">
 					<HBox.margin>
 						<Insets right="10.0" />
 					</HBox.margin>
@@ -27,7 +27,7 @@
 						<Insets right="10.0" />
 					</HBox.margin>
 				</Label>
-				<TextField fx:id="min1Deb" prefHeight="25.0" prefWidth="28.0" text="00">
+				<TextField fx:id="min1Deb" alignment="CENTER" prefHeight="25.0" prefWidth="35.0" text="00">
 					<HBox.margin>
 						<Insets right="10.0" />
 					</HBox.margin>
@@ -37,7 +37,7 @@
 						<Insets right="10.0" />
 					</HBox.margin>
 				</Label>
-				<TextField fx:id="heure1Fin" prefHeight="25.0" prefWidth="28.0" text="0">
+				<TextField fx:id="heure1Fin" alignment="CENTER" prefHeight="25.0" prefWidth="35.0" text="00">
 					<HBox.margin>
 						<Insets right="10.0" />
 					</HBox.margin>
@@ -47,7 +47,7 @@
 						<Insets right="10.0" />
 					</HBox.margin>
 				</Label>
-				<TextField fx:id="min1Fin" prefHeight="25.0" prefWidth="28.0" text="00">
+				<TextField fx:id="min1Fin" alignment="CENTER" prefHeight="25.0" prefWidth="35.0" text="00">
 					<HBox.margin>
 						<Insets right="30.0" />
 					</HBox.margin>
