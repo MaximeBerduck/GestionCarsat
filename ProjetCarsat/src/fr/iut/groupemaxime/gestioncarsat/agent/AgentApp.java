@@ -75,10 +75,18 @@ public class AgentApp extends Application {
 	private ListeOrdreMission listeOM;
 
 	private OrdreMission missionActive;
+	private FraisMission fmMissionActive;
+	private HoraireTravail htMissionActive;
 
 	private AnchorPane etatMission;
 
 	private Service<Void> serviceEnvoiMail;
+
+	////////////////////////////////////////
+	//
+	// AgentApp
+	//
+	////////////////////////////////////////
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -141,6 +149,70 @@ public class AgentApp extends Application {
 		}
 	}
 
+	public void fermerSecondaryStage() {
+		this.secondaryStage.close();
+	}
+
+	public void retourMenu() {
+		this.retirerDocActif();
+		this.afficherListeMissions();
+		if (!this.missionActiveIsNull()) {
+			ItemOrdreMissionController itemOmCtrl = controllerMenuAgent.getItemOM(missionActive);
+			if (itemOmCtrl != null) {
+				this.setMissionActive(itemOmCtrl.getOM());
+				itemOmCtrl.ajouterStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			}
+		}
+	}
+
+	public void afficherListeMissions() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(this.getClass().getResource("view/MenuAgent.fxml"));
+
+			this.pageMenuAgent = loader.load();
+
+			if (!this.rootLayoutCtrl.getGridRoot().getChildren().contains(this.pageMenuAgent))
+				this.rootLayoutCtrl.getGridRoot().add(this.pageMenuAgent, 0, 0);
+			controllerMenuAgent = loader.getController();
+			controllerMenuAgent.setAgentApp(this);
+			controllerMenuAgent.setOptions(this.options);
+			controllerMenuAgent.chargerOM();
+			this.listeOM = controllerMenuAgent.getListeOm();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void creerDossier(String chemin) {
+		File fichier = new File(chemin);
+		if (!fichier.exists()) {
+			fichier.mkdir();
+		}
+	}
+
+	public void retirerDocActif() {
+		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.etatMission);
+		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.ordreMission);
+		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.horairesTravail);
+		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.fraisMission);
+		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+	}
+
+	////////////////////////////////////////
+	//
+	// Ordre de Mission
+	//
+	////////////////////////////////////////
+
+	public void creerOrdreMission() {
+		this.retirerMissionActive();
+		this.afficherOrdresMission();
+		this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.omCtrl.creerNouveauOm();
+	}
+
 	public void demanderActionOM() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Choix de l'action");
@@ -182,114 +254,6 @@ public class AgentApp extends Application {
 		}
 	}
 
-	public void modifierOptions() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(AgentApp.class.getResource("view/Options.fxml"));
-			AnchorPane optionsLayout = loader.load();
-
-			Scene scene = new Scene(optionsLayout);
-			this.secondaryStage = new Stage();
-			OptionsController controllerOptions = loader.getController();
-			controllerOptions.chargerPage(this, options);
-			controllerOptions.chargerMailsResponsable();
-			secondaryStage.setScene(scene);
-			this.secondaryStage.setTitle("Paramètres");
-			this.secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
-
-			secondaryStage.show();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void setOptions(Options options) {
-		this.options = options;
-		this.options.sauvegarderJson(Constante.CHEMIN_OPTIONS);
-	}
-
-	public void fermerSecondaryStage() {
-		this.secondaryStage.close();
-	}
-
-	public void afficherFraisMission() {
-		retirerDocActif();
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(AgentApp.class.getResource("view/FraisMission.fxml"));
-			this.fraisMission = loader.load();
-
-			this.fmCtrl = loader.getController();
-			this.fmCtrl.setAgentApp(this);
-			this.rootLayoutCtrl.getGridRoot().add(this.fraisMission, 2, 0);
-			this.fmCtrl.setOptions(this.options);
-			this.fmCtrl.setMissionActive(missionActive);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void retourMenu() {
-		this.retirerDocActif();
-		this.afficherListeMissions();
-		if (!this.missionActiveIsNull()) {
-			ItemOrdreMissionController itemOmCtrl = controllerMenuAgent.getItemOM(missionActive);
-			if (itemOmCtrl != null) {
-				this.setMissionActive(itemOmCtrl.getOM());
-				itemOmCtrl.ajouterStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			}
-		}
-	}
-
-	public void creerFraisMission() {
-		this.afficherFraisMission();
-		this.fmCtrl.creerFraisMission();
-	}
-
-	public void creerHoraireTravail() {
-		this.afficherHorairesTravail();
-		this.htCtrl.creerHoraireMission();
-	}
-
-	public void afficherHorairesTravail() {
-		retirerDocActif();
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(AgentApp.class.getResource("view/HorairesTravail.fxml"));
-			this.horairesTravail = loader.load();
-
-			this.htCtrl = loader.getController();
-			this.htCtrl.setMainApp(this);
-			this.rootLayoutCtrl.getGridRoot().add(this.horairesTravail, 2, 0);
-			this.htCtrl.setOptions(this.options);
-			this.htCtrl.setMissionActive(missionActive);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void afficherHtXLS() {
-		try {
-			this.genererXlsHT();
-			File excelFile = new File(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
-					+ Constante.EXTENSION_XLS);
-			getHostServices().showDocument(excelFile.toURI().toURL().toExternalForm());
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		this.retirerDocActif();
-	}
-	
-	public void genererXlsHT() {
-		this.afficherHorairesTravail();
-		HoraireTravail ht = new HoraireTravail(null);
-		ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
-				+ Constante.EXTENSION_JSON);
-		this.htCtrl.afficherExcel(ht);
-	}
-
 	public void afficherOrdresMission() {
 		retirerDocActif();
 		try {
@@ -307,302 +271,12 @@ public class AgentApp extends Application {
 		}
 	}
 
-	public void afficherListeMissions() {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(this.getClass().getResource("view/MenuAgent.fxml"));
-
-			this.pageMenuAgent = loader.load();
-
-			if (!this.rootLayoutCtrl.getGridRoot().getChildren().contains(this.pageMenuAgent))
-				this.rootLayoutCtrl.getGridRoot().add(this.pageMenuAgent, 0, 0);
-			controllerMenuAgent = loader.getController();
-			controllerMenuAgent.setAgentApp(this);
-			controllerMenuAgent.setOptions(this.options);
-			controllerMenuAgent.chargerOM();
-			this.listeOM = controllerMenuAgent.getListeOm();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void creerDossier(String chemin) {
-		File fichier = new File(chemin);
-		if (!fichier.exists()) {
-			fichier.mkdir();
-		}
-	}
-
-	public OrdreMissionController getOMCtrl() {
-		return this.omCtrl;
-	}
-
-	public void retirerMissionActive() {
-		this.missionActive = null;
-		this.rootLayoutCtrl.setLabelMissionSelectionnee("Aucune");
-		this.retourMenu();
-	}
-
-	public void setMissionActive(OrdreMission missionActive) {
-		this.missionActive = missionActive;
-		MissionTemporaire mission = (MissionTemporaire) missionActive.getMission();
-		String om = mission.getLieuDeplacement() + " du " + mission.getDateDebut() + " au " + mission.getDateFin();
-		this.rootLayoutCtrl.setLabelMissionSelectionnee(om);
-		this.afficherInfosMission(missionActive);
-	}
-
-	private void afficherInfosMission(OrdreMission missionActive) {
-		this.retirerDocActif();
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(this.getClass().getResource("view/EtatMissionSelectionnee.fxml"));
-
-			etatMission = loader.load();
-
-			EtatMissionSelectionneeController etatMissionCtrl = loader.getController();
-
-			etatMissionCtrl.choisirCouleurOM(missionActive.getEtat().getEtat());
-			etatMissionCtrl.modifierInfosMission(missionActive);
-
-			if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
-				FraisMission fm = new FraisMission(null);
-				fm = fm.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "FM_")
-						+ Constante.EXTENSION_JSON);
-
-				etatMissionCtrl.choisirCouleurFM(fm.getEtat().getEtat());
-			}
-
-			if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
-				HoraireTravail ht = new HoraireTravail(null);
-				ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
-						+ Constante.EXTENSION_JSON);
-				etatMissionCtrl.choisirCouleurHT(ht.getEtat().getEtat());
-			}
-
-			this.rootLayoutCtrl.getGridRoot().add(etatMission, 2, 0);
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	public void retirerDocActif() {
-		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.etatMission);
-		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.ordreMission);
-		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.horairesTravail);
-		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.fraisMission);
-		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-	}
-
-	public Options getOptions() {
-		return this.options;
-	}
-
 	public void modifierOm(OrdreMission om) {
 		this.afficherOrdresMission();
 		this.omCtrl.modifierOm(om);
 		this.omCtrl.setTitre(Constante.TITRE_MODIF_OM);
 		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-	}
-
-	public void modifierHt(OrdreMission missionActive) {
-		HoraireTravail ht = new HoraireTravail(Bibliotheque.recupererCheminEtNomFichierHt(this.missionActive));
-		ht = ht.chargerJson(ht.getAdresseFichier());
-
-		this.afficherHorairesTravail();
-		this.htCtrl.modifierHoraireTravail(ht);
-		this.htCtrl.setHoraireTravail(ht);
-		this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
-		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		this.rootLayoutCtrl.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-	}
-
-	public void afficherEnvoiDuMail(TypeDocument typeDocument) {
-		if (TypeDocument.ORDREMISSION == typeDocument) {
-			this.genererPDFOM();
-		} else {
-			this.genererPdfFM();
-			this.genererXlsHT();
-		}
-		this.afficherOrdresMission();
-		this.omCtrl.setTitre("Envoyer un document");
-		this.omCtrl.afficherEnvoiDuMail(typeDocument);
-		if (TypeDocument.ORDREMISSION == typeDocument) {
-			this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		} else {
-			this.rootLayoutCtrl.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			this.rootLayoutCtrl.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		}
-	}
-
-	public void demanderActionFM() {
-		if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
-			// Vérifie que le fichier fm est complet ou non
-			if (Bibliotheque.fichierFmEstEntier(Bibliotheque.recupererFmAvecOm(missionActive))) {
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Choix de l'action");
-				alert.setHeaderText("Choisissez l'action souhaitée");
-				alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre mission.");
-
-				ButtonType buttonTypeAfficher = new ButtonType("Afficher");
-				ButtonType buttonTypeModif = new ButtonType("Modifier");
-				ButtonType buttonTypeSigner = new ButtonType("Signer");
-				ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
-				ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
-
-				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif);
-				if (!this.missionActive.fmEstSigne()) {
-					alert.getButtonTypes().add(buttonTypeSigner);
-				}
-				if (Bibliotheque.fichierHtMissionExiste(missionActive) && this.missionActive.htEstSigne() && Bibliotheque.recupererFmAvecOm(missionActive).getEtat() == EtatMission.SIGNE) {
-					alert.getButtonTypes().add(buttonTypeEnvoyer);
-				}
-				alert.getButtonTypes().add(buttonTypeCancel);
-
-				Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == buttonTypeAfficher) {
-					this.genererPdfFM();
-					this.afficherPdfFM(this.missionActive);
-					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-
-				} else if (result.get() == buttonTypeModif) {
-					this.afficherFraisMission();
-					this.modifierFrais(this.missionActive);
-
-				} else if (result.get() == buttonTypeSigner) {
-					this.signerFM(this.missionActive);
-					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-
-				} else if (result.get() == buttonTypeEnvoyer) {
-					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-					this.afficherEnvoiDuMail(TypeDocument.FRAISOUHORAIRES);
-
-				} else {
-					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-					// Ne fait rien == bouton "annuler"
-				}
-			} else {
-				this.reprendreCreationFm(missionActive);
-			}
-
-		} else {
-			// Créer les frais de mission
-			this.creerFraisMission();
-		}
-	}
-
-	private void reprendreCreationFm(OrdreMission missionActive2) {
-		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(this.missionActive));
-		fm = fm.chargerJson(fm.getAdresseFichier());
-
-		this.afficherFraisMission();
-		this.fmCtrl.setFraisMission(fm);
-		this.fmCtrl.afficherSemaine();
-		this.fmCtrl.reprendreDernierJour(fm);
-	}
-
-	private void signerFM(OrdreMission missionActive) {
-		this.afficherFraisMission();
-		this.fmCtrl.afficherSignatureFM(missionActive);
-		this.fmCtrl.setTitre(Constante.TITRE_SIGNER_FM);
-	}
-
-	private void afficherPdfFM(OrdreMission missionActive) {
-		try {
-			Desktop.getDesktop().browse(new File(
-					this.missionActive.getCheminDossier() + this.missionActive.getNomOM() + Constante.EXTENSION_PDF)
-							.toURI());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void genererPdfFM() {
-		this.genererPDFOM();
-		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(missionActive));
-		fm = fm.chargerJson(fm.getAdresseFichier());
-		fm.genererPDF(this.options);
-		this.afficherFraisMission();
-		this.fmCtrl.setFraisMission(fm);
-	}
-
-	private void modifierFrais(OrdreMission missionActive) {
-		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(this.missionActive));
-		fm = fm.chargerJson(fm.getAdresseFichier());
-
-		this.afficherFraisMission();
-		this.fmCtrl.modifierFraisMission(fm);
-		this.fmCtrl.setFraisMission(fm);
-		this.fmCtrl.setTitre(Constante.TITRE_MODIF_FM);
-		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		this.rootLayoutCtrl.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-
-	}
-
-	public void demanderActionHT() {
-		if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Choix de l'action");
-			alert.setHeaderText("Choisissez l'action souhaitée");
-			alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre ordre de mission.");
-
-			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
-			ButtonType buttonTypeModif = new ButtonType("Modifier");
-			alert.getButtonTypes().setAll(buttonTypeAfficher);
-
-			ButtonType buttonTypeSigner = null;
-			if (this.missionActive.htEstSigne()) {
-				alert.getButtonTypes().addAll(buttonTypeModif);
-			} else {
-				buttonTypeSigner = new ButtonType("Signer");
-				alert.getButtonTypes().addAll(buttonTypeModif, buttonTypeSigner);
-			}
-
-			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
-
-			alert.getButtonTypes().add(buttonTypeCancel);
-
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == buttonTypeAfficher) {
-				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-				this.afficherHtXLS();
-			} else if (result.get() == buttonTypeModif) {
-				this.modifierHt(missionActive);
-			} else if (result.get() == buttonTypeSigner) {
-				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-				this.signerHT();
-			} else {
-				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-				// Ne fait rien == bouton "annuler"
-			}
-		} else
-			this.creerHoraireTravail();
-	}
-
-	private void signerHT() {
-		// TODO Auto-generated method stub
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Certifier l'exactitude des horaires");
-		alert.setHeaderText(
-				"Certifiez-vous l'exactitude des informations saisies \ndans les horaires de travail de cette mission ?");
-		alert.setContentText("Signer vos horaires de travail ?");
-
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.get() == ButtonType.OK) {
-			HoraireTravail ht = new HoraireTravail(null);
-			ht = ht.chargerJson(
-					missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_").concat(".json"));
-			ht.setDateSignature(Bibliotheque.getDateAujourdhui());
-			ht.setSignature(true);
-			ht.setEtat(EtatMission.SIGNE);
-			ht.sauvegarderJson(ht.getAdresseFichier());
-		} else {
-			// ne fait rien : bouton annuler ou fermer la fenetre
-		}
-		this.retourMenu();
 	}
 
 	public void afficherOrdreMissionPDF() {
@@ -722,8 +396,351 @@ public class AgentApp extends Application {
 		this.retourMenu();
 	}
 
-	public boolean missionActiveIsNull() {
-		return null == this.missionActive;
+	////////////////////////////////////////
+	//
+	// Frais de Mission
+	//
+	////////////////////////////////////////
+
+	public void demanderActionFM() {
+		if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
+			// Vérifie que le fichier fm est complet ou non
+			if (Bibliotheque.fichierFmEstEntier(Bibliotheque.recupererFmAvecOm(missionActive))) {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Choix de l'action");
+				alert.setHeaderText("Choisissez l'action souhaitée");
+				alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre mission.");
+
+				ButtonType buttonTypeAfficher = new ButtonType("Afficher");
+				ButtonType buttonTypeModif = new ButtonType("Modifier");
+				ButtonType buttonTypeSigner = new ButtonType("Signer");
+				ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
+				ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+
+				alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif);
+				if (!this.missionActive.fmEstSigne()) {
+					alert.getButtonTypes().add(buttonTypeSigner);
+				}
+				if (Bibliotheque.fichierHtMissionExiste(missionActive) && this.missionActive.htEstSigne()
+						&& Bibliotheque.recupererFmAvecOm(missionActive).getEtat() == EtatMission.SIGNE) {
+					alert.getButtonTypes().add(buttonTypeEnvoyer);
+				}
+				alert.getButtonTypes().add(buttonTypeCancel);
+
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.get() == buttonTypeAfficher) {
+					this.genererPdfFM();
+					this.afficherPdfFM(this.missionActive);
+					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+
+				} else if (result.get() == buttonTypeModif) {
+					this.afficherFraisMission();
+					this.modifierFrais(this.missionActive);
+
+				} else if (result.get() == buttonTypeSigner) {
+					this.signerFM(this.missionActive);
+					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+
+				} else if (result.get() == buttonTypeEnvoyer) {
+					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+					this.afficherEnvoiDuMail(TypeDocument.FRAISOUHORAIRES);
+
+				} else {
+					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+					// Ne fait rien == bouton "annuler"
+				}
+			} else {
+				this.reprendreCreationFm(missionActive);
+			}
+
+		} else {
+			// Créer les frais de mission
+			this.creerFraisMission();
+		}
+	}
+
+	private void reprendreCreationFm(OrdreMission missionActive2) {
+		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(this.missionActive));
+		fm = fm.chargerJson(fm.getAdresseFichier());
+
+		this.afficherFraisMission();
+		this.fmCtrl.setFraisMission(fm);
+		this.fmCtrl.afficherSemaine();
+		this.fmCtrl.reprendreDernierJour(fm);
+	}
+
+	private void signerFM(OrdreMission missionActive) {
+		this.afficherFraisMission();
+		this.fmCtrl.afficherSignatureFM(missionActive);
+		this.fmCtrl.setTitre(Constante.TITRE_SIGNER_FM);
+	}
+
+	private void afficherPdfFM(OrdreMission missionActive) {
+		try {
+			Desktop.getDesktop().browse(new File(
+					this.missionActive.getCheminDossier() + this.missionActive.getNomOM() + Constante.EXTENSION_PDF)
+							.toURI());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		this.retourMenu();
+	}
+
+	public void genererPdfFM() {
+		this.genererPDFOM();
+		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(missionActive));
+		fm = fm.chargerJson(fm.getAdresseFichier());
+		fm.genererPDF(this.options);
+		this.afficherFraisMission();
+		this.fmCtrl.setFraisMission(fm);
+	}
+
+	private void modifierFrais(OrdreMission missionActive) {
+		FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(this.missionActive));
+		fm = fm.chargerJson(fm.getAdresseFichier());
+
+		this.afficherFraisMission();
+		this.fmCtrl.modifierFraisMission(fm);
+		this.fmCtrl.setFraisMission(fm);
+		this.fmCtrl.setTitre(Constante.TITRE_MODIF_FM);
+		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+
+	}
+
+	public void afficherFraisMission() {
+		retirerDocActif();
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AgentApp.class.getResource("view/FraisMission.fxml"));
+			this.fraisMission = loader.load();
+
+			this.fmCtrl = loader.getController();
+			this.fmCtrl.setAgentApp(this);
+			this.rootLayoutCtrl.getGridRoot().add(this.fraisMission, 2, 0);
+			this.fmCtrl.setOptions(this.options);
+			this.fmCtrl.setMissionActive(missionActive);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void creerFraisMission() {
+		this.afficherFraisMission();
+		this.fmCtrl.creerFraisMission();
+	}
+
+	////////////////////////////////////////
+	//
+	// Horaires de Mission
+	//
+	////////////////////////////////////////
+
+	public void demanderActionHT() {
+		if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Choix de l'action");
+			alert.setHeaderText("Choisissez l'action souhaitée");
+			alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre ordre de mission.");
+
+			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
+			ButtonType buttonTypeModif = new ButtonType("Modifier");
+			alert.getButtonTypes().setAll(buttonTypeAfficher);
+
+			ButtonType buttonTypeSigner = null;
+			if (this.missionActive.htEstSigne()) {
+				alert.getButtonTypes().addAll(buttonTypeModif);
+			} else {
+				buttonTypeSigner = new ButtonType("Signer");
+				alert.getButtonTypes().addAll(buttonTypeModif, buttonTypeSigner);
+			}
+
+			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+
+			alert.getButtonTypes().add(buttonTypeCancel);
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == buttonTypeAfficher) {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+				this.afficherHtXLS();
+			} else if (result.get() == buttonTypeModif) {
+				this.modifierHt(missionActive);
+			} else if (result.get() == buttonTypeSigner) {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+				this.signerHT();
+			} else {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+				// Ne fait rien == bouton "annuler"
+			}
+		} else
+			this.creerHoraireTravail();
+	}
+
+	private void signerHT() {
+		// TODO Auto-generated method stub
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Certifier l'exactitude des horaires");
+		alert.setHeaderText(
+				"Certifiez-vous l'exactitude des informations saisies \ndans les horaires de travail de cette mission ?");
+		alert.setContentText("Signer vos horaires de travail ?");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			HoraireTravail ht = new HoraireTravail(null);
+			ht = ht.chargerJson(
+					missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_").concat(".json"));
+			ht.setDateSignature(Bibliotheque.getDateAujourdhui());
+			ht.setSignature(true);
+			ht.setEtat(EtatMission.SIGNE);
+			ht.sauvegarderJson(ht.getAdresseFichier());
+		} else {
+			// ne fait rien : bouton annuler ou fermer la fenetre
+		}
+		this.retourMenu();
+	}
+
+	public void creerHoraireTravail() {
+		this.afficherHorairesTravail();
+		this.htCtrl.creerHoraireMission();
+	}
+
+	public void afficherHorairesTravail() {
+		retirerDocActif();
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AgentApp.class.getResource("view/HorairesTravail.fxml"));
+			this.horairesTravail = loader.load();
+
+			this.htCtrl = loader.getController();
+			this.htCtrl.setMainApp(this);
+			this.rootLayoutCtrl.getGridRoot().add(this.horairesTravail, 2, 0);
+			this.htCtrl.setOptions(this.options);
+			this.htCtrl.setMissionActive(missionActive);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void afficherHtXLS() {
+		try {
+			this.genererXlsHT();
+			File excelFile = new File(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+					+ Constante.EXTENSION_XLS);
+			getHostServices().showDocument(excelFile.toURI().toURL().toExternalForm());
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.retourMenu();
+	}
+
+	public void genererXlsHT() {
+		this.afficherHorairesTravail();
+		HoraireTravail ht = new HoraireTravail(null);
+		ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+				+ Constante.EXTENSION_JSON);
+		this.htCtrl.afficherExcel(ht);
+	}
+
+	public void modifierHt(OrdreMission missionActive) {
+		HoraireTravail ht = new HoraireTravail(Bibliotheque.recupererCheminEtNomFichierHt(this.missionActive));
+		ht = ht.chargerJson(ht.getAdresseFichier());
+
+		this.afficherHorairesTravail();
+		this.htCtrl.modifierHoraireTravail(ht);
+		this.htCtrl.setHoraireTravail(ht);
+		this.htCtrl.setTitre(Constante.TITRE_MODIF_HT);
+		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+	}
+
+	////////////////////////////////////////
+	//
+	// Options
+	//
+	////////////////////////////////////////
+
+	public void modifierOptions() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AgentApp.class.getResource("view/Options.fxml"));
+			AnchorPane optionsLayout = loader.load();
+
+			Scene scene = new Scene(optionsLayout);
+			this.secondaryStage = new Stage();
+			OptionsController controllerOptions = loader.getController();
+			controllerOptions.chargerPage(this, options);
+			controllerOptions.chargerMailsResponsable();
+			secondaryStage.setScene(scene);
+			this.secondaryStage.setTitle("Paramètres");
+			this.secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
+
+			secondaryStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setOptions(Options options) {
+		this.options = options;
+		this.options.sauvegarderJson(Constante.CHEMIN_OPTIONS);
+	}
+
+	////////////////////////////////////////
+	//
+	// Mission Active
+	//
+	////////////////////////////////////////
+
+	public void retirerMissionActive() {
+		this.missionActive = null;
+		this.rootLayoutCtrl.setLabelMissionSelectionnee("Aucune");
+		this.retourMenu();
+	}
+
+	public void setMissionActive(OrdreMission missionActive) {
+		this.missionActive = missionActive;
+		MissionTemporaire mission = (MissionTemporaire) missionActive.getMission();
+		String om = mission.getLieuDeplacement() + " du " + mission.getDateDebut() + " au " + mission.getDateFin();
+		this.rootLayoutCtrl.setLabelMissionSelectionnee(om);
+		this.afficherInfosMission(missionActive);
+	}
+
+	private void afficherInfosMission(OrdreMission missionActive) {
+		this.retirerDocActif();
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(this.getClass().getResource("view/EtatMissionSelectionnee.fxml"));
+
+			etatMission = loader.load();
+
+			EtatMissionSelectionneeController etatMissionCtrl = loader.getController();
+
+			etatMissionCtrl.choisirCouleurOM(missionActive.getEtat().getEtat());
+			etatMissionCtrl.modifierInfosMission(missionActive);
+
+			if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
+				FraisMission fm = new FraisMission(null);
+				fm = fm.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "FM_")
+						+ Constante.EXTENSION_JSON);
+
+				etatMissionCtrl.choisirCouleurFM(fm.getEtat().getEtat());
+			}
+
+			if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
+				HoraireTravail ht = new HoraireTravail(null);
+				ht = ht.chargerJson(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+						+ Constante.EXTENSION_JSON);
+				etatMissionCtrl.choisirCouleurHT(ht.getEtat().getEtat());
+			}
+
+			this.rootLayoutCtrl.getGridRoot().add(etatMission, 2, 0);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void alertChoisirMission() {
@@ -735,11 +752,46 @@ public class AgentApp extends Application {
 		alert.showAndWait();
 	}
 
-	public void creerOrdreMission() {
-		this.retirerMissionActive();
+	////////////////////////////////////////
+	//
+	// Mails
+	//
+	////////////////////////////////////////
+	
+	public void afficherEnvoiDuMail(TypeDocument typeDocument) {
+		if (TypeDocument.ORDREMISSION == typeDocument) {
+			this.genererPDFOM();
+		} else {
+			this.genererPdfFM();
+			this.genererXlsHT();
+		}
 		this.afficherOrdresMission();
-		this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-		this.omCtrl.creerNouveauOm();
+		this.omCtrl.setTitre("Envoyer un document");
+		this.omCtrl.afficherEnvoiDuMail(typeDocument);
+		if (TypeDocument.ORDREMISSION == typeDocument) {
+			this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		} else {
+			this.rootLayoutCtrl.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.rootLayoutCtrl.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		}
+	}
+
+	////////////////////////////////////////
+	//
+	// Getters/Setter
+	//
+	////////////////////////////////////////
+
+	public OrdreMissionController getOMCtrl() {
+		return this.omCtrl;
+	}
+
+	public Options getOptions() {
+		return this.options;
+	}
+
+	public boolean missionActiveIsNull() {
+		return null == this.missionActive;
 	}
 
 	public OrdreMission getMissionActive() {
