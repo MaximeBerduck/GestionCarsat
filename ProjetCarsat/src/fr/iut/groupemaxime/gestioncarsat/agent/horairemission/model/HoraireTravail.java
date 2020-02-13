@@ -221,8 +221,8 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 				final int pictureIndex = workbook.addPicture(IOUtils.toByteArray(stream), Workbook.PICTURE_TYPE_PNG);
 
 				anchor.setCol1(2);
-				anchor.setRow1(20); // same row is okay
-				anchor.setRow2(24);
+				anchor.setRow1(ligne+3);
+				anchor.setRow2(ligne+7);
 				anchor.setCol2(4);
 				final Picture pict = drawing.createPicture(anchor, pictureIndex);
 				dataSheet.getRow(ligne+5).getCell(1).setCellValue(this.dateSignature);

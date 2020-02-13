@@ -439,7 +439,6 @@ public class AgentApp extends Application {
 
 				} else if (result.get() == buttonTypeSigner) {
 					this.signerFM(this.missionActive);
-					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 
 				} else if (result.get() == buttonTypeEnvoyer) {
 					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
@@ -473,6 +472,9 @@ public class AgentApp extends Application {
 		this.afficherFraisMission();
 		this.fmCtrl.afficherSignatureFM(missionActive);
 		this.fmCtrl.setTitre(Constante.TITRE_SIGNER_FM);
+		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		this.rootLayoutCtrl.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+
 	}
 
 	private void afficherPdfFM(OrdreMission missionActive) {
