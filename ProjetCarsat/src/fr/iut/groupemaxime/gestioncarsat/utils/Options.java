@@ -77,6 +77,10 @@ public class Options implements DocJson<Options> {
 		}
 		return options;
 	}
+	
+	public void sauvegarder() {
+		this.sauvegarderJson(Constante.CHEMIN_OPTIONS);
+	}
 
 	public static boolean fichierOptionsExiste() {
 		boolean existe = false;

@@ -216,8 +216,8 @@ public class AgentApp extends Application {
 	public void demanderActionOM() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Choix de l'action");
-		alert.setHeaderText("Choisissez l'action souhaitee");
-		alert.setContentText("Choisissez l'action que vous voulez realiser sur votre ordre de mission.");
+		alert.setHeaderText("Choisissez l'action souhaitée");
+		alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre ordre de mission.");
 		ButtonType buttonTypeAfficher = new ButtonType("Afficher");
 		ButtonType buttonTypeModif = new ButtonType("Modifier");
 		alert.getButtonTypes().setAll(buttonTypeAfficher, buttonTypeModif);
@@ -543,7 +543,7 @@ public class AgentApp extends Application {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Choix de l'action");
 			alert.setHeaderText("Choisissez l'action souhaitée");
-			alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre ordre de mission.");
+			alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre mission.");
 
 			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
 			ButtonType buttonTypeModif = new ButtonType("Modifier");
@@ -759,7 +759,7 @@ public class AgentApp extends Application {
 	// Mails
 	//
 	////////////////////////////////////////
-	
+
 	public void afficherEnvoiDuMail(TypeDocument typeDocument) {
 		if (TypeDocument.ORDREMISSION == typeDocument) {
 			this.genererPDFOM();
@@ -769,6 +769,7 @@ public class AgentApp extends Application {
 		}
 		this.afficherOrdresMission();
 		this.omCtrl.setTitre("Envoyer un document");
+		this.omCtrl.setPrimaryStage(primaryStage);
 		this.omCtrl.afficherEnvoiDuMail(typeDocument);
 		if (TypeDocument.ORDREMISSION == typeDocument) {
 			this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);

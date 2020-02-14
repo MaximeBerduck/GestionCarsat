@@ -2,11 +2,8 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.Optional;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
-import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.AutreTransport;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Avion;
@@ -25,17 +22,12 @@ import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import fr.iut.groupemaxime.gestioncarsat.utils.TypeDocument;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Dialog;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class OrdreMissionController {
 
@@ -172,37 +164,8 @@ public class OrdreMissionController {
 			}
 
 			controllerMail.setExpediteur(this.options.getMailAgent() + '@' + Constante.HOSTNAME);
-			String desti = "";
 
-			Dialog<VBox> dialog = new Dialog<>();
-			dialog.setTitle("Choisir les destinataires");
-			dialog.setHeaderText("Selectionnez le ou les destinaire(s) pour cet envoi");
-			VBox vbox = new VBox();
-			ButtonType buttonTypeValider = new ButtonType("Valider", ButtonData.OK_DONE);
-
-			for (String responsable : this.options.getMailsResponsables()) {
-				CheckBox check = new CheckBox(responsable);
-				vbox.getChildren().add(check);
-			}
-			dialog.getDialogPane().setContent(vbox);
-			dialog.getDialogPane().getButtonTypes().add(buttonTypeValider);
-
-			dialog.setResultConverter(new Callback<ButtonType, VBox>() {
-				@Override
-				public VBox call(ButtonType b) {
-
-					return vbox;
-				}
-			});
-
-			Optional<VBox> result = dialog.showAndWait();
-
-			for (Node node : result.get().getChildren()) {
-				CheckBox check = (CheckBox) node;
-				if (check.isSelected()) {
-					desti += check.getText() + ',';
-				}
-			}
+			String desti = demanderMailsDestinataire(options);
 
 			if (desti.length() != 0)
 				desti = desti.substring(0, desti.length() - 1);
@@ -212,6 +175,41 @@ public class OrdreMissionController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public String demanderMailsDestinataire(Options options) {
+		String desti = "";
+
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AgentApp.class.getResource("view/choixMailsDestinataires.fxml"));
+			AnchorPane choixMails = loader.load();
+
+			choixMailsDestinatairesController choixMailsCtrl = loader.getController();
+
+			for (String responsable : this.options.getMailsResponsables()) {
+				choixMailsCtrl.ajouterMails(responsable);
+			}
+
+			Scene scene = new Scene(choixMails);
+
+			// New window (Stage)
+			Stage fenetreChoixDesti = new Stage();
+			fenetreChoixDesti.setResizable(false);
+			choixMailsCtrl.initialize(fenetreChoixDesti, options);
+
+			fenetreChoixDesti.setTitle("Second Stage");
+			fenetreChoixDesti.setScene(scene);
+
+			fenetreChoixDesti.initOwner(primaryStage);
+			fenetreChoixDesti.initModality(Modality.WINDOW_MODAL);
+			fenetreChoixDesti.showAndWait();
+			desti = choixMailsCtrl.getDestinaires();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return desti;
 	}
 
 	public void afficherFormMoyenTransport() {
@@ -393,6 +391,10 @@ public class OrdreMissionController {
 
 	public Stage getPrimaryStage() {
 		return this.primaryStage;
+	}
+
+	public void setPrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
 	}
 
 	public void setMainApp(AgentApp mainApp) {
