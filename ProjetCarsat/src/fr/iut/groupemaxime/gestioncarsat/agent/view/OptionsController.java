@@ -2,6 +2,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Optional;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
@@ -11,6 +12,9 @@ import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -45,9 +49,35 @@ public class OptionsController {
 	@FXML
 	public void choisirCheminDossierMission() {
 		File dossier = Bibliotheque.ouvrirDirectoryChooser();
-		if (null != dossier) {
-			this.textFieldCheminDossierOM.setText(String.valueOf(dossier) + '/');
-			this.options.setCheminOM(String.valueOf(dossier) + '/');
+		if (null != dossier && !dossier.getAbsolutePath().equals(new File(options.getCheminOM()).getAbsolutePath())) {
+			if (!Bibliotheque.repertoireEstVide(dossier)) {
+				dossier = new File(dossier.getAbsolutePath() + "/OM");
+				try {
+					Files.createDirectories(dossier.toPath());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			if (!dossier.getAbsolutePath().endsWith(File.separator)) {
+				dossier = new File(dossier.getAbsolutePath() + File.separator);
+			}
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Confirmation déplacement");
+			alert.setHeaderText("Attention, les missions déjà enregistrées seront automatiquement"
+					+ " déplacées dans le nouveau dossier.");
+			alert.setContentText("Êtes-vous sûr de vouloir changer le chemin vers le répertoire ? ");
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == ButtonType.OK) {
+				Bibliotheque.deplacerContenuRepertoire(new File(this.options.getCheminOM()), dossier);
+				this.textFieldCheminDossierOM.setText(String.valueOf(dossier));
+				this.options.setCheminOM(String.valueOf(dossier));
+			} else {
+				// ... user chose CANCEL or closed the dialog
+			}
+
 		}
 	}
 
@@ -74,7 +104,7 @@ public class OptionsController {
 			this.ajouterItemResponsable(result.get());
 		}
 	}
-	
+
 	public void ajouterItemResponsable(String adresseResponsable) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -84,7 +114,7 @@ public class OptionsController {
 			ItemResponsableOptionsController itemResponsableOptionsCtrl = loader.getController();
 			itemResponsableOptionsCtrl.setOptionCtrl(this);
 			itemResponsableOptionsCtrl.setAdresseMailResponsable(adresseResponsable);
-			
+
 			vboxMailResponsable.getChildren().add(itemResponsable);
 
 		} catch (IOException e) {

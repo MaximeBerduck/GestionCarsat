@@ -292,7 +292,6 @@ public class AgentApp extends Application {
 	}
 
 	public void genererPDFOM() {
-		// TODO
 		String chemin = this.missionActive.getCheminDossier()
 				+ this.missionActive.getNomOM().concat(Constante.EXTENSION_PDF);
 		PDF pdf;
@@ -579,7 +578,6 @@ public class AgentApp extends Application {
 	}
 
 	private void signerHT() {
-		// TODO Auto-generated method stub
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Certifier l'exactitude des horaires");
 		alert.setHeaderText(

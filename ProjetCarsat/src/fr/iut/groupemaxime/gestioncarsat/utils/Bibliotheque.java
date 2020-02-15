@@ -1,6 +1,11 @@
 package fr.iut.groupemaxime.gestioncarsat.utils;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.CopyOption;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
@@ -117,6 +122,16 @@ public class Bibliotheque {
 		return null;
 	}
 
+	public static boolean repertoireEstVide(File repertoire) {
+		boolean vide = true;
+		File listeFichiers[] = {};
+		listeFichiers = repertoire.listFiles();
+		if (listeFichiers.length > 1) {
+			vide = false;
+		}
+		return vide;
+	}
+
 	public static String getDateAujourdhui() {
 		return Constante.FORMAT_DATE_SLASH.format(new Date());
 	}
@@ -125,7 +140,31 @@ public class Bibliotheque {
 		FraisMission fm = Bibliotheque.recupererFmAvecOm(mission);
 		fm.setEtat(etat);
 		fm.sauvegarderJson(Bibliotheque.recupererCheminEtNomFichierFm(mission));
-		
+
+	}
+
+	public static void deplacerContenuRepertoire(File ancienRepertoire, File newRepertoire) {
+		// TODO Auto-generated method stub
+		File listeFichiers[] = {};
+		listeFichiers = ancienRepertoire.listFiles();
+		if (listeFichiers != null) {
+			for (File fichier : listeFichiers) {
+				if (fichier.isDirectory()) {
+					File temp = new File(newRepertoire.toPath() + File.separator + fichier.getName());
+					temp.mkdir();
+					deplacerContenuRepertoire(fichier, temp);
+					fichier.delete();
+				} else {
+					try {
+						File temp = new File(newRepertoire.toPath() + File.separator + fichier.getName());
+						Files.move(fichier.toPath(), temp.toPath(), StandardCopyOption.REPLACE_EXISTING);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 
 }
