@@ -11,6 +11,7 @@ public class Constante {
 	public static String EXTENSION_PDF = ".pdf";
 	public static String EXTENSION_MAIL = ".eml";
 	public static String CHEMIN_PDF_VIDE = "target/PDF/OM_vide.pdf";
+	public static final String CHEMIN_PDF_FRAIS_VIDE = "target/PDF/pageFrais.pdf";
 	public static String CHEMIN_FICHIERS_DEFAUT = "target/OM/";
 	public static String EXTENSION_JSON = ".json";
 	public static String CHEMIN_XLS_VIDE = "target/PDF/HT_vide.xls";

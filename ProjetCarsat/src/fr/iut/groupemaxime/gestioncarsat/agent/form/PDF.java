@@ -219,7 +219,7 @@ public class PDF {
 	}
 
 	public void remplirPdfFM(FraisMission fm, Options options) throws IOException {
-
+		//TODO Gérer les missions de plusieurs semaines
 		this.remplirChamp("dateDebutMission", fm.getDateDebutMission());
 		this.remplirChamp("dateFinMission", fm.getDateFinMission());
 		Calendar c = Calendar.getInstance();
