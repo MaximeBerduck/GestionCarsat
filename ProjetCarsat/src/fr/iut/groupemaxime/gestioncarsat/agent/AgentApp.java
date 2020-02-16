@@ -48,6 +48,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class AgentApp extends Application {
@@ -103,6 +104,7 @@ public class AgentApp extends Application {
 			this.options = this.options.chargerJson(Constante.CHEMIN_OPTIONS);
 		else {
 			this.options.sauvegarderJson(Constante.CHEMIN_OPTIONS);
+			this.modifierOptions();
 		}
 		this.creerDossier(this.options.getCheminOM());
 		this.mailsEnAttente = new ListeMails();
@@ -674,9 +676,11 @@ public class AgentApp extends Application {
 			controllerOptions.chargerMailsResponsable();
 			secondaryStage.setScene(scene);
 			this.secondaryStage.setTitle("Paramètres");
+			secondaryStage.initOwner(primaryStage);
+			secondaryStage.initModality(Modality.WINDOW_MODAL);
 			this.secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
 
-			secondaryStage.show();
+			secondaryStage.showAndWait();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
