@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="itemHoraire" prefHeight="38.0" prefWidth="788.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.ItemHoraireTravailController">
+<VBox fx:id="itemHoraire" prefHeight="38.0" prefWidth="788.0" stylesheets="@../style.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.ItemHoraireTravailController">
 	<children>
 		<HBox alignment="CENTER" prefHeight="43.0" prefWidth="788.0">
 			<children>

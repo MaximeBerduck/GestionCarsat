@@ -12,7 +12,7 @@
 <VBox fx:id="itemMission" onMouseClicked="#choisirMission"
 	prefHeight="100.0" prefWidth="597.0"
 	style="-fx-border-color: grey; -fx-border-width: 0 0 1 0;"
-	stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1"
+	stylesheets="@../style.css"
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="fr.iut.groupemaxime.gestioncarsat.responsable.view.ItemMissionResponsableController">
 	<children>

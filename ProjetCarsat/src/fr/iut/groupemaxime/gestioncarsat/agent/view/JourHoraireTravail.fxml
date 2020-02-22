@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="520.0" prefWidth="700.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.JourHoraireTravailController">
+<AnchorPane prefHeight="520.0" prefWidth="700.0" stylesheets="@../style.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.JourHoraireTravailController">
 	<children>
 		<VBox alignment="TOP_CENTER" layoutY="64.0" prefHeight="456.0" prefWidth="700.0">
 			<children>

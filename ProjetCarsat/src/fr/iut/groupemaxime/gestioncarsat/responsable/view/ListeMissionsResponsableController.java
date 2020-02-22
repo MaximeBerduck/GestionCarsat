@@ -35,7 +35,6 @@ public class ListeMissionsResponsableController {
 
 	public void chargerOM() {
 		listeOm = new ListeOrdreMission();
-		listeOm.chargerOMMail(options);
 		File dossier = new File(options.getCheminOM() + "responsable/");
 		File[] pdfs = dossier.listFiles();
 		PDF pdf;

@@ -9,42 +9,27 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
-	minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0"
-	prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.AgentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.AgentController">
 	<children>
-		<GridPane fx:id="grilleTop" layoutX="-1.0" layoutY="59.0"
-			prefHeight="491.0" prefWidth="700.0" stylesheets="@../style.css"
-			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-			AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
+		<GridPane fx:id="grilleTop" layoutX="-1.0" layoutY="59.0" prefHeight="491.0" prefWidth="700.0" stylesheets="@../style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0">
 			<columnConstraints>
-				<ColumnConstraints hgrow="SOMETIMES"
-					maxWidth="470.0" minWidth="10.0" prefWidth="300.0" />
-				<ColumnConstraints hgrow="SOMETIMES"
-					maxWidth="435.0" minWidth="10.0" prefWidth="300.0" />
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="470.0" minWidth="10.0" prefWidth="300.0" />
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="435.0" minWidth="10.0" prefWidth="300.0" />
 			</columnConstraints>
 			<rowConstraints>
-				<RowConstraints maxHeight="129.0" minHeight="0.0"
-					prefHeight="28.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="334.0" minHeight="0.0"
-					prefHeight="33.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="354.0" minHeight="10.0"
-					prefHeight="82.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="354.0" minHeight="0.0"
-					prefHeight="66.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="354.0" minHeight="10.0"
-					prefHeight="66.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="129.0" minHeight="0.0" prefHeight="28.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="334.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="354.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="354.0" minHeight="0.0" prefHeight="66.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="354.0" minHeight="10.0" prefHeight="66.0" vgrow="SOMETIMES" />
 			</rowConstraints>
 			<children>
-				<Label stylesheets="@../style.css" text="Nom :">
+				<Label id="x" stylesheets="@../style.css" text="Nom :">
 					<GridPane.margin>
 						<Insets left="10.0" />
 					</GridPane.margin>
 				</Label>
-				<TextField fx:id="nomTextField" maxWidth="150.0"
-					prefHeight="25.0" prefWidth="126.0">
+				<TextField fx:id="nomTextField" maxWidth="150.0" prefHeight="25.0" prefWidth="126.0">
 					<GridPane.margin>
 						<Insets left="200.0" />
 					</GridPane.margin>
@@ -54,8 +39,7 @@
 						<Insets left="25.0" />
 					</GridPane.margin>
 				</Label>
-				<TextField fx:id="prenomTextField" maxWidth="150.0"
-					GridPane.columnIndex="1">
+				<TextField fx:id="prenomTextField" maxWidth="150.0" GridPane.columnIndex="1">
 					<GridPane.margin>
 						<Insets left="155.0" />
 					</GridPane.margin>
@@ -65,20 +49,17 @@
 						<Insets left="10.0" />
 					</GridPane.margin>
 				</Label>
-				<TextField fx:id="fonctionTextField" maxWidth="150.0"
-					GridPane.rowIndex="1">
+				<TextField fx:id="fonctionTextField" maxWidth="150.0" GridPane.rowIndex="1">
 					<GridPane.margin>
 						<Insets left="200.0" />
 					</GridPane.margin>
 				</TextField>
-				<Label text="N° CAPSSA :" GridPane.columnIndex="1"
-					GridPane.rowIndex="1">
+				<Label text="N° CAPSSA :" GridPane.columnIndex="1" GridPane.rowIndex="1">
 					<GridPane.margin>
 						<Insets left="25.0" />
 					</GridPane.margin>
 				</Label>
-				<TextField fx:id="numCAPSSATextField" maxWidth="150.0"
-					GridPane.columnIndex="1" GridPane.rowIndex="1">
+				<TextField fx:id="numCAPSSATextField" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
 					<GridPane.margin>
 						<Insets left="155.0" />
 					</GridPane.margin>
@@ -88,21 +69,17 @@
 						<Insets left="10.0" />
 					</GridPane.margin>
 				</Label>
-				<TextField fx:id="residenceAdminTextField"
-					maxWidth="150.0" prefHeight="25.0" prefWidth="161.0"
-					GridPane.rowIndex="2">
+				<TextField fx:id="residenceAdminTextField" maxWidth="150.0" prefHeight="25.0" prefWidth="161.0" GridPane.rowIndex="2">
 					<GridPane.margin>
 						<Insets left="200.0" />
 					</GridPane.margin>
 				</TextField>
-				<Label text="Coefficient :" GridPane.columnIndex="1"
-					GridPane.rowIndex="2">
+				<Label text="Coefficient :" GridPane.columnIndex="1" GridPane.rowIndex="2">
 					<GridPane.margin>
 						<Insets left="25.0" />
 					</GridPane.margin>
 				</Label>
-				<TextField fx:id="coefficientTextField" maxWidth="150.0"
-					GridPane.columnIndex="1" GridPane.rowIndex="2">
+				<TextField fx:id="coefficientTextField" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
 					<GridPane.margin>
 						<Insets left="155.0" />
 					</GridPane.margin>
@@ -112,28 +89,22 @@
 						<Insets left="10.0" />
 					</GridPane.margin>
 				</Label>
-				<TextField fx:id="uniteTavailTextField" maxWidth="150.0"
-					GridPane.rowIndex="3">
+				<TextField fx:id="uniteTavailTextField" maxWidth="150.0" GridPane.rowIndex="3">
 					<GridPane.margin>
 						<Insets left="200.0" />
 					</GridPane.margin>
 				</TextField>
-				<Label text="Code analytique :" GridPane.columnIndex="1"
-					GridPane.rowIndex="3">
+				<Label text="Code analytique :" GridPane.columnIndex="1" GridPane.rowIndex="3">
 					<GridPane.margin>
 						<Insets left="25.0" />
 					</GridPane.margin>
 				</Label>
-				<TextField fx:id="codeAnalytiqueTextField"
-					maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+				<TextField fx:id="codeAnalytiqueTextField" maxWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
 					<GridPane.margin>
 						<Insets left="155.0" />
 					</GridPane.margin>
 				</TextField>
-				<Button fx:id="suivantBtn" mnemonicParsing="false"
-					onAction="#passerATypeOM" prefHeight="30.0" prefWidth="100.0"
-					text="Suivant &gt;&gt;" GridPane.columnIndex="1"
-					GridPane.rowIndex="4">
+				<Button fx:id="suivantBtn" mnemonicParsing="false" onAction="#passerATypeOM" prefHeight="30.0" prefWidth="100.0" text="Suivant &gt;&gt;" GridPane.columnIndex="1" GridPane.rowIndex="4">
 					<GridPane.margin>
 						<Insets bottom="8.0" left="160.0" />
 					</GridPane.margin>

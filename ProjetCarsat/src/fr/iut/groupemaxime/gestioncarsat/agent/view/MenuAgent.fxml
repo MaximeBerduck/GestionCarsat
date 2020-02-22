@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane minWidth="-Infinity" prefHeight="550.0"
-	prefWidth="350.0" xmlns="http://javafx.com/javafx/11.0.1"
+	prefWidth="350.0"
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.MenuAgentController">
 	<children>

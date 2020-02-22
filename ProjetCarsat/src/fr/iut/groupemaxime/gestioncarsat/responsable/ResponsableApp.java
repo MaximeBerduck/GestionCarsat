@@ -5,6 +5,7 @@ import java.io.IOException;
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.mail.MailProcessor;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.RootLayoutController;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
@@ -43,6 +44,7 @@ public class ResponsableApp extends Application {
 		this.options = new Options();
 		this.options = this.options.chargerJson(Constante.CHEMIN_OPTIONS);
 		initialiseRootLayout();
+		this.afficherListeMissions();
 		this.serviceRecuperationMails = new ScheduledService<Void>() {
 
 			@Override
@@ -51,7 +53,9 @@ public class ResponsableApp extends Application {
 				return new Task<Void>() {
 					@Override
 					protected Void call() throws Exception {
-
+						
+						MailProcessor.recevoirEmail(Constante.HOSTNAME, options.getMailAgent() + '@' + Constante.HOSTNAME, "root",
+								options.getCheminOM());
 						Platform.runLater(new Runnable() {
 							@Override
 							public void run() {
