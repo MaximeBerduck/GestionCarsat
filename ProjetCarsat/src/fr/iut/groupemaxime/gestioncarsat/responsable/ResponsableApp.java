@@ -4,11 +4,14 @@ import java.io.IOException;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.view.ItemOrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.mail.MailProcessor;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.RootLayoutController;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
+import fr.iut.groupemaxime.gestioncarsat.responsable.view.ItemMissionResponsableController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.ListeMissionsResponsableController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -121,7 +124,7 @@ public class ResponsableApp extends Application {
 			loader.setLocation(this.getClass().getResource("view/listeMissionsResponsable.fxml"));
 			this.listeMissionsResponsable = loader.load();
 			if (!this.rootLayoutCtrl.getGridRoot().getChildren().contains(this.listeMissionsResponsable))
-				this.rootLayoutCtrl.getGridRoot().add(this.listeMissionsResponsable, 1, 0);
+				this.rootLayoutCtrl.getGridRoot().add(this.listeMissionsResponsable, 0, 0);
 			controllerListeMissionsResponsable = loader.getController();
 			controllerListeMissionsResponsable.setResponsableApp(this);
 			controllerListeMissionsResponsable.setOptions(this.options);
@@ -131,13 +134,16 @@ public class ResponsableApp extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	public void setMissionActive(OrdreMission missionActive) {
+		this.missionActive = missionActive;
+		MissionTemporaire mission = (MissionTemporaire) missionActive.getMission();
+		String om = mission.getLieuDeplacement() + " du " + mission.getDateDebut() + " au " + mission.getDateFin();
+		this.rootLayoutCtrl.setLabelMissionSelectionnee(om);
+	}
 
 	public static void main(String[] args) {
 		Application.launch(args);
-	}
-
-	public void setMissionActive(OrdreMission om) {
-		this.missionActive = om;
 	}
 
 }

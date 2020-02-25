@@ -2,10 +2,12 @@ package fr.iut.groupemaxime.gestioncarsat.responsable.view;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.view.ItemOrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.ResponsableApp;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
@@ -22,9 +24,16 @@ public class ListeMissionsResponsableController {
 
 	private OrdreMissionController mainApp;
 	private Options options;
+	
+	private HashSet<ItemMissionResponsableController> listeOmCtrl;
 
 	private ResponsableApp responsableApp;
-
+	
+	@FXML
+	public void initialize() {
+		this.listeOmCtrl = new HashSet<>();
+	}
+	
 	public void setMenuController(OrdreMissionController mainApp) {
 		this.mainApp = mainApp;
 	}
@@ -45,6 +54,7 @@ public class ListeMissionsResponsableController {
 				OrdreMission om = pdf.chargerPDFtoOM();
 				om.setCheminDossier(file.getAbsolutePath());
 				om.setNomOM(filee.getAbsolutePath().substring(filee.getAbsolutePath().lastIndexOf('\\')));
+				
 				listeOm.ajouterOM(om);
 				pdf.fermerPDF();
 			} catch (IOException e) {
@@ -70,7 +80,7 @@ public class ListeMissionsResponsableController {
 			ctrl = loader.getController();
 			ctrl.chargerOM(om);
 			ctrl.setMenuAgent(this);
-
+			this.listeOmCtrl.add(ctrl);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -91,6 +101,10 @@ public class ListeMissionsResponsableController {
 
 	public void setMissionActive(OrdreMission om) {
 		this.responsableApp.setMissionActive(om);
+		for (ItemMissionResponsableController item : listeOmCtrl) {
+			item.retirerStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		}
+		
 	}
 
 	public ResponsableApp getAgentApp() {

@@ -1,12 +1,8 @@
 package fr.iut.groupemaxime.gestioncarsat.responsable.view;
 
-import java.awt.Desktop;
-import java.io.File;
-import java.io.IOException;
-
-import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -23,18 +19,7 @@ public class ItemMissionResponsableController {
 
 	private OrdreMission om;
 
-	private AgentApp agentApp;
 	private ListeMissionsResponsableController menuAgentCtrl;
-
-	@FXML
-	private void initialize() {
-
-	}
-
-	@FXML
-	public void choisirMission() {
-		this.menuAgentCtrl.setMissionActive(this.om);
-	}
 
 	public void chargerOM(OrdreMission om) {
 		this.om = om;
@@ -49,15 +34,22 @@ public class ItemMissionResponsableController {
 		this.menuAgentCtrl = menuAgentCtrl;
 	}
 	
-	public void afficherPDF() {
-		try {
-			
-			Desktop.getDesktop().browse(new File(
-					this.om.getCheminDossier() + this.om.getNomOM())
-							.toURI());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@FXML
+	public void choisirMission() {
+		this.menuAgentCtrl.setMissionActive(this.om);
+		this.ajouterStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+	}
+
+	public void ajouterStyle(String style) {
+		this.itemMission.setStyle(this.itemMission.getStyle() + style);
+	}
+
+	public void retirerStyle(String style) {
+		this.itemMission.setStyle(this.itemMission.getStyle().replace(style, ""));
+
+	}
+	
+	public void setMissionActive(OrdreMission om) {
+		this.menuAgentCtrl.setMissionActive(om);
 	}
 }

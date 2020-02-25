@@ -37,14 +37,14 @@ public class MailProcessor {
 				dossier.mkdir();
 			}
 			Properties properties = new Properties();
-			properties.put("mail.pop3.host", host);
+			properties.put("mail.pop3.host", "localhost");
 			Session emailSession = Session.getDefaultInstance(properties);
 
 			POP3Store emailStore = (POP3Store) emailSession.getStore("pop3");
 			emailStore.connect(user, password);
 
 			Folder emailFolder = emailStore.getFolder("INBOX");
-			emailFolder.open(Folder.READ_ONLY);
+			emailFolder.open(Folder.READ_WRITE);
 
 			Message[] messages = emailFolder.getMessages();
 			for (Message message : messages) {
