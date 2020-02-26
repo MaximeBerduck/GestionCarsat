@@ -57,7 +57,13 @@ public class RootLayoutController {
 	
 	@FXML
 	private void afficherFraisMission() {
-		// TODO Auto-generated method stub
+		if (mainApp.missionActiveIsNull()) {
+			mainApp.alertChoisirMission();
+		} else {
+			this.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			mainApp.demanderActionFM();
+		}
 
 	}
 	

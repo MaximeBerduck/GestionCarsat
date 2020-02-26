@@ -304,20 +304,20 @@ public class AgentApp extends Application {
 				pdf.sauvegarderPDF();
 
 				if (this.missionActive.estSigne()) {
-					pdf.ajouterDateSignatureOM(this.missionActive.getDateSignature());
+					pdf.ajouterDateSignatureOMAgent(this.missionActive.getDateSignature());
 					pdf.sauvegarderPDF();
 					// Ajout carré blanc pour éviter doubles signatures
-					PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
+					PDF.signerPDFOM(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
 							Constante.TAILLE_SIGNATURE, this.missionActive, Constante.CHEMIN_CARRE_BLANC);
 					// Ajout signature
-					PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
+					PDF.signerPDFOM(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
 							Constante.TAILLE_SIGNATURE, this.missionActive, this.getOptions().getCheminSignature());
 				} else {
 					// Retirer date signature si modif
-					pdf.ajouterDateSignatureOM("");
+					pdf.ajouterDateSignatureOMAgent("");
 					pdf.sauvegarderPDF();
 					// Ajout carré blanc pour éviter doubles signatures
-					PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
+					PDF.signerPDFOM(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
 							Constante.TAILLE_SIGNATURE, this.missionActive, Constante.CHEMIN_CARRE_BLANC);
 				}
 				pdf.fermerPDF();
@@ -332,10 +332,10 @@ public class AgentApp extends Application {
 				pdf.sauvegarderPDF();
 
 				if (this.missionActive.estSigne()) {
-					pdf.ajouterDateSignatureOM(this.missionActive.getDateSignature());
+					pdf.ajouterDateSignatureOMAgent(this.missionActive.getDateSignature());
 					pdf.sauvegarderPDF();
 					// Ajout signature
-					PDF.signerPDF(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
+					PDF.signerPDFOM(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
 							Constante.TAILLE_SIGNATURE, this.missionActive, this.getOptions().getCheminSignature());
 				}
 				pdf.fermerPDF();

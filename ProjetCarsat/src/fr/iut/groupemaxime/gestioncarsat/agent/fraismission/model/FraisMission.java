@@ -34,7 +34,8 @@ public class FraisMission implements DocJson<FraisMission> {
 	private HashMap<String, FraisJournalier> fraisMission;
 	private String typeAutreFrais;
 	private float montantAutreFrais;
-	private boolean estSigne;
+	private boolean estSigneAgent;
+	private boolean estSigneResponsable;
 	private String dateSignature;
 	private float montantDeductionFrais;
 	private float montantAvance;
@@ -43,17 +44,24 @@ public class FraisMission implements DocJson<FraisMission> {
 
 	public FraisMission(String adresseFichier, String dateDebutMission, String dateFinMission,
 			HashMap<String, FraisJournalier> fraisMission, String typeAutreFrais, float montantAutreFrais,
-			boolean estSigne, String dateSignature, float montantDeductionFrais, float montantAvance,
-			int nbrRepasOffert) {
+			boolean estSigneAgent, boolean estSigneResponsable, String dateSignature, float montantDeductionFrais,
+			float montantAvance, int nbrRepasOffert) {
 		this.adresseFichier = adresseFichier;
 		this.dateDebutMission = dateDebutMission;
 		this.dateFinMission = dateFinMission;
 		this.fraisMission = fraisMission;
+		this.typeAutreFrais = typeAutreFrais;
+		this.montantAutreFrais = montantAutreFrais;
+		this.estSigneAgent = estSigneAgent;
+		this.estSigneResponsable = estSigneResponsable;
+		this.dateSignature = dateSignature;
+		this.montantAvance = montantAvance;
+		this.nbrRepasOffert = nbrRepasOffert;
 		this.etat = EtatMission.NON_REMPLI;
 	}
 
 	public FraisMission(String adresseFichier) {
-		this(adresseFichier, null, null, new HashMap<String, FraisJournalier>(), null, 0, false, null, 0, 0, 0);
+		this(adresseFichier, null, null, new HashMap<String, FraisJournalier>(), null, 0, false, false, null, 0, 0, 0);
 	}
 
 	@Override
@@ -101,7 +109,7 @@ public class FraisMission implements DocJson<FraisMission> {
 			PDF pdf = new PDF(new File(this.adresseFichier.replace(".json", ".pdf").replace("FM_", "OM_")));
 			pdf.remplirPdfFM(this, options);
 			pdf.sauvegarderPDF();
-			if (this.estSigne) {
+			if (this.estSigneAgent) {
 				pdf.signerPdfFM(this, options);
 			}
 		} catch (IOException e) {
@@ -117,12 +125,16 @@ public class FraisMission implements DocJson<FraisMission> {
 			this.fraisMission.put(fraisJournalier.getDate(), fraisJournalier);
 	}
 
-	public boolean estSigne() {
-		return this.estSigne;
+	public boolean estSigneAgent() {
+		return this.estSigneAgent;
+	}
+	
+	public boolean estSigneResponsable() {
+		return this.estSigneResponsable;
 	}
 
 	public void signerFMAgent(float montantDeductionFrais, float montantAvance, int nbrRepasOffert) {
-		this.estSigne = true;
+		this.estSigneAgent = true;
 		this.dateSignature = Constante.FORMAT_DATE_SLASH.format(new Date());
 		this.montantDeductionFrais = montantDeductionFrais;
 		this.montantAvance = montantAvance;
@@ -179,7 +191,7 @@ public class FraisMission implements DocJson<FraisMission> {
 	}
 
 	public void setEstSigne(boolean estSigne) {
-		this.estSigne = estSigne;
+		this.estSigneAgent = estSigne;
 	}
 
 	public void setAdresseFichier(String adresseFichier) {

@@ -32,6 +32,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Train;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Transport;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.TypeMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Voiture;
+import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 
@@ -219,7 +220,7 @@ public class PDF {
 	}
 
 	public void remplirPdfFM(FraisMission fm, Options options) throws IOException {
-		//TODO Gérer les missions de plusieurs semaines
+		// TODO Gérer les missions de plusieurs semaines
 		this.remplirChamp("dateDebutMission", fm.getDateDebutMission());
 		this.remplirChamp("dateFinMission", fm.getDateFinMission());
 		Calendar c = Calendar.getInstance();
@@ -468,24 +469,42 @@ public class PDF {
 		this.remplirChamp("montantAvance", String.valueOf(fm.getMontantAvance()));
 		this.remplirChamp("repasCheck", "Yes");
 		this.remplirChamp("nbrRepasMidiOfferts", String.valueOf(fm.getNbrRepasOffert()));
-		this.remplirChamp("dateSignatureAgent", fm.getDateSignature());
+		this.ajouterDateSignatureFMAgent(fm.getDateSignature());
 		this.sauvegarderPDF();
 		this.signerPdfFM(Constante.SIGNATURE_AGENT_FM_X, Constante.SIGNATURE_AGENT_FM_Y, Constante.TAILLE_SIGNATURE_FM,
 				fm, options.getCheminSignature());
 	}
 
 	public void signerPdfFM(int x, int y, int taille, FraisMission fm, String signature) {
-		String cheminFichier = fm.getAdresseFichier().replace(".json", ".pdf").replace("FM_", "OM_");
+		String cheminFM = fm.getAdresseFichier().replace(".json", ".pdf").replace("FM_", "OM_");
+		this.signerPdfFM(x, y, taille, cheminFM, signature);
+	}
+
+	public static void signerPdfFmResponsable(int x, int y, int taille, String cheminPDF, String cheminSignature) {
 		try {
-			PDDocument pdf = PDDocument.load(new File(cheminFichier));
+			PDF pdf = new PDF(new File(cheminPDF));
+			pdf.cheminFichier = cheminPDF;
+			pdf.ajouterDateSignatureFMResponsable(Bibliotheque.getDateAujourdhui());
+			pdf.sauvegarderPDF();
+			pdf.modele.close();
+			pdf.signerPdfFM(x, y, taille, cheminPDF, cheminSignature);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void signerPdfFM(int x, int y, int taille, String cheminPDF, String cheminSignature) {
+		try {
+			PDDocument pdf = PDDocument.load(new File(cheminPDF));
 			PDPage page = pdf.getPage(1);
 
-			PDImageXObject pdImage = PDImageXObject.createFromFile(signature, pdf);
+			PDImageXObject pdImage = PDImageXObject.createFromFile(cheminSignature, pdf);
 			PDPageContentStream contentStream = new PDPageContentStream(pdf, page, AppendMode.APPEND, true);
 
 			contentStream.drawImage(pdImage, x, y, taille, taille);
 			contentStream.close();
-			pdf.save(cheminFichier);
+			pdf.save(cheminPDF);
 			pdf.close();
 
 		} catch (IOException e) {
@@ -494,7 +513,7 @@ public class PDF {
 		}
 	}
 
-	public static void signerPDF(int x, int y, int taille, OrdreMission om, String signature) {
+	public static void signerPDFOM(int x, int y, int taille, OrdreMission om, String signature) {
 		String cheminFichier = om.getCheminDossier() + om.getNomOM() + Constante.EXTENSION_PDF;
 		try {
 			PDDocument pdf = PDDocument.load(new File(cheminFichier));
@@ -514,9 +533,25 @@ public class PDF {
 		}
 	}
 
-	public void ajouterDateSignatureOM(String date) {
+	public void ajouterDateSignatureOMAgent(String date) {
 
 		this.remplirChamp("dateSigna", date);
+	}
+
+	public void ajouterDateSignatureFMAgent(String date) {
+
+		this.remplirChamp("dateSignatureAgent", date);
+
+	}
+
+	public void ajouterDateSignatureFMResponsable(String date) {
+
+		this.remplirChamp("dateSignResponsable", date);
+
+	}
+
+	public void ajouterDateSignatureOMResponsable(String date) {
+		this.remplirChamp("dateSignResOM", date);
 	}
 
 	public void completerExcel(HoraireTravail ht) {
@@ -525,10 +560,27 @@ public class PDF {
 			Workbook workbook = new HSSFWorkbook(excelFile);
 			Sheet dataSheet = workbook.getSheetAt(0);
 			Cell cell = dataSheet.getRow(17).getCell(3);
-			System.out.println(cell);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public static boolean fmEstSigneResp(String chemin) {
+		try {
+			PDF pdf = new PDF(new File(chemin));
+			if ("".equals(pdf.formulaire.getField("dateSignResponsable").getValueAsString())) {
+				pdf.modele.close();
+				return false;
+			} else {
+				pdf.modele.close();
+				return true;
+			}
+
+		} catch (IOException e) {
+			// TODO
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

@@ -55,7 +55,6 @@ public class MailProcessor {
 			emailStore.close();
 		} catch (MessagingException e) {
 			// TODO
-			e.printStackTrace();
 		}
 	}
 
