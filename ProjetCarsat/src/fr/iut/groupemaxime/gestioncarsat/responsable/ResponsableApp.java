@@ -13,6 +13,7 @@ import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.ItemMissionResponsableController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.ListeMissionsResponsableController;
+import fr.iut.groupemaxime.gestioncarsat.responsable.view.OptionsResponsableController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.ScheduledService;
@@ -95,14 +96,14 @@ public class ResponsableApp extends Application {
 	public void modifierOptions() {
 		try {
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(AgentApp.class.getResource("view/OptionsResp.fxml"));
+			loader.setLocation(ResponsableApp.class.getResource("view/OptionsResponsable.fxml"));
 			AnchorPane optionsLayout = loader.load();
 
 			Scene scene = new Scene(optionsLayout);
 			this.secondaryStage = new Stage();
-//			OptionsResponsableController controllerOptions = loader.getController();
-//			controllerOptions.chargerPage(this, options);
-//			controllerOptions.chargerMailsResponsable();
+			OptionsResponsableController controllerOptions = loader.getController();
+			controllerOptions.chargerPage(this, options);
+			controllerOptions.chargerMailsAutres();
 			secondaryStage.setScene(scene);
 			this.secondaryStage.setTitle("Paramètres");
 			this.secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
@@ -144,6 +145,10 @@ public class ResponsableApp extends Application {
 
 	public static void main(String[] args) {
 		Application.launch(args);
+	}
+
+	public void fermerSecondaryStage() {
+		this.secondaryStage.close();
 	}
 
 }

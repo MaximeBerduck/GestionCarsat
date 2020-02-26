@@ -37,7 +37,7 @@ public class MailProcessor {
 				dossier.mkdir();
 			}
 			Properties properties = new Properties();
-			properties.put("mail.pop3.host", "localhost");
+			properties.put("mail.pop3.host", Constante.HOSTNAME);
 			Session emailSession = Session.getDefaultInstance(properties);
 
 			POP3Store emailStore = (POP3Store) emailSession.getStore("pop3");

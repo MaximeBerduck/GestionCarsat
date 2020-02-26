@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.Set;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -23,21 +24,23 @@ public class Options implements DocJson<Options> {
 	private String cheminSignature;
 	private Agent agent;
 	private String mailAgent;
-	private HashSet<String> mailsResponsables;
+	private Set<String> mailsResponsables;
+	private Set<String> mailsAutres;
 	private String corpsDuMail;
 
 	public Options(String cheminFichiers, String cheminSignature, Agent agent, String mailAgent,
-			HashSet<String> mailsRespomsables, String corpsDuMail) {
+			Set<String> mailsRespomsables,Set<String> mailsAutres, String corpsDuMail) {
 		this.cheminFichiers = cheminFichiers;
 		this.cheminSignature = cheminSignature;
 		this.agent = agent;
 		this.mailAgent = mailAgent;
 		this.mailsResponsables = mailsRespomsables;
+		this.mailsAutres = mailsAutres;
 		this.corpsDuMail = corpsDuMail;
 	}
 
 	public Options() {
-		this(Constante.CHEMIN_FICHIERS_DEFAUT, null, new Agent(), null, new HashSet<String>(),
+		this(Constante.CHEMIN_FICHIERS_DEFAUT, null, new Agent(), null, new HashSet<>(),new HashSet<>(),
 				Constante.CORPS_DU_MAIL_DEFAUT);
 	}
 
@@ -98,6 +101,14 @@ public class Options implements DocJson<Options> {
 	public void ajouterResponsable(String responsable) {
 		this.mailsResponsables.add(responsable);
 	}
+	
+	public void supprimerAutre(String adresseAutre) {
+		this.mailsAutres.remove(adresseAutre);
+	}
+
+	public void ajouterAutre(String adresseAutre) {
+		this.mailsAutres.add(adresseAutre);
+	}
 
 	public String getCheminOM() {
 		return this.cheminFichiers;
@@ -131,12 +142,20 @@ public class Options implements DocJson<Options> {
 		this.mailAgent = mailAgent;
 	}
 
-	public HashSet<String> getMailsResponsables() {
+	public Set<String> getMailsResponsables() {
 		return mailsResponsables;
 	}
 
-	public void setMailsResponsables(HashSet<String> mailsResponsables) {
+	public void setMailsResponsables(Set<String> mailsResponsables) {
 		this.mailsResponsables = mailsResponsables;
+	}
+	
+	public Set<String> getMailsAutres() {
+		return mailsAutres;
+	}
+
+	public void setMailsAutres(Set<String> mailsAutres) {
+		this.mailsAutres = mailsAutres;
 	}
 
 	public String getCorpsDuMail() {
