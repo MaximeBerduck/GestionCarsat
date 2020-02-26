@@ -193,12 +193,12 @@ public class OrdreMissionController {
 
 			Scene scene = new Scene(choixMails);
 
-			// New window (Stage)
+			// New stage
 			Stage fenetreChoixDesti = new Stage();
 			fenetreChoixDesti.setResizable(false);
 			choixMailsCtrl.initialize(fenetreChoixDesti, options);
 
-			fenetreChoixDesti.setTitle("Second Stage");
+			fenetreChoixDesti.setTitle("Choix destinataires");
 			fenetreChoixDesti.setScene(scene);
 
 			fenetreChoixDesti.initOwner(primaryStage);
