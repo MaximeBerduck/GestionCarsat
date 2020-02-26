@@ -35,7 +35,6 @@ public class FraisMission implements DocJson<FraisMission> {
 	private String typeAutreFrais;
 	private float montantAutreFrais;
 	private boolean estSigneAgent;
-	private boolean estSigneResponsable;
 	private String dateSignature;
 	private float montantDeductionFrais;
 	private float montantAvance;
@@ -44,7 +43,7 @@ public class FraisMission implements DocJson<FraisMission> {
 
 	public FraisMission(String adresseFichier, String dateDebutMission, String dateFinMission,
 			HashMap<String, FraisJournalier> fraisMission, String typeAutreFrais, float montantAutreFrais,
-			boolean estSigneAgent, boolean estSigneResponsable, String dateSignature, float montantDeductionFrais,
+			boolean estSigneAgent, String dateSignature, float montantDeductionFrais,
 			float montantAvance, int nbrRepasOffert) {
 		this.adresseFichier = adresseFichier;
 		this.dateDebutMission = dateDebutMission;
@@ -53,7 +52,6 @@ public class FraisMission implements DocJson<FraisMission> {
 		this.typeAutreFrais = typeAutreFrais;
 		this.montantAutreFrais = montantAutreFrais;
 		this.estSigneAgent = estSigneAgent;
-		this.estSigneResponsable = estSigneResponsable;
 		this.dateSignature = dateSignature;
 		this.montantAvance = montantAvance;
 		this.nbrRepasOffert = nbrRepasOffert;
@@ -61,7 +59,7 @@ public class FraisMission implements DocJson<FraisMission> {
 	}
 
 	public FraisMission(String adresseFichier) {
-		this(adresseFichier, null, null, new HashMap<String, FraisJournalier>(), null, 0, false, false, null, 0, 0, 0);
+		this(adresseFichier, null, null, new HashMap<String, FraisJournalier>(), null, 0, false, null, 0, 0, 0);
 	}
 
 	@Override
@@ -127,10 +125,6 @@ public class FraisMission implements DocJson<FraisMission> {
 
 	public boolean estSigneAgent() {
 		return this.estSigneAgent;
-	}
-	
-	public boolean estSigneResponsable() {
-		return this.estSigneResponsable;
 	}
 
 	public void signerFMAgent(float montantDeductionFrais, float montantAvance, int nbrRepasOffert) {
