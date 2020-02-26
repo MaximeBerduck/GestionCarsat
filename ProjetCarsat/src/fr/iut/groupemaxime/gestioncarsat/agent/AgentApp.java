@@ -308,17 +308,17 @@ public class AgentApp extends Application {
 					pdf.sauvegarderPDF();
 					// Ajout carré blanc pour éviter doubles signatures
 					PDF.signerPDFOM(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
-							Constante.TAILLE_SIGNATURE, this.missionActive, Constante.CHEMIN_CARRE_BLANC);
+							Constante.TAILLE_SIGNATURE_OM, this.missionActive, Constante.CHEMIN_CARRE_BLANC);
 					// Ajout signature
 					PDF.signerPDFOM(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
-							Constante.TAILLE_SIGNATURE, this.missionActive, this.getOptions().getCheminSignature());
+							Constante.TAILLE_SIGNATURE_OM, this.missionActive, this.getOptions().getCheminSignature());
 				} else {
 					// Retirer date signature si modif
 					pdf.ajouterDateSignatureOMAgent("");
 					pdf.sauvegarderPDF();
 					// Ajout carré blanc pour éviter doubles signatures
 					PDF.signerPDFOM(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
-							Constante.TAILLE_SIGNATURE, this.missionActive, Constante.CHEMIN_CARRE_BLANC);
+							Constante.TAILLE_SIGNATURE_OM, this.missionActive, Constante.CHEMIN_CARRE_BLANC);
 				}
 				pdf.fermerPDF();
 			} catch (IOException e) {
@@ -336,7 +336,7 @@ public class AgentApp extends Application {
 					pdf.sauvegarderPDF();
 					// Ajout signature
 					PDF.signerPDFOM(Constante.SIGNATURE_AGENT_OM_X, Constante.SIGNATURE_AGENT_OM_Y,
-							Constante.TAILLE_SIGNATURE, this.missionActive, this.getOptions().getCheminSignature());
+							Constante.TAILLE_SIGNATURE_OM, this.missionActive, this.getOptions().getCheminSignature());
 				}
 				pdf.fermerPDF();
 			} catch (IOException e) {

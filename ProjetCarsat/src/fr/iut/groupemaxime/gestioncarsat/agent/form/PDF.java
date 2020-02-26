@@ -477,7 +477,7 @@ public class PDF {
 
 	public void signerPdfFM(int x, int y, int taille, FraisMission fm, String signature) {
 		String cheminFM = fm.getAdresseFichier().replace(".json", ".pdf").replace("FM_", "OM_");
-		this.signerPdfFM(x, y, taille, cheminFM, signature);
+		this.signerPdf(x, y, taille, cheminFM, signature, 1);
 	}
 
 	public static void signerPdfFmResponsable(int x, int y, int taille, String cheminPDF, String cheminSignature) {
@@ -487,17 +487,17 @@ public class PDF {
 			pdf.ajouterDateSignatureFMResponsable(Bibliotheque.getDateAujourdhui());
 			pdf.sauvegarderPDF();
 			pdf.modele.close();
-			pdf.signerPdfFM(x, y, taille, cheminPDF, cheminSignature);
+			pdf.signerPdf(x, y, taille, cheminPDF, cheminSignature, 1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void signerPdfFM(int x, int y, int taille, String cheminPDF, String cheminSignature) {
+	public void signerPdf(int x, int y, int taille, String cheminPDF, String cheminSignature, int numPage) {
 		try {
 			PDDocument pdf = PDDocument.load(new File(cheminPDF));
-			PDPage page = pdf.getPage(1);
+			PDPage page = pdf.getPage(numPage);
 
 			PDImageXObject pdImage = PDImageXObject.createFromFile(cheminSignature, pdf);
 			PDPageContentStream contentStream = new PDPageContentStream(pdf, page, AppendMode.APPEND, true);
@@ -582,5 +582,20 @@ public class PDF {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public static void signerPdfOmResponsable(int x, int y, int taille, String cheminPDF, String cheminSignature) {
+		try {
+			PDF pdf = new PDF(new File(cheminPDF));
+			pdf.cheminFichier = cheminPDF;
+			pdf.ajouterDateSignatureOMResponsable(Bibliotheque.getDateAujourdhui());
+			pdf.sauvegarderPDF();
+			pdf.modele.close();
+			pdf.signerPdf(x, y, taille, cheminPDF, cheminSignature, 0);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }

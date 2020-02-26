@@ -110,4 +110,13 @@ public class ListeMissionsResponsableController {
 	public ResponsableApp getAgentApp() {
 		return this.responsableApp;
 	}
+
+	public ItemMissionResponsableController getItemOM(OrdreMission om) {
+		for (ItemMissionResponsableController item : this.listeOmCtrl) {
+			if (item.getOM().getNomOM().equals(om.getNomOM())) {
+				return item;
+			}
+		}
+		return null;
+	}
 }

@@ -51,8 +51,13 @@ public class RootLayoutController {
 	
 	@FXML
 	private void afficherOrdresMission() {
-		// TODO Auto-generated method stub
-
+		if (mainApp.missionActiveIsNull()) {
+			mainApp.alertChoisirMission();
+		} else {
+			this.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			mainApp.demanderActionOM();
+		}
 	}
 	
 	@FXML

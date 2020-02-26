@@ -33,7 +33,7 @@ public class ItemMissionResponsableController {
 	public void setMenuAgent(ListeMissionsResponsableController menuAgentCtrl) {
 		this.menuAgentCtrl = menuAgentCtrl;
 	}
-	
+
 	@FXML
 	public void choisirMission() {
 		this.menuAgentCtrl.setMissionActive(this.om);
@@ -48,8 +48,12 @@ public class ItemMissionResponsableController {
 		this.itemMission.setStyle(this.itemMission.getStyle().replace(style, ""));
 
 	}
-	
+
 	public void setMissionActive(OrdreMission om) {
 		this.menuAgentCtrl.setMissionActive(om);
+	}
+
+	public OrdreMission getOM() {
+		return this.om;
 	}
 }
