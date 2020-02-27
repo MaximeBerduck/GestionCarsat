@@ -2,6 +2,7 @@ package fr.iut.groupemaxime.gestioncarsat.agent.form;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,8 +17,13 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.util.IOUtils;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
@@ -597,5 +603,43 @@ public class PDF {
 			e.printStackTrace();
 		}
 
+	}
+
+	public static void signerHTResponsable(String cheminXls,String cheminSignature) {
+
+		Workbook workbook;
+		FileInputStream excelFile;
+		try {
+			excelFile = new FileInputStream(new File(cheminXls));
+			workbook = new HSSFWorkbook(excelFile);
+			Sheet dataSheet = workbook.getSheetAt(0);
+			int ligne = 15;
+			while (!"Date et signature :".equals(dataSheet.getRow(ligne).getCell(2).getStringCellValue())) {
+				ligne++;
+			}
+			dataSheet.getRow(ligne+1).getCell(6).setCellValue(Bibliotheque.getDateAujourdhui());
+			final FileInputStream stream = new FileInputStream(cheminSignature);
+			final CreationHelper helper = workbook.getCreationHelper();
+			final Drawing drawing = dataSheet.createDrawingPatriarch();
+
+			final ClientAnchor anchor = helper.createClientAnchor();
+			anchor.setAnchorType(ClientAnchor.MOVE_AND_RESIZE);
+
+			final int pictureIndex = workbook.addPicture(IOUtils.toByteArray(stream), Workbook.PICTURE_TYPE_PNG);
+
+			anchor.setCol1(8);
+			anchor.setRow1(ligne-2);
+			anchor.setRow2(ligne+1);
+			anchor.setCol2(9);
+			final Picture pict = drawing.createPicture(anchor, pictureIndex);
+			
+			FileOutputStream out = new FileOutputStream(
+					new File(cheminXls));
+			workbook.write(out);
+			out.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

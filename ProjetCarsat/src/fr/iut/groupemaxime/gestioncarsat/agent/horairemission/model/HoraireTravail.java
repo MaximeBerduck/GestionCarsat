@@ -202,15 +202,9 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 			dataSheet.getRow(ligne).getCell(2).setCellFormula("SUM(F" + (Constante.DEBUT_LIGNE_EXCEL + 1) + ":F" + ligne
 					+ ")+SUM(H" + (Constante.DEBUT_LIGNE_EXCEL + 1) + ":H" + ligne + ")*0.75");
 
-			// TODO Avoir la formule horaire journalier
-//			dataSheet.getRow(ligne).getCell(4).setCellStyle(style);
-//			dataSheet.getRow(ligne).getCell(4).setCellFormula("");
-
 			workbook.setForceFormulaRecalculation(true);
 
 			if (this.estSigne()) {
-				// TODO Ajout signature XLS
-				// read the image to the stream
 				final FileInputStream stream = new FileInputStream(options.getCheminSignature());
 				final CreationHelper helper = workbook.getCreationHelper();
 				final Drawing drawing = dataSheet.createDrawingPatriarch();

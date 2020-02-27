@@ -68,9 +68,9 @@ public class ResponsableApp extends Application {
 				return new Task<Void>() {
 					@Override
 					protected Void call() throws Exception {
-						
-						MailProcessor.recevoirEmail(Constante.HOSTNAME, options.getMailAgent() + '@' + Constante.HOSTNAME, "root",
-								options.getCheminOM());
+
+						MailProcessor.recevoirEmail(Constante.HOSTNAME,
+								options.getMailAgent() + '@' + Constante.HOSTNAME, "root", options.getCheminOM());
 						Platform.runLater(new Runnable() {
 							@Override
 							public void run() {
@@ -80,7 +80,7 @@ public class ResponsableApp extends Application {
 
 						return null;
 					}
-					
+
 				};
 			};
 		};
@@ -146,7 +146,7 @@ public class ResponsableApp extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void setMissionActive(OrdreMission missionActive) {
 		this.missionActive = missionActive;
 		MissionTemporaire mission = (MissionTemporaire) missionActive.getMission();
@@ -165,7 +165,7 @@ public class ResponsableApp extends Application {
 	public boolean missionActiveIsNull() {
 		return null == missionActive;
 	}
-	
+
 	public void alertChoisirMission() {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Erreur");
@@ -174,49 +174,52 @@ public class ResponsableApp extends Application {
 
 		alert.showAndWait();
 	}
-	
+
 	public void demanderActionFM() {
 		if (this.recuHT()) {
-				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Choix de l'action");
-				alert.setHeaderText("Choisissez l'action souhaitée");
-				alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre mission.");
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Choix de l'action");
+			alert.setHeaderText("Choisissez l'action souhaitée");
+			alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre mission.");
 
-				ButtonType buttonTypeAfficher = new ButtonType("Afficher");
-				ButtonType buttonTypeSigner = new ButtonType("Signer");
-				ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
-				ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
+			ButtonType buttonTypeSigner = new ButtonType("Signer");
+			ButtonType buttonTypeEnvoyer = new ButtonType("Envoyer");
+			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
-				alert.getButtonTypes().setAll(buttonTypeAfficher);
-				if (!PDF.fmEstSigneResp(missionActive.getCheminDossier() + missionActive.getNomOM())) {
-					alert.getButtonTypes().add(buttonTypeSigner);
-				}
-				if (false) { //TODO fm + ht signe
-					alert.getButtonTypes().add(buttonTypeEnvoyer);
-				}
-				alert.getButtonTypes().add(buttonTypeCancel);
+			alert.getButtonTypes().setAll(buttonTypeAfficher);
+			if (!PDF.fmEstSigneResp(missionActive.getCheminDossier() + missionActive.getNomOM())) {
+				alert.getButtonTypes().add(buttonTypeSigner);
+			}
+			if (false) { // TODO fm + ht signe
+				alert.getButtonTypes().add(buttonTypeEnvoyer);
+			}
+			alert.getButtonTypes().add(buttonTypeCancel);
 
-				Optional<ButtonType> result = alert.showAndWait();
-				if (result.get() == buttonTypeAfficher) {
-					this.afficherPdfOM();
-					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-				} else if (result.get() == buttonTypeSigner) {
-					this.signerFM();
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == buttonTypeAfficher) {
+				this.afficherPdfOM();
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			} else if (result.get() == buttonTypeSigner) {
+				this.signerFM();
 
-				} else if (result.get() == buttonTypeEnvoyer) {
-					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-					//this.afficherEnvoiDuMail(TypeDocument.FRAISOUHORAIRES);
+			} else if (result.get() == buttonTypeEnvoyer) {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+				// this.afficherEnvoiDuMail(TypeDocument.FRAISOUHORAIRES);
 
-				} else {
-					this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-					// Ne fait rien == bouton "annuler"
-				}
+			} else {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+				// Ne fait rien == bouton "annuler"
+			}
 		} else {
-			//TODO alert pas fm
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Frais non reçus");
+			alert.setContentText("Vous n'avez pas encore recu les frais de mission pour cette mission");
+			alert.show();
 		}
 		retourMenu();
 	}
-	
+
 	public void demanderActionOM() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Choix de l'action");
@@ -224,11 +227,11 @@ public class ResponsableApp extends Application {
 		alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre ordre de mission.");
 		ButtonType buttonTypeAfficher = new ButtonType("Afficher");
 		alert.getButtonTypes().setAll(buttonTypeAfficher);
-		
+
 		ButtonType buttonTypeEnvoyer = null;
 		ButtonType buttonTypeSigner = null;
-		if (!this.missionActive.estEnvoye()) { //TODO
-			if (this.missionActive.agentSigne()) { //TODO
+		if (!this.missionActive.estEnvoye()) { // TODO
+			if (this.missionActive.agentSigne()) { // TODO
 				buttonTypeEnvoyer = new ButtonType("Envoyer");
 			} else {
 				buttonTypeSigner = new ButtonType("Signer");
@@ -247,7 +250,7 @@ public class ResponsableApp extends Application {
 			this.signerOM();
 		} else if (result.get() == buttonTypeEnvoyer) {
 			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			//TODO this.afficherEnvoiDuMail(TypeDocument.ORDREMISSION);
+			// TODO this.afficherEnvoiDuMail(TypeDocument.ORDREMISSION);
 		} else {
 			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			// Ne fait rien == bouton "annuler"
@@ -255,17 +258,74 @@ public class ResponsableApp extends Application {
 		retourMenu();
 	}
 
+	public void demanderActionHT() {
+		if (recuHT()) {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Choix de l'action");
+			alert.setHeaderText("Choisissez l'action souhaitée");
+			alert.setContentText("Choisissez l'action que vous voulez réaliser sur votre mission.");
+
+			ButtonType buttonTypeAfficher = new ButtonType("Afficher");
+			alert.getButtonTypes().setAll(buttonTypeAfficher);
+
+			ButtonType buttonTypeSigner = null;
+//			if (!this.htEstSigne()) {
+//				buttonTypeSigner = new ButtonType("Signer");
+//				alert.getButtonTypes().addAll(buttonTypeSigner);
+//			}
+
+			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
+
+			alert.getButtonTypes().add(buttonTypeCancel);
+
+			Optional<ButtonType> result = alert.showAndWait();
+			if (result.get() == buttonTypeAfficher) {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+				this.afficherHtXLS();
+			} else if (result.get() == buttonTypeSigner) {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+				this.signerHT();
+			} else {
+				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+				// Ne fait rien == bouton "annuler"
+			}
+		} else {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Frais non reçus");
+			alert.setContentText("Vous n'avez pas encore recu les frais de mission pour cette mission");
+			alert.show();
+		}
+		retourMenu();
+	}
+
+	private void signerHT() {
+		PDF.signerHTResponsable(this.missionActive.getCheminDossier() + this.missionActive.getNomOM().replace("OM_", "HT_").replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS),this.options.getCheminSignature());
+	}
+
+	private void afficherHtXLS() {
+		try {
+			Desktop.getDesktop().browse(new File(this.missionActive.getCheminDossier() + this.missionActive.getNomOM()
+					.replace("OM_", "HT_").replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS)).toURI());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+		}
+	}
+
 	private void signerOM() {
-		PDF.signerPdfOmResponsable(Constante.SIGNATURE_RESPONSABLE_OM_X, Constante.SIGNATURE_RESPONSABLE_OM_Y, Constante.TAILLE_SIGNATURE_OM_RESP, missionActive.getCheminDossier() + missionActive.getNomOM(), options.getCheminSignature());		
+		PDF.signerPdfOmResponsable(Constante.SIGNATURE_RESPONSABLE_OM_X, Constante.SIGNATURE_RESPONSABLE_OM_Y,
+				Constante.TAILLE_SIGNATURE_OM_RESP, missionActive.getCheminDossier() + missionActive.getNomOM(),
+				options.getCheminSignature());
 	}
 
 	private void signerFM() {
-		PDF.signerPdfFmResponsable(Constante.SIGNATURE_RESPONSABLE_FM_X, Constante.SIGNATURE_RESPONSABLE_FM_Y, Constante.TAILLE_SIGNATURE_FM, missionActive.getCheminDossier() + missionActive.getNomOM(), options.getCheminSignature());
+		PDF.signerPdfFmResponsable(Constante.SIGNATURE_RESPONSABLE_FM_X, Constante.SIGNATURE_RESPONSABLE_FM_Y,
+				Constante.TAILLE_SIGNATURE_FM, missionActive.getCheminDossier() + missionActive.getNomOM(),
+				options.getCheminSignature());
 	}
 
 	private void afficherPdfOM() {
 		try {
-			Desktop.getDesktop().browse(new File(missionActive.getCheminDossier()+missionActive.getNomOM()).toURI());
+			Desktop.getDesktop().browse(new File(missionActive.getCheminDossier() + missionActive.getNomOM()).toURI());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -273,15 +333,16 @@ public class ResponsableApp extends Application {
 	}
 
 	public boolean recuHT() {
-		if (new File(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_").replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS)).exists()) {
+		if (new File(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+				.replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS)).exists()) {
 			return true;
-		}else {
-			return false;			
+		} else {
+			return false;
 		}
 	}
-	
+
 	public void retourMenu() {
-		//this.retirerDocActif();
+		// this.retirerDocActif();
 		this.afficherListeMissions();
 		if (!this.missionActiveIsNull()) {
 			ItemMissionResponsableController itemOmCtrl = controllerListeMissionsResponsable.getItemOM(missionActive);

@@ -74,8 +74,13 @@ public class RootLayoutController {
 	
 	@FXML
 	private void afficherHorairesTravail() {
-		// TODO Auto-generated method stub
-
+		if (mainApp.missionActiveIsNull()) {
+			mainApp.alertChoisirMission();
+		} else {
+			this.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			mainApp.demanderActionHT();
+		}
 	}
 
 	@FXML
