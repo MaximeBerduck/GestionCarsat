@@ -10,6 +10,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.ItemOrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.ResponsableApp;
+import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.fxml.FXML;
@@ -45,22 +46,27 @@ public class ListeMissionsResponsableController {
 	public void chargerOM() {
 		listeOm = new ListeOrdreMission();
 		File dossier = new File(options.getCheminOM() + "responsable/");
+		if(!dossier.exists())
+			dossier.mkdir();
 		File[] pdfs = dossier.listFiles();
 		PDF pdf;
 		for (File file : pdfs) {
-			File filee = new File(file.getAbsolutePath() + "/OM_" + file.getName() + Constante.EXTENSION_PDF);
-			try {
-				pdf = new PDF(filee);
-				OrdreMission om = pdf.chargerPDFtoOM();
-				om.setCheminDossier(file.getAbsolutePath());
-				om.setNomOM(filee.getAbsolutePath().substring(filee.getAbsolutePath().lastIndexOf('\\')));
-				
-				listeOm.ajouterOM(om);
-				pdf.fermerPDF();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(file.canWrite()) {
+				File filee = new File(file.getAbsolutePath() + "/OM_" + file.getName() + Constante.EXTENSION_PDF);
+				try {
+					pdf = new PDF(filee);
+					OrdreMission om = pdf.chargerPDFtoOM();
+					om.setCheminDossier(file.getAbsolutePath());
+					om.setNomOM(filee.getAbsolutePath().substring(filee.getAbsolutePath().lastIndexOf(File.separator)));
+					
+					listeOm.ajouterOM(om);
+					pdf.fermerPDF();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+
 		}
 		for (OrdreMission om : listeOm.getListeOM()) {
 			listeOmVBox.getChildren().add(this.creerItemOM(om));
