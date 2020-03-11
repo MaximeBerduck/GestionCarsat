@@ -22,6 +22,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.view.MenuAgentController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OptionsController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.RootLayoutController;
+import fr.iut.groupemaxime.gestioncarsat.agent.view.SaisieMailController;
 import fr.iut.groupemaxime.gestioncarsat.mail.ListeMails;
 import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
@@ -768,6 +769,32 @@ public class AgentApp extends Application {
 		} else {
 			this.genererPdfFM();
 			this.genererXlsHT();
+		}
+		if ("".equals(options.getMailAgent())) {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(AgentApp.class.getResource("view/SaisieMail.fxml"));
+				AnchorPane saisieLayout = loader.load();
+
+				Scene scene = new Scene(saisieLayout);
+				this.secondaryStage = new Stage();
+				SaisieMailController controllerMail = loader.getController();
+				controllerMail.setStage(this.secondaryStage);
+				controllerMail.setHostname(Constante.HOSTNAME);
+				
+				secondaryStage.setScene(scene);
+				this.secondaryStage.setTitle("Paramètres");
+				secondaryStage.initOwner(primaryStage);
+				secondaryStage.initModality(Modality.WINDOW_MODAL);
+				this.secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
+
+				secondaryStage.showAndWait();
+				
+				options.setMailAgent(controllerMail.getMailAgent());
+				options.sauvegarder();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		this.afficherOrdresMission();
 		this.omCtrl.setTitre("Envoyer un document");

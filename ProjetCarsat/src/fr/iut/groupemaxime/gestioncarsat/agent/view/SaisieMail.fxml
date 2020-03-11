@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="194.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.agent.view.SaisieMailController">
+   <children>
+      <Label layoutX="152.0" layoutY="31.0" text="Saisie de votre adresse adresse mail" />
+      <Label layoutX="25.0" layoutY="102.0" text="Mail : " />
+      <TextField fx:id="mailAgent" layoutX="67.0" layoutY="97.0" prefHeight="27.0" prefWidth="224.0" />
+      <Label fx:id="hostname" layoutX="299.0" layoutY="102.0" text="\@" />
+      <Button fx:id="buttonValider" layoutX="420.0" layoutY="153.0" mnemonicParsing="false" onAction="#valider" text="Valider" />
+      <Button fx:id="boutonAnnuler" layoutX="338.0" layoutY="153.0" mnemonicParsing="false" onAction="#annuler" text="Annuler" />
+   </children>
+</AnchorPane>

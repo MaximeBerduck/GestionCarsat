@@ -1,5 +1,8 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model;
 
+import java.io.File;
+import java.util.HashSet;
+
 public class FraisJournalier implements Comparable<FraisJournalier> {
 	private String date;
 	private String heureDepart;
@@ -19,6 +22,9 @@ public class FraisJournalier implements Comparable<FraisJournalier> {
 
 	private String typeAutreFrais;
 	private float montantAutreFrais;
+	
+	private HashSet<Facture> justificatifRepas;
+	private Facture justificatifDecoucher;
 
 	public FraisJournalier(String date) {
 		this.date = date;

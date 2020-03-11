@@ -3,6 +3,8 @@ package fr.iut.groupemaxime.gestioncarsat.agent.view;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -34,14 +36,62 @@ public class Frais1Controller {
 
 	private FraisMissionController fmController;
 
+	//Méthode qui vérifie le nombre de repas saisie. Si >2, return false + affiche erreur
+	public boolean verifierNbrRepas() {
+		// TODO Auto-generated method stub
+		int n = Integer.parseInt(getNbrForfaitRepas());
+		// TODO Ajouter nbr justifs
+		if (n > 2) {
+			this.dateJournee.setText("bonjour");
+
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erreur");
+			alert.setHeaderText("Nombre de repas journalier trop élevé");
+			alert.setContentText("Vous avez indiqué un nombre trop élevé de repas dans cette journée (2 au maximum).\n"
+					+ " Veuillez corriger cette erreur.");
+
+			alert.showAndWait();
+			return false;
+		}
+		return true;
+
+	}
+
+	//Méthode qui vérifie le nombre de découcher saisie. Si >1, return false + affiche erreur
+	public boolean verifierNbrDecoucher() {
+		// TODO Auto-generated method stub
+		int n = Integer.parseInt(getNbrForfaitDecouchers());
+		// TODO Ajouter nbr justifs
+		if (n > 2) {
+			this.dateJournee.setText("bonjour");
+
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erreur");
+			alert.setHeaderText("Nombre de repas journalier trop élevé");
+			alert.setContentText("Vous avez indiqué un nombre trop élevé de découcher dans cette journée (1 au maximum).\n"
+					+ " Veuillez corriger cette erreur.");
+
+			alert.showAndWait();
+			return false;
+		}
+		return true;
+	}
+
+	public boolean verifierSaisieCorrect() {
+		if(verifierNbrRepas() && verifierNbrDecoucher())
+			return true;
+		else
+			return false;
+	}
+	
 	// Event Listener on Button.onAction
 	@FXML
 	public void afficherFrais2(ActionEvent event) {
-		this.fmController.afficherFrais2(dateJournee.getText());
+		if(verifierSaisieCorrect())
+			this.fmController.afficherFrais2(dateJournee.getText());
 	}
 
 	public void modifierFraisJournalier(FraisJournalier fj) {
-		// TODO
 		if (null != fj.getHeureDepart()) {
 			this.setHeureDepart(fj.getHeureDepart().split(":")[0]);
 			this.setMinDepart(fj.getHeureDepart().split(":")[1]);
@@ -61,16 +111,20 @@ public class Frais1Controller {
 	}
 
 	public void afficherJourSuivant() {
-		this.fmController.sauvegarderJournee(this.dateJournee.getText());
-		if (!this.fmController.jourEstLeDernier(this.getDateJournee()))
-			this.fmController.afficherJourSuivant(this.dateJournee.getText());
-		else
-			this.fmController.getAgentApp().retourMenu();
+		if(verifierSaisieCorrect()) {
+			this.fmController.sauvegarderJournee(this.dateJournee.getText());
+			if (!this.fmController.jourEstLeDernier(this.getDateJournee()))
+				this.fmController.afficherJourSuivant(this.dateJournee.getText());
+			else
+				this.fmController.getAgentApp().retourMenu();
+		}
 	}
 
 	public void afficherJourAvant() {
-		this.fmController.sauvegarderJournee(this.dateJournee.getText());
-		this.fmController.afficherJourAvant(this.dateJournee.getText());
+		if(verifierSaisieCorrect()) {
+			this.fmController.sauvegarderJournee(this.dateJournee.getText());
+			this.fmController.afficherJourAvant(this.dateJournee.getText());
+		}
 	}
 
 	public void setHeureDepart(String heureDepart) {
