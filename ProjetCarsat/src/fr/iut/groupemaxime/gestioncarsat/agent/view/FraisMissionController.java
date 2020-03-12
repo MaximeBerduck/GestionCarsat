@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.HashMap;
+
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
@@ -139,14 +140,12 @@ public class FraisMissionController {
 		if (!"".equals(frais1Ctrl.getNbrForfaitRepas()))
 			fraisJournalier.setNbrRepasForfait(Integer.parseInt(frais1Ctrl.getNbrForfaitRepas()));
 
-		if (!"".equals(frais1Ctrl.getNbrJustificatifRepas()))
-			fraisJournalier.setNbrRepasJustif(Integer.parseInt(frais1Ctrl.getNbrJustificatifRepas()));
+		fraisJournalier.setJustificatifRepas(frais1Ctrl.getJustificatifRepas());
 
 		if (!"".equals(frais1Ctrl.getNbrForfaitDecouchers()))
 			fraisJournalier.setNbrDecouchForfait(Integer.parseInt(frais1Ctrl.getNbrForfaitDecouchers()));
 
-		if (!"".equals(frais1Ctrl.getNbrJustifDecouchers()))
-			fraisJournalier.setNbrDecouchJustif(Integer.parseInt(frais1Ctrl.getNbrJustifDecouchers()));
+		fraisJournalier.setJustificatifDecoucher(frais1Ctrl.getJustificatifDecoucher());
 
 		if (!"".equals(frais2Ctrl.getTypeFraisTransport()))
 			fraisJournalier.setTypeFraisTransport(frais2Ctrl.getTypeFraisTransport());
@@ -183,6 +182,7 @@ public class FraisMissionController {
 			frais1Ctrl.setPageFrais1(pageFrais1);
 			frais1Ctrl.setDateJournee(jour);
 			frais1Ctrl.setFmController(this);
+			frais1Ctrl.setAgentApp(agentApp);
 			this.listeFrais1.put(jour, frais1Ctrl);
 
 			FXMLLoader loader2 = new FXMLLoader();

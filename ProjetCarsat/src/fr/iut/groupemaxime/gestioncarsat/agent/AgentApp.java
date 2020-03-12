@@ -51,6 +51,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class AgentApp extends Application {
 
@@ -836,5 +837,9 @@ public class AgentApp extends Application {
 
 	public Service<Void> getServiceEnvoiMail() {
 		return this.serviceEnvoiMail;
+	}
+
+	public Stage getPrimaryStage() {
+		return this.primaryStage;
 	}
 }

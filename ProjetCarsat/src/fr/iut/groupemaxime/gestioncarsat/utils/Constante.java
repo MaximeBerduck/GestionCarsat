@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class Constante {
 	public static String CHEMIN_PDF = "target/PDF/";
@@ -48,6 +49,9 @@ public class Constante {
 	public static final FileChooser.ExtensionFilter IMAGE_FILTER = new FileChooser.ExtensionFilter(
 			"Fichier image (.jpg .png .gif)", "*.jpg", "*.png", "*.gif");
 
+	public static final ExtensionFilter FACTURE_FILTER = new FileChooser.ExtensionFilter(
+			"Fichiers (.jpg .png .gif .pdf .doc .docx)", "*.jpg", "*.png", "*.gif", "*.pdf", "*.doc", "*.docx");
+
 	public static final String BACKGROUND_COLOR_MISSION_SELECTIONNE = "-fx-background-color: #ff651c;";
 
 	public static final String CORPS_DU_MAIL_DEFAUT = "Bonjour, \nVeuillez trouver ci-joint mon ordre de mission. \n\nCordialement.";
@@ -60,4 +64,8 @@ public class Constante {
 	public static final String TITRE_MODIF_FM = "Modification des frais mission";
 	public static final String TITRE_MODIF_HT = "Modification des horaires de travail";
 	public static final String TITRE_SIGNER_FM = "Valider les informations des frais de missions";
+	
+	public static final int NBR_DECOUCHER_JOURNALIER = 1; // Nombre de découchers maximum par jour dans les frais
+	public static final int NBR_REPAS_JOURNALIER = 2;// Nombre de repas maximum par jour dans les frais
+
 }

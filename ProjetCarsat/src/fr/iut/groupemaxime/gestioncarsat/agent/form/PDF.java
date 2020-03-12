@@ -244,8 +244,8 @@ public class PDF {
 			try {
 				repasForfaitTotal += fj.getNbrRepasForfait();
 				repasJustifTotal += fj.getNbrRepasJustif();
-				decouchForfaitTotal += fj.getNbrDecouchForfait();
-				decouchJustifTotal += fj.getNbrDecouchJustif();
+				decouchForfaitTotal += fj.getMontantJustifDecouchers();
+				decouchJustifTotal += fj.getMontantJustifRepas();
 				serviceTotal += fj.getNbrKmVehiService();
 				persoTotal += fj.getNbrKmVehiPerso();
 				montantAutreFrais += fj.getMontantAutreFrais();
@@ -268,8 +268,9 @@ public class PDF {
 
 					this.remplirChamp("repasForfaitDimanche", String.valueOf(fj.getNbrRepasForfait()));
 					this.remplirChamp("repasJustifDimanche", String.valueOf(fj.getNbrRepasJustif()));
-					this.remplirChamp("decouchForfaitDimanche", String.valueOf(fj.getNbrDecouchForfait()));
-					this.remplirChamp("decouchJustifDimanche", String.valueOf(fj.getNbrDecouchJustif()));
+
+					this.remplirChamp("decouchForfaitDimanche", String.valueOf(fj.getMontantJustifDecouchers()));
+					this.remplirChamp("decouchJustifDimanche", String.valueOf(fj.getMontantJustifRepas()));
 
 					// TODO
 					this.remplirChamp("motifDimanche", "");
@@ -294,8 +295,8 @@ public class PDF {
 
 					this.remplirChamp("repasForfaitLundi", String.valueOf(fj.getNbrRepasForfait()));
 					this.remplirChamp("repasJustifLundi", String.valueOf(fj.getNbrRepasJustif()));
-					this.remplirChamp("decouchForfaitLundi", String.valueOf(fj.getNbrDecouchForfait()));
-					this.remplirChamp("decouchJustifLundi", String.valueOf(fj.getNbrDecouchJustif()));
+					this.remplirChamp("decouchForfaitLundi", String.valueOf(fj.getMontantJustifDecouchers()));
+					this.remplirChamp("decouchJustifLundi", String.valueOf(fj.getMontantJustifRepas()));
 
 					// TODO
 					this.remplirChamp("motifLundi", "");
@@ -320,8 +321,8 @@ public class PDF {
 
 					this.remplirChamp("repasForfaitMardi", String.valueOf(fj.getNbrRepasForfait()));
 					this.remplirChamp("repasJustifMardi", String.valueOf(fj.getNbrRepasJustif()));
-					this.remplirChamp("decouchForfaitMardi", String.valueOf(fj.getNbrDecouchForfait()));
-					this.remplirChamp("decouchJustifMardi", String.valueOf(fj.getNbrDecouchJustif()));
+					this.remplirChamp("decouchForfaitMardi", String.valueOf(fj.getMontantJustifDecouchers()));
+					this.remplirChamp("decouchJustifMardi", String.valueOf(fj.getMontantJustifRepas()));
 
 					// TODO
 					this.remplirChamp("motifMardi", "");
@@ -346,8 +347,8 @@ public class PDF {
 
 					this.remplirChamp("repasForfaitMercredi", String.valueOf(fj.getNbrRepasForfait()));
 					this.remplirChamp("repasJustifMercredi", String.valueOf(fj.getNbrRepasJustif()));
-					this.remplirChamp("decouchForfaitMercredi", String.valueOf(fj.getNbrDecouchForfait()));
-					this.remplirChamp("decouchJustifMercredi", String.valueOf(fj.getNbrDecouchJustif()));
+					this.remplirChamp("decouchForfaitMercredi", String.valueOf(fj.getMontantJustifDecouchers()));
+					this.remplirChamp("decouchJustifMercredi", String.valueOf(fj.getMontantJustifRepas()));
 
 					// TODO
 					this.remplirChamp("motifMercredi", "");
@@ -372,8 +373,8 @@ public class PDF {
 
 					this.remplirChamp("repasForfaitJeudi", String.valueOf(fj.getNbrRepasForfait()));
 					this.remplirChamp("repasJustifJeudi", String.valueOf(fj.getNbrRepasJustif()));
-					this.remplirChamp("decouchForfaitJeudi", String.valueOf(fj.getNbrDecouchForfait()));
-					this.remplirChamp("decouchJustifJeudi", String.valueOf(fj.getNbrDecouchJustif()));
+					this.remplirChamp("decouchForfaitJeudi", String.valueOf(fj.getMontantJustifDecouchers()));
+					this.remplirChamp("decouchJustifJeudi", String.valueOf(fj.getMontantJustifRepas()));
 
 					// TODO
 					this.remplirChamp("motifJeudi", "");
@@ -398,8 +399,8 @@ public class PDF {
 
 					this.remplirChamp("repasForfaitVendredi", String.valueOf(fj.getNbrRepasForfait()));
 					this.remplirChamp("repasJustifVendredi", String.valueOf(fj.getNbrRepasJustif()));
-					this.remplirChamp("decouchForfaitVendredi", String.valueOf(fj.getNbrDecouchForfait()));
-					this.remplirChamp("decouchJustifVendredi", String.valueOf(fj.getNbrDecouchJustif()));
+					this.remplirChamp("decouchForfaitVendredi", String.valueOf(fj.getMontantJustifDecouchers()));
+					this.remplirChamp("decouchJustifVendredi", String.valueOf(fj.getMontantJustifRepas()));
 
 					// TODO
 					this.remplirChamp("motifVendredi", "");
@@ -424,8 +425,8 @@ public class PDF {
 
 					this.remplirChamp("repasForfaitSamedi", String.valueOf(fj.getNbrRepasForfait()));
 					this.remplirChamp("repasJustifSamedi", String.valueOf(fj.getNbrRepasJustif()));
-					this.remplirChamp("decouchForfaitSamedi", String.valueOf(fj.getNbrDecouchForfait()));
-					this.remplirChamp("decouchJustifSamedi", String.valueOf(fj.getNbrDecouchJustif()));
+					this.remplirChamp("decouchForfaitSamedi", String.valueOf(fj.getMontantJustifDecouchers()));
+					this.remplirChamp("decouchJustifSamedi", String.valueOf(fj.getMontantJustifRepas()));
 
 					// TODO
 					this.remplirChamp("motifSamedi", "");
@@ -605,7 +606,7 @@ public class PDF {
 
 	}
 
-	public static void signerHTResponsable(String cheminXls,String cheminSignature) {
+	public static void signerHTResponsable(String cheminXls, String cheminSignature) {
 
 		Workbook workbook;
 		FileInputStream excelFile;
@@ -617,7 +618,7 @@ public class PDF {
 			while (!"Date et signature :".equals(dataSheet.getRow(ligne).getCell(2).getStringCellValue())) {
 				ligne++;
 			}
-			dataSheet.getRow(ligne+1).getCell(6).setCellValue(Bibliotheque.getDateAujourdhui());
+			dataSheet.getRow(ligne + 1).getCell(6).setCellValue(Bibliotheque.getDateAujourdhui());
 			final FileInputStream stream = new FileInputStream(cheminSignature);
 			final CreationHelper helper = workbook.getCreationHelper();
 			final Drawing drawing = dataSheet.createDrawingPatriarch();
@@ -628,13 +629,12 @@ public class PDF {
 			final int pictureIndex = workbook.addPicture(IOUtils.toByteArray(stream), Workbook.PICTURE_TYPE_PNG);
 
 			anchor.setCol1(8);
-			anchor.setRow1(ligne-2);
-			anchor.setRow2(ligne+1);
+			anchor.setRow1(ligne - 2);
+			anchor.setRow2(ligne + 1);
 			anchor.setCol2(9);
 			final Picture pict = drawing.createPicture(anchor, pictureIndex);
-			
-			FileOutputStream out = new FileOutputStream(
-					new File(cheminXls));
+
+			FileOutputStream out = new FileOutputStream(new File(cheminXls));
 			workbook.write(out);
 			out.close();
 		} catch (IOException e) {

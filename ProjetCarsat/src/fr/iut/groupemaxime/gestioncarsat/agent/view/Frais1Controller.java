@@ -1,14 +1,25 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
+import java.io.IOException;
+import java.util.HashSet;
+
+import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.Facture;
 import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisJournalier;
+import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class Frais1Controller {
 	@FXML
@@ -24,11 +35,11 @@ public class Frais1Controller {
 	@FXML
 	private TextField nbrForfaitRepas;
 	@FXML
-	private TextField nbrJustificatifRepas;
+	private Label montantJustifRepas;
 	@FXML
 	private TextField nbrForfaitDecouchers;
 	@FXML
-	private TextField nbrJustifDecouchers;
+	private Label montantJustifDecouchers;
 	@FXML
 	private Button btnRetour;
 
@@ -36,19 +47,28 @@ public class Frais1Controller {
 
 	private FraisMissionController fmController;
 
-	//Méthode qui vérifie le nombre de repas saisie. Si >2, return false + affiche erreur
+	private HashSet<Facture> justificatifRepas;
+	private HashSet<Facture> justificatifDecoucher;
+
+	private AgentApp agentApp;
+
+	public void initialize() {
+		this.justificatifRepas = new HashSet<Facture>();
+		this.justificatifDecoucher = new HashSet<Facture>();
+	}
+
+	// Méthode qui vérifie le nombre de repas saisie. Si >2, return false + affiche
+	// erreur
 	public boolean verifierNbrRepas() {
-		// TODO Auto-generated method stub
-		int n = Integer.parseInt(getNbrForfaitRepas());
-		// TODO Ajouter nbr justifs
-		if (n > 2) {
+		int n = Integer.parseInt(getNbrForfaitRepas()) + this.justificatifRepas.size();
+		if (n > Constante.NBR_REPAS_JOURNALIER) {
 			this.dateJournee.setText("bonjour");
 
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Erreur");
 			alert.setHeaderText("Nombre de repas journalier trop élevé");
-			alert.setContentText("Vous avez indiqué un nombre trop élevé de repas dans cette journée (2 au maximum).\n"
-					+ " Veuillez corriger cette erreur.");
+			alert.setContentText("Vous avez indiqué un nombre trop élevé de repas dans cette journée ("
+					+ Constante.NBR_REPAS_JOURNALIER + "au maximum).\n" + " Veuillez corriger cette erreur.");
 
 			alert.showAndWait();
 			return false;
@@ -57,19 +77,18 @@ public class Frais1Controller {
 
 	}
 
-	//Méthode qui vérifie le nombre de découcher saisie. Si >1, return false + affiche erreur
+	// Méthode qui vérifie le nombre de découcher saisie. Si >1, return false +
+	// affiche erreur
 	public boolean verifierNbrDecoucher() {
-		// TODO Auto-generated method stub
-		int n = Integer.parseInt(getNbrForfaitDecouchers());
-		// TODO Ajouter nbr justifs
-		if (n > 2) {
+		int n = Integer.parseInt(getNbrForfaitDecouchers()) + this.justificatifDecoucher.size();
+		if (n > Constante.NBR_DECOUCHER_JOURNALIER) {
 			this.dateJournee.setText("bonjour");
 
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Erreur");
-			alert.setHeaderText("Nombre de repas journalier trop élevé");
-			alert.setContentText("Vous avez indiqué un nombre trop élevé de découcher dans cette journée (1 au maximum).\n"
-					+ " Veuillez corriger cette erreur.");
+			alert.setHeaderText("Nombre de découcher journalier trop élevé");
+			alert.setContentText("Vous avez indiqué un nombre trop élevé de découcher dans cette journée ("
+					+ Constante.NBR_DECOUCHER_JOURNALIER + "au maximum).\n" + " Veuillez corriger cette erreur.");
 
 			alert.showAndWait();
 			return false;
@@ -78,16 +97,16 @@ public class Frais1Controller {
 	}
 
 	public boolean verifierSaisieCorrect() {
-		if(verifierNbrRepas() && verifierNbrDecoucher())
+		if (verifierNbrRepas() && verifierNbrDecoucher())
 			return true;
 		else
 			return false;
 	}
-	
+
 	// Event Listener on Button.onAction
 	@FXML
 	public void afficherFrais2(ActionEvent event) {
-		if(verifierSaisieCorrect())
+		if (verifierSaisieCorrect())
 			this.fmController.afficherFrais2(dateJournee.getText());
 	}
 
@@ -103,15 +122,18 @@ public class Frais1Controller {
 		}
 
 		this.setNbrForfaitRepas(String.valueOf(fj.getNbrRepasForfait()));
-		this.setNbrJustificatifRepas(String.valueOf(fj.getNbrRepasJustif()));
+		this.justificatifRepas = fj.getJustificatifRepas();
+		this.majJustifRepas();
 
 		this.setNbrForfaitDecouchers(String.valueOf(fj.getNbrDecouchForfait()));
-		this.setNbrJustifDecouchers(String.valueOf(fj.getNbrDecouchJustif()));
+		// TODO setMontantJustifDecouchers
+		this.justificatifDecoucher = fj.getJustificatifDecoucher();
+		majJustifDecoucher();
 
 	}
 
 	public void afficherJourSuivant() {
-		if(verifierSaisieCorrect()) {
+		if (verifierSaisieCorrect()) {
 			this.fmController.sauvegarderJournee(this.dateJournee.getText());
 			if (!this.fmController.jourEstLeDernier(this.getDateJournee()))
 				this.fmController.afficherJourSuivant(this.dateJournee.getText());
@@ -121,10 +143,131 @@ public class Frais1Controller {
 	}
 
 	public void afficherJourAvant() {
-		if(verifierSaisieCorrect()) {
+		if (verifierSaisieCorrect()) {
 			this.fmController.sauvegarderJournee(this.dateJournee.getText());
 			this.fmController.afficherJourAvant(this.dateJournee.getText());
 		}
+	}
+
+	public void modifierJustificatifDecouchers() {
+		if (!"".equals(this.nbrForfaitDecouchers.getText())
+				&& Integer.parseInt(this.nbrForfaitDecouchers.getText()) >= Constante.NBR_DECOUCHER_JOURNALIER) {
+			// Si le nombre de repas déclaré est déjà le maximum
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erreur");
+			alert.setHeaderText("Nombre de découcher journalié trop élevé");
+			alert.setContentText("Vous souhaitez indiquer un nombre trop élevé de découcher dans cette journée ("
+					+ Constante.NBR_DECOUCHER_JOURNALIER + " au maximum).\n");
+			alert.showAndWait();
+		} else {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(AgentApp.class.getResource("view/ListeFactures.fxml"));
+				AnchorPane saisieLayout = loader.load();
+				Stage secondaryStage = new Stage();
+
+				Scene scene = new Scene(saisieLayout);
+				secondaryStage = new Stage();
+				ListeFacturesController controllerListe = loader.getController();
+				controllerListe.setStage(secondaryStage);
+
+				controllerListe.setNbrMax(
+						Constante.NBR_DECOUCHER_JOURNALIER - Integer.parseInt(this.nbrForfaitDecouchers.getText()));
+
+				secondaryStage.setScene(scene);
+
+				secondaryStage.setTitle("Justificatifs");
+				secondaryStage.initOwner(this.agentApp.getPrimaryStage());
+				secondaryStage.initModality(Modality.WINDOW_MODAL);
+				secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
+
+				if (this.justificatifDecoucher.size() != 0)
+					controllerListe.modifierListeFacture(justificatifDecoucher);
+
+				secondaryStage.showAndWait();
+
+				this.justificatifDecoucher = controllerListe.getFactures();
+				this.majJustifDecoucher();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void majJustifDecoucher() {
+		float montant = 0;
+		for (Facture facture : this.justificatifDecoucher) {
+			montant += facture.getMontant();
+		}
+		this.montantJustifDecouchers.setText(String.valueOf(montant) + "€");
+	}
+
+	public void modifierJustificatifsRepas() {
+		if (!"".equals(this.nbrForfaitRepas.getText())
+				&& Integer.parseInt(this.nbrForfaitRepas.getText()) >= Constante.NBR_REPAS_JOURNALIER) {
+			// Si le nombre de repas déclaré est déjà le maximum
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Erreur");
+			alert.setHeaderText("Nombre de repas journalié trop élevé");
+			alert.setContentText("Vous souhaitez indiquer un nombre trop élevé de repas dans cette journée ("
+					+ Constante.NBR_REPAS_JOURNALIER + " au maximum).\n");
+			alert.showAndWait();
+		} else {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(AgentApp.class.getResource("view/ListeFactures.fxml"));
+				AnchorPane saisieLayout = loader.load();
+				Stage secondaryStage = new Stage();
+
+				Scene scene = new Scene(saisieLayout);
+				secondaryStage = new Stage();
+				ListeFacturesController controllerListe = loader.getController();
+				controllerListe.setStage(secondaryStage);
+				controllerListe
+						.setNbrMax(Constante.NBR_REPAS_JOURNALIER - Integer.parseInt(this.nbrForfaitRepas.getText()));
+
+				secondaryStage.setScene(scene);
+
+				secondaryStage.setTitle("Justificatifs");
+				secondaryStage.initOwner(this.agentApp.getPrimaryStage());
+				secondaryStage.initModality(Modality.WINDOW_MODAL);
+				secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
+
+				if (this.justificatifRepas.size() != 0)
+					controllerListe.modifierListeFacture(justificatifRepas);
+
+				secondaryStage.showAndWait();
+
+				this.justificatifRepas = controllerListe.getFactures();
+				this.majJustifRepas();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void majJustifRepas() {
+		float montant = 0;
+		for (Facture facture : this.justificatifRepas) {
+			montant += facture.getMontant();
+		}
+		this.montantJustifRepas.setText(String.valueOf(montant) + "€");
+	}
+
+	public String getMontantJustifRepas() {
+		return montantJustifRepas.getText().replace("€", "");
+	}
+
+	public void setMontantJustifRepas(String montantJustifRepas) {
+		this.montantJustifRepas.setText(montantJustifRepas);
+	}
+
+	public String getMontantJustifDecouchers() {
+		return montantJustifDecouchers.getText();
+	}
+
+	public void setMontantJustifDecouchers(String montantJustifDecouchers) {
+		this.montantJustifDecouchers.setText(montantJustifDecouchers);
 	}
 
 	public void setHeureDepart(String heureDepart) {
@@ -147,16 +290,8 @@ public class Frais1Controller {
 		this.nbrForfaitRepas.setText(nbrForfaitRepas);
 	}
 
-	public void setNbrJustificatifRepas(String nbrJustificatifRepas) {
-		this.nbrJustificatifRepas.setText(nbrJustificatifRepas);
-	}
-
 	public void setNbrForfaitDecouchers(String nbrForfaitDecouchers) {
 		this.nbrForfaitDecouchers.setText(nbrForfaitDecouchers);
-	}
-
-	public void setNbrJustifDecouchers(String nbrJustifDecouchers) {
-		this.nbrJustifDecouchers.setText(nbrJustifDecouchers);
 	}
 
 	public void setPageFrais1(AnchorPane pageFrais1) {
@@ -195,16 +330,8 @@ public class Frais1Controller {
 		return nbrForfaitRepas.getText();
 	}
 
-	public String getNbrJustificatifRepas() {
-		return nbrJustificatifRepas.getText();
-	}
-
 	public String getNbrForfaitDecouchers() {
 		return nbrForfaitDecouchers.getText();
-	}
-
-	public String getNbrJustifDecouchers() {
-		return nbrJustifDecouchers.getText();
 	}
 
 	public FraisMissionController getFmController() {
@@ -217,6 +344,26 @@ public class Frais1Controller {
 
 	public String getDateJournee() {
 		return this.dateJournee.getText();
+	}
+
+	public void setAgentApp(AgentApp agentApp) {
+		this.agentApp = agentApp;
+	}
+
+	public HashSet<Facture> getJustificatifRepas() {
+		return justificatifRepas;
+	}
+
+	public void setJustificatifRepas(HashSet<Facture> justificatifRepas) {
+		this.justificatifRepas = justificatifRepas;
+	}
+
+	public HashSet<Facture> getJustificatifDecoucher() {
+		return justificatifDecoucher;
+	}
+
+	public void setJustificatifDecoucher(HashSet<Facture> justificatifDecoucher) {
+		this.justificatifDecoucher = justificatifDecoucher;
 	}
 
 }

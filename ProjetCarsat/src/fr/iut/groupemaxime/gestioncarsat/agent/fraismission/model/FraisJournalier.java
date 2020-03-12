@@ -1,6 +1,5 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model;
 
-import java.io.File;
 import java.util.HashSet;
 
 public class FraisJournalier implements Comparable<FraisJournalier> {
@@ -11,9 +10,6 @@ public class FraisJournalier implements Comparable<FraisJournalier> {
 	private int nbrRepasForfait;
 	private int nbrRepasJustif;
 
-	private int nbrDecouchForfait;
-	private int nbrDecouchJustif;
-
 	private String typeFraisTransport;
 	private float montantFraisTransport;
 
@@ -22,12 +18,14 @@ public class FraisJournalier implements Comparable<FraisJournalier> {
 
 	private String typeAutreFrais;
 	private float montantAutreFrais;
-	
+
 	private HashSet<Facture> justificatifRepas;
-	private Facture justificatifDecoucher;
+	private HashSet<Facture> justificatifDecoucher;
 
 	public FraisJournalier(String date) {
 		this.date = date;
+		this.justificatifDecoucher = new HashSet<Facture>();
+		this.justificatifRepas = new HashSet<Facture>();
 	}
 
 	@Override
@@ -101,22 +99,6 @@ public class FraisJournalier implements Comparable<FraisJournalier> {
 		this.nbrRepasJustif = nbrRepasJustif;
 	}
 
-	public int getNbrDecouchForfait() {
-		return nbrDecouchForfait;
-	}
-
-	public void setNbrDecouchForfait(int nbrDecouchForfait) {
-		this.nbrDecouchForfait = nbrDecouchForfait;
-	}
-
-	public int getNbrDecouchJustif() {
-		return nbrDecouchJustif;
-	}
-
-	public void setNbrDecouchJustif(int nbrDecouchJustif) {
-		this.nbrDecouchJustif = nbrDecouchJustif;
-	}
-
 	public String getTypeFraisTransport() {
 		return typeFraisTransport;
 	}
@@ -168,4 +150,35 @@ public class FraisJournalier implements Comparable<FraisJournalier> {
 	public void setMontantAutreFrais(float montantAutreFrais) {
 		this.montantAutreFrais = montantAutreFrais;
 	}
+
+	public HashSet<Facture> getJustificatifRepas() {
+		return justificatifRepas;
+	}
+
+	public void setJustificatifRepas(HashSet<Facture> justificatifRepas) {
+		this.justificatifRepas = justificatifRepas;
+	}
+
+	public HashSet<Facture> getJustificatifDecoucher() {
+		return justificatifDecoucher;
+	}
+
+	public void setJustificatifDecoucher(HashSet<Facture> justificatifDecoucher) {
+		this.justificatifDecoucher = justificatifDecoucher;
+	}
+
+	public float getMontantJustifRepas() {
+		float n = 0;
+		for (Facture facture : this.justificatifRepas)
+			n += facture.getMontant();
+		return n;
+	}
+
+	public float getMontantJustifDecouchers() {
+		float n = 0;
+		for (Facture facture : this.justificatifDecoucher)
+			n += facture.getMontant();
+		return n;
+	}
+
 }
