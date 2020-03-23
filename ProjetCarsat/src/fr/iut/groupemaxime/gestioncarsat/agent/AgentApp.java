@@ -148,6 +148,7 @@ public class AgentApp extends Application {
 			this.rootLayout = loader.load();
 			rootLayoutCtrl = loader.getController();
 			rootLayoutCtrl.setAgentApp(this);
+			rootLayoutCtrl.setPrenomNomAgent();
 
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
@@ -712,6 +713,8 @@ public class AgentApp extends Application {
 
 	public void setOptions(Options options) {
 		this.options = options;
+		if (this.rootLayoutCtrl != null)
+			this.rootLayoutCtrl.setPrenomNomAgent();
 		this.options.sauvegarderJson(Constante.CHEMIN_OPTIONS);
 	}
 

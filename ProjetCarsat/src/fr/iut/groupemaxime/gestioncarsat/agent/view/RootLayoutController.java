@@ -1,6 +1,7 @@
 package fr.iut.groupemaxime.gestioncarsat.agent.view;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
+import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.Agent;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -47,6 +48,8 @@ public class RootLayoutController {
 
 	@FXML
 	private Label labelMissionSelectionnee;
+	@FXML
+	private Label prenomNomAgent;
 
 	@FXML
 	private void initialize() {
@@ -55,7 +58,7 @@ public class RootLayoutController {
 		this.imageHT.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "horaires.png"));
 		this.imageFM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "frais.png"));
 		this.imageOM.setImage(new Image("file:" + Constante.CHEMIN_IMAGES + "ordre.png"));
-
+		this.prenomNomAgent.setText("Options de l'agent incomplet.\nRendez-vous dans les options.");
 	}
 
 	public void retirerStyleSurTousLesDocs(String style) {
@@ -136,6 +139,13 @@ public class RootLayoutController {
 			this.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			this.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			agentApp.demanderActionHT();
+		}
+	}
+
+	public void setPrenomNomAgent() {
+		Agent agent = this.agentApp.getOptions().getAgent();
+		if (null != agent && !"".equals(agent.getPrenom()) && !"".equals(agent.getNom())) {
+			this.prenomNomAgent.setText(agent.getPrenom() + " " + agent.getNom().toUpperCase());
 		}
 	}
 
