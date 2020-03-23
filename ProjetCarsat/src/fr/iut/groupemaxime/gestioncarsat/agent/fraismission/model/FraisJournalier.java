@@ -8,7 +8,7 @@ public class FraisJournalier implements Comparable<FraisJournalier> {
 	private String heureRetour;
 
 	private int nbrRepasForfait;
-	private int nbrRepasJustif;
+	private int nbrDecouchForfait;
 
 	private String typeFraisTransport;
 	private float montantFraisTransport;
@@ -91,12 +91,12 @@ public class FraisJournalier implements Comparable<FraisJournalier> {
 		this.nbrRepasForfait = nbrRepasForfait;
 	}
 
-	public int getNbrRepasJustif() {
-		return nbrRepasJustif;
+	public int getNbrDecouchForfait() {
+		return nbrDecouchForfait;
 	}
 
-	public void setNbrRepasJustif(int nbrRepasJustif) {
-		this.nbrRepasJustif = nbrRepasJustif;
+	public void setNbrDecouchForfait(int nbrDecouchForfait) {
+		this.nbrDecouchForfait = nbrDecouchForfait;
 	}
 
 	public String getTypeFraisTransport() {

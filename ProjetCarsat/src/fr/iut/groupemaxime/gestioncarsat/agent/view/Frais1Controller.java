@@ -120,7 +120,7 @@ public class Frais1Controller {
 			this.setHeureRetour(fj.getHeureRetour().split(":")[0]);
 			this.setMinRetour(fj.getHeureRetour().split(":")[1]);
 		}
-
+		
 		this.setNbrForfaitRepas(String.valueOf(fj.getNbrRepasForfait()));
 		this.justificatifRepas = fj.getJustificatifRepas();
 		this.majJustifRepas();
