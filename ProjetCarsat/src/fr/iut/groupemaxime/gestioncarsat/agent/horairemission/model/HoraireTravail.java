@@ -78,6 +78,10 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 		}
 	}
 
+	public void sauvegarderJson() {
+		this.sauvegarderJson(this.adresseFichier);
+	}
+
 	public void setEtat(EtatMission etat) {
 		this.etat = etat;
 	}
@@ -215,11 +219,11 @@ public class HoraireTravail implements DocJson<HoraireTravail> {
 				final int pictureIndex = workbook.addPicture(IOUtils.toByteArray(stream), Workbook.PICTURE_TYPE_PNG);
 
 				anchor.setCol1(2);
-				anchor.setRow1(ligne+3);
-				anchor.setRow2(ligne+7);
+				anchor.setRow1(ligne + 3);
+				anchor.setRow2(ligne + 7);
 				anchor.setCol2(4);
 				final Picture pict = drawing.createPicture(anchor, pictureIndex);
-				dataSheet.getRow(ligne+5).getCell(1).setCellValue(this.dateSignature);
+				dataSheet.getRow(ligne + 5).getCell(1).setCellValue(this.dateSignature);
 			}
 
 			// Sauvegarder le fichier

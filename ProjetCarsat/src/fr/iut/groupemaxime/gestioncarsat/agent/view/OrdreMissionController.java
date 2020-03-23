@@ -335,6 +335,10 @@ public class OrdreMissionController {
 
 		om.sauvegarderJson(om.getCheminDossier());
 
+		// Permet de réinitialiser l'état saisies FM et HT si modif OM
+		this.mainApp.setEtatFM(om, EtatMission.EN_COURS_SAISIE);
+		this.mainApp.setEtatHT(om, EtatMission.EN_COURS_SAISIE);
+
 		this.mainApp.retourMenu();
 	}
 

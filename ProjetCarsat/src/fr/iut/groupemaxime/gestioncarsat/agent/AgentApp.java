@@ -135,6 +135,10 @@ public class AgentApp extends Application {
 		serviceEnvoiMail.start();
 		initialiseRootLayout();
 		afficherListeMissions();
+
+		this.missionActive = null;
+		this.htMissionActive = null;
+		this.fmMissionActive = null;
 	}
 
 	public void initialiseRootLayout() {
@@ -535,6 +539,15 @@ public class AgentApp extends Application {
 		this.fmCtrl.creerFraisMission();
 	}
 
+	// Permet de modifier l'état des FM depuis l'OM
+	public void setEtatFM(OrdreMission om, EtatMission etat) {
+		if (this.fmMissionActive != null) {
+			this.fmMissionActive.setEtat(etat);
+			this.fmMissionActive.setEstSigne(false);
+			this.fmMissionActive.sauvegarderJson();
+		}
+	}
+
 	////////////////////////////////////////
 	//
 	// Horaires de Mission
@@ -542,7 +555,7 @@ public class AgentApp extends Application {
 	////////////////////////////////////////
 
 	public void demanderActionHT() {
-		if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
+		if (this.htMissionActive != null) {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Choix de l'action");
 			alert.setHeaderText("Choisissez l'action souhaitée");
@@ -553,7 +566,7 @@ public class AgentApp extends Application {
 			alert.getButtonTypes().setAll(buttonTypeAfficher);
 
 			ButtonType buttonTypeSigner = null;
-			if (this.missionActive.htEstSigne()) {
+			if (this.htMissionActive.estSigne()) {
 				alert.getButtonTypes().addAll(buttonTypeModif);
 			} else {
 				buttonTypeSigner = new ButtonType("Signer");
@@ -659,6 +672,15 @@ public class AgentApp extends Application {
 		this.rootLayoutCtrl.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 	}
 
+	// Permet de modifier l'état des HT depuis l'OM
+	public void setEtatHT(OrdreMission om, EtatMission etat) {
+		if (htMissionActive != null) {
+			htMissionActive.setEtat(etat);
+			htMissionActive.setSignature(false);
+			htMissionActive.sauvegarderJson();
+		}
+	}
+
 	////////////////////////////////////////
 	//
 	// Options
@@ -711,6 +733,25 @@ public class AgentApp extends Application {
 		String om = mission.getLieuDeplacement() + " du " + mission.getDateDebut() + " au " + mission.getDateFin();
 		this.rootLayoutCtrl.setLabelMissionSelectionnee(om);
 		this.afficherInfosMission(missionActive);
+
+		// Récupère HT de la mission active si existe
+		if (Bibliotheque.fichierHtMissionExiste(missionActive)) {
+			HoraireTravail ht = new HoraireTravail(Bibliotheque.recupererCheminEtNomFichierHt(missionActive));
+			ht = ht.chargerJson(ht.getAdresseFichier());
+			this.htMissionActive = ht;
+		} else {
+			this.htMissionActive = null;
+		}
+
+		// Récupère FM de la mission active si existe
+		if (Bibliotheque.fichierFmMissionExiste(missionActive)) {
+			FraisMission fm = new FraisMission(Bibliotheque.recupererCheminEtNomFichierFm(missionActive));
+			fm = fm.chargerJson(fm.getAdresseFichier());
+			this.fmMissionActive = fm;
+		} else {
+			this.fmMissionActive = null;
+		}
+
 	}
 
 	private void afficherInfosMission(OrdreMission missionActive) {
@@ -782,7 +823,7 @@ public class AgentApp extends Application {
 				SaisieMailController controllerMail = loader.getController();
 				controllerMail.setStage(this.secondaryStage);
 				controllerMail.setHostname(Constante.HOSTNAME);
-				
+
 				secondaryStage.setScene(scene);
 				this.secondaryStage.setTitle("Paramètres");
 				secondaryStage.initOwner(primaryStage);
@@ -790,7 +831,7 @@ public class AgentApp extends Application {
 				this.secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
 
 				secondaryStage.showAndWait();
-				
+
 				options.setMailAgent(controllerMail.getMailAgent());
 				options.sauvegarder();
 			} catch (IOException e) {

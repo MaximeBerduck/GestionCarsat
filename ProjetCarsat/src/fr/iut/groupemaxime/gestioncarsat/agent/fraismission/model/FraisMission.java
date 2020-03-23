@@ -76,6 +76,10 @@ public class FraisMission implements DocJson<FraisMission> {
 			e.printStackTrace();
 		}
 	}
+	
+	public void sauvegarderJson() {
+		this.sauvegarderJson(this.adresseFichier);
+	}
 
 	@Override
 	public FraisMission chargerJson(String adresseFichier) {
