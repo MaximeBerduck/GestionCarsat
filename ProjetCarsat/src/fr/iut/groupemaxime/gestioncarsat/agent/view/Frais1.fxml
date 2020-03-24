@@ -31,7 +31,7 @@
 		<TextField fx:id="nbrForfaitDecouchers" layoutX="372.0" layoutY="367.0" prefHeight="27.0" prefWidth="42.0" text="0" />
 		<Label layoutX="268.0" layoutY="410.0" text="Justificatif :" />
 		<Button layoutX="528.0" layoutY="446.0" mnemonicParsing="false" onAction="#afficherFrais2" prefHeight="30.0" prefWidth="100.0" text="Suivant &gt;&gt;" />
-		<Button layoutX="285.0" layoutY="447.0" mnemonicParsing="false" onAction="#afficherJourSuivant" text="Aucun frais pour ce jour" />
+		<Button layoutX="316.0" layoutY="447.0" mnemonicParsing="false" onAction="#afficherJourSuivant" text="Jour suivant" />
 		<Button fx:id="btnRetour" layoutX="57.0" layoutY="447.0" mnemonicParsing="false" onAction="#afficherJourAvant" text="Journée précédente" />
       <Label fx:id="montantJustifDecouchers" layoutX="367.0" layoutY="410.0" text="0.000€" />
       <Label fx:id="montantJustifRepas" layoutX="364.0" layoutY="267.0" text="0.000€" />
