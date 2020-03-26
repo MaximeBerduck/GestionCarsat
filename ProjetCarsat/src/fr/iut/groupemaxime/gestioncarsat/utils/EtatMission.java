@@ -1,8 +1,8 @@
 package fr.iut.groupemaxime.gestioncarsat.utils;
 
-public enum EtatMission {
+public enum EtatMission{
 	ENVOYE("Envoyé"), SIGNE("Signé"), NON_SIGNE("Non signé"), EN_COURS_ENVOI("En cours d'envoi"),
-	NON_REMPLI("Non rempli"), EN_COURS_SAISIE("En cours de saisie");
+	NON_REMPLI("Non rempli"), EN_COURS_SAISIE("En cours de saisie"), NON_RECU("Non reçu");
 
 	private String etat;
 

@@ -480,6 +480,7 @@ public class PDF {
 		this.sauvegarderPDF();
 		this.signerPdfFM(Constante.SIGNATURE_AGENT_FM_X, Constante.SIGNATURE_AGENT_FM_Y, Constante.TAILLE_SIGNATURE_FM,
 				fm, options.getCheminSignature());
+		this.fermerPDF();
 	}
 
 	public void signerPdfFM(int x, int y, int taille, FraisMission fm, String signature) {
@@ -573,24 +574,6 @@ public class PDF {
 		}
 	}
 
-	public static boolean fmEstSigneResp(String chemin) {
-		try {
-			PDF pdf = new PDF(new File(chemin));
-			if ("".equals(pdf.formulaire.getField("dateSignResponsable").getValueAsString())) {
-				pdf.modele.close();
-				return false;
-			} else {
-				pdf.modele.close();
-				return true;
-			}
-
-		} catch (IOException e) {
-			// TODO
-			e.printStackTrace();
-		}
-		return false;
-	}
-
 	public static void signerPdfOmResponsable(int x, int y, int taille, String cheminPDF, String cheminSignature) {
 		try {
 			PDF pdf = new PDF(new File(cheminPDF));
@@ -606,7 +589,7 @@ public class PDF {
 
 	}
 
-	public static void signerHTResponsable(String cheminXls, String cheminSignature) {
+	public static boolean signerHTResponsable(String cheminXls, String cheminSignature) {
 
 		Workbook workbook;
 		FileInputStream excelFile;
@@ -615,10 +598,10 @@ public class PDF {
 			workbook = new HSSFWorkbook(excelFile);
 			Sheet dataSheet = workbook.getSheetAt(0);
 			int ligne = 15;
-			while (!"Date et signature :".equals(dataSheet.getRow(ligne).getCell(2).getStringCellValue())) {
+			while (!"Date et signature :".equals(dataSheet.getRow(ligne).getCell(1).getStringCellValue())) {
 				ligne++;
 			}
-			dataSheet.getRow(ligne + 1).getCell(6).setCellValue(Bibliotheque.getDateAujourdhui());
+			dataSheet.getRow(ligne + 1).getCell(5).setCellValue(Bibliotheque.getDateAujourdhui());
 			final FileInputStream stream = new FileInputStream(cheminSignature);
 			final CreationHelper helper = workbook.getCreationHelper();
 			final Drawing drawing = dataSheet.createDrawingPatriarch();
@@ -628,9 +611,9 @@ public class PDF {
 
 			final int pictureIndex = workbook.addPicture(IOUtils.toByteArray(stream), Workbook.PICTURE_TYPE_PNG);
 
-			anchor.setCol1(8);
-			anchor.setRow1(ligne - 2);
-			anchor.setRow2(ligne + 1);
+			anchor.setCol1(7);
+			anchor.setRow1(ligne - 1);
+			anchor.setRow2(ligne + 2);
 			anchor.setCol2(9);
 			final Picture pict = drawing.createPicture(anchor, pictureIndex);
 
@@ -640,6 +623,8 @@ public class PDF {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
+		return true;
 	}
 }

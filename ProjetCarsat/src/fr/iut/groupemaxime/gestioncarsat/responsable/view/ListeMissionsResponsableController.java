@@ -12,6 +12,8 @@ import fr.iut.groupemaxime.gestioncarsat.agent.view.OrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.ResponsableApp;
 import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
+import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
+import fr.iut.groupemaxime.gestioncarsat.utils.EtatsResponsable;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,10 +57,14 @@ public class ListeMissionsResponsableController {
 				File filee = new File(file.getAbsolutePath() + "/OM_" + file.getName() + Constante.EXTENSION_PDF);
 				try {
 					pdf = new PDF(filee);
-					OrdreMission om = pdf.chargerPDFtoOM();
+					OrdreMission om = pdf.chargerPDFtoOM();					
 					om.setCheminDossier(file.getAbsolutePath());
 					om.setNomOM(filee.getAbsolutePath().substring(filee.getAbsolutePath().lastIndexOf(File.separator)));
-					
+					File etat = new File(om.getCheminDossier()+File.separator+ om.getNomOM().substring(om.getNomOM().indexOf("_")+1,om.getNomOM().lastIndexOf("."))+".json");
+					if (!etat.exists()) {
+						EtatsResponsable nouveau = new EtatsResponsable(etat.getPath());
+						nouveau.sauvegarderJson();
+					}
 					listeOm.ajouterOM(om);
 					pdf.fermerPDF();
 				} catch (IOException e) {

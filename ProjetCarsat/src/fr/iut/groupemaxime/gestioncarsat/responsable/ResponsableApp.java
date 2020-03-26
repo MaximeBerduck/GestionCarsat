@@ -5,19 +5,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
-import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
-import fr.iut.groupemaxime.gestioncarsat.agent.view.ItemOrdreMissionController;
 import fr.iut.groupemaxime.gestioncarsat.mail.MailProcessor;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.RootLayoutController;
-import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
+import fr.iut.groupemaxime.gestioncarsat.utils.EtatsResponsable;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
-import fr.iut.groupemaxime.gestioncarsat.utils.TypeDocument;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.ItemMissionResponsableController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.ListeMissionsResponsableController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.OptionsResponsableController;
@@ -49,6 +46,7 @@ public class ResponsableApp extends Application {
 	private ListeOrdreMission listeOM;
 	private OrdreMission missionActive;
 	private ScheduledService<Void> serviceRecuperationMails;
+	private EtatsResponsable etatMissionActive;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -60,6 +58,7 @@ public class ResponsableApp extends Application {
 		this.options = this.options.chargerJson(Constante.CHEMIN_OPTIONS);
 		initialiseRootLayout();
 		this.afficherListeMissions();
+
 		this.serviceRecuperationMails = new ScheduledService<Void>() {
 
 			@Override
@@ -152,6 +151,11 @@ public class ResponsableApp extends Application {
 		MissionTemporaire mission = (MissionTemporaire) missionActive.getMission();
 		String om = mission.getLieuDeplacement() + " du " + mission.getDateDebut() + " au " + mission.getDateFin();
 		this.rootLayoutCtrl.setLabelMissionSelectionnee(om);
+		EtatsResponsable er = new EtatsResponsable(missionActive.getCheminDossier() + File.separator
+				+ missionActive.getNomOM().substring(missionActive.getNomOM().indexOf("_") + 1,
+						missionActive.getNomOM().lastIndexOf("."))
+				+ ".json");
+		this.etatMissionActive = er.chargerJson(er.getNom());
 	}
 
 	public static void main(String[] args) {
@@ -176,7 +180,12 @@ public class ResponsableApp extends Application {
 	}
 
 	public void demanderActionFM() {
-		if (this.recuHT()) {
+		if (recuHT()) {
+			if (etatMissionActive.getFm() == EtatMission.NON_RECU) {
+				etatMissionActive.setFm(EtatMission.NON_SIGNE);
+				etatMissionActive.setHt(EtatMission.NON_SIGNE);
+				etatMissionActive.sauvegarderJson();
+			}
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Choix de l'action");
 			alert.setHeaderText("Choisissez l'action souhaitée");
@@ -188,10 +197,10 @@ public class ResponsableApp extends Application {
 			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
 			alert.getButtonTypes().setAll(buttonTypeAfficher);
-			if (!PDF.fmEstSigneResp(missionActive.getCheminDossier() + missionActive.getNomOM())) {
+			if (etatMissionActive.getFm() == EtatMission.NON_SIGNE) {
 				alert.getButtonTypes().add(buttonTypeSigner);
 			}
-			if (false) { // TODO fm + ht signe
+			if (etatMissionActive.getFm() == EtatMission.SIGNE && etatMissionActive.getHt() == EtatMission.SIGNE) {
 				alert.getButtonTypes().add(buttonTypeEnvoyer);
 			}
 			alert.getButtonTypes().add(buttonTypeCancel);
@@ -230,9 +239,10 @@ public class ResponsableApp extends Application {
 
 		ButtonType buttonTypeEnvoyer = null;
 		ButtonType buttonTypeSigner = null;
-		if (!this.missionActive.estEnvoye()) { // TODO
-			if (this.missionActive.agentSigne()) { // TODO
+		if (etatMissionActive.getOm() != EtatMission.ENVOYE) {
+			if (etatMissionActive.getOm() == EtatMission.SIGNE) {
 				buttonTypeEnvoyer = new ButtonType("Envoyer");
+				alert.getButtonTypes().addAll(buttonTypeEnvoyer);
 			} else {
 				buttonTypeSigner = new ButtonType("Signer");
 				alert.getButtonTypes().addAll(buttonTypeSigner);
@@ -260,6 +270,11 @@ public class ResponsableApp extends Application {
 
 	public void demanderActionHT() {
 		if (recuHT()) {
+			if (etatMissionActive.getFm() == EtatMission.NON_RECU) {
+				etatMissionActive.setFm(EtatMission.NON_SIGNE);
+				etatMissionActive.setHt(EtatMission.NON_SIGNE);
+				etatMissionActive.sauvegarderJson();
+			}
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Choix de l'action");
 			alert.setHeaderText("Choisissez l'action souhaitée");
@@ -269,10 +284,10 @@ public class ResponsableApp extends Application {
 			alert.getButtonTypes().setAll(buttonTypeAfficher);
 
 			ButtonType buttonTypeSigner = null;
-//			if (!this.htEstSigne()) {
-//				buttonTypeSigner = new ButtonType("Signer");
-//				alert.getButtonTypes().addAll(buttonTypeSigner);
-//			}
+			if (etatMissionActive.getHt() == EtatMission.NON_SIGNE) {
+				buttonTypeSigner = new ButtonType("Signer");
+				alert.getButtonTypes().addAll(buttonTypeSigner);
+			}
 
 			ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
@@ -297,9 +312,24 @@ public class ResponsableApp extends Application {
 		}
 		retourMenu();
 	}
+	
+	public boolean recuHT() {
+		if (new File(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
+				.replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS)).exists()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	private void signerHT() {
-		PDF.signerHTResponsable(this.missionActive.getCheminDossier() + this.missionActive.getNomOM().replace("OM_", "HT_").replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS),this.options.getCheminSignature());
+		if (PDF.signerHTResponsable(
+				this.missionActive.getCheminDossier() + this.missionActive.getNomOM().replace("OM_", "HT_")
+						.replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS),
+				this.options.getCheminSignature())) {
+			this.etatMissionActive.setHt(EtatMission.SIGNE);
+			this.etatMissionActive.sauvegarderJson();
+		}
 	}
 
 	private void afficherHtXLS() {
@@ -315,12 +345,16 @@ public class ResponsableApp extends Application {
 		PDF.signerPdfOmResponsable(Constante.SIGNATURE_RESPONSABLE_OM_X, Constante.SIGNATURE_RESPONSABLE_OM_Y,
 				Constante.TAILLE_SIGNATURE_OM_RESP, missionActive.getCheminDossier() + missionActive.getNomOM(),
 				options.getCheminSignature());
+		this.etatMissionActive.setOm(EtatMission.SIGNE);
+		this.etatMissionActive.sauvegarderJson();
 	}
 
 	private void signerFM() {
 		PDF.signerPdfFmResponsable(Constante.SIGNATURE_RESPONSABLE_FM_X, Constante.SIGNATURE_RESPONSABLE_FM_Y,
 				Constante.TAILLE_SIGNATURE_FM, missionActive.getCheminDossier() + missionActive.getNomOM(),
 				options.getCheminSignature());
+		this.etatMissionActive.setFm(EtatMission.SIGNE);
+		this.etatMissionActive.sauvegarderJson();
 	}
 
 	private void afficherPdfOM() {
@@ -329,15 +363,6 @@ public class ResponsableApp extends Application {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	}
-
-	public boolean recuHT() {
-		if (new File(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
-				.replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS)).exists()) {
-			return true;
-		} else {
-			return false;
 		}
 	}
 
