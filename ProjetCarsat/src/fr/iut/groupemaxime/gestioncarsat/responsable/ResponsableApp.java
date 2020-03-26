@@ -5,23 +5,33 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.controlsfx.control.Notifications;
+
+import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.view.SaisieMailController;
+import fr.iut.groupemaxime.gestioncarsat.agent.view.choixMailsDestinatairesController;
+import fr.iut.groupemaxime.gestioncarsat.mail.ListeMails;
 import fr.iut.groupemaxime.gestioncarsat.mail.MailProcessor;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.RootLayoutController;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatsResponsable;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
+import fr.iut.groupemaxime.gestioncarsat.utils.TypeDocument;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.ItemMissionResponsableController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.ListeMissionsResponsableController;
+import fr.iut.groupemaxime.gestioncarsat.responsable.view.MailController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.OptionsResponsableController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -31,7 +41,10 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 public class ResponsableApp extends Application {
@@ -45,8 +58,13 @@ public class ResponsableApp extends Application {
 	private ListeMissionsResponsableController controllerListeMissionsResponsable;
 	private ListeOrdreMission listeOM;
 	private OrdreMission missionActive;
+	
+	private ListeMails mailsEnAttente;
 	private ScheduledService<Void> serviceRecuperationMails;
+	private Service<Void> serviceEnvoiMail;
+	
 	private EtatsResponsable etatMissionActive;
+	private AnchorPane pageMail;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -54,11 +72,36 @@ public class ResponsableApp extends Application {
 		this.primaryStage.setTitle("Carsat - Gestion des déplacement");
 		this.primaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
 		this.primaryStage.setResizable(true);
+		
 		this.options = new Options();
 		this.options = this.options.chargerJson(Constante.CHEMIN_OPTIONS);
-		initialiseRootLayout();
-		this.afficherListeMissions();
+		
+		this.mailsEnAttente = new ListeMails();
+		this.mailsEnAttente.chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE, this.options);
+		
+		this.serviceEnvoiMail = new Service<Void>() {
 
+			@Override
+			protected Task<Void> createTask() {
+				return new Task<Void>() {
+
+					@Override
+					protected Void call() throws Exception {
+						mailsEnAttente.iterationMails();
+						return null;
+					}
+				};
+			}
+		};
+		serviceEnvoiMail.setOnFailed((WorkerStateEvent event) -> {
+			serviceEnvoiMail.reset();
+			Notifications.create().title("Erreur")
+					.text("Vous n'êtes pas connecté à Internet.\n Les mails en attente seront "
+							+ "envoyés dès que vous serez connecté à Internet.")
+					.showError();
+		});
+		serviceEnvoiMail.start();
+		
 		this.serviceRecuperationMails = new ScheduledService<Void>() {
 
 			@Override
@@ -83,8 +126,11 @@ public class ResponsableApp extends Application {
 				};
 			};
 		};
-		serviceRecuperationMails.setPeriod(Duration.minutes(1));
+		serviceRecuperationMails.setPeriod(Duration.minutes(5));
 		serviceRecuperationMails.start();
+		
+		initialiseRootLayout();
+		afficherListeMissions();
 	}
 
 	public void initialiseRootLayout() {
@@ -127,6 +173,10 @@ public class ResponsableApp extends Application {
 	public void setOptions(Options options) {
 		this.options = options;
 		this.options.sauvegarderJson(Constante.CHEMIN_OPTIONS);
+	}
+	
+	public Options getOptions() {
+		return this.options;
 	}
 
 	public void afficherListeMissions() {
@@ -214,7 +264,7 @@ public class ResponsableApp extends Application {
 
 			} else if (result.get() == buttonTypeEnvoyer) {
 				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-				// this.afficherEnvoiDuMail(TypeDocument.FRAISOUHORAIRES);
+				this.envoyerMail(TypeDocument.FRAISOUHORAIRES);
 
 			} else {
 				this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
@@ -239,14 +289,13 @@ public class ResponsableApp extends Application {
 
 		ButtonType buttonTypeEnvoyer = null;
 		ButtonType buttonTypeSigner = null;
-		if (etatMissionActive.getOm() != EtatMission.ENVOYE) {
-			if (etatMissionActive.getOm() == EtatMission.SIGNE) {
+		if (etatMissionActive.getOm() == EtatMission.SIGNE) {
 				buttonTypeEnvoyer = new ButtonType("Envoyer");
 				alert.getButtonTypes().addAll(buttonTypeEnvoyer);
-			} else {
+		} 
+		if (etatMissionActive.getOm() == EtatMission.NON_SIGNE){
 				buttonTypeSigner = new ButtonType("Signer");
 				alert.getButtonTypes().addAll(buttonTypeSigner);
-			}
 		}
 		ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
@@ -260,12 +309,116 @@ public class ResponsableApp extends Application {
 			this.signerOM();
 		} else if (result.get() == buttonTypeEnvoyer) {
 			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
-			// TODO this.afficherEnvoiDuMail(TypeDocument.ORDREMISSION);
+			this.envoyerMail(TypeDocument.ORDREMISSION);
 		} else {
 			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			// Ne fait rien == bouton "annuler"
 		}
 		retourMenu();
+	}
+
+	private void envoyerMail(TypeDocument typeDocument) {
+		if ("".equals(options.getMailAgent())) {
+			try {
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(AgentApp.class.getResource("view/SaisieMail.fxml"));
+				AnchorPane saisieLayout = loader.load();
+
+				Scene scene = new Scene(saisieLayout);
+				this.secondaryStage = new Stage();
+				SaisieMailController controllerMail = loader.getController();
+				controllerMail.setStage(this.secondaryStage);
+				controllerMail.setHostname(Constante.HOSTNAME);
+
+				secondaryStage.setScene(scene);
+				this.secondaryStage.setTitle("Paramètres");
+				secondaryStage.initOwner(primaryStage);
+				secondaryStage.initModality(Modality.WINDOW_MODAL);
+				this.secondaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
+
+				secondaryStage.showAndWait();
+
+				options.setMailAgent(controllerMail.getMailAgent());
+				options.sauvegarder();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(this.getClass().getResource("view/Mail.fxml"));
+			this.pageMail = loader.load();
+
+			
+			GridPane pane = (GridPane) this.rootLayout.getLeft();
+			pane.add(this.pageMail, 2, 0);
+				
+			MailController controllerMail = loader.getController();
+			controllerMail.setMainApp(this);
+			File pdfOM = new File((this.missionActive.getCheminDossier()
+					+ this.missionActive.getNomOM()));
+			if (TypeDocument.ORDREMISSION == typeDocument) {
+				controllerMail.setPiecesJointes(new File[] { pdfOM });
+			} else {
+				File pdfHT = new File((this.missionActive.getCheminDossier()
+						+ this.missionActive.getNomOM().replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS).replace("OM_", "HT_")));
+				controllerMail.setPiecesJointes(new File[] { pdfOM, pdfHT });
+			}
+
+			controllerMail.setExpediteur(this.options.getMailAgent() + '@' + Constante.HOSTNAME);
+
+			String desti = demanderMailsDestinataire(options);
+
+			if (desti.length() != 0)
+				desti = desti.substring(0, desti.length() - 1);
+			controllerMail.setDestinataires(desti);
+			controllerMail.chargerOptions();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (TypeDocument.ORDREMISSION == typeDocument) {
+			this.rootLayoutCtrl.ajouterStyleOM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		} else {
+			this.rootLayoutCtrl.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+			this.rootLayoutCtrl.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
+		}
+		
+	}
+	
+	public String demanderMailsDestinataire(Options options) {
+		String desti = "";
+
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(AgentApp.class.getResource("view/choixMailsDestinataires.fxml"));
+			AnchorPane choixMails = loader.load();
+
+			choixMailsDestinatairesController choixMailsCtrl = loader.getController();
+
+			for (String responsable : this.options.getMailsResponsables()) {
+				choixMailsCtrl.ajouterMails(responsable);
+			}
+
+			Scene scene = new Scene(choixMails);
+
+			// New stage
+			Stage fenetreChoixDesti = new Stage();
+			fenetreChoixDesti.setResizable(false);
+			choixMailsCtrl.initialize(fenetreChoixDesti, options);
+
+			fenetreChoixDesti.setTitle("Choix destinataires");
+			fenetreChoixDesti.setScene(scene);
+
+			fenetreChoixDesti.initOwner(primaryStage);
+			fenetreChoixDesti.initModality(Modality.WINDOW_MODAL);
+			fenetreChoixDesti.showAndWait();
+			desti = choixMailsCtrl.getDestinaires();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return desti;
 	}
 
 	public void demanderActionHT() {
@@ -376,6 +529,26 @@ public class ResponsableApp extends Application {
 				itemOmCtrl.ajouterStyle(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			}
 		}
+	}
+
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	public OrdreMission getMissionActive() {
+		return missionActive;
+	}
+	
+	public ListeMails getMailsEnAttente() {
+		return mailsEnAttente;
+	}
+
+	public Service<Void> getServiceEnvoiMail() {
+		return serviceEnvoiMail;
+	}
+
+	public EtatsResponsable getEtatMissionActive() {
+		return this.etatMissionActive;
 	}
 
 }

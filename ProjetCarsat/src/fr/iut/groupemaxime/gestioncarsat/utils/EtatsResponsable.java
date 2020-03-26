@@ -103,4 +103,8 @@ public class EtatsResponsable implements DocJson<EtatsResponsable> {
 		return etatsResponsable;
 	}
 
+	@Override
+	public String toString() {
+		return "Nom : " + this.chemin+"\nOm : "+this.om+"\nFm : "+this.fm+"\nHt : "+this.ht;
+	}
 }

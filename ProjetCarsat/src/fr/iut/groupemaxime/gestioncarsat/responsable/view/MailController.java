@@ -1,7 +1,8 @@
-package fr.iut.groupemaxime.gestioncarsat.agent.view;
+package fr.iut.groupemaxime.gestioncarsat.responsable.view;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.regex.Matcher;
@@ -15,6 +16,7 @@ import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.InterfaceMail;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.mail.Mail;
 import fr.iut.groupemaxime.gestioncarsat.mail.MailProcessor;
+import fr.iut.groupemaxime.gestioncarsat.responsable.ResponsableApp;
 import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
@@ -27,7 +29,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-public class MailController implements InterfaceMail{
+public class MailController implements InterfaceMail {
 
 	@FXML
 	private TextField expediteur;
@@ -43,12 +45,12 @@ public class MailController implements InterfaceMail{
 
 	@FXML
 	private TextArea corpsDuMail;
-	
+
 	private File[] piecesJointes;
 
-	private OrdreMissionController mainApp;
+	private ResponsableApp mainApp;
 
-	public void setMainApp(OrdreMissionController mainApp) {
+	public void setMainApp(ResponsableApp mainApp) {
 		this.mainApp = mainApp;
 	}
 
@@ -60,18 +62,19 @@ public class MailController implements InterfaceMail{
 
 	@FXML
 	public void envoyerMail(ActionEvent event) {
-		AgentApp app = this.mainApp.getMainApp();
 		if (adressesMailValides()) {
 			if (piecesJointes.length == 2) {
-				Bibliotheque.setEtatFm(app.getMissionActive(),EtatMission.EN_COURS_ENVOI);
-			}else {
-				app.getMissionActive().setEtat(EtatMission.EN_COURS_ENVOI);
+				mainApp.getEtatMissionActive().setFm(EtatMission.EN_COURS_ENVOI);
+				mainApp.getEtatMissionActive().setHt(EtatMission.EN_COURS_ENVOI);
+				mainApp.getEtatMissionActive().sauvegarderJson();
+			} else {
+				mainApp.getEtatMissionActive().setOm(EtatMission.EN_COURS_ENVOI);
+				mainApp.getEtatMissionActive().sauvegarderJson();
 			}
-			app.getMailsEnAttente().ajouterMail(new Mail(MailProcessor.creerMail(this)));
-			app.getMailsEnAttente().chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE,
-					app.getOptions());
-			app.retourMenu();
-			app.getServiceEnvoiMail().restart();
+			mainApp.getMailsEnAttente().ajouterMail(new Mail(MailProcessor.creerMail(this)));
+			mainApp.getMailsEnAttente().chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE, mainApp.getOptions());
+			mainApp.retourMenu();
+			mainApp.getServiceEnvoiMail().restart();
 		}
 	}
 
@@ -147,9 +150,7 @@ public class MailController implements InterfaceMail{
 
 	public List<String> getDestinatairesTab() {
 		List<String> listDest = new ArrayList<>();
-		for (String email : destinataires.getText().split(",")) {
-			listDest.add(email);
-		}
+		listDest.addAll(Arrays.asList(destinataires.getText().split(",")));
 		return listDest;
 	}
 
@@ -165,9 +166,7 @@ public class MailController implements InterfaceMail{
 		List<String> listEnCopie = null;
 		if (!destEnCopie.getText().equals("")) {
 			listEnCopie = new ArrayList<>();
-			for (String email : destEnCopie.getText().split(",")) {
-				listEnCopie.add(email);
-			}
+			listEnCopie.addAll(Arrays.asList(destEnCopie.getText().split(",")));
 		}
 		return listEnCopie;
 	}
@@ -192,13 +191,13 @@ public class MailController implements InterfaceMail{
 		this.corpsDuMail.setText(corpsDuMail);
 	}
 
-	public OrdreMissionController getMainApp() {
+	public ResponsableApp getMainApp() {
 		return mainApp;
 	}
-	
+
 	public void setPiecesJointes(File[] fichiers) {
 		this.piecesJointes = fichiers;
-		
+
 	}
 
 	public File[] getPiecesJointes() {

@@ -25,6 +25,7 @@ import javax.mail.internet.MimeMultipart;
 
 import com.sun.mail.pop3.POP3Store;
 
+import fr.iut.groupemaxime.gestioncarsat.agent.interfaces.InterfaceMail;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.MailController;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
@@ -99,7 +100,7 @@ public class MailProcessor {
 		return props;
 	}
 
-	public static Message configurationMessage(Session session, MailController mailCtrl) {
+	public static Message configurationMessage(Session session, InterfaceMail mailCtrl) {
 		Message message = new MimeMessage(session);
 		try {
 			MimeBodyPart texteMessage = new MimeBodyPart();
@@ -140,7 +141,7 @@ public class MailProcessor {
 		return message;
 	}
 
-	public static Message creerMail(MailController mailCtrl) {
+	public static Message creerMail(InterfaceMail mailCtrl) {
 		Properties props = configurationSmtp();
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 			@Override
@@ -185,7 +186,6 @@ public class MailProcessor {
 					+ part.getFileName().substring(0, part.getFileName().lastIndexOf(".")) + Constante.EXTENSION_MAIL);
 			FileOutputStream os = new FileOutputStream(fichierMail);
 			message.writeTo(os);
-			System.out.println(fichierMail.getAbsolutePath());
 			mail.setPath(fichierMail.getAbsolutePath());
 			os.close();
 

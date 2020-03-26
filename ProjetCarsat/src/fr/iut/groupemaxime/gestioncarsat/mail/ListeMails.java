@@ -31,7 +31,6 @@ public class ListeMails {
 	}
 
 	public void iterationMails() {
-		StringBuilder erreur = new StringBuilder();
 		List<Mail> aSuppr = new ArrayList<>();
 		for (Mail mail : mails) {
 			if (null == MailProcessor.envoyerMail(mail.getMail())) {
