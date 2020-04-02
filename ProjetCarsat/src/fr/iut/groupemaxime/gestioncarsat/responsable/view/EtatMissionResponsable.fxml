@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="525.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.iut.groupemaxime.gestioncarsat.responsable.view.EtatMissionResponsableController">
+	<children>
+		<Label alignment="CENTER" layoutX="1.0" layoutY="40.0" maxWidth="-Infinity" prefWidth="525.0" style="-fx-font-size: 18;" text="Informations concernant la mission sélectionnée">
+			<font>
+				<Font name="System Bold" size="12.0" />
+			</font>
+		</Label>
+		<GridPane layoutX="12.0" layoutY="256.0" prefHeight="273.0" prefWidth="514.0">
+			<columnConstraints>
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="299.5575256347656" minWidth="10.0" prefWidth="125.0" />
+				<ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="522.0" minWidth="10.0" prefWidth="375.0" />
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints maxHeight="136.0" minHeight="10.0" prefHeight="91.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="91.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="91.0" vgrow="SOMETIMES" />
+			</rowConstraints>
+			<children>
+				<Label prefHeight="78.0" prefWidth="200.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Ordre de mission" />
+				<Label prefHeight="78.0" prefWidth="245.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Frais de mission" GridPane.rowIndex="1" />
+				<Label prefHeight="113.0" prefWidth="229.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Horaires de travail" GridPane.rowIndex="2" />
+				<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+					<children>
+						<HBox prefHeight="40.0" prefWidth="365.0">
+							<children>
+								<Label prefHeight="30.0" prefWidth="80.0" style="-fx-font-size: 12;" text="Reçu">
+									<font>
+										<Font size="10.0" />
+									</font>
+								</Label>
+								<Label prefHeight="30.0" prefWidth="70.0" style="-fx-font-size: 12;" text="Signé" />
+								<Label prefHeight="30.0" prefWidth="125.0" style="-fx-font-size: 12;" text="En cours d'envoi" />
+								<Label prefHeight="30.0" style="-fx-font-size: 12;" text="Envoyé" />
+							</children>
+						</HBox>
+						<HBox prefHeight="54.0" prefWidth="365.0">
+							<children>
+								<Label fx:id="saisieEnCoursOM" alignment="CENTER" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" stylesheets="@../style%20etat.css">
+									<HBox.margin>
+										<Insets bottom="5.0" />
+									</HBox.margin>
+									<graphic>
+										<ImageView fx:id="saisieOM" fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+									</graphic>
+								</Label>
+								<Label fx:id="signeOM" alignment="CENTER" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" stylesheets="@../style%20etat.css">
+									<HBox.margin>
+										<Insets bottom="5.0" left="30.0" />
+									</HBox.margin>
+									<graphic>
+										<ImageView fx:id="signatureOM" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+									</graphic>
+								</Label>
+								<Label fx:id="envoiEnCoursOM" alignment="CENTER" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" stylesheets="@../style%20etat.css">
+									<HBox.margin>
+										<Insets bottom="5.0" left="60.0" />
+									</HBox.margin>
+									<graphic>
+										<ImageView fx:id="coursEnvoiOM" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+									</graphic>
+								</Label>
+								<Label fx:id="envoiOM" alignment="CENTER" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" stylesheets="@../style%20etat.css">
+									<HBox.margin>
+										<Insets bottom="5.0" left="65.0" />
+									</HBox.margin>
+									<graphic>
+										<ImageView fx:id="envoyeOM" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+									</graphic>
+								</Label>
+							</children>
+						</HBox>
+					</children>
+				</VBox>
+				<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+					<children>
+						<HBox prefHeight="40.0" prefWidth="365.0">
+							<children>
+								<Label prefHeight="30.0" prefWidth="80.0" style="-fx-font-size: 12;" text="Reçu">
+									<font>
+										<Font size="10.0" />
+									</font>
+								</Label>
+								<Label prefHeight="30.0" prefWidth="70.0" style="-fx-font-size: 12;" text="Signé" />
+							</children>
+						</HBox>
+            						<HBox prefHeight="54.0" prefWidth="100.0">
+            							<children>
+            								<Label fx:id="saisieEnCoursFM" alignment="CENTER" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" stylesheets="@../style%20etat.css">
+            									<HBox.margin>
+            										<Insets bottom="5.0" />
+            									</HBox.margin>
+            									<graphic>
+            										<ImageView fx:id="saisieFM" fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+            									</graphic>
+            								</Label>
+            								<Label fx:id="signeFM" alignment="CENTER" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" stylesheets="@../style%20etat.css">
+            									<HBox.margin>
+            										<Insets bottom="5.0" left="30.0" />
+            									</HBox.margin>
+            									<graphic>
+            										<ImageView fx:id="signatureFM" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+            									</graphic>
+            								</Label>
+            							</children>
+            						</HBox>
+					</children>
+				</VBox>
+				<VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+					<children>
+						<HBox prefHeight="40.0" prefWidth="365.0">
+							<children>
+								<Label prefHeight="30.0" prefWidth="80.0" style="-fx-font-size: 12;" text="Reçu">
+									<font>
+										<Font size="10.0" />
+									</font>
+								</Label>
+								<Label prefHeight="30.0" prefWidth="70.0" style="-fx-font-size: 12;" text="Signé" />
+							</children>
+						</HBox>
+						<HBox prefHeight="54.0" prefWidth="365.0">
+							<children>
+								<Label fx:id="saisieEnCoursHT" alignment="CENTER" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" stylesheets="@../style%20etat.css">
+									<HBox.margin>
+										<Insets bottom="5.0" />
+									</HBox.margin>
+									<graphic>
+										<ImageView fx:id="saisieHT" fitHeight="28.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+									</graphic>
+								</Label>
+								<Label fx:id="signeHT" alignment="CENTER" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" stylesheets="@../style%20etat.css">
+									<HBox.margin>
+										<Insets bottom="5.0" left="30.0" />
+									</HBox.margin>
+									<graphic>
+										<ImageView fx:id="signatureHT" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+									</graphic>
+								</Label>
+							</children>
+						</HBox>
+					</children>
+				</VBox>
+			</children>
+			<opaqueInsets>
+				<Insets />
+			</opaqueInsets>
+		</GridPane>
+      <Label layoutX="290.0" layoutY="386.0" prefHeight="30.0" style="-fx-font-size: 12;" text="En cours d'envoi" />
+      <Label layoutX="415.0" layoutY="386.0" prefHeight="30.0" style="-fx-font-size: 12;" text="Envoyé" />
+      <Label fx:id="envoiHTFM" alignment="CENTER" layoutX="415.0" layoutY="420.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" stylesheets="@../style%20etat.css">
+         <graphic>
+            <ImageView fx:id="imageEnvoiHTFM" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
+      </Label>
+      <Label fx:id="envoiEnCoursHTFM" alignment="CENTER" layoutX="315.0" layoutY="420.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" stylesheets="@../style%20etat.css">
+         <graphic>
+            <ImageView fx:id="imageEnvoiEnCoursHTFM" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+         </graphic>
+      </Label>
+      <Label layoutX="47.0" layoutY="106.0" prefHeight="30.0" prefWidth="40.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Lieu :" />
+      <Label layoutX="47.0" layoutY="76.0" prefHeight="30.0" prefWidth="110.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Nom et prénom :" />
+      <Label layoutX="47.0" layoutY="194.0" prefHeight="30.0" prefWidth="87.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Date de fin :" />
+      <Label layoutX="47.0" layoutY="166.0" prefHeight="30.0" prefWidth="104.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Date de début :" />
+      <Label layoutX="47.0" layoutY="136.0" prefHeight="30.0" prefWidth="50.0" style="-fx-font-size: 15; -fx-font-weight: bold;" text="Motif :" />
+				<Label fx:id="lieuMission" layoutX="90.0" layoutY="106.0" prefHeight="30.0" prefWidth="359.0" text="lieuMission" />
+      <Label fx:id="motifMission" layoutX="99.0" layoutY="136.0" prefHeight="30.0" prefWidth="359.0" text="motifMission" />
+      <Label fx:id="dateDebutMission" layoutX="151.0" layoutY="166.0" prefHeight="30.0" prefWidth="120.0" text="dateDebutMission" />
+      <Label fx:id="dateFinMission" layoutX="134.0" layoutY="194.0" prefHeight="30.0" prefWidth="120.0" text="dateFinMission" />
+      <Label fx:id="heureDebut" layoutX="276.0" layoutY="166.0" prefHeight="30.0" prefWidth="150.0" text="heureDebutMission" />
+      <Label fx:id="heureFin" layoutX="257.0" layoutY="194.0" prefHeight="30.0" prefWidth="150.0" text="heureFinMission" />
+      <Label layoutX="237.0" layoutY="226.0" prefHeight="30.0" prefWidth="116.0" style="-fx-font-size: 17;" text="Etat d'envoi" />
+      <Label fx:id="nomPrenom" layoutX="156.0" layoutY="76.0" prefHeight="30.0" prefWidth="327.0" text="nomPrenom" />
+	</children>
+</AnchorPane>

@@ -55,9 +55,13 @@ public class MailController implements InterfaceMail {
 	}
 
 	public void chargerOptions() {
-		Options options = this.mainApp.getOptions();
-		this.corpsDuMail.setText(options.getCorpsDuMail());
-		this.objetDuMail.setText(Constante.OBJET_DU_MAIL_DEFAUT);
+		if (piecesJointes.length == 2) {
+			this.objetDuMail.setText(Constante.OBJET_DU_MAIL_DEFAUT_HTFM_RESP);
+			this.corpsDuMail.setText(Constante.CORPS_DU_MAIL_DEFAUT_HTFM_RESP);
+		} else {
+			this.objetDuMail.setText(Constante.OBJET_DU_MAIL_DEFAUT_OM_RESP);
+			this.corpsDuMail.setText(Constante.CORPS_DU_MAIL_DEFAUT_OM_RESP);
+		}
 	}
 
 	@FXML

@@ -9,19 +9,24 @@ import org.controlsfx.control.Notifications;
 
 import fr.iut.groupemaxime.gestioncarsat.agent.AgentApp;
 import fr.iut.groupemaxime.gestioncarsat.agent.form.PDF;
+import fr.iut.groupemaxime.gestioncarsat.agent.fraismission.model.FraisMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.horairemission.model.HoraireTravail;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.ListeOrdreMission;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.MissionTemporaire;
 import fr.iut.groupemaxime.gestioncarsat.agent.ordremission.model.OrdreMission;
+import fr.iut.groupemaxime.gestioncarsat.agent.view.EtatMissionSelectionneeController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.SaisieMailController;
 import fr.iut.groupemaxime.gestioncarsat.agent.view.choixMailsDestinatairesController;
 import fr.iut.groupemaxime.gestioncarsat.mail.ListeMails;
 import fr.iut.groupemaxime.gestioncarsat.mail.MailProcessor;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.RootLayoutController;
+import fr.iut.groupemaxime.gestioncarsat.utils.Bibliotheque;
 import fr.iut.groupemaxime.gestioncarsat.utils.Constante;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatMission;
 import fr.iut.groupemaxime.gestioncarsat.utils.EtatsResponsable;
 import fr.iut.groupemaxime.gestioncarsat.utils.Options;
 import fr.iut.groupemaxime.gestioncarsat.utils.TypeDocument;
+import fr.iut.groupemaxime.gestioncarsat.responsable.view.EtatMissionResponsableController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.ItemMissionResponsableController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.ListeMissionsResponsableController;
 import fr.iut.groupemaxime.gestioncarsat.responsable.view.MailController;
@@ -58,11 +63,13 @@ public class ResponsableApp extends Application {
 	private ListeMissionsResponsableController controllerListeMissionsResponsable;
 	private ListeOrdreMission listeOM;
 	private OrdreMission missionActive;
-	
+
+	private AnchorPane etatMission;
+
 	private ListeMails mailsEnAttente;
 	private ScheduledService<Void> serviceRecuperationMails;
 	private Service<Void> serviceEnvoiMail;
-	
+
 	private EtatsResponsable etatMissionActive;
 	private AnchorPane pageMail;
 
@@ -72,13 +79,13 @@ public class ResponsableApp extends Application {
 		this.primaryStage.setTitle("Carsat - Gestion des déplacement");
 		this.primaryStage.getIcons().add(new Image("file:" + Constante.CHEMIN_IMAGES + "logo.png"));
 		this.primaryStage.setResizable(true);
-		
+
 		this.options = new Options();
 		this.options = this.options.chargerJson(Constante.CHEMIN_OPTIONS);
-		
+
 		this.mailsEnAttente = new ListeMails();
 		this.mailsEnAttente.chargerMails(Constante.CHEMIN_MAILS_EN_ATTENTE, this.options);
-		
+
 		this.serviceEnvoiMail = new Service<Void>() {
 
 			@Override
@@ -101,7 +108,7 @@ public class ResponsableApp extends Application {
 					.showError();
 		});
 		serviceEnvoiMail.start();
-		
+
 		this.serviceRecuperationMails = new ScheduledService<Void>() {
 
 			@Override
@@ -128,7 +135,7 @@ public class ResponsableApp extends Application {
 		};
 		serviceRecuperationMails.setPeriod(Duration.minutes(5));
 		serviceRecuperationMails.start();
-		
+
 		initialiseRootLayout();
 		afficherListeMissions();
 	}
@@ -174,7 +181,7 @@ public class ResponsableApp extends Application {
 		this.options = options;
 		this.options.sauvegarderJson(Constante.CHEMIN_OPTIONS);
 	}
-	
+
 	public Options getOptions() {
 		return this.options;
 	}
@@ -202,10 +209,35 @@ public class ResponsableApp extends Application {
 		String om = mission.getLieuDeplacement() + " du " + mission.getDateDebut() + " au " + mission.getDateFin();
 		this.rootLayoutCtrl.setLabelMissionSelectionnee(om);
 		EtatsResponsable er = new EtatsResponsable(missionActive.getCheminDossier() + File.separator
-				+ missionActive.getNomOM().substring(missionActive.getNomOM().indexOf("_") + 1,
+				+ missionActive.getNomOM().substring(missionActive.getNomOM().indexOf('_') + 1,
 						missionActive.getNomOM().lastIndexOf("."))
 				+ ".json");
 		this.etatMissionActive = er.chargerJson(er.getNom());
+		this.afficherInfosMission();
+	}
+
+	private void afficherInfosMission() {
+		this.retirerDocActif();
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(this.getClass().getResource("view/EtatMissionResponsable.fxml"));
+
+			etatMission = loader.load();
+
+			EtatMissionResponsableController etatMissionCtrl = loader.getController();
+
+			etatMissionCtrl.choisirCouleurOM(etatMissionActive.getOm().getEtat());
+			etatMissionCtrl.modifierInfosMission(missionActive);
+
+			etatMissionCtrl.choisirCouleurFM(etatMissionActive.getFm().getEtat());
+
+			etatMissionCtrl.choisirCouleurHT(etatMissionActive.getHt().getEtat());
+
+			this.rootLayoutCtrl.getGridRoot().add(etatMission, 2, 0);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
@@ -290,12 +322,12 @@ public class ResponsableApp extends Application {
 		ButtonType buttonTypeEnvoyer = null;
 		ButtonType buttonTypeSigner = null;
 		if (etatMissionActive.getOm() == EtatMission.SIGNE) {
-				buttonTypeEnvoyer = new ButtonType("Envoyer");
-				alert.getButtonTypes().addAll(buttonTypeEnvoyer);
-		} 
-		if (etatMissionActive.getOm() == EtatMission.NON_SIGNE){
-				buttonTypeSigner = new ButtonType("Signer");
-				alert.getButtonTypes().addAll(buttonTypeSigner);
+			buttonTypeEnvoyer = new ButtonType("Envoyer");
+			alert.getButtonTypes().addAll(buttonTypeEnvoyer);
+		}
+		if (etatMissionActive.getOm() == EtatMission.NON_SIGNE) {
+			buttonTypeSigner = new ButtonType("Signer");
+			alert.getButtonTypes().addAll(buttonTypeSigner);
 		}
 		ButtonType buttonTypeCancel = new ButtonType("Annuler", ButtonData.CANCEL_CLOSE);
 
@@ -314,7 +346,6 @@ public class ResponsableApp extends Application {
 			this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			// Ne fait rien == bouton "annuler"
 		}
-		retourMenu();
 	}
 
 	private void envoyerMail(TypeDocument typeDocument) {
@@ -349,19 +380,18 @@ public class ResponsableApp extends Application {
 			loader.setLocation(this.getClass().getResource("view/Mail.fxml"));
 			this.pageMail = loader.load();
 
-			
 			GridPane pane = (GridPane) this.rootLayout.getLeft();
+			this.retirerDocActif();
 			pane.add(this.pageMail, 2, 0);
-				
+
 			MailController controllerMail = loader.getController();
 			controllerMail.setMainApp(this);
-			File pdfOM = new File((this.missionActive.getCheminDossier()
-					+ this.missionActive.getNomOM()));
+			File pdfOM = new File((this.missionActive.getCheminDossier() + this.missionActive.getNomOM()));
 			if (TypeDocument.ORDREMISSION == typeDocument) {
 				controllerMail.setPiecesJointes(new File[] { pdfOM });
 			} else {
-				File pdfHT = new File((this.missionActive.getCheminDossier()
-						+ this.missionActive.getNomOM().replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS).replace("OM_", "HT_")));
+				File pdfHT = new File((this.missionActive.getCheminDossier() + this.missionActive.getNomOM()
+						.replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS).replace("OM_", "HT_")));
 				controllerMail.setPiecesJointes(new File[] { pdfOM, pdfHT });
 			}
 
@@ -383,9 +413,9 @@ public class ResponsableApp extends Application {
 			this.rootLayoutCtrl.ajouterStyleFM(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 			this.rootLayoutCtrl.ajouterStyleHT(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 		}
-		
+
 	}
-	
+
 	public String demanderMailsDestinataire(Options options) {
 		String desti = "";
 
@@ -419,6 +449,12 @@ public class ResponsableApp extends Application {
 			e.printStackTrace();
 		}
 		return desti;
+	}
+
+	public void retirerDocActif() {
+		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.pageMail);
+		this.rootLayoutCtrl.getGridRoot().getChildren().remove(this.etatMission);
+		this.rootLayoutCtrl.retirerStyleSurTousLesDocs(Constante.BACKGROUND_COLOR_MISSION_SELECTIONNE);
 	}
 
 	public void demanderActionHT() {
@@ -465,7 +501,7 @@ public class ResponsableApp extends Application {
 		}
 		retourMenu();
 	}
-	
+
 	public boolean recuHT() {
 		if (new File(missionActive.getCheminDossier() + missionActive.getNomOM().replace("OM_", "HT_")
 				.replace(Constante.EXTENSION_PDF, Constante.EXTENSION_XLS)).exists()) {
@@ -483,6 +519,7 @@ public class ResponsableApp extends Application {
 			this.etatMissionActive.setHt(EtatMission.SIGNE);
 			this.etatMissionActive.sauvegarderJson();
 		}
+		this.retourMenu();
 	}
 
 	private void afficherHtXLS() {
@@ -500,6 +537,7 @@ public class ResponsableApp extends Application {
 				options.getCheminSignature());
 		this.etatMissionActive.setOm(EtatMission.SIGNE);
 		this.etatMissionActive.sauvegarderJson();
+		this.retourMenu();
 	}
 
 	private void signerFM() {
@@ -508,6 +546,7 @@ public class ResponsableApp extends Application {
 				options.getCheminSignature());
 		this.etatMissionActive.setFm(EtatMission.SIGNE);
 		this.etatMissionActive.sauvegarderJson();
+		this.retourMenu();
 	}
 
 	private void afficherPdfOM() {
@@ -520,7 +559,7 @@ public class ResponsableApp extends Application {
 	}
 
 	public void retourMenu() {
-		// this.retirerDocActif();
+		this.retirerDocActif();
 		this.afficherListeMissions();
 		if (!this.missionActiveIsNull()) {
 			ItemMissionResponsableController itemOmCtrl = controllerListeMissionsResponsable.getItemOM(missionActive);
@@ -538,7 +577,7 @@ public class ResponsableApp extends Application {
 	public OrdreMission getMissionActive() {
 		return missionActive;
 	}
-	
+
 	public ListeMails getMailsEnAttente() {
 		return mailsEnAttente;
 	}

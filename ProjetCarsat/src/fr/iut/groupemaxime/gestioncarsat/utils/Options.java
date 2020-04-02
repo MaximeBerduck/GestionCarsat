@@ -41,7 +41,7 @@ public class Options implements DocJson<Options> {
 
 	public Options() {
 		this(Constante.CHEMIN_FICHIERS_DEFAUT, null, new Agent(), null, new HashSet<>(),new HashSet<>(),
-				Constante.CORPS_DU_MAIL_DEFAUT);
+				Constante.CORPS_DU_MAIL_DEFAUT_OM);
 	}
 
 	@Override

@@ -63,8 +63,6 @@ public class AgentApp extends Application {
 
 	private OrdreMissionController omCtrl;
 	private AnchorPane ordreMission;
-	private ItemOrdreMissionController itemOmCtrl;
-
 	private AnchorPane fraisMission;
 	private FraisMissionController fmCtrl;
 

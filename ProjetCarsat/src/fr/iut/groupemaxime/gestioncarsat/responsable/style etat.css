@@ -1,0 +1,9 @@
+.label, .text
+{
+	-fx-border-color : black;
+	-fx-border-radius : 20;
+	-fx-background-radius : 20;
+	-fx-background-insets:1;
+	-fx-border-insets:1;
+}
+
