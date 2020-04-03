@@ -57,63 +57,67 @@ public class ListeMissionsResponsableController {
 		File[] pdfs = dossier.listFiles();
 		PDF pdf;
 		for (File file : pdfs) {
-			if (file.canWrite()) {
-				File filee = new File(file.getAbsolutePath() + "/OM_" + file.getName() + Constante.EXTENSION_PDF);
-				try {
-					pdf = new PDF(filee);
-					OrdreMission om = pdf.chargerPDFtoOM();
-					om.setCheminDossier(file.getAbsolutePath());
-					om.setNomOM(filee.getAbsolutePath().substring(filee.getAbsolutePath().lastIndexOf(File.separator)));
-					File etat = new File(om.getCheminDossier() + File.separator
-							+ om.getNomOM().substring(om.getNomOM().indexOf("_") + 1, om.getNomOM().lastIndexOf("."))
-							+ ".json");
-					EtatsResponsable nouveau = new EtatsResponsable(etat.getAbsolutePath());
-					if (!etat.exists()) {
-						nouveau.sauvegarderJson();
-					} else {
-						nouveau = nouveau.chargerJson(etat.getAbsolutePath());						
-						if (nouveau.getOm() == EtatMission.EN_COURS_ENVOI) {
+			if (!".DS_Store".equals(file.getName())) {
+				if (file.canWrite()) {
+					File filee = new File(file.getAbsolutePath() + "/OM_" + file.getName() + Constante.EXTENSION_PDF);
+					try {
+						pdf = new PDF(filee);
+						OrdreMission om = pdf.chargerPDFtoOM();
+						om.setCheminDossier(file.getAbsolutePath());
+						om.setNomOM(
+								filee.getAbsolutePath().substring(filee.getAbsolutePath().lastIndexOf(File.separator)));
+						File etat = new File(om.getCheminDossier() + File.separator + om.getNomOM()
+								.substring(om.getNomOM().indexOf("_") + 1, om.getNomOM().lastIndexOf(".")) + ".json");
+						EtatsResponsable nouveau = new EtatsResponsable(etat.getAbsolutePath());
+						if (!etat.exists()) {
+							nouveau.sauvegarderJson();
+						} else {
+							nouveau = nouveau.chargerJson(etat.getAbsolutePath());
+							if (nouveau.getOm() == EtatMission.EN_COURS_ENVOI) {
 
-							boolean trouve = false;
+								boolean trouve = false;
 
-							for (Mail mail : this.responsableApp.getMailsEnAttente().getListeMails()) {
-								if (mail.getPath().length() > 0 && om.getNomOM().substring(1,om.getNomOM().lastIndexOf('.'))
-										.equals(mail.getPath().substring(
-												mail.getPath().lastIndexOf(File.separator) + 1,
-												mail.getPath().lastIndexOf('.')))) {
-									trouve = true;
+								for (Mail mail : this.responsableApp.getMailsEnAttente().getListeMails()) {
+									if (mail.getPath().length() > 0
+											&& om.getNomOM().substring(1, om.getNomOM().lastIndexOf('.'))
+													.equals(mail.getPath().substring(
+															mail.getPath().lastIndexOf(File.separator) + 1,
+															mail.getPath().lastIndexOf('.')))) {
+										trouve = true;
+									}
+								}
+								if (!trouve) {
+									nouveau.setOm(EtatMission.ENVOYE);
 								}
 							}
-							if (!trouve) {
-								nouveau.setOm(EtatMission.ENVOYE);
-							}
-						}
-						if (nouveau.getFm() == EtatMission.EN_COURS_ENVOI) {
-							boolean trouve = false;
+							if (nouveau.getFm() == EtatMission.EN_COURS_ENVOI) {
+								boolean trouve = false;
 
-							for (Mail mail : this.responsableApp.getMailsEnAttente().getListeMails()) {
-								if (mail.getPath().length() > 0 && om.getNomOM().replace("OM_", "HT_").substring(1,om.getNomOM().lastIndexOf('.'))
-										.equals(mail.getPath().substring(
-												mail.getPath().lastIndexOf(File.separator) + 1,
-												mail.getPath().lastIndexOf('.')))) {
-									trouve = true;
+								for (Mail mail : this.responsableApp.getMailsEnAttente().getListeMails()) {
+									if (mail.getPath().length() > 0 && om.getNomOM().replace("OM_", "HT_")
+											.substring(1, om.getNomOM().lastIndexOf('.'))
+											.equals(mail.getPath().substring(
+													mail.getPath().lastIndexOf(File.separator) + 1,
+													mail.getPath().lastIndexOf('.')))) {
+										trouve = true;
+									}
 								}
-							}
-							if (!trouve) {
-								nouveau.setFm(EtatMission.ENVOYE);
-								nouveau.setHt(EtatMission.ENVOYE);
-							}
+								if (!trouve) {
+									nouveau.setFm(EtatMission.ENVOYE);
+									nouveau.setHt(EtatMission.ENVOYE);
+								}
 
+							}
+							nouveau.sauvegarderJson();
 						}
-						nouveau.sauvegarderJson();
-					}	
-					listeOm.ajouterOM(om);
-					pdf.fermerPDF();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+						listeOm.ajouterOM(om);
+						pdf.fermerPDF();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
-
 			}
 		}
 		for (
