@@ -1,7 +1,10 @@
 package fr.iut.groupemaxime.gestioncarsat.utils;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -56,17 +59,17 @@ public class Constante {
 
 	public static final String CORPS_DU_MAIL_DEFAUT_OM = "Bonjour, \nVeuillez trouver ci-joint mon ordre de mission. \n\nCordialement.";
 	public static final String OBJET_DU_MAIL_DEFAUT_OM = "Ordre de mission";
-	
+
 	public static final String CORPS_DU_MAIL_DEFAUT_HTFM = "Bonjour, \nVeuillez trouver ci-joint mes frais de missions ainsi que mes horaires de travail. \n\nCordialement.";
 	public static final String OBJET_DU_MAIL_DEFAUT_HTFM = "Frais et horaires";
-	
+
 	public static final String CORPS_DU_MAIL_DEFAUT_OM_RESP = "Bonjour, \nVeuillez trouver ci-joint un ordre de mission signé. \n\nCordialement.";
 	public static final String OBJET_DU_MAIL_DEFAUT_OM_RESP = "Ordre de mission";
-	
+
 	public static final String CORPS_DU_MAIL_DEFAUT_HTFM_RESP = "Bonjour, \nVeuillez trouver ci-joint des frais de mission et des horaires de travail signés. \n\nCordialement.";
 	public static final String OBJET_DU_MAIL_DEFAUT_HTFM_RESP = "Ordre de mission";
 
-	public static final String HOSTNAME = "groupemaxime.ddns.net";
+	public static final String HOSTNAME = getHOSTNAME();
 	public static final String MOT_DE_PASSE = "root";
 
 	public static final String TITRE_MODIF_OM = "Modification d'un ordre de mission";
@@ -77,4 +80,12 @@ public class Constante {
 	public static final int NBR_DECOUCHER_JOURNALIER = 1; // Nombre de découchers maximum par jour dans les frais
 	public static final int NBR_REPAS_JOURNALIER = 2;// Nombre de repas maximum par jour dans les frais
 
+	private static String getHOSTNAME() {
+		File file = new File("target/hostname");
+		try (Scanner s = new Scanner(file)){
+			return s.nextLine();
+		} catch (FileNotFoundException e) {
+			return "erreur";
+		}
+	}
 }
