@@ -267,6 +267,9 @@ public class ResponsableApp extends Application {
 				etatMissionActive.setFm(EtatMission.NON_SIGNE);
 				etatMissionActive.setHt(EtatMission.NON_SIGNE);
 				etatMissionActive.sauvegarderJson();
+				if (etatMissionActive.getOm() == EtatMission.SIGNE || etatMissionActive.getOm() == EtatMission.EN_COURS_ENVOI || etatMissionActive.getOm() == EtatMission.ENVOYE) {
+					this.signerOM();
+				}
 			}
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Choix de l'action");
@@ -308,7 +311,6 @@ public class ResponsableApp extends Application {
 			alert.setContentText("Vous n'avez pas encore recu les frais de mission pour cette mission");
 			alert.show();
 		}
-		retourMenu();
 	}
 
 	public void demanderActionOM() {
@@ -499,7 +501,6 @@ public class ResponsableApp extends Application {
 			alert.setContentText("Vous n'avez pas encore recu les frais de mission pour cette mission");
 			alert.show();
 		}
-		retourMenu();
 	}
 
 	public boolean recuHT() {
