@@ -124,6 +124,9 @@ public class ResponsableApp extends Application {
 							@Override
 							public void run() {
 								afficherListeMissions();
+								if (rootLayoutCtrl.getGridRoot().getChildren().contains(etatMission)) {
+									afficherInfosMission();
+								}
 							}
 						});
 
